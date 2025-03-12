@@ -42,14 +42,31 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
                 className="w-full h-full object-cover rounded-2xl shadow-lg"
               />
             </AspectRatio>
-            <div className="flex items-center justify-between mt-4">
-              <div className="flex items-center gap-2">
-                <div className="bg-green-500 h-3 w-3 rounded-full animate-pulse"></div>
-                <span className="text-foreground font-medium">Coming Soon</span>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="bg-green-500 h-3 w-3 rounded-full animate-pulse"></div>
+                  <span className="text-foreground font-medium">Coming Soon</span>
+                </div>
+                <div className="flex items-center gap-2 text-foreground/70">
+                  <i className="ri-shield-check-line"></i>
+                  <span>Security Audited</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-foreground/70">
-                <i className="ri-shield-check-line"></i>
-                <span>Security Audited</span>
+              
+              <div className="flex flex-wrap items-center justify-center gap-4 mt-3 py-2 px-4 bg-white/30 rounded-xl">
+                <div className="flex items-center gap-2">
+                  <i className="ri-lock-line text-primary"></i>
+                  <span className="text-xs font-medium">256-bit Encryption</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <i className="ri-shield-keyhole-line text-primary"></i>
+                  <span className="text-xs font-medium">SSL Secured</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <i className="ri-database-2-line text-primary"></i>
+                  <span className="text-xs font-medium">Private Data Protection</span>
+                </div>
               </div>
             </div>
           </div>
