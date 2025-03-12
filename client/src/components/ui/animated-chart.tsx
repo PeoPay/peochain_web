@@ -242,8 +242,12 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
             <XAxis 
               dataKey="name" 
-              tick={{ fontSize: 10 }} 
+              tick={{ 
+                fontSize: isMobile ? 8 : 10,
+                width: isMobile ? 35 : 80
+              }}
               interval={isMobile ? 3 : 1} // Show fewer X-axis ticks on mobile
+              tickFormatter={(value) => isMobile && value.length > 6 ? value.substring(0, 1) : value}
             />
             <YAxis tick={{ fontSize: 10 }} tickCount={mobileTicks} />
             <Tooltip 
@@ -251,6 +255,8 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
                 if (name === 'tps') return [`${value.toLocaleString()} TPS`, 'PEOCHAIN'];
                 return [`${value.toLocaleString()} TPS`, 'Competitors'];
               }}
+              contentStyle={{ fontSize: isMobile ? '10px' : '12px', padding: isMobile ? '4px 8px' : '8px 10px' }}
+              itemStyle={{ padding: isMobile ? '1px 0' : '2px 0' }}
             />
             <Area 
               type="monotone" 
@@ -396,7 +402,10 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
               animationDuration={1500}
             />
             {!isMobile && <Legend />}
-            <Tooltip />
+            <Tooltip 
+              contentStyle={{ fontSize: isMobile ? '10px' : '12px', padding: isMobile ? '4px 8px' : '8px 10px' }}
+              itemStyle={{ padding: isMobile ? '1px 0' : '2px 0' }}
+            />
           </RadarChart>
         );
     }
