@@ -293,11 +293,16 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
             <YAxis 
               dataKey="name" 
               type="category" 
-              tick={{ fontSize: 10 }} 
-              width={isMobile ? 60 : 80} 
+              tick={{ 
+                fontSize: isMobile ? 8 : 10,
+                width: isMobile ? 60 : 80
+              }}
+              tickFormatter={(value) => isMobile && value.length > 7 ? value.substring(0, 6) + '...' : value}
             />
             <Tooltip 
               formatter={(value: number) => [`${value.toLocaleString()} TPS`, 'Transactions Per Second']}
+              contentStyle={{ fontSize: isMobile ? '10px' : '12px', padding: isMobile ? '4px 8px' : '8px 10px' }}
+              itemStyle={{ padding: isMobile ? '1px 0' : '2px 0' }}
             />
             {!isMobile && <Legend />}
             <Bar 
@@ -324,10 +329,11 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
             <XAxis 
               dataKey="name" 
-              tick={{ fontSize: 10 }}
+              tick={{ fontSize: isMobile ? 8 : 10, width: isMobile ? 35 : 80 }}
               angle={isMobile ? -45 : 0}
               textAnchor={isMobile ? "end" : "middle"}
               height={isMobile ? 60 : 30}
+              tickFormatter={(value) => isMobile && value.length > 7 ? value.substring(0, 5) + '...' : value}
             />
             <YAxis 
               tick={{ fontSize: 10 }} 
@@ -338,6 +344,8 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
             />
             <Tooltip 
               formatter={(value: number) => [`$${value.toFixed(5)}`, 'Transaction Cost']}
+              contentStyle={{ fontSize: isMobile ? '10px' : '12px', padding: isMobile ? '4px 8px' : '8px 10px' }}
+              itemStyle={{ padding: isMobile ? '1px 0' : '2px 0' }}
             />
             {!isMobile && <Legend />}
             <Bar 
@@ -372,8 +380,11 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
               dataKey="name" 
               tick={{ 
                 fill: 'currentColor', 
-                fontSize: isMobile ? 8 : 10
+                fontSize: isMobile ? 7 : 10,
+                dy: isMobile ? 2 : 0,
+                width: isMobile ? 30 : 80
               }}
+              tickFormatter={(value) => isMobile && value.length > 7 ? value.substring(0, 6) + '...' : value}
             />
             <PolarRadiusAxis angle={30} domain={[0, 300]} tick={false} />
             <Radar 
@@ -443,25 +454,27 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
   
   return (
     <div className={`w-full h-full flex flex-col ${className}`}>
-      <div className={`flex ${isMobile ? 'flex-col' : 'justify-between'} ${itemsClass} mb-2`}>
-        {getChartTitle()}
-        <div className={`text-xs font-medium ${isMobile ? 'mt-1' : ''}`}>
+      <div className={`flex ${isMobile ? 'flex-col' : 'justify-between'} ${itemsClass} mb-2 max-w-full overflow-hidden`}>
+        <div className="truncate max-w-full">
+          {getChartTitle()}
+        </div>
+        <div className={`text-xs font-medium ${isMobile ? 'mt-1' : ''} truncate`}>
           {getHighlightStat()}
         </div>
       </div>
       
-      <div className="flex-1 min-h-[180px] md:min-h-[220px]">
+      <div className="flex-1 min-h-[160px] md:min-h-[220px]">
         <ResponsiveContainer width="100%" height="100%">
           {renderChart()}
         </ResponsiveContainer>
       </div>
       
-      <div className={`mt-2 flex ${isMobile ? 'flex-col gap-1' : 'justify-between'} ${itemsClass} text-xs`}>
-        <div className="flex items-center gap-1 text-foreground/60">
-          <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-          Live Performance Metrics
+      <div className={`mt-2 flex ${isMobile ? 'flex-col gap-1' : 'justify-between'} ${itemsClass} text-xs max-w-full overflow-hidden`}>
+        <div className="flex items-center gap-1 text-foreground/60 truncate">
+          <div className="w-2 h-2 rounded-full bg-primary animate-pulse flex-shrink-0"></div>
+          <span className="truncate">Live Metrics</span>
         </div>
-        <div className="font-medium">
+        <div className="font-medium truncate">
           PoSyg™ Consensus
         </div>
       </div>
