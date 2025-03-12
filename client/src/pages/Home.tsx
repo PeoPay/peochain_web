@@ -6,11 +6,14 @@ import FeaturesSection from "@/components/sections/features-section";
 import BenefitsSection from "@/components/sections/benefits-section";
 import WaitlistSection from "@/components/sections/waitlist-section";
 import FAQSection from "@/components/sections/faq-section";
+import TechnologySection from "@/components/sections/technology-section";
 
 export default function Home() {
   const featuresRef = useRef<HTMLDivElement>(null);
   const benefitsRef = useRef<HTMLDivElement>(null);
+  const technologyRef = useRef<HTMLDivElement>(null);
   const waitlistRef = useRef<HTMLDivElement>(null);
+  const faqRef = useRef<HTMLDivElement>(null);
 
   const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
@@ -24,6 +27,7 @@ export default function Home() {
         onFeatureClick={() => scrollToRef(featuresRef)}
         onBenefitsClick={() => scrollToRef(benefitsRef)}
         onWaitlistClick={() => scrollToRef(waitlistRef)}
+        onFaqClick={() => scrollToRef(faqRef)}
       />
       <main>
         <HeroSection 
@@ -39,7 +43,9 @@ export default function Home() {
         <div ref={waitlistRef}>
           <WaitlistSection />
         </div>
-        <FAQSection />
+        <div ref={faqRef}>
+          <FAQSection />
+        </div>
       </main>
       <Footer />
     </div>

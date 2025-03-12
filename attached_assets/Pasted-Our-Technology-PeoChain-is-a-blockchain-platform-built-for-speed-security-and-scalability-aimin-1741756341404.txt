@@ -1,0 +1,35 @@
+Our Technology  
+PeoChain is a blockchain platform built for speed, security, and scalability, aiming to promote global financial inclusion.  
+Key Features  
+Consensus Mechanism  
+PeoChain uses Proof of Synergy (PoSyg), a hybrid consensus system that combines the energy efficiency of Proof of Stake (PoS) with the strong security of Proof of Work (PoW). This ensures a secure network while keeping energy use low.  
+Scalability  
+PeoChain can process up to 100,000 transactions per second (TPS) with 1-second finality, making it one of the fastest blockchain platforms. This makes it ideal for microtransactions and widespread adoption.  
+Mobile Money Integration  
+PeoChain connects with platforms like M-Pesa and GCash, giving users in emerging markets access to decentralized financial services without needing a traditional bank account.  
+Dynamic Contribution Scoring (DCS)  
+Our Dynamic Contribution Scoring system rewards users for supporting the network—whether by staking or participating in governance—building an active, community-driven ecosystem.  
+System Architecture  
+PeoChain’s architecture is designed to be modular, secure, and high-performing, offering a solid base for decentralized financial applications.  
+Consensus Layer (PoSyg + DCS)  
+Proof of Synergy (PoSyg): Balances energy efficiency and network security.  
+Dynamic Contribution Scoring (DCS): Rewards users for contributing to the network.  
+Handles validator management and reward distribution.  
+EVM Compatibility Layer  
+Supports smart contracts and state management.  
+Optimized for low-cost transactions.  
+Cross-Chain Bridge  
+Enables secure asset transfers and state synchronization between blockchains.  
+Includes advanced security for smooth interoperability.  
+PeoPay API Layer  
+REST API endpoints for easier development.  
+Mobile integration for better user experience.  
+Real-time transaction processing.  
+PoSyg + DCS: Key Highlights  
+Synergy Scoring  
+Validators earn points by reliably proposing blocks and participating in governance, encouraging consistent contributions.  
+Security Features  
+Synergy-weighted voting strengthens the network against attacks like Sybil and 51% attacks, ensuring resilience.  
+High Performance  
+With 1-second finality and the ability to process up to 100,000 TPS, PeoChain is optimized for high-demand applications and mass adoption.  
+These features make PeoChain a leader in blockchain innovation, accessibility, and performance, designed to meet the financial needs of underserved communities worldwide.

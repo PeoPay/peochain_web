@@ -10,7 +10,7 @@ interface HeaderProps {
   onFaqClick?: () => void;
 }
 
-export default function Header({ onFeatureClick, onBenefitsClick, onWaitlistClick }: HeaderProps) {
+export default function Header({ onFeatureClick, onBenefitsClick, onWaitlistClick, onFaqClick }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleMobileNavClick = (callback: () => void) => {
@@ -26,7 +26,27 @@ export default function Header({ onFeatureClick, onBenefitsClick, onWaitlistClic
         </div>
       </div>
       
-      <div className="hidden md:flex items-center">
+      <div className="hidden md:flex items-center space-x-8">
+        <nav className="flex items-center space-x-6 mr-6">
+          <button 
+            onClick={onFeatureClick}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Features
+          </button>
+          <button 
+            onClick={onBenefitsClick}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Benefits
+          </button>
+          <button 
+            onClick={onFaqClick}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            FAQ
+          </button>
+        </nav>
         <Button 
           onClick={onWaitlistClick}
           className="btn-gradient text-white font-medium py-2 px-6 rounded-full"
@@ -43,10 +63,30 @@ export default function Header({ onFeatureClick, onBenefitsClick, onWaitlistClic
           </Button>
         </SheetTrigger>
         <SheetContent side="right" className="bg-background">
-          <div className="flex flex-col items-center space-y-8 mt-12">
+          <div className="flex flex-col space-y-8 mt-12">
+            <nav className="flex flex-col space-y-6 w-full">
+              <button 
+                onClick={() => handleMobileNavClick(onFeatureClick)}
+                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
+              >
+                Features
+              </button>
+              <button 
+                onClick={() => handleMobileNavClick(onBenefitsClick)}
+                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
+              >
+                Benefits
+              </button>
+              <button 
+                onClick={() => onFaqClick && handleMobileNavClick(onFaqClick)}
+                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
+              >
+                FAQ
+              </button>
+            </nav>
             <Button 
               onClick={() => handleMobileNavClick(onWaitlistClick)}
-              className="btn-gradient text-white font-medium py-2 px-8 rounded-full text-xl w-full"
+              className="btn-gradient text-white font-medium py-2 px-8 rounded-full text-xl w-full mt-4"
             >
               Join Waitlist
             </Button>
