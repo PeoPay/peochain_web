@@ -7,6 +7,7 @@ interface HeaderProps {
   onFeatureClick: () => void;
   onBenefitsClick: () => void;
   onWaitlistClick: () => void;
+  onFaqClick?: () => void;
 }
 
 export default function Header({ onFeatureClick, onBenefitsClick, onWaitlistClick }: HeaderProps) {

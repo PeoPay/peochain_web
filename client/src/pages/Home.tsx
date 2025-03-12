@@ -5,6 +5,7 @@ import HeroSection from "@/components/sections/hero-section";
 import FeaturesSection from "@/components/sections/features-section";
 import BenefitsSection from "@/components/sections/benefits-section";
 import WaitlistSection from "@/components/sections/waitlist-section";
+import FAQSection from "@/components/sections/faq-section";
 
 export default function Home() {
   const featuresRef = useRef<HTMLDivElement>(null);
@@ -38,6 +39,7 @@ export default function Home() {
         <div ref={waitlistRef}>
           <WaitlistSection />
         </div>
+        <FAQSection />
       </main>
       <Footer />
     </div>

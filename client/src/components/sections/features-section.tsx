@@ -8,34 +8,34 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    icon: "ri-coins-line",
-    title: "Lend & Earn",
-    description: "Deposit your assets and watch your rewards grow with high-yield returns on your investments."
+    icon: "ri-pulse-line",
+    title: "Proof of Synergy (PoSyg)",
+    description: "Our innovative consensus mechanism champions trust, fairness, and collaboration, creating a vibrant community where ethical contributors are rewarded."
   },
   {
-    icon: "ri-bank-line",
-    title: "Borrow Instantly",
-    description: "Access funds without intermediaries—fast, fair, and flexible terms powered by secure smart contracts."
+    icon: "ri-coins-line",
+    title: "Decentralized Lending",
+    description: "Say goodbye to traditional banking barriers! Lend, borrow, and earn with flexibility and ease—all powered by secure blockchain technology."
   },
   {
     icon: "ri-global-line",
-    title: "Be Inclusive",
-    description: "Help bridge the financial gap for communities worldwide, providing banking services to the underbanked."
+    title: "Financial Inclusion",
+    description: "Breaking barriers to build a more inclusive financial future, serving the underbanked and unlocking opportunities for the next billion users."
   },
   {
     icon: "ri-shield-check-line",
-    title: "Stay Secure",
-    description: "Trust in our decentralized security framework and smart contract protections for your assets."
+    title: "Advanced Security",
+    description: "Cutting-edge protocols protect you from emerging threats, ensuring peace of mind while you focus on innovating and growing in this new financial era."
   },
   {
     icon: "ri-link-m",
     title: "Cross-Chain Compatibility",
-    description: "Seamlessly operate across multiple blockchains, providing flexibility and reducing costs for all users."
+    description: "Seamlessly operate across multiple blockchains without complicated technical knowledge, breaking down barriers between ecosystems."
   },
   {
     icon: "ri-smartphone-line",
-    title: "Mobile-First Accessibility",
-    description: "Access the full power of decentralized lending from any device, anytime, with our intuitive mobile interface."
+    title: "Mobile-First Design",
+    description: "Access the power of decentralized finance anytime, anywhere. Whether you're at home or on the go, PEOCHAIN puts financial freedom in your pocket."
   }
 ];
 
