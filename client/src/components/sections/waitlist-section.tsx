@@ -11,10 +11,10 @@ export default function WaitlistSection() {
               The Waitlist – Your VIP Pass Awaits!
             </h2>
             <p className="text-foreground/80 max-w-2xl mx-auto text-lg">
-              PEOCHAIN Lending is almost here, and YOU can be at the forefront! Join our waitlist now to secure early access to this game-changing platform. Early birds get exclusive perks—don't wait for the future, shape it with us!
+              PEOCHAIN is almost here, and YOU can be at the forefront! Join our waitlist now to secure early access to this game-changing platform. Early birds get exclusive perks—don't wait for the future, shape it with us!
             </p>
             <p className="text-foreground/90 mt-4 max-w-2xl mx-auto text-lg italic">
-              "Imagine a world where your money works for you, not the banks. With PEOCHAIN Lending, that's not a dream—it's your future."
+              "Imagine a world where your money works for you, not the banks. With PEOCHAIN, that's not a dream—it's your future."
             </p>
           </div>
           
@@ -26,7 +26,7 @@ export default function WaitlistSection() {
           
           <div className="mt-12 p-6 bg-primary/10 rounded-xl">
             <p className="text-center text-foreground/80 font-medium">
-              The next billion users are counting on this. Be part of something bigger—PEOCHAIN Lending launches soon. Stay tuned!
+              The next billion users are counting on this. Be part of something bigger—PEOCHAIN launches soon. Stay tuned!
             </p>
           </div>
         </CardContent>

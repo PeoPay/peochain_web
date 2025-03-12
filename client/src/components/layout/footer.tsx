@@ -1,5 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { Twitter, MessageCircle, Send, FileText } from "lucide-react";
 
 export default function Footer() {
   const handleWaitlistClick = () => {
@@ -21,16 +22,16 @@ export default function Footer() {
           </p>
           <div className="flex space-x-4 mb-8 md:justify-center">
             <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Twitter">
-              <i className="ri-twitter-fill text-xl"></i>
+              <Twitter className="w-5 h-5" />
             </a>
             <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Discord">
-              <i className="ri-discord-fill text-xl"></i>
+              <MessageCircle className="w-5 h-5" />
             </a>
             <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Telegram">
-              <i className="ri-telegram-fill text-xl"></i>
+              <Send className="w-5 h-5" />
             </a>
             <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Medium">
-              <i className="ri-medium-fill text-xl"></i>
+              <FileText className="w-5 h-5" />
             </a>
           </div>
           
@@ -46,7 +47,7 @@ export default function Footer() {
         
         <div className="p-4 rounded-lg bg-primary/5 text-center mb-8">
           <p className="text-foreground/80">
-            The next billion users are counting on this. Be part of something bigger—PEOCHAIN Lending launches soon.
+            The next billion users are counting on this. Be part of something bigger—PEOCHAIN launches soon.
           </p>
         </div>
         
