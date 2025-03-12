@@ -18,18 +18,21 @@ export default function WaitlistSection() {
             </p>
           </div>
           
-          <div className="mb-6 p-3 bg-primary/5 rounded-lg flex flex-col md:flex-row items-center justify-center gap-3">
-            <div className="flex items-center gap-2">
-              <i className="ri-shield-check-line text-primary"></i>
-              <span className="text-sm font-medium">SOC 2 Compliant</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <i className="ri-lock-line text-primary"></i>
-              <span className="text-sm font-medium">Encrypted Data</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <i className="ri-check-double-line text-primary"></i>
-              <span className="text-sm font-medium">GDPR Compliant</span>
+          <div className="mb-6 p-4 bg-primary/5 rounded-lg">
+            <h4 className="text-sm font-medium text-center mb-3">Highest Security Standards</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="flex items-center gap-2 justify-center bg-white/40 py-2 px-3 rounded-md">
+                <i className="ri-shield-check-line text-primary text-lg"></i>
+                <span className="text-sm font-medium">SOC 2 Compliant</span>
+              </div>
+              <div className="flex items-center gap-2 justify-center bg-white/40 py-2 px-3 rounded-md">
+                <i className="ri-lock-line text-primary text-lg"></i>
+                <span className="text-sm font-medium">Encrypted Data</span>
+              </div>
+              <div className="flex items-center gap-2 justify-center bg-white/40 py-2 px-3 rounded-md">
+                <i className="ri-check-double-line text-primary text-lg"></i>
+                <span className="text-sm font-medium">GDPR Compliant</span>
+              </div>
             </div>
           </div>
           
