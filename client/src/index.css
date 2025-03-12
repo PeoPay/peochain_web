@@ -26,4 +26,12 @@
   .btn-gradient {
     background: linear-gradient(135deg, #5a8364 0%, #4a6a52 100%);
   }
+  
+  .social-icon {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    transform: translateY(-3px);
+  }
 }

@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Twitter, MessageCircle, Send, Linkedin } from "lucide-react";
+import { FaXTwitter, FaDiscord, FaTelegram, FaLinkedinIn } from "react-icons/fa6";
 
 export default function Footer() {
   const handleWaitlistClick = () => {
@@ -20,18 +20,18 @@ export default function Footer() {
           <p className="text-foreground/70 mb-6 md:max-w-xl md:mx-auto">
             PEOCHAIN drives progress by blending unparalleled security, accessibility, and collaboration. We're not just a platform, we're a movement for financial inclusion.
           </p>
-          <div className="flex space-x-4 mb-8 md:justify-center">
-            <a href="https://x.com/peochain" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors" aria-label="X (Twitter)">
-              <Twitter className="w-5 h-5" />
+          <div className="flex space-x-6 mb-8 md:justify-center">
+            <a href="https://x.com/peochain" target="_blank" rel="noopener noreferrer" className="social-icon text-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-primary/10" aria-label="X (Twitter)">
+              <FaXTwitter className="w-6 h-6" />
             </a>
-            <a href="https://discord.gg/WQNT6M8P" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors" aria-label="Discord">
-              <MessageCircle className="w-5 h-5" />
+            <a href="https://discord.gg/WQNT6M8P" target="_blank" rel="noopener noreferrer" className="social-icon text-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-primary/10" aria-label="Discord">
+              <FaDiscord className="w-6 h-6" />
             </a>
-            <a href="https://t.me/+3LLM7mD3gwRkZjgy" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors" aria-label="Telegram">
-              <Send className="w-5 h-5" />
+            <a href="https://t.me/+3LLM7mD3gwRkZjgy" target="_blank" rel="noopener noreferrer" className="social-icon text-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-primary/10" aria-label="Telegram">
+              <FaTelegram className="w-6 h-6" />
             </a>
-            <a href="https://www.linkedin.com/company/peochain/" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors" aria-label="LinkedIn">
-              <Linkedin className="w-5 h-5" />
+            <a href="https://www.linkedin.com/company/peochain/" target="_blank" rel="noopener noreferrer" className="social-icon text-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-primary/10" aria-label="LinkedIn">
+              <FaLinkedinIn className="w-6 h-6" />
             </a>
           </div>
           
