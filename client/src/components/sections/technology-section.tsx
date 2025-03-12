@@ -91,8 +91,8 @@ export default function TechnologySection() {
               <Card key={index} className="feature-card glass rounded-3xl border-0 shadow-sm">
                 <CardContent className="p-6 md:p-8">
                   <div className="flex items-start">
-                    <div className="bg-primary/10 p-3 rounded-xl mr-4 mt-1">
-                      <i className={`${feature.icon} text-2xl text-primary`}></i>
+                    <div className="bg-primary/10 p-3 rounded-xl mr-4 mt-1 text-primary">
+                      {feature.icon}
                     </div>
                     <div>
                       <h3 className="font-poppins font-semibold text-xl mb-2 text-foreground">{feature.title}</h3>
@@ -120,8 +120,8 @@ export default function TechnologySection() {
                 </p>
               </div>
               <div className="md:w-1/3 flex justify-center">
-                <div className="bg-primary/10 rounded-full p-12">
-                  <i className="ri-line-chart-line text-8xl text-primary"></i>
+                <div className="bg-primary/10 rounded-full p-12 text-primary">
+                  <LineChart className="h-24 w-24" />
                 </div>
               </div>
             </div>
@@ -138,8 +138,12 @@ export default function TechnologySection() {
                   </h3>
                   <ul className="space-y-2">
                     {layer.items.map((item, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <i className="ri-check-line text-primary mr-2 mt-1"></i>
+                      <li key={idx} className="flex items-start gap-2">
+                        <div className="text-primary mt-1 flex-shrink-0">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                        </div>
                         <span className="text-foreground/70">{item}</span>
                       </li>
                     ))}
@@ -156,7 +160,7 @@ export default function TechnologySection() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
               <div className="bg-white/40 p-5 rounded-2xl">
                 <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
-                  <i className="ri-medal-line text-primary mr-2"></i>
+                  <Medal className="h-5 w-5 text-primary mr-2" />
                   Synergy Scoring
                 </h4>
                 <p className="text-foreground/70 text-sm">
@@ -165,7 +169,7 @@ export default function TechnologySection() {
               </div>
               <div className="bg-white/40 p-5 rounded-2xl">
                 <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
-                  <i className="ri-shield-check-line text-primary mr-2"></i>
+                  <ShieldCheck className="h-5 w-5 text-primary mr-2" />
                   Security Features
                 </h4>
                 <p className="text-foreground/70 text-sm">
@@ -174,7 +178,7 @@ export default function TechnologySection() {
               </div>
               <div className="bg-white/40 p-5 rounded-2xl">
                 <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
-                  <i className="ri-speed-line text-primary mr-2"></i>
+                  <Gauge className="h-5 w-5 text-primary mr-2" />
                   High Performance
                 </h4>
                 <p className="text-foreground/70 text-sm">
