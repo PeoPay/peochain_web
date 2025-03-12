@@ -82,7 +82,7 @@ export function WaitlistForm() {
                   <FormLabel className="text-foreground font-medium">Email Address</FormLabel>
                   <FormControl>
                     <Input 
-                      placeholder="Enter your email address" 
+                      placeholder="Your Email Address" 
                       type="email"
                       className="px-4 py-3 border-foreground/20 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white/60 text-foreground rounded-xl" 
                       {...field} 
@@ -107,7 +107,7 @@ export function WaitlistForm() {
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormLabel className="text-sm text-foreground/70 font-normal">
-                      I agree to receive updates about PEOCHAIN and understand I can unsubscribe at any time.
+                      Send me updates on PEOCHAIN's launch and exclusive offers!
                     </FormLabel>
                   </div>
                 </FormItem>
@@ -125,7 +125,7 @@ export function WaitlistForm() {
                   Processing...
                 </span>
               ) : (
-                <span>Join the Waitlist</span>
+                <span>Secure My Spot</span>
               )}
             </Button>
           </form>
@@ -140,7 +140,7 @@ export function WaitlistForm() {
               <div className="ml-3">
                 <h3 className="font-medium text-foreground">Registration Successful!</h3>
                 <p className="mt-2 text-foreground/70">
-                  Thank you for joining the PEOCHAIN waitlist. We'll notify you when we're ready to launch!
+                  Thank you for joining the PEOCHAIN waitlist. We'll notify you when we're ready to launch! How will you use your financial freedom? Tell us on our social media channels.
                 </p>
               </div>
             </div>

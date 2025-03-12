@@ -10,7 +10,7 @@ export default function Footer() {
               PEO<span className="text-primary">CHAIN</span>
             </div>
             <p className="text-foreground/70 mb-6 max-w-md">
-              Empowering financial inclusion through decentralized lending protocols and cross-chain compatibility.
+              Where traditional banking barriers vanish, and financial empowerment begins! Lend, borrow, and earn like never before.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Twitter">
@@ -60,6 +60,12 @@ export default function Footer() {
             <a href="#" className="text-foreground/60 hover:text-primary text-sm transition-colors">Terms of Service</a>
             <a href="#" className="text-foreground/60 hover:text-primary text-sm transition-colors">Cookie Policy</a>
           </div>
+        </div>
+        
+        <div className="mt-8 p-4 rounded-lg bg-primary/5 text-center">
+          <p className="text-foreground/80 text-sm">
+            The next billion users are counting on this. Be part of something bigger—PEOCHAIN Lending launches soon.
+          </p>
         </div>
       </div>
     </footer>

@@ -8,6 +8,26 @@ interface Feature {
 
 const features: Feature[] = [
   {
+    icon: "ri-coins-line",
+    title: "Lend & Earn",
+    description: "Deposit your assets and watch your rewards grow with high-yield returns on your investments."
+  },
+  {
+    icon: "ri-bank-line",
+    title: "Borrow Instantly",
+    description: "Access funds without intermediaries—fast, fair, and flexible terms powered by secure smart contracts."
+  },
+  {
+    icon: "ri-global-line",
+    title: "Be Inclusive",
+    description: "Help bridge the financial gap for communities worldwide, providing banking services to the underbanked."
+  },
+  {
+    icon: "ri-shield-check-line",
+    title: "Stay Secure",
+    description: "Trust in our decentralized security framework and smart contract protections for your assets."
+  },
+  {
     icon: "ri-link-m",
     title: "Cross-Chain Compatibility",
     description: "Seamlessly operate across multiple blockchains, providing flexibility and reducing costs for all users."
@@ -16,11 +36,6 @@ const features: Feature[] = [
     icon: "ri-smartphone-line",
     title: "Mobile-First Accessibility",
     description: "Access the full power of decentralized lending from any device, anytime, with our intuitive mobile interface."
-  },
-  {
-    icon: "ri-bank-line",
-    title: "Decentralized Lending",
-    description: "Borrow and lend without intermediaries, with transparent terms and competitive rates powered by smart contracts."
   }
 ];
 
@@ -29,10 +44,10 @@ export default function FeaturesSection() {
     <section className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
       <div className="text-center mb-16">
         <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
-          Revolutionary Features
+          Why Join PEOCHAIN Lending?
         </h2>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-          PEOCHAIN combines cutting-edge technology with user-friendly design to create the most accessible DeFi platform.
+          Welcome to PEOCHAIN Lending, where traditional banking barriers vanish, and financial empowerment begins! Our platform brings lending to your fingertips—anytime, anywhere.
         </p>
       </div>
       

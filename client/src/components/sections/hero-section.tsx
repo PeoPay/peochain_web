@@ -12,10 +12,10 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
       <div className="flex flex-col lg:flex-row items-center">
         <div className="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
           <h1 className="font-poppins font-bold text-4xl md:text-5xl leading-tight mb-6 text-foreground">
-            The Future of <span className="text-primary">Decentralized Lending</span> is Almost Here
+            Unlock <span className="text-primary">Financial Freedom</span> with PEOCHAIN Lending – Join the Revolution Today!
           </h1>
           <p className="text-lg md:text-xl mb-8 text-foreground/80 max-w-xl">
-            PEOCHAIN Lending reimagines financial inclusion through decentralized protocols, making borderless finance accessible to everyone.
+            Lend, borrow, and earn like never before—powered by secure blockchain technology and built for YOU. Be among the first to experience decentralized finance redefined.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Button 
@@ -45,7 +45,7 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
             <div className="flex items-center justify-between mt-4">
               <div className="flex items-center gap-2">
                 <div className="bg-green-500 h-3 w-3 rounded-full animate-pulse"></div>
-                <span className="text-foreground font-medium">Live Protocol</span>
+                <span className="text-foreground font-medium">Coming Soon</span>
               </div>
               <div className="flex items-center gap-2 text-foreground/70">
                 <i className="ri-shield-check-line"></i>

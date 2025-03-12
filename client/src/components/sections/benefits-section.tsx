@@ -41,7 +41,7 @@ export default function BenefitsSection() {
               Early Bird Benefits
             </h2>
             <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-              Join our waitlist today and enjoy exclusive rewards when we launch.
+              Early birds get exclusive perks—don't wait for the future, shape it with us! Join our waitlist today.
             </p>
           </div>
           
