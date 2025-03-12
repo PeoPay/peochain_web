@@ -443,7 +443,7 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
   
   return (
     <div className={`w-full h-full flex flex-col ${className}`}>
-      <div className={`flex ${isMobile ? 'flex-col' : 'justify-between'} items-${isMobile ? 'start' : 'center'} mb-2`}>
+      <div className={`flex ${isMobile ? 'flex-col' : 'justify-between'} ${itemsClass} mb-2`}>
         {getChartTitle()}
         <div className={`text-xs font-medium ${isMobile ? 'mt-1' : ''}`}>
           {getHighlightStat()}
@@ -456,7 +456,7 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
         </ResponsiveContainer>
       </div>
       
-      <div className={`mt-2 flex ${isMobile ? 'flex-col gap-1' : 'justify-between'} items-${isMobile ? 'start' : 'center'} text-xs`}>
+      <div className={`mt-2 flex ${isMobile ? 'flex-col gap-1' : 'justify-between'} ${itemsClass} text-xs`}>
         <div className="flex items-center gap-1 text-foreground/60">
           <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
           Live Performance Metrics
