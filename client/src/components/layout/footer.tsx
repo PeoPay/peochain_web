@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Twitter, MessageCircle, Send, FileText } from "lucide-react";
+import { Twitter, MessageCircle, Send, Linkedin } from "lucide-react";
 
 export default function Footer() {
   const handleWaitlistClick = () => {
@@ -21,17 +21,17 @@ export default function Footer() {
             PEOCHAIN drives progress by blending unparalleled security, accessibility, and collaboration. We're not just a platform, we're a movement for financial inclusion.
           </p>
           <div className="flex space-x-4 mb-8 md:justify-center">
-            <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Twitter">
+            <a href="https://x.com/peochain" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors" aria-label="X (Twitter)">
               <Twitter className="w-5 h-5" />
             </a>
-            <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Discord">
+            <a href="https://discord.gg/WQNT6M8P" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors" aria-label="Discord">
               <MessageCircle className="w-5 h-5" />
             </a>
-            <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Telegram">
+            <a href="https://t.me/+3LLM7mD3gwRkZjgy" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors" aria-label="Telegram">
               <Send className="w-5 h-5" />
             </a>
-            <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Medium">
-              <FileText className="w-5 h-5" />
+            <a href="https://www.linkedin.com/company/peochain/" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors" aria-label="LinkedIn">
+              <Linkedin className="w-5 h-5" />
             </a>
           </div>
           
