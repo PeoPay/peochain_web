@@ -11,3 +11,19 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+
+@layer components {
+  .gradient-background {
+    background-color: #e1eae3;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-gradient {
+    background: linear-gradient(135deg, #5a8364 0%, #4a6a52 100%);
+  }
+}

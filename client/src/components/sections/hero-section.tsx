@@ -40,11 +40,13 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
         <div className="lg:w-1/2 relative">
           <div className="glass p-6 md:p-8 rounded-3xl relative z-10">
             <AspectRatio ratio={4/3}>
-              <img 
-                src="https://images.unsplash.com/photo-1639762681057-408e52192e55?auto=format&fit=crop&q=80&w=800&h=600" 
-                alt="Decentralized Finance Visualization" 
-                className="w-full h-full object-cover rounded-2xl shadow-lg"
-              />
+              <div className="w-full h-full flex items-center justify-center bg-primary/5 rounded-2xl shadow-lg p-8">
+                <img 
+                  src="/images/peochain-logo.png" 
+                  alt="PEOCHAIN Logo" 
+                  className="max-w-full max-h-full object-contain"
+                />
+              </div>
             </AspectRatio>
             <div className="flex items-center justify-between mt-4">
               <div className="flex items-center gap-2">
