@@ -136,12 +136,12 @@ export function WaitlistForm() {
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground h-4 w-4"
+                      className="data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground h-4 w-4 mt-0.5"
                     />
                   </FormControl>
-                  <div className="space-y-1 leading-none">
+                  <div className="space-y-1 leading-tight">
                     <FormLabel className="text-sm text-foreground/70 font-normal">
-                      Send me updates on PEOCHAIN's launch and exclusive offers!
+                      Send me updates about PEOCHAIN's launch
                     </FormLabel>
                   </div>
                 </FormItem>
@@ -173,32 +173,32 @@ export function WaitlistForm() {
                   <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white">✓</div>
                 </div>
                 <div className="ml-3">
-                  <h3 className="font-medium text-foreground">Registration Successful!</h3>
-                  <p className="mt-2 text-foreground/70">
-                    Thank you for joining the PEOCHAIN waitlist. We'll notify you when we're ready to launch!
+                  <h3 className="font-medium text-foreground">You're In!</h3>
+                  <p className="mt-2 text-foreground/70 text-sm">
+                    Thank you for joining the waitlist. We'll notify you when we launch!
                   </p>
                 </div>
               </div>
               
               {referralData && (
                 <div className="mt-6 border-t border-primary/20 pt-6">
-                  <h4 className="font-medium text-foreground mb-2">Refer Friends, Move Up the Waitlist</h4>
+                  <h4 className="font-medium text-foreground mb-2">Refer Friends & Skip the Line</h4>
                   <p className="text-sm text-foreground/70 mb-4">
-                    Share your unique referral link with friends. Each successful referral moves you up in our priority access list!
+                    Share your referral link with friends to gain priority access to PEOCHAIN!
                   </p>
                   
                   <div className="flex flex-col space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-white/80 rounded-lg border border-primary/20">
-                      <div className="text-sm font-medium truncate mr-2">
-                        {window.location.origin}/?ref={referralData.code}
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 p-3 bg-white/80 rounded-lg border border-primary/20">
+                      <div className="text-sm font-medium truncate flex-1 w-full break-all sm:break-normal overflow-hidden">
+                        <span className="hidden sm:inline">{window.location.origin}/</span><span className="sm:hidden">...</span>?ref={referralData.code}
                       </div>
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="flex-shrink-0 bg-primary/10 hover:bg-primary/20 border-primary/20 text-primary"
+                        className="flex-shrink-0 bg-primary/10 hover:bg-primary/20 border-primary/20 text-primary w-full sm:w-auto"
                         onClick={handleCopyReferral}
                       >
-                        <Share2 className="h-4 w-4 mr-1" /> Copy
+                        <Share2 className="h-4 w-4 mr-1" /> Copy Link
                       </Button>
                     </div>
                     
