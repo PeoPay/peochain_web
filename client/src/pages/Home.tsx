@@ -26,6 +26,7 @@ export default function Home() {
       <Header 
         onFeatureClick={() => scrollToRef(featuresRef)}
         onBenefitsClick={() => scrollToRef(benefitsRef)}
+        onTechnologyClick={() => scrollToRef(technologyRef)}
         onWaitlistClick={() => scrollToRef(waitlistRef)}
         onFaqClick={() => scrollToRef(faqRef)}
       />
@@ -39,6 +40,9 @@ export default function Home() {
         </div>
         <div ref={benefitsRef}>
           <BenefitsSection />
+        </div>
+        <div ref={technologyRef}>
+          <TechnologySection />
         </div>
         <div ref={waitlistRef}>
           <WaitlistSection />

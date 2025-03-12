@@ -6,11 +6,12 @@ import { Menu } from "lucide-react";
 interface HeaderProps {
   onFeatureClick: () => void;
   onBenefitsClick: () => void;
+  onTechnologyClick?: () => void;
   onWaitlistClick: () => void;
   onFaqClick?: () => void;
 }
 
-export default function Header({ onFeatureClick, onBenefitsClick, onWaitlistClick, onFaqClick }: HeaderProps) {
+export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyClick, onWaitlistClick, onFaqClick }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleMobileNavClick = (callback: () => void) => {
@@ -39,6 +40,12 @@ export default function Header({ onFeatureClick, onBenefitsClick, onWaitlistClic
             className="text-foreground hover:text-primary transition-colors font-medium"
           >
             Benefits
+          </button>
+          <button 
+            onClick={onTechnologyClick}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Technology
           </button>
           <button 
             onClick={onFaqClick}
@@ -76,6 +83,12 @@ export default function Header({ onFeatureClick, onBenefitsClick, onWaitlistClic
                 className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
               >
                 Benefits
+              </button>
+              <button 
+                onClick={() => onTechnologyClick && handleMobileNavClick(onTechnologyClick)}
+                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
+              >
+                Technology
               </button>
               <button 
                 onClick={() => onFaqClick && handleMobileNavClick(onFaqClick)}

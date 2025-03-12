@@ -1,30 +1,31 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Shield, LineChart, Zap, Smartphone, Medal, ShieldCheck, Gauge } from "lucide-react";
 
 interface TechFeature {
   title: string;
   description: string;
-  icon: string;
+  icon: React.ReactNode;
 }
 
 const techFeatures: TechFeature[] = [
   {
-    icon: "ri-shield-flash-line",
+    icon: <Shield className="h-6 w-6" />,
     title: "Proof of Synergy (PoSyg)",
     description: "A hybrid consensus system combining the energy efficiency of Proof of Stake with the strong security of Proof of Work, ensuring a secure network with low energy consumption."
   },
   {
-    icon: "ri-line-chart-line",
+    icon: <LineChart className="h-6 w-6" />,
     title: "Dynamic Contribution Scoring",
     description: "Rewards users for supporting the network—whether by staking or participating in governance—building an active, community-driven ecosystem."
   },
   {
-    icon: "ri-speed-up-line",
+    icon: <Zap className="h-6 w-6" />,
     title: "High Performance",
     description: "Process up to 100,000 transactions per second with 1-second finality, making it one of the fastest blockchain platforms ideal for microtransactions."
   },
   {
-    icon: "ri-smartphone-line",
+    icon: <Smartphone className="h-6 w-6" />,
     title: "Mobile Money Integration",
     description: "Connects with platforms like M-Pesa and GCash, giving users in emerging markets access to DeFi services without needing a traditional bank account."
   }
