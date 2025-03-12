@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, LineChart, Zap, Smartphone, Medal, ShieldCheck, Gauge } from "lucide-react";
+import { ShieldCheck, BarChart3, Zap, SmartphoneCharging, Medal, Shield, Gauge } from "lucide-react";
 
 interface TechFeature {
   title: string;
@@ -10,12 +10,12 @@ interface TechFeature {
 
 const techFeatures: TechFeature[] = [
   {
-    icon: <Shield className="h-6 w-6" />,
+    icon: <ShieldCheck className="h-6 w-6" />,
     title: "Proof of Synergy (PoSyg)",
     description: "A hybrid consensus system combining the energy efficiency of Proof of Stake with the strong security of Proof of Work, ensuring a secure network with low energy consumption."
   },
   {
-    icon: <LineChart className="h-6 w-6" />,
+    icon: <BarChart3 className="h-6 w-6" />,
     title: "Dynamic Contribution Scoring",
     description: "Rewards users for supporting the network—whether by staking or participating in governance—building an active, community-driven ecosystem."
   },
@@ -25,7 +25,7 @@ const techFeatures: TechFeature[] = [
     description: "Process up to 100,000 transactions per second with 1-second finality, making it one of the fastest blockchain platforms ideal for microtransactions."
   },
   {
-    icon: <Smartphone className="h-6 w-6" />,
+    icon: <SmartphoneCharging className="h-6 w-6" />,
     title: "Mobile Money Integration",
     description: "Connects with platforms like M-Pesa and GCash, giving users in emerging markets access to DeFi services without needing a traditional bank account."
   }
@@ -121,7 +121,7 @@ export default function TechnologySection() {
               </div>
               <div className="md:w-1/3 flex justify-center">
                 <div className="bg-primary/10 rounded-full p-12 text-primary">
-                  <LineChart className="h-24 w-24" />
+                  <BarChart3 className="h-24 w-24" />
                 </div>
               </div>
             </div>

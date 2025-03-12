@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Activity, Coins, Globe, ShieldCheck, Link as LinkIcon, Smartphone, ArrowRight } from "lucide-react";
+import { CircuitBoard, Banknote, Globe2, Shield, Link as LinkIcon, Smartphone, ArrowRight } from "lucide-react";
 
 interface Feature {
   icon: React.ReactNode;
@@ -9,22 +9,22 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    icon: <Activity className="w-8 h-8" />,
+    icon: <CircuitBoard className="w-8 h-8" />,
     title: "Proof of Synergy (PoSyg)",
     description: "Our innovative consensus mechanism champions trust, fairness, and collaboration, creating a vibrant community where ethical contributors are rewarded."
   },
   {
-    icon: <Coins className="w-8 h-8" />,
+    icon: <Banknote className="w-8 h-8" />,
     title: "Decentralized Lending",
     description: "Say goodbye to traditional banking barriers! Lend, borrow, and earn with flexibility and ease—all powered by secure blockchain technology."
   },
   {
-    icon: <Globe className="w-8 h-8" />,
+    icon: <Globe2 className="w-8 h-8" />,
     title: "Financial Inclusion",
     description: "Breaking barriers to build a more inclusive financial future, serving the underbanked and unlocking opportunities for the next billion users."
   },
   {
-    icon: <ShieldCheck className="w-8 h-8" />,
+    icon: <Shield className="w-8 h-8" />,
     title: "Advanced Security",
     description: "Cutting-edge protocols protect you from emerging threats, ensuring peace of mind while you focus on innovating and growing in this new financial era."
   },

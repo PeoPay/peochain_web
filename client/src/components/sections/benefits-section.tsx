@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Coins, Crown, RotateCw, HeadphonesIcon } from "lucide-react";
+import { BadgeDollarSign, Trophy, Sparkles, Headset } from "lucide-react";
 
 interface Benefit {
   icon: React.ReactNode;
@@ -9,22 +9,22 @@ interface Benefit {
 
 const benefits: Benefit[] = [
   {
-    icon: <Coins className="w-6 h-6" />,
+    icon: <BadgeDollarSign className="w-6 h-6" />,
     title: "Zero-Fee Transactions",
     description: "Early adopters will receive zero-fee transactions for the first three months after launch."
   },
   {
-    icon: <Crown className="w-6 h-6" />,
+    icon: <Trophy className="w-6 h-6" />,
     title: "Priority Access",
     description: "Be the first to experience new features and products before they're available to the general public."
   },
   {
-    icon: <RotateCw className="w-6 h-6" />,
+    icon: <Sparkles className="w-6 h-6" />,
     title: "Exclusive Token Allocation",
     description: "Waitlist members will receive an exclusive allocation of PEOCHAIN tokens during our initial offering."
   },
   {
-    icon: <HeadphonesIcon className="w-6 h-6" />,
+    icon: <Headset className="w-6 h-6" />,
     title: "Dedicated Support",
     description: "Early adopters get access to a dedicated support channel for personalized assistance."
   }
