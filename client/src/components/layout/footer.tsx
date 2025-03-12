@@ -1,6 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { FaXTwitter, FaDiscord, FaTelegram, FaLinkedinIn } from "react-icons/fa6";
+import { Link } from "wouter";
 
 export default function Footer() {
   const handleWaitlistClick = () => {
@@ -58,8 +59,8 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} PEOCHAIN. All rights reserved.
           </p>
           <div className="flex space-x-6">
-            <a href="#" className="text-foreground/60 hover:text-primary text-sm transition-colors">Privacy Policy</a>
-            <a href="#" className="text-foreground/60 hover:text-primary text-sm transition-colors">Terms of Service</a>
+            <Link href="/privacy-policy" className="text-foreground/60 hover:text-primary text-sm transition-colors">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="text-foreground/60 hover:text-primary text-sm transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
