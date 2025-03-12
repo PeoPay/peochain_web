@@ -1,29 +1,30 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Coins, Crown, RotateCw, HeadphonesIcon } from "lucide-react";
 
 interface Benefit {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   description: string;
 }
 
 const benefits: Benefit[] = [
   {
-    icon: "ri-coins-line",
+    icon: <Coins className="w-6 h-6" />,
     title: "Zero-Fee Transactions",
     description: "Early adopters will receive zero-fee transactions for the first three months after launch."
   },
   {
-    icon: "ri-vip-crown-line",
+    icon: <Crown className="w-6 h-6" />,
     title: "Priority Access",
     description: "Be the first to experience new features and products before they're available to the general public."
   },
   {
-    icon: "ri-token-swap-line",
+    icon: <RotateCw className="w-6 h-6" />,
     title: "Exclusive Token Allocation",
     description: "Waitlist members will receive an exclusive allocation of PEOCHAIN tokens during our initial offering."
   },
   {
-    icon: "ri-customer-service-2-line",
+    icon: <HeadphonesIcon className="w-6 h-6" />,
     title: "Dedicated Support",
     description: "Early adopters get access to a dedicated support channel for personalized assistance."
   }
@@ -53,8 +54,8 @@ export default function BenefitsSection() {
           <div className="grid md:grid-cols-2 gap-8">
             {benefits.map((benefit, index) => (
               <div key={index} className="bg-white/40 rounded-2xl p-6 flex items-start">
-                <div className="bg-primary/10 p-3 rounded-xl mr-4">
-                  <i className={`${benefit.icon} text-2xl text-primary`}></i>
+                <div className="bg-primary/10 p-3 rounded-xl mr-4 flex items-center justify-center text-primary">
+                  {benefit.icon}
                 </div>
                 <div>
                   <h3 className="font-poppins font-semibold text-xl mb-2 text-foreground">{benefit.title}</h3>
