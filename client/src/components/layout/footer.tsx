@@ -17,7 +17,7 @@ export default function Footer() {
             PEO<span className="text-primary">CHAIN</span>
           </div>
           <p className="text-foreground/70 mb-6 md:max-w-xl md:mx-auto">
-            Where traditional banking barriers vanish, and financial empowerment begins! Lend, borrow, and earn like never before.
+            PEOCHAIN drives progress by blending unparalleled security, accessibility, and collaboration. We're not just a platform, we're a movement for financial inclusion.
           </p>
           <div className="flex space-x-4 mb-8 md:justify-center">
             <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Twitter">

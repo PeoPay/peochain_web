@@ -43,6 +43,11 @@ export default function BenefitsSection() {
             <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
               Early birds get exclusive perks—don't wait for the future, shape it with us! Join our waitlist today.
             </p>
+            <div className="bg-primary/10 rounded-xl p-4 max-w-xl mx-auto mt-4">
+              <p className="text-foreground/80 text-md">
+                <span className="font-semibold text-primary">Proof of Synergy (PoSyg):</span> Our innovative consensus mechanism that combines security, accessibility, and collaboration to create a truly inclusive financial ecosystem for everyone.
+              </p>
+            </div>
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">

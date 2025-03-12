@@ -49,6 +49,9 @@ export default function FeaturesSection() {
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
           Welcome to PEOCHAIN Lending, where traditional banking barriers vanish, and financial empowerment begins! Our platform brings lending to your fingertips—anytime, anywhere.
         </p>
+        <p className="text-foreground/70 max-w-2xl mx-auto text-lg mt-4">
+          We drive progress by blending unparalleled security, accessibility, and collaboration, all underpinned by our innovative <span className="text-primary font-medium">Proof of Synergy (PoSyg)</span> mechanism.
+        </p>
       </div>
       
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
