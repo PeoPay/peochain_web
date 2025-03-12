@@ -22,9 +22,13 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
   return (
     <header className="w-full py-6 px-4 md:px-8 flex justify-between items-center">
       <div className="flex items-center">
-        <div className="text-foreground font-poppins font-bold text-2xl md:text-3xl">
-          PEO<span className="text-primary">CHAIN</span>
-        </div>
+        <a href="/" className="flex items-center">
+          <img 
+            src="/images/peochain-logo.png" 
+            alt="PEOCHAIN Logo" 
+            className="h-8 md:h-10"
+          />
+        </a>
       </div>
       
       <div className="hidden md:flex items-center space-x-8">
