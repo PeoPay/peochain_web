@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ArrowRight, ShieldCheck } from "lucide-react";
+import { AnimatedChart } from "@/components/ui/animated-chart";
 
 interface HeroSectionProps {
   onExploreClick: () => void;
@@ -40,12 +41,8 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
         <div className="lg:w-1/2 relative">
           <div className="glass p-6 md:p-8 rounded-3xl relative z-10">
             <AspectRatio ratio={4/3}>
-              <div className="w-full h-full flex items-center justify-center bg-primary/5 rounded-2xl shadow-lg p-8">
-                <img 
-                  src="/images/peochain-logo.png" 
-                  alt="PEOCHAIN Logo" 
-                  className="max-w-full max-h-full object-contain"
-                />
+              <div className="w-full h-full flex items-center justify-center bg-primary/5 rounded-2xl shadow-lg p-4">
+                <AnimatedChart className="w-full h-full" />
               </div>
             </AspectRatio>
             <div className="flex items-center justify-between mt-4">
