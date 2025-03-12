@@ -41,7 +41,7 @@ const features: Feature[] = [
 
 export default function FeaturesSection() {
   return (
-    <section className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
+    <section id="features" className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
       <div className="text-center mb-16">
         <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
           Why Join PEOCHAIN Lending?
@@ -62,10 +62,10 @@ export default function FeaturesSection() {
               <p className="text-foreground/70 mb-6 flex-grow">
                 {feature.description}
               </p>
-              <div className="flex items-center text-primary cursor-pointer">
-                <span className="font-medium">Learn more</span>
+              <a href="#waitlist" className="flex items-center text-primary cursor-pointer">
+                <span className="font-medium">Join Waitlist</span>
                 <i className="ri-arrow-right-line ml-2"></i>
-              </div>
+              </a>
             </CardContent>
           </Card>
         ))}

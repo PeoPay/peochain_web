@@ -31,7 +31,7 @@ const benefits: Benefit[] = [
 
 export default function BenefitsSection() {
   return (
-    <section className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
+    <section id="benefits" className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
       <Card className="glass rounded-3xl border-0 shadow-sm relative overflow-hidden">
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
         

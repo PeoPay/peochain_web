@@ -3,7 +3,7 @@ import { WaitlistForm } from "@/components/ui/waitlist-form";
 
 export default function WaitlistSection() {
   return (
-    <section className="px-4 md:px-8 py-16 md:py-24 max-w-3xl mx-auto">
+    <section id="waitlist" className="px-4 md:px-8 py-16 md:py-24 max-w-3xl mx-auto">
       <Card className="glass rounded-3xl border-0 shadow-sm">
         <CardContent className="p-8 md:p-12">
           <div className="text-center mb-10">

@@ -25,19 +25,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onWaitlistClic
         </div>
       </div>
       
-      <div className="hidden md:flex items-center space-x-8">
-        <button 
-          onClick={onFeatureClick}
-          className="text-foreground hover:text-primary transition-colors font-medium"
-        >
-          Features
-        </button>
-        <button 
-          onClick={onBenefitsClick}
-          className="text-foreground hover:text-primary transition-colors font-medium"
-        >
-          Benefits
-        </button>
+      <div className="hidden md:flex items-center">
         <Button 
           onClick={onWaitlistClick}
           className="btn-gradient text-white font-medium py-2 px-6 rounded-full"
@@ -55,21 +43,9 @@ export default function Header({ onFeatureClick, onBenefitsClick, onWaitlistClic
         </SheetTrigger>
         <SheetContent side="right" className="bg-background">
           <div className="flex flex-col items-center space-y-8 mt-12">
-            <button 
-              onClick={() => handleMobileNavClick(onFeatureClick)}
-              className="text-foreground text-xl font-medium"
-            >
-              Features
-            </button>
-            <button 
-              onClick={() => handleMobileNavClick(onBenefitsClick)}
-              className="text-foreground text-xl font-medium"
-            >
-              Benefits
-            </button>
             <Button 
               onClick={() => handleMobileNavClick(onWaitlistClick)}
-              className="btn-gradient text-white font-medium py-2 px-8 rounded-full text-xl"
+              className="btn-gradient text-white font-medium py-2 px-8 rounded-full text-xl w-full"
             >
               Join Waitlist
             </Button>
