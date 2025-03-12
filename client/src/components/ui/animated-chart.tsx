@@ -22,10 +22,19 @@ import {
 } from 'recharts';
 import { Badge } from './badge';
 
+// Define interfaces for our data types
+interface PerformanceDataPoint {
+  name: string;
+  tps: number;
+  finality: number;
+  cost: number;
+  security: number;
+}
+
 // Performance metrics data generation
-const generatePerformanceData = () => {
+const generatePerformanceData = (): PerformanceDataPoint[] => {
   // Create benchmark data for comparison
-  const competitors = [
+  const competitors: PerformanceDataPoint[] = [
     { name: 'Ethereum', tps: 15, finality: 6 * 60, cost: 15, security: 90 },
     { name: 'Solana', tps: 65000, finality: 0.4, cost: 0.00025, security: 75 },
     { name: 'Bitcoin', tps: 7, finality: 60 * 60, cost: 15, security: 95 },
@@ -33,7 +42,7 @@ const generatePerformanceData = () => {
   ];
   
   // PEOCHAIN outperforms competitors in most metrics
-  const peochain = { 
+  const peochain: PerformanceDataPoint = { 
     name: 'PEOCHAIN', 
     tps: 85000 + Math.floor(Math.random() * 5000), 
     finality: 0.3 + (Math.random() * 0.2), 
@@ -44,9 +53,15 @@ const generatePerformanceData = () => {
   return [...competitors, peochain];
 };
 
+interface ScalabilityDataPoint {
+  name: string;
+  tps: number;
+  competitors: number;
+}
+
 // Scalability data over time (transactions per second)
-const generateScalabilityData = () => {
-  const data = [];
+const generateScalabilityData = (): ScalabilityDataPoint[] => {
+  const data: ScalabilityDataPoint[] = [];
   const timePoints = 24; // 24 hours
   let baseTps = 50000;
   
@@ -79,13 +94,19 @@ const generateScalabilityData = () => {
   return data;
 };
 
+// Define types for our data
+interface CostDataPoint {
+  name: string;
+  cost: number;
+}
+
 // Transaction cost efficiency data
-const generateCostData = () => {
-  const data = [];
+const generateCostData = (): CostDataPoint[] => {
+  const data: CostDataPoint[] = [];
   const competitors = ['Bitcoin', 'Ethereum', 'Solana', 'Avalanche', 'PEOCHAIN'];
   
   competitors.forEach(name => {
-    let cost;
+    let cost: number;
     switch(name) {
       case 'Bitcoin': cost = 15 + Math.random() * 5; break;
       case 'Ethereum': cost = 10 + Math.random() * 8; break;
@@ -104,8 +125,14 @@ const generateCostData = () => {
   return data;
 };
 
+interface RadarDataPoint {
+  name: string;
+  value: number;
+  fullMark: number;
+}
+
 // Transaction speeds comparison
-const generateSpeedData = () => {
+const generateSpeedData = (): RadarDataPoint[] => {
   return [
     { name: 'PEOCHAIN', value: 300, fullMark: 300 },
     { name: 'Security', value: 270, fullMark: 300 },
@@ -170,13 +197,37 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
     return () => clearInterval(dataInterval);
   }, [isAnimating]);
   
+  // Helper to check if mobile view is needed
+  const useIsMobile = () => {
+    const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+  
+    useEffect(() => {
+      const handleResize = () => setWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
+    return width < 768; // Mobile breakpoint
+  };
+  
+  // Fixed hook implementation outside component
+  const isMobile = useIsMobile();
+  
+  // Dynamic classes for responsive layout
+  const itemsClass = isMobile ? 'items-start' : 'items-center';
+  
   const renderChart = () => {
+    const mobileTicks = isMobile ? 5 : undefined; // Reduce ticks on mobile
+    const mobileMargin = isMobile 
+      ? { top: 5, right: 5, left: 0, bottom: 5 } 
+      : { top: 5, right: 20, left: 0, bottom: 5 };
+    
     switch (chartType) {
       case 'scalability':
         return (
           <AreaChart
-            data={scalabilityData}
-            margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+            data={isMobile ? scalabilityData.filter((_, i) => i % 2 === 0) : scalabilityData} // Less data points on mobile
+            margin={mobileMargin}
           >
             <defs>
               <linearGradient id="colorTps" x1="0" y1="0" x2="0" y2="1">
@@ -189,8 +240,12 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
-            <XAxis dataKey="name" tick={{ fontSize: 10 }} />
-            <YAxis tick={{ fontSize: 10 }} />
+            <XAxis 
+              dataKey="name" 
+              tick={{ fontSize: 10 }} 
+              interval={isMobile ? 3 : 1} // Show fewer X-axis ticks on mobile
+            />
+            <YAxis tick={{ fontSize: 10 }} tickCount={mobileTicks} />
             <Tooltip 
               formatter={(value: number, name) => {
                 if (name === 'tps') return [`${value.toLocaleString()} TPS`, 'PEOCHAIN'];
@@ -217,74 +272,109 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
         );
       
       case 'performance':
+        // Simplified data for mobile
+        const filteredData = isMobile 
+          ? performanceData.filter(d => d.name === 'PEOCHAIN' || d.name === 'Ethereum' || d.name === 'Solana')
+          : performanceData;
+          
         return (
           <BarChart
-            data={performanceData}
-            margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+            data={filteredData}
+            margin={mobileMargin}
             layout="vertical"
           >
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} horizontal={false} />
-            <XAxis type="number" tick={{ fontSize: 10 }} />
-            <YAxis dataKey="name" type="category" tick={{ fontSize: 10 }} width={80} />
+            <XAxis 
+              type="number" 
+              tick={{ fontSize: 10 }} 
+              tickCount={mobileTicks}
+              domain={[0, 'dataMax']}
+            />
+            <YAxis 
+              dataKey="name" 
+              type="category" 
+              tick={{ fontSize: 10 }} 
+              width={isMobile ? 60 : 80} 
+            />
             <Tooltip 
               formatter={(value: number) => [`${value.toLocaleString()} TPS`, 'Transactions Per Second']}
             />
-            <Legend />
+            {!isMobile && <Legend />}
             <Bar 
               dataKey="tps" 
               fill={colors.primary} 
               name="Transactions Per Second"
               animationDuration={1000}
-              label={{ position: 'right', fill: colors.primary, fontSize: 10 }}
+              label={isMobile ? false : { position: 'right', fill: colors.primary, fontSize: 10 }}
             />
           </BarChart>
         );
       
       case 'cost':
+        // Simplified for mobile
+        const mobileCostData = isMobile 
+          ? costData.filter(d => d.name === 'PEOCHAIN' || d.name === 'Ethereum' || d.name === 'Solana')
+          : costData;
+          
         return (
           <ComposedChart
-            data={costData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            data={mobileCostData}
+            margin={isMobile ? { top: 5, right: 5, left: 5, bottom: 5 } : { top: 5, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
-            <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+            <XAxis 
+              dataKey="name" 
+              tick={{ fontSize: 10 }}
+              angle={isMobile ? -45 : 0}
+              textAnchor={isMobile ? "end" : "middle"}
+              height={isMobile ? 60 : 30}
+            />
             <YAxis 
               tick={{ fontSize: 10 }} 
               scale="log" 
               domain={[0.0001, 100]} 
               allowDataOverflow
+              tickCount={mobileTicks}
             />
             <Tooltip 
               formatter={(value: number) => [`$${value.toFixed(5)}`, 'Transaction Cost']}
             />
-            <Legend />
+            {!isMobile && <Legend />}
             <Bar 
               dataKey="cost" 
-              fill={(entry) => entry.name === 'PEOCHAIN' ? colors.primary : colors.competitors} 
+              fill={colors.primary} // Using a single color for simplicity and to fix TypeScript errors
               name="Transaction Cost (USD)"
               animationDuration={1000}
             />
-            <Line 
-              type="monotone" 
-              dataKey="cost" 
-              stroke="#8884d8" 
-              dot={false} 
-              activeDot={false} 
-              animationDuration={1500}
-            />
+            {!isMobile && (
+              <Line 
+                type="monotone" 
+                dataKey="cost" 
+                stroke="#8884d8" 
+                dot={false} 
+                activeDot={false} 
+                animationDuration={1500}
+              />
+            )}
           </ComposedChart>
         );
         
       case 'radar':
         return (
           <RadarChart 
-            outerRadius={90} 
-            width={300} 
-            height={250} 
+            outerRadius={isMobile ? 70 : 90} 
+            width={isMobile ? 260 : 300} 
+            height={isMobile ? 200 : 250} 
             data={radarData}
           >
             <PolarGrid gridType="polygon" />
-            <PolarAngleAxis dataKey="name" tick={{ fill: 'currentColor', fontSize: 10 }} />
+            <PolarAngleAxis 
+              dataKey="name" 
+              tick={{ 
+                fill: 'currentColor', 
+                fontSize: isMobile ? 8 : 10
+              }}
+            />
             <PolarRadiusAxis angle={30} domain={[0, 300]} tick={false} />
             <Radar 
               name="PEOCHAIN Performance" 
@@ -294,7 +384,7 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
               fillOpacity={0.6} 
               animationDuration={1500}
             />
-            <Legend />
+            {!isMobile && <Legend />}
             <Tooltip />
           </RadarChart>
         );
@@ -353,20 +443,20 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
   
   return (
     <div className={`w-full h-full flex flex-col ${className}`}>
-      <div className="flex justify-between items-center mb-2">
+      <div className={`flex ${isMobile ? 'flex-col' : 'justify-between'} items-${isMobile ? 'start' : 'center'} mb-2`}>
         {getChartTitle()}
-        <div className="text-xs font-medium">
+        <div className={`text-xs font-medium ${isMobile ? 'mt-1' : ''}`}>
           {getHighlightStat()}
         </div>
       </div>
       
-      <div className="flex-1 min-h-[220px]">
+      <div className="flex-1 min-h-[180px] md:min-h-[220px]">
         <ResponsiveContainer width="100%" height="100%">
           {renderChart()}
         </ResponsiveContainer>
       </div>
       
-      <div className="mt-2 flex justify-between items-center text-xs">
+      <div className={`mt-2 flex ${isMobile ? 'flex-col gap-1' : 'justify-between'} items-${isMobile ? 'start' : 'center'} text-xs`}>
         <div className="flex items-center gap-1 text-foreground/60">
           <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
           Live Performance Metrics
