@@ -45,10 +45,10 @@ export default function FeaturesSection() {
     <section id="features" className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
       <div className="text-center mb-16">
         <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
-          Why Join PEOCHAIN Lending?
+          Why Join PEOCHAIN?
         </h2>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-          Welcome to PEOCHAIN Lending, where traditional banking barriers vanish, and financial empowerment begins! Our platform brings lending to your fingertips—anytime, anywhere.
+          Welcome to PEOCHAIN, where traditional banking barriers vanish, and financial empowerment begins! Our platform brings decentralized finance to your fingertips—anytime, anywhere.
         </p>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg mt-4">
           We drive progress by blending unparalleled security, accessibility, and collaboration, all underpinned by our innovative <span className="text-primary font-medium">Proof of Synergy (PoSyg)</span> mechanism.

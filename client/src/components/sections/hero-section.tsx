@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 
 interface HeroSectionProps {
   onExploreClick: () => void;
@@ -12,7 +13,7 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
       <div className="flex flex-col lg:flex-row items-center">
         <div className="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
           <h1 className="font-poppins font-bold text-4xl md:text-5xl leading-tight mb-6 text-foreground">
-            Unlock <span className="text-primary">Financial Freedom</span> with PEOCHAIN Lending – Join the Revolution Today!
+            Unlock <span className="text-primary">Financial Freedom</span> with PEOCHAIN – Join the Revolution Today!
           </h1>
           <p className="text-lg md:text-xl mb-6 text-foreground/80 max-w-xl">
             Lend, borrow, and earn like never before—powered by secure blockchain technology and built for YOU. Be among the first to experience decentralized finance redefined.
@@ -32,7 +33,7 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
               variant="ghost" 
               className="text-foreground font-medium flex items-center justify-center gap-2 py-3 w-full sm:w-auto"
             >
-              Explore Features <i className="ri-arrow-right-line"></i>
+              Explore Features <ArrowRight className="w-4 h-4 ml-1" />
             </Button>
           </div>
         </div>
@@ -51,7 +52,7 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
                 <span className="text-foreground font-medium">Coming Soon</span>
               </div>
               <div className="flex items-center gap-2 text-foreground/70">
-                <i className="ri-shield-check-line"></i>
+                <ShieldCheck className="w-4 h-4" />
                 <span>Security Audited</span>
               </div>
             </div>
