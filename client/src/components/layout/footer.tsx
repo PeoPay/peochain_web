@@ -52,40 +52,13 @@ export default function Footer() {
         
         <Separator className="my-6 bg-foreground/10" />
         
-        <div className="flex flex-col gap-4 mb-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
-            <div className="flex items-center gap-2">
-              <i className="ri-bank-line text-primary text-lg"></i>
-              <span className="text-sm font-medium">Financial Regulation<br className="hidden sm:block"/> Compliant</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <i className="ri-global-line text-primary text-lg"></i>
-              <span className="text-sm font-medium">International<br className="hidden sm:block"/> Standards</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <i className="ri-secure-payment-line text-primary text-lg"></i>
-              <span className="text-sm font-medium">Secure Transaction<br className="hidden sm:block"/> Protocol</span>
-            </div>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-6 px-4">
-            <img src="https://cdn.cdnlogo.com/logos/s/8/ssl-secure.svg" alt="SSL Secure" className="h-10 opacity-60" />
-            <div className="w-4"></div>
-            <img src="https://cdn.cdnlogo.com/logos/p/6/pci-dss-compliant.svg" alt="PCI DSS Compliant" className="h-10 opacity-60" />
-            <div className="w-4"></div>
-            <img src="https://cdn.cdnlogo.com/logos/s/94/secure-checkout.svg" alt="Secure Checkout" className="h-10 opacity-60" />
-          </div>
-        </div>
-        
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
           <p className="text-foreground/60 text-sm mb-4 md:mb-0">
             &copy; {new Date().getFullYear()} PEOCHAIN. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex space-x-6">
             <a href="#" className="text-foreground/60 hover:text-primary text-sm transition-colors">Privacy Policy</a>
             <a href="#" className="text-foreground/60 hover:text-primary text-sm transition-colors">Terms of Service</a>
-            <a href="#" className="text-foreground/60 hover:text-primary text-sm transition-colors">Compliance</a>
-            <a href="#" className="text-foreground/60 hover:text-primary text-sm transition-colors">Security</a>
           </div>
         </div>
       </div>

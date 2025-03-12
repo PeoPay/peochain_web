@@ -60,45 +60,6 @@ export default function BenefitsSection() {
               </div>
             ))}
           </div>
-          
-          <div className="mt-12 flex flex-col gap-4 items-center">
-            <div className="p-4 rounded-lg bg-primary/5 max-w-2xl">
-              <h4 className="font-medium text-lg mb-2 text-center">Security Is Our Priority</h4>
-              <div className="flex flex-col md:flex-row gap-4 items-center">
-                <div className="md:w-1/2">
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <i className="ri-shield-check-line text-primary mt-1"></i>
-                      <span className="text-sm">Regular security audits by leading blockchain security firms</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <i className="ri-shield-check-line text-primary mt-1"></i>
-                      <span className="text-sm">Multi-sig wallet technology protects user funds</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="md:w-1/2">
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <i className="ri-shield-check-line text-primary mt-1"></i>
-                      <span className="text-sm">Insurance fund to protect against unforeseen events</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <i className="ri-shield-check-line text-primary mt-1"></i>
-                      <span className="text-sm">Open-source code with community security reviews</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <a 
-              href="#waitlist" 
-              className="bg-primary hover:bg-primary/90 text-white font-medium px-8 py-3 mt-4 rounded-full inline-block"
-            >
-              Join Waitlist Now
-            </a>
-          </div>
         </CardContent>
       </Card>
     </section>

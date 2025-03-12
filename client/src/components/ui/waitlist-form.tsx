@@ -93,18 +93,6 @@ export function WaitlistForm() {
               )}
             />
             
-            <div className="p-3 bg-white/40 rounded-md border border-primary/20 mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <i className="ri-shield-keyhole-line text-primary"></i>
-                <span className="text-sm font-semibold">Privacy & Security Notice</span>
-              </div>
-              <p className="text-xs text-foreground/70 leading-relaxed">
-                Your data is encrypted with bank-grade 256-bit SSL encryption. We never store sensitive financial information. 
-                PEOCHAIN is compliant with financial regulations and implements multi-signature security protocols. 
-                Read our <a href="#" className="text-primary hover:underline">Privacy Policy</a> for details.
-              </p>
-            </div>
-            
             <FormField
               control={form.control}
               name="agreeToTerms"
@@ -119,7 +107,7 @@ export function WaitlistForm() {
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormLabel className="text-sm text-foreground/70 font-normal">
-                      I acknowledge the privacy notice and agree to receive updates about PEOCHAIN's launch and exclusive offers.
+                      Send me updates on PEOCHAIN's launch and exclusive offers!
                     </FormLabel>
                   </div>
                 </FormItem>

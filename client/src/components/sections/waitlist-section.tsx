@@ -18,36 +18,11 @@ export default function WaitlistSection() {
             </p>
           </div>
           
-          <div className="mb-6 p-4 bg-primary/5 rounded-lg">
-            <h4 className="text-sm font-medium text-center mb-3">Highest Security Standards</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="flex items-center gap-2 justify-center bg-white/40 py-2 px-3 rounded-md">
-                <i className="ri-shield-check-line text-primary text-lg"></i>
-                <span className="text-sm font-medium">SOC 2 Compliant</span>
-              </div>
-              <div className="flex items-center gap-2 justify-center bg-white/40 py-2 px-3 rounded-md">
-                <i className="ri-lock-line text-primary text-lg"></i>
-                <span className="text-sm font-medium">Encrypted Data</span>
-              </div>
-              <div className="flex items-center gap-2 justify-center bg-white/40 py-2 px-3 rounded-md">
-                <i className="ri-check-double-line text-primary text-lg"></i>
-                <span className="text-sm font-medium">GDPR Compliant</span>
-              </div>
-            </div>
-          </div>
-          
           <WaitlistForm />
           
-          <div className="mt-8 flex flex-col gap-3">
-            <p className="text-center text-foreground/60 text-sm flex items-center justify-center gap-2">
-              <i className="ri-lock-fill text-primary"></i>
-              We respect your privacy—your info stays safe with us.
-            </p>
-            <div className="flex items-center justify-center gap-4">
-              <img src="https://cdn.cdnlogo.com/logos/n/31/norton-secured.svg" alt="Norton Secured" className="h-8 opacity-60" />
-              <img src="https://cdn.cdnlogo.com/logos/s/89/ssl.svg" alt="SSL Certified" className="h-8 opacity-60" />
-            </div>
-          </div>
+          <p className="text-center text-foreground/60 text-sm mt-8">
+            We respect your privacy—your info stays safe with us.
+          </p>
           
           <div className="mt-12 p-6 bg-primary/10 rounded-xl">
             <p className="text-center text-foreground/80 font-medium">
