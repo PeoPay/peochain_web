@@ -1,6 +1,12 @@
-import { users, type User, type InsertUser, waitlistEntries, type WaitlistEntry, type InsertWaitlistEntry } from "@shared/schema";
+import { 
+  users, type User, type InsertUser, 
+  waitlistEntries, type WaitlistEntry, type InsertWaitlistEntry,
+  dailyWaitlistStats, type DailyWaitlistStats, type InsertDailyWaitlistStats,
+  geographicStats, type GeographicStats, type InsertGeographicStats,
+  referralChannels, type ReferralChannel, type InsertReferralChannel
+} from "@shared/schema";
 import { db } from "./db";
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, desc, asc, and, gte, lte } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -13,6 +19,33 @@ export interface IStorage {
   getWaitlistEntryByReferralCode(referralCode: string): Promise<WaitlistEntry | undefined>;
   incrementReferralCount(referralCode: string): Promise<void>;
   getAllWaitlistEntries(): Promise<WaitlistEntry[]>;
+
+  // Analytics methods
+  // Daily stats
+  createOrUpdateDailyStats(stats: InsertDailyWaitlistStats): Promise<DailyWaitlistStats>;
+  getDailyStatsForDateRange(startDate: Date, endDate: Date): Promise<DailyWaitlistStats[]>;
+  getLatestDailyStats(limit?: number): Promise<DailyWaitlistStats[]>;
+  
+  // Geographic stats
+  createOrUpdateGeographicStats(stats: InsertGeographicStats): Promise<GeographicStats>;
+  getAllGeographicStats(): Promise<GeographicStats[]>;
+  getTopRegionsByUserCount(limit?: number): Promise<GeographicStats[]>;
+  
+  // Referral channel stats
+  createOrUpdateReferralChannel(channel: InsertReferralChannel): Promise<ReferralChannel>;
+  getAllReferralChannels(): Promise<ReferralChannel[]>;
+  getTopReferralChannels(limit?: number): Promise<ReferralChannel[]>;
+  
+  // Analytics overview
+  getAnalyticsOverview(): Promise<{
+    totalSignups: number;
+    totalReferrals: number;
+    avgReferralsPerUser: number;
+    topReferrers: WaitlistEntry[];
+    dailyStats: DailyWaitlistStats[];
+    topChannels: ReferralChannel[];
+    topRegions: GeographicStats[];
+  }>;
 }
 
 export class DatabaseStorage implements IStorage {
