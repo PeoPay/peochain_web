@@ -91,6 +91,12 @@ export class DatabaseStorage implements IStorage {
         })
         .returning();
       
+      // Update daily stats when a new entry is created
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      await this.updateDailyStatsForNewSignup(today, !!insertEntry.referredBy);
+      
       return entry;
     } catch (error: any) {
       // Handle unique constraint violation
@@ -140,6 +146,255 @@ export class DatabaseStorage implements IStorage {
         referralCount: sql`${waitlistEntries.referralCount} + 1`
       })
       .where(eq(waitlistEntries.referralCode, referralCode));
+  }
+
+  // Helper method to update daily stats when a new signup occurs
+  private async updateDailyStatsForNewSignup(date: Date, wasReferred: boolean): Promise<void> {
+    try {
+      const dateString = date.toISOString().split('T')[0];
+      
+      // Try to find existing stats for this date
+      const [existingStats] = await db
+        .select()
+        .from(dailyWaitlistStats)
+        .where(eq(dailyWaitlistStats.date, dateString));
+      
+      if (existingStats) {
+        // Update existing stats
+        await db
+          .update(dailyWaitlistStats)
+          .set({
+            signupCount: sql`${dailyWaitlistStats.signupCount} + 1`,
+            totalReferrals: wasReferred ? sql`${dailyWaitlistStats.totalReferrals} + 1` : dailyWaitlistStats.totalReferrals,
+          })
+          .where(eq(dailyWaitlistStats.id, existingStats.id));
+      } else {
+        // Create new stats for this date
+        await db
+          .insert(dailyWaitlistStats)
+          .values({
+            date: dateString,
+            signupCount: 1,
+            totalReferrals: wasReferred ? 1 : 0,
+            conversionRate: 0, // Will be calculated later
+          });
+      }
+    } catch (error) {
+      console.error("Error updating daily stats:", error);
+    }
+  }
+
+  // Analytics methods implementation
+  async createOrUpdateDailyStats(stats: InsertDailyWaitlistStats): Promise<DailyWaitlistStats> {
+    try {
+      // Check if stats for this date already exist
+      const dateString = typeof stats.date === 'object' && stats.date !== null && 'toISOString' in stats.date
+        ? (stats.date as Date).toISOString().split('T')[0] 
+        : stats.date;
+      
+      const [existingStats] = await db
+        .select()
+        .from(dailyWaitlistStats)
+        .where(eq(dailyWaitlistStats.date, dateString));
+      
+      if (existingStats) {
+        // Update existing stats
+        const [updatedStats] = await db
+          .update(dailyWaitlistStats)
+          .set(stats)
+          .where(eq(dailyWaitlistStats.id, existingStats.id))
+          .returning();
+        
+        return updatedStats;
+      } else {
+        // Create new stats
+        const [newStats] = await db
+          .insert(dailyWaitlistStats)
+          .values(stats)
+          .returning();
+        
+        return newStats;
+      }
+    } catch (error) {
+      console.error("Error creating/updating daily stats:", error);
+      throw error;
+    }
+  }
+
+  async getDailyStatsForDateRange(startDate: Date, endDate: Date): Promise<DailyWaitlistStats[]> {
+    const startDateStr = startDate.toISOString().split('T')[0];
+    const endDateStr = endDate.toISOString().split('T')[0];
+    
+    return db
+      .select()
+      .from(dailyWaitlistStats)
+      .where(
+        and(
+          gte(dailyWaitlistStats.date, startDateStr),
+          lte(dailyWaitlistStats.date, endDateStr)
+        )
+      )
+      .orderBy(asc(dailyWaitlistStats.date));
+  }
+
+  async getLatestDailyStats(limit: number = 30): Promise<DailyWaitlistStats[]> {
+    return db
+      .select()
+      .from(dailyWaitlistStats)
+      .orderBy(desc(dailyWaitlistStats.date))
+      .limit(limit);
+  }
+
+  async createOrUpdateGeographicStats(stats: InsertGeographicStats): Promise<GeographicStats> {
+    try {
+      // Check if stats for this region already exist
+      const [existingStats] = await db
+        .select()
+        .from(geographicStats)
+        .where(eq(geographicStats.region, stats.region));
+      
+      if (existingStats) {
+        // Update existing stats
+        const [updatedStats] = await db
+          .update(geographicStats)
+          .set({
+            ...stats,
+            updatedAt: new Date(),
+          })
+          .where(eq(geographicStats.id, existingStats.id))
+          .returning();
+        
+        return updatedStats;
+      } else {
+        // Create new stats
+        const [newStats] = await db
+          .insert(geographicStats)
+          .values(stats)
+          .returning();
+        
+        return newStats;
+      }
+    } catch (error) {
+      console.error("Error creating/updating geographic stats:", error);
+      throw error;
+    }
+  }
+
+  async getAllGeographicStats(): Promise<GeographicStats[]> {
+    return db
+      .select()
+      .from(geographicStats)
+      .orderBy(desc(geographicStats.userCount));
+  }
+
+  async getTopRegionsByUserCount(limit: number = 10): Promise<GeographicStats[]> {
+    return db
+      .select()
+      .from(geographicStats)
+      .orderBy(desc(geographicStats.userCount))
+      .limit(limit);
+  }
+
+  async createOrUpdateReferralChannel(channel: InsertReferralChannel): Promise<ReferralChannel> {
+    try {
+      // Check if channel already exists
+      const [existingChannel] = await db
+        .select()
+        .from(referralChannels)
+        .where(eq(referralChannels.channelName, channel.channelName));
+      
+      if (existingChannel) {
+        // Update existing channel
+        const [updatedChannel] = await db
+          .update(referralChannels)
+          .set({
+            ...channel,
+            updatedAt: new Date(),
+          })
+          .where(eq(referralChannels.id, existingChannel.id))
+          .returning();
+        
+        return updatedChannel;
+      } else {
+        // Create new channel
+        const [newChannel] = await db
+          .insert(referralChannels)
+          .values(channel)
+          .returning();
+        
+        return newChannel;
+      }
+    } catch (error) {
+      console.error("Error creating/updating referral channel:", error);
+      throw error;
+    }
+  }
+
+  async getAllReferralChannels(): Promise<ReferralChannel[]> {
+    return db
+      .select()
+      .from(referralChannels)
+      .orderBy(desc(referralChannels.referralCount));
+  }
+
+  async getTopReferralChannels(limit: number = 10): Promise<ReferralChannel[]> {
+    return db
+      .select()
+      .from(referralChannels)
+      .orderBy(desc(referralChannels.referralCount))
+      .limit(limit);
+  }
+
+  async getAnalyticsOverview(): Promise<{
+    totalSignups: number;
+    totalReferrals: number;
+    avgReferralsPerUser: number;
+    topReferrers: WaitlistEntry[];
+    dailyStats: DailyWaitlistStats[];
+    topChannels: ReferralChannel[];
+    topRegions: GeographicStats[];
+  }> {
+    // Get total signups
+    const [{ count: totalSignups }] = await db
+      .select({ count: sql`count(*)` })
+      .from(waitlistEntries);
+    
+    // Calculate total referrals
+    const [referralResult] = await db
+      .select({ total: sql`sum(referral_count)` })
+      .from(waitlistEntries);
+    
+    const totalReferrals = referralResult?.total ? Number(referralResult.total) : 0;
+    const signupCount = totalSignups ? Number(totalSignups) : 0;
+    
+    // Calculate average referrals per user (avoiding division by zero)
+    const avgReferralsPerUser = signupCount > 0 ? totalReferrals / signupCount : 0;
+    
+    // Get top referrers
+    const topReferrers = await db
+      .select()
+      .from(waitlistEntries)
+      .orderBy(desc(waitlistEntries.referralCount))
+      .limit(5);
+    
+    // Get latest daily stats
+    const dailyStats = await this.getLatestDailyStats(30);
+    
+    // Get top referral channels
+    const topChannels = await this.getTopReferralChannels(5);
+    
+    // Get top regions
+    const topRegions = await this.getTopRegionsByUserCount(5);
+    
+    return {
+      totalSignups: signupCount,
+      totalReferrals,
+      avgReferralsPerUser,
+      topReferrers,
+      dailyStats,
+      topChannels,
+      topRegions,
+    };
   }
 }
 
