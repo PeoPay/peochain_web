@@ -33,7 +33,45 @@ async function main() {
       id SERIAL PRIMARY KEY,
       full_name TEXT NOT NULL,
       email TEXT NOT NULL UNIQUE,
+      referral_code TEXT NOT NULL UNIQUE,
+      referred_by TEXT,
+      referral_count INTEGER NOT NULL DEFAULT 0,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
+    )
+  `);
+
+  // Create daily_waitlist_stats table
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS daily_waitlist_stats (
+      id SERIAL PRIMARY KEY,
+      date DATE NOT NULL UNIQUE,
+      signup_count INTEGER NOT NULL DEFAULT 0,
+      total_referrals INTEGER NOT NULL DEFAULT 0,
+      conversion_rate INTEGER NOT NULL DEFAULT 0,
+      metadata JSONB,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
+    )
+  `);
+
+  // Create geographic_stats table
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS geographic_stats (
+      id SERIAL PRIMARY KEY,
+      region TEXT NOT NULL UNIQUE,
+      user_count INTEGER NOT NULL DEFAULT 0,
+      engagement_score INTEGER NOT NULL DEFAULT 0,
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
+    )
+  `);
+
+  // Create referral_channels table
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS referral_channels (
+      id SERIAL PRIMARY KEY,
+      channel_name TEXT NOT NULL UNIQUE,
+      referral_count INTEGER NOT NULL DEFAULT 0,
+      conversion_rate INTEGER NOT NULL DEFAULT 0,
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
     )
   `);
   
