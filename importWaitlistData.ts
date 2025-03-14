@@ -37,7 +37,7 @@ async function importWaitlistData() {
     }
 
     // Process records one by one instead of in parallel to avoid connection issues
-    for (let i = 0; i < records.length && i < 1000; i++) { // Limit to 1000 records for now
+    for (let i = 0; i < records.length && i < 2000; i++) { // Increased limit to 2000
       const record = records[i];
       try {
         // Create entry data
