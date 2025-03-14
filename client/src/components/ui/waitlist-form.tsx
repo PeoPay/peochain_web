@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Loader2, Share2 } from "lucide-react";
 import { useLocation } from "wouter";
+import { SocialShare } from "@/components/ui/social-share";
 
 export function WaitlistForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -187,7 +188,7 @@ export function WaitlistForm() {
                     Share your referral link with friends to gain priority access to PEOCHAIN!
                   </p>
                   
-                  <div className="flex flex-col space-y-3">
+                  <div className="flex flex-col space-y-4">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 p-3 bg-white/80 rounded-lg border border-primary/20">
                       <div className="text-sm font-medium truncate flex-1 w-full break-all sm:break-normal overflow-hidden">
                         <span className="hidden sm:inline">{window.location.origin}/</span><span className="sm:hidden">...</span>?ref={referralData.code}
@@ -206,11 +207,10 @@ export function WaitlistForm() {
                       <div className="text-sm">Current Referrals</div>
                       <div className="font-medium text-primary">{referralData.count}</div>
                     </div>
+                    
+                    {/* Social Share Component */}
+                    <SocialShare referralCode={referralData.code} className="mt-2" />
                   </div>
-                  
-                  <p className="text-xs text-foreground/60 mt-4">
-                    The more friends you refer, the earlier you'll get access to PEOCHAIN.
-                  </p>
                 </div>
               )}
             </div>
