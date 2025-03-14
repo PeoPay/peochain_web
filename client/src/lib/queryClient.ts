@@ -7,14 +7,32 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
+// Helper function to get the stored API key
+function getApiKey(): string | null {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('adminApiKey');
+  }
+  return null;
+}
+
 export async function apiRequest(
   method: string,
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
+  const headers: HeadersInit = {
+    ...(data ? { "Content-Type": "application/json" } : {})
+  };
+  
+  // Add API key for analytics endpoints
+  const apiKey = getApiKey();
+  if (apiKey && url.includes('/api/analytics')) {
+    headers['x-api-key'] = apiKey;
+  }
+  
   const res = await fetch(url, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers,
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });
@@ -29,8 +47,18 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey[0] as string, {
+    const url = queryKey[0] as string;
+    const headers: HeadersInit = {};
+    
+    // Add API key for analytics endpoints
+    const apiKey = getApiKey();
+    if (apiKey && url.includes('/api/analytics')) {
+      headers['x-api-key'] = apiKey;
+    }
+    
+    const res = await fetch(url, {
       credentials: "include",
+      headers
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {
@@ -38,7 +66,8 @@ export const getQueryFn: <T>(options: {
     }
 
     await throwIfResNotOk(res);
-    return await res.json();
+    const data = await res.json();
+    return data.data || data;
   };
 
 export const queryClient = new QueryClient({
