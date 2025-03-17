@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
@@ -14,23 +14,11 @@ interface HeaderProps {
 
 export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyClick, onWaitlistClick, onFaqClick }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [hasApiKey, setHasApiKey] = useState(false);
   const [, setLocation] = useLocation();
-
-  useEffect(() => {
-    // Check if API key exists in localStorage
-    const apiKey = localStorage.getItem('adminApiKey');
-    setHasApiKey(!!apiKey);
-  }, []);
 
   const handleMobileNavClick = (callback: () => void) => {
     setIsOpen(false);
     callback();
-  };
-  
-  const navigateToDashboard = () => {
-    setIsOpen(false);
-    setLocation('/admin/dashboard');
   };
   
   const navigateToWhitepaper = () => {
@@ -82,14 +70,6 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
           >
             Whitepaper
           </button>
-          {hasApiKey && (
-            <button 
-              onClick={navigateToDashboard}
-              className="text-primary hover:text-primary/80 transition-colors font-medium"
-            >
-              Dashboard
-            </button>
-          )}
         </nav>
         <Button 
           onClick={onWaitlistClick}
@@ -139,14 +119,6 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
               >
                 Whitepaper
               </button>
-              {hasApiKey && (
-                <button 
-                  onClick={navigateToDashboard}
-                  className="text-primary hover:text-primary/80 transition-colors font-medium text-xl text-left"
-                >
-                  Dashboard
-                </button>
-              )}
             </nav>
             <Button 
               onClick={() => handleMobileNavClick(onWaitlistClick)}

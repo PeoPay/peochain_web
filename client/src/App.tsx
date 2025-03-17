@@ -6,7 +6,6 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
-import Dashboard from "@/pages/Dashboard";
 import Whitepaper from "@/pages/Whitepaper";
 
 function Router() {
@@ -16,7 +15,6 @@ function Router() {
       <Route path="/privacy-policy" component={PrivacyPolicy}/>
       <Route path="/terms-of-service" component={TermsOfService}/>
       <Route path="/whitepaper" component={Whitepaper}/>
-      <Route path="/admin/dashboard" component={Dashboard}/>
       <Route component={NotFound} />
     </Switch>
   );
