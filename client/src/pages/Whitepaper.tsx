@@ -34,28 +34,28 @@ export default function Whitepaper() {
                   <div className="bg-primary/5 p-6 rounded-xl">
                     <h3 className="font-bold text-xl mb-3">High Transaction Costs</h3>
                     <p className="text-foreground/70">
-                      Traditional financial services impose steep fees that exclude millions from basic banking services and cross-border transactions.
+                      Current blockchain and traditional financial systems impose high fees, significantly restricting access for underserved and underbanked communities.
                     </p>
                   </div>
                   
                   <div className="bg-primary/5 p-6 rounded-xl">
-                    <h3 className="font-bold text-xl mb-3">Scalability Issues</h3>
+                    <h3 className="font-bold text-xl mb-3">Scalability and Performance Issues</h3>
                     <p className="text-foreground/70">
-                      Current blockchain platforms struggle with processing speed and capacity limitations, preventing mass adoption.
+                      Most existing blockchain networks struggle to handle peak transaction volumes efficiently, causing delays, network congestion, and reduced usability.
                     </p>
                   </div>
                   
                   <div className="bg-primary/5 p-6 rounded-xl">
                     <h3 className="font-bold text-xl mb-3">Complex User Experiences</h3>
                     <p className="text-foreground/70">
-                      Technical barriers and complicated interfaces limit blockchain accessibility for non-technical users.
+                      Technical barriers, complicated interfaces, and insufficient educational resources limit blockchain adoption, especially among populations with limited technological literacy.
                     </p>
                   </div>
                   
                   <div className="bg-primary/5 p-6 rounded-xl">
-                    <h3 className="font-bold text-xl mb-3">Economic Instability</h3>
+                    <h3 className="font-bold text-xl mb-3">Economic Instability and Volatility</h3>
                     <p className="text-foreground/70">
-                      Cryptocurrency volatility creates uncertainty and risk for everyday users, hindering practical financial applications.
+                      Crypto volatility undermines trust and discourages everyday use, particularly in emerging economies where stability and predictability are essential.
                     </p>
                   </div>
                 </div>
