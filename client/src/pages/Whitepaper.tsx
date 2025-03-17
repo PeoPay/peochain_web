@@ -149,28 +149,35 @@ export default function Whitepaper() {
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="font-bold text-lg mb-2">Subnet Validator Network</h3>
                     <p className="text-foreground/70 text-sm">
-                      Enables parallel transaction validation across specialized validator subnets, dramatically increasing throughput while maintaining security.
+                      Independent validator subnetworks enable parallel transaction processing, dramatically boosting network throughput and decentralization.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="font-bold text-lg mb-2">Zero-Knowledge Proofs</h3>
+                    <h3 className="font-bold text-lg mb-2">Zero-Knowledge Proofs (ZK-Proofs)</h3>
                     <p className="text-foreground/70 text-sm">
-                      Implements zkSNARKs for privacy-preserving transactions, allowing users to verify transactions without revealing sensitive details.
+                      Advanced cryptographic protocols ensuring secure, confidential transactions while preserving public verifiability, enhancing both privacy and scalability.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="font-bold text-lg mb-2">Threshold Signature Scheme</h3>
+                    <h3 className="font-bold text-lg mb-2">Threshold Signature Scheme (TSS)</h3>
                     <p className="text-foreground/70 text-sm">
-                      Distributes cryptographic signing across multiple validators, ensuring fault tolerance and enhanced security against targeted attacks.
+                      Collaborative validation method improving fault tolerance and security, eliminating single points of failure through decentralized signature generation.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="font-bold text-lg mb-2">Adaptive Block Production</h3>
                     <p className="text-foreground/70 text-sm">
-                      Real-time adjustment of block parameters based on network conditions, optimizing performance during high-demand periods.
+                      Real-time adjustments in block validation difficulty and reward distribution, maintaining optimal network performance under varying conditions.
+                    </p>
+                  </div>
+                  
+                  <div className="border border-primary/20 p-5 rounded-xl">
+                    <h3 className="font-bold text-lg mb-2">Cross-Chain Interoperability</h3>
+                    <p className="text-foreground/70 text-sm">
+                      Seamless integration with major blockchains (Ethereum, Solana, Polkadot, Cosmos), facilitating asset transfers, enhancing liquidity, and extending decentralized financial opportunities.
                     </p>
                   </div>
                 </div>
