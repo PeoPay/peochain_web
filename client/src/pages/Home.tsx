@@ -35,19 +35,19 @@ export default function Home() {
           onExploreClick={() => scrollToRef(featuresRef)}
           onJoinClick={() => scrollToRef(waitlistRef)}
         />
-        <div ref={featuresRef}>
+        <div id="features" ref={featuresRef}>
           <FeaturesSection />
         </div>
-        <div ref={benefitsRef}>
+        <div id="benefits" ref={benefitsRef}>
           <BenefitsSection />
         </div>
-        <div ref={technologyRef}>
+        <div id="technology" ref={technologyRef}>
           <TechnologySection />
         </div>
-        <div ref={waitlistRef}>
+        <div id="waitlist" ref={waitlistRef}>
           <WaitlistSection />
         </div>
-        <div ref={faqRef}>
+        <div id="faq" ref={faqRef}>
           <FAQSection />
         </div>
       </main>

@@ -4,16 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import { useLocation } from "wouter";
 
 export default function Whitepaper() {
+  const [, navigate] = useLocation();
+
+  // Navigate to home page sections
+  const navigateToHome = (section: string) => {
+    navigate(`/#${section}`);
+  };
+
   return (
     <div className="min-h-screen gradient-background">
       <Header 
-        onFeatureClick={() => {}}
-        onBenefitsClick={() => {}}
-        onTechnologyClick={() => {}}
-        onWaitlistClick={() => {}}
-        onFaqClick={() => {}}
+        onFeatureClick={() => navigateToHome('features')}
+        onBenefitsClick={() => navigateToHome('benefits')}
+        onTechnologyClick={() => navigateToHome('technology')}
+        onWaitlistClick={() => navigateToHome('waitlist')}
+        onFaqClick={() => navigateToHome('faq')}
       />
 
       <main className="container max-w-4xl mx-auto px-4 py-12">

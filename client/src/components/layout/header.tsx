@@ -26,6 +26,20 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
     setLocation('/whitepaper');
   };
   
+  const navigateToHomeSection = (section: string) => {
+    setIsOpen(false);
+    // If already on home page, use scrollIntoView
+    if (window.location.pathname === '/') {
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      // Navigate to home page with section hash
+      setLocation(`/#${section}`);
+    }
+  };
+  
   return (
     <header className="w-full py-6 px-4 md:px-8 flex justify-between items-center">
       <div className="flex items-center">
@@ -41,25 +55,25 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
       <div className="hidden md:flex items-center space-x-8">
         <nav className="flex items-center space-x-6 mr-6">
           <button 
-            onClick={onFeatureClick}
+            onClick={() => navigateToHomeSection('features')}
             className="text-foreground hover:text-primary transition-colors font-medium"
           >
             Features
           </button>
           <button 
-            onClick={onBenefitsClick}
+            onClick={() => navigateToHomeSection('benefits')}
             className="text-foreground hover:text-primary transition-colors font-medium"
           >
             Benefits
           </button>
           <button 
-            onClick={onTechnologyClick}
+            onClick={() => navigateToHomeSection('technology')}
             className="text-foreground hover:text-primary transition-colors font-medium"
           >
             Technology
           </button>
           <button 
-            onClick={onFaqClick}
+            onClick={() => navigateToHomeSection('faq')}
             className="text-foreground hover:text-primary transition-colors font-medium"
           >
             FAQ
@@ -72,7 +86,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
           </button>
         </nav>
         <Button 
-          onClick={onWaitlistClick}
+          onClick={() => navigateToHomeSection('waitlist')}
           className="btn-gradient text-white font-medium py-2 px-6 rounded-full"
         >
           Join Waitlist
@@ -90,25 +104,25 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
           <div className="flex flex-col space-y-8 mt-12">
             <nav className="flex flex-col space-y-6 w-full">
               <button 
-                onClick={() => handleMobileNavClick(onFeatureClick)}
+                onClick={() => navigateToHomeSection('features')}
                 className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
               >
                 Features
               </button>
               <button 
-                onClick={() => handleMobileNavClick(onBenefitsClick)}
+                onClick={() => navigateToHomeSection('benefits')}
                 className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
               >
                 Benefits
               </button>
               <button 
-                onClick={() => onTechnologyClick && handleMobileNavClick(onTechnologyClick)}
+                onClick={() => navigateToHomeSection('technology')}
                 className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
               >
                 Technology
               </button>
               <button 
-                onClick={() => onFaqClick && handleMobileNavClick(onFaqClick)}
+                onClick={() => navigateToHomeSection('faq')}
                 className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
               >
                 FAQ
@@ -121,7 +135,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
               </button>
             </nav>
             <Button 
-              onClick={() => handleMobileNavClick(onWaitlistClick)}
+              onClick={() => navigateToHomeSection('waitlist')}
               className="btn-gradient text-white font-medium py-2 px-8 rounded-full text-xl w-full mt-4"
             >
               Join Waitlist
