@@ -73,8 +73,8 @@ export default function Whitepaper() {
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                     </div>
                     <div>
-                      <h3 className="font-bold text-xl">Ultra-Low Fees</h3>
-                      <p className="text-foreground/70">Transactions cost as little as CHF 0.40, making financial services accessible to everyone, regardless of transaction size or economic status.</p>
+                      <h3 className="font-bold text-xl">Ultra-Low Transaction Fees</h3>
+                      <p className="text-foreground/70">PeoChain dramatically reduces costs with fees as low as <span className="font-semibold">CHF 0.40 per transaction</span>, ensuring affordability and global accessibility.</p>
                     </div>
                   </div>
                   
@@ -83,8 +83,8 @@ export default function Whitepaper() {
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
                     </div>
                     <div>
-                      <h3 className="font-bold text-xl">High Scalability</h3>
-                      <p className="text-foreground/70">Our platform processes up to 100,000 transactions per second with 1-second finality, surpassing most payment networks and meeting global demand.</p>
+                      <h3 className="font-bold text-xl">High Scalability and Instant Transactions</h3>
+                      <p className="text-foreground/70">Leveraging advanced blockchain infrastructure, PeoChain processes up to <span className="font-semibold">100,000 transactions per second (TPS)</span> with <span className="font-semibold">1-second finality</span>, maintaining reliability even during peak usage.</p>
                     </div>
                   </div>
                   
@@ -93,8 +93,8 @@ export default function Whitepaper() {
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
                     </div>
                     <div>
-                      <h3 className="font-bold text-xl">Mobile-first Integrations</h3>
-                      <p className="text-foreground/70">Seamless integrations with popular mobile payment systems like M-Pesa and GCash, making blockchain technology accessible through familiar interfaces.</p>
+                      <h3 className="font-bold text-xl">User-Centric Mobile Integration</h3>
+                      <p className="text-foreground/70">PeoChain simplifies blockchain adoption by seamlessly integrating with established mobile payment platforms like <span className="font-semibold">M-Pesa</span> and <span className="font-semibold">GCash</span>, facilitating effortless crypto-to-mobile money conversions.</p>
                     </div>
                   </div>
                   
@@ -104,7 +104,7 @@ export default function Whitepaper() {
                     </div>
                     <div>
                       <h3 className="font-bold text-xl">Economic Stability Measures</h3>
-                      <p className="text-foreground/70">Localized stablecoins and advanced volatility management mechanisms protect users from market fluctuations, ensuring reliable value storage and transfer.</p>
+                      <p className="text-foreground/70">By deploying localized stablecoins pegged to familiar fiat currencies and incorporating sophisticated volatility-mitigation mechanisms, PeoChain ensures economic stability and builds trust among global users.</p>
                     </div>
                   </div>
                 </div>
