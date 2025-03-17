@@ -321,12 +321,11 @@ export default function Whitepaper() {
                         1
                       </div>
                       <div className="ml-6">
-                        <h3 className="font-bold text-xl mb-2">Phase 1 (2024-2025): Foundation</h3>
+                        <h3 className="font-bold text-xl mb-2">Phase 1: Foundation and Early Development (Q4 2024 – Q1 2025)</h3>
                         <ul className="list-disc pl-6 space-y-1 text-foreground/80">
-                          <li>Testnet launch and comprehensive security audits</li>
-                          <li>Strategic pilot integrations with select payment providers</li>
-                          <li>Private funding rounds and early partnership development</li>
-                          <li>Core protocol finalization and technical documentation</li>
+                          <li>Launch PeoChain Testnet, initial crypto-to-mobile integrations with M-Pesa and GCash</li>
+                          <li>Deployment on Polygon Amoy Testnet, initial staking, and DCS smart contracts</li>
+                          <li>Secure private investment ($5M) and expand pilot programs in Kenya, Philippines, and Nigeria</li>
                         </ul>
                       </div>
                     </div>
@@ -339,12 +338,12 @@ export default function Whitepaper() {
                         2
                       </div>
                       <div className="ml-6">
-                        <h3 className="font-bold text-xl mb-2">Phase 2 (2025): Launch & Scale</h3>
+                        <h3 className="font-bold text-xl mb-2">Phase 2: Scaling and Expansion (Q2 2025 – Q4 2025)</h3>
                         <ul className="list-disc pl-6 space-y-1 text-foreground/80">
-                          <li>Mainnet launch with initial validator network</li>
-                          <li>Advanced scaling features and subnet implementation</li>
-                          <li>Initial interoperability with major blockchain networks</li>
-                          <li>Regional deployment in Southeast Asia and Africa</li>
+                          <li>Expand validator subnetworks, parallel transaction processing, and optimize mobile integrations (MTN Nigeria)</li>
+                          <li>Official PeoChain Mainnet launch using PoSyg (100,000 TPS, 1-second finality)</li>
+                          <li>Security audits by CertiK and Quantstamp; integration with Ethereum, Polkadot, Solana, Cosmos ecosystems</li>
+                          <li>Reach 1 million active users through strategic marketing</li>
                         </ul>
                       </div>
                     </div>
@@ -356,12 +355,12 @@ export default function Whitepaper() {
                         3
                       </div>
                       <div className="ml-6">
-                        <h3 className="font-bold text-xl mb-2">Phase 3 (2026-2027): Global Expansion</h3>
+                        <h3 className="font-bold text-xl mb-2">Phase 3: Global Adoption and Advanced Features (2026 – 2027)</h3>
                         <ul className="list-disc pl-6 space-y-1 text-foreground/80">
-                          <li>Worldwide expansion and localized deployment strategies</li>
-                          <li>Advanced DeFi products and financial service integrations</li>
-                          <li>Comprehensive interoperability across blockchain ecosystems</li>
-                          <li>Enterprise-grade solutions and major institutional partnerships</li>
+                          <li>Scale to 7.5 million active users across LATAM, South Asia, and broader African markets</li>
+                          <li>Launch advanced DeFi products including yield farming, decentralized insurance, and NFT-based identity systems</li>
+                          <li>Further expand cross-chain interoperability; strengthen global mobile money partnerships</li>
+                          <li>Achieve 10 million active users, annual revenue exceeding $100 million, advanced regulatory frameworks for global sustainability</li>
                         </ul>
                       </div>
                     </div>
