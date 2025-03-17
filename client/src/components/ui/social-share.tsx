@@ -11,6 +11,7 @@ interface SocialShareProps {
 export function SocialShare({ referralCode, className = '' }: SocialShareProps) {
   const { toast } = useToast();
   const referralLink = `${window.location.origin}/?ref=${referralCode}`;
+  const shareImageUrl = `${window.location.origin}/images/peochain-share.png`;
   const shareMessage = encodeURIComponent(
     "I just joined the PEOCHAIN waitlist! Skip the line by using my referral link: "
   );
@@ -25,17 +26,17 @@ export function SocialShare({ referralCode, className = '' }: SocialShareProps) 
   };
 
   const shareTwitter = () => {
-    const url = `https://twitter.com/intent/tweet?text=${shareMessage}&url=${encodeURIComponent(referralLink)}`;
+    const url = `https://twitter.com/intent/tweet?text=${shareMessage}&url=${encodeURIComponent(referralLink)}&via=peochain`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const shareFacebook = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}`;
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}&picture=${encodeURIComponent(shareImageUrl)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const shareLinkedin = () => {
-    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralLink)}`;
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralLink)}&summary=${shareMessage}&image=${encodeURIComponent(shareImageUrl)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
