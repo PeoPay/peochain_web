@@ -33,6 +33,11 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
     setLocation('/admin/dashboard');
   };
   
+  const navigateToWhitepaper = () => {
+    setIsOpen(false);
+    setLocation('/whitepaper');
+  };
+  
   return (
     <header className="w-full py-6 px-4 md:px-8 flex justify-between items-center">
       <div className="flex items-center">
@@ -70,6 +75,12 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
             className="text-foreground hover:text-primary transition-colors font-medium"
           >
             FAQ
+          </button>
+          <button 
+            onClick={navigateToWhitepaper}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Whitepaper
           </button>
           {hasApiKey && (
             <button 
@@ -121,6 +132,12 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                 className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
               >
                 FAQ
+              </button>
+              <button 
+                onClick={navigateToWhitepaper}
+                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
+              >
+                Whitepaper
               </button>
               {hasApiKey && (
                 <button 
