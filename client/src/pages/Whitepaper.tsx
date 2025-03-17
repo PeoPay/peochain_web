@@ -189,85 +189,122 @@ export default function Whitepaper() {
               <section>
                 <h2 className="text-2xl font-bold mb-6">Economic Model (Tokenomics)</h2>
                 
+                <p className="text-foreground/80 mb-6">
+                  PeoChain's tokenomics strategically support long-term economic sustainability and incentivize active participation:
+                </p>
+                
                 <div className="bg-primary/5 p-6 rounded-xl mb-6">
-                  <h3 className="font-bold text-xl mb-3">Token Distribution</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                  <h3 className="font-bold text-xl mb-3">Balanced Token Distribution</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
                     <div className="p-3">
-                      <div className="text-3xl font-bold text-primary mb-1">40%</div>
-                      <div className="text-sm text-foreground/70">Validators</div>
+                      <div className="text-3xl font-bold text-primary mb-1">30%</div>
+                      <div className="text-sm text-foreground/70">Active Validators</div>
                     </div>
                     <div className="p-3">
                       <div className="text-3xl font-bold text-primary mb-1">25%</div>
-                      <div className="text-sm text-foreground/70">Stabilization Fund</div>
-                    </div>
-                    <div className="p-3">
-                      <div className="text-3xl font-bold text-primary mb-1">20%</div>
                       <div className="text-sm text-foreground/70">Ecosystem Growth</div>
                     </div>
                     <div className="p-3">
                       <div className="text-3xl font-bold text-primary mb-1">15%</div>
-                      <div className="text-sm text-foreground/70">Core Development</div>
+                      <div className="text-sm text-foreground/70">Team Commitment</div>
+                    </div>
+                    <div className="p-3">
+                      <div className="text-3xl font-bold text-primary mb-1">15%</div>
+                      <div className="text-sm text-foreground/70">Stabilization Fund</div>
+                    </div>
+                    <div className="p-3">
+                      <div className="text-3xl font-bold text-primary mb-1">10%</div>
+                      <div className="text-sm text-foreground/70">Liquidity</div>
+                    </div>
+                    <div className="p-3">
+                      <div className="text-3xl font-bold text-primary mb-1">5%</div>
+                      <div className="text-sm text-foreground/70">Community Adoption</div>
                     </div>
                   </div>
                 </div>
                 
-                <h3 className="font-bold text-xl mb-3">Volatility Management Mechanisms</h3>
-                <ul className="list-disc pl-6 space-y-2 text-foreground/80">
-                  <li><span className="font-medium">Dynamic Token Issuance:</span> Algorithmically adjusted based on network usage and market conditions</li>
-                  <li><span className="font-medium">Automated Buyback Programs:</span> Triggered during significant price volatility events</li>
-                  <li><span className="font-medium">Collateralized Stablecoins:</span> Multiple currency-pegged tokens backed by diversified asset reserves</li>
-                  <li><span className="font-medium">Liquidity Pools:</span> Incentivized multi-asset pools to ensure market depth and stability</li>
-                </ul>
+                <div className="space-y-6">
+                  <div className="bg-primary/5 p-6 rounded-xl">
+                    <h3 className="font-bold text-xl mb-3">Dynamic Supply Management</h3>
+                    <p className="text-foreground/80">
+                      Employs strategic token buybacks and issuance adjustments to stabilize prices, manage volatility, and respond dynamically to market conditions, thus safeguarding economic health.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-primary/5 p-6 rounded-xl">
+                    <h3 className="font-bold text-xl mb-3">Participant-Centric Incentives</h3>
+                    <p className="text-foreground/80">
+                      Validators and users earn rewards proportional to their <span className="font-semibold">Synergy Scores</span>, incentivizing consistent participation, staking, governance involvement, and referrals, reinforced by periodic bonuses and gamified engagement mechanisms.
+                    </p>
+                  </div>
+                </div>
               </section>
 
               <Separator />
 
               {/* 7. Financial Projections */}
               <section>
-                <h2 className="text-2xl font-bold mb-6">Financial Projections & Viability</h2>
+                <h2 className="text-2xl font-bold mb-6">Financial Model, Projections & Viability</h2>
                 
-                <div className="overflow-x-auto">
+                <p className="text-foreground/80 mb-6">
+                  PeoChain employs a dual-structured funding approach:
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-primary/5 p-6 rounded-xl">
+                    <h3 className="font-bold text-xl mb-3">ICO/IEO Funding</h3>
+                    <p className="text-foreground/80">
+                      Targets <span className="font-semibold">$3,250,000</span> (25% token supply) allocated towards blockchain development, marketing, community growth, and liquidity management.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-primary/5 p-6 rounded-xl">
+                    <h3 className="font-bold text-xl mb-3">Private Investment Round</h3>
+                    <p className="text-foreground/80">
+                      Seeks <span className="font-semibold">$5,000,000</span> (20% equity at $27,500,000 valuation) to bolster team capabilities, scaling infrastructure, comprehensive marketing, and compliance.
+                    </p>
+                  </div>
+                </div>
+                
+                <h3 className="font-bold text-xl mb-4">Profitability and ROI Projections</h3>
+                
+                <div className="overflow-x-auto mb-6">
                   <table className="min-w-full border-collapse">
                     <thead>
                       <tr className="bg-primary/10">
-                        <th className="border border-primary/20 p-3 text-left">Milestone</th>
-                        <th className="border border-primary/20 p-3 text-left">Timeframe</th>
+                        <th className="border border-primary/20 p-3 text-left">Year</th>
                         <th className="border border-primary/20 p-3 text-left">Projected Revenue</th>
-                        <th className="border border-primary/20 p-3 text-left">ROI</th>
+                        <th className="border border-primary/20 p-3 text-left">ROI Projection</th>
+                        <th className="border border-primary/20 p-3 text-left">Growth Drivers</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-primary/20 p-3">Initial Deployment</td>
-                        <td className="border border-primary/20 p-3">Q3 2024</td>
-                        <td className="border border-primary/20 p-3">CHF 2.5M</td>
-                        <td className="border border-primary/20 p-3">1.2x</td>
+                        <td className="border border-primary/20 p-3 font-medium">2025</td>
+                        <td className="border border-primary/20 p-3">$500,000</td>
+                        <td className="border border-primary/20 p-3">~19% ROI</td>
+                        <td className="border border-primary/20 p-3 text-sm">Initial network growth, user acquisition, validator incentives</td>
                       </tr>
                       <tr className="bg-primary/5">
-                        <td className="border border-primary/20 p-3">Regional Expansion</td>
-                        <td className="border border-primary/20 p-3">Q2 2025</td>
-                        <td className="border border-primary/20 p-3">CHF 12M</td>
-                        <td className="border border-primary/20 p-3">2.4x</td>
+                        <td className="border border-primary/20 p-3 font-medium">2026</td>
+                        <td className="border border-primary/20 p-3">$1,000,000</td>
+                        <td className="border border-primary/20 p-3">54% ROI</td>
+                        <td className="border border-primary/20 p-3 text-sm" rowSpan={2}>Driven by expanded validator engagement, partnerships, and widespread DeFi integrations</td>
                       </tr>
                       <tr>
-                        <td className="border border-primary/20 p-3">Full Feature Rollout</td>
-                        <td className="border border-primary/20 p-3">Q1 2026</td>
-                        <td className="border border-primary/20 p-3">CHF 45M</td>
-                        <td className="border border-primary/20 p-3">3.8x</td>
-                      </tr>
-                      <tr className="bg-primary/5">
-                        <td className="border border-primary/20 p-3">Global Operation</td>
-                        <td className="border border-primary/20 p-3">Q4 2026</td>
-                        <td className="border border-primary/20 p-3">CHF 120M</td>
-                        <td className="border border-primary/20 p-3">5.5x</td>
+                        <td className="border border-primary/20 p-3 font-medium">2027</td>
+                        <td className="border border-primary/20 p-3">$2,500,000</td>
+                        <td className="border border-primary/20 p-3">110% ROI</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 
-                <p className="mt-4 text-foreground/60 text-sm italic">
-                  Note: Projections based on conservative market penetration estimates and existing adoption patterns in targeted regions.
-                </p>
+                <h3 className="font-bold text-xl mb-3">Viability Measures</h3>
+                <ul className="list-disc pl-6 space-y-2 text-foreground/80">
+                  <li><span className="font-medium">Risk Management:</span> Robust approach through regulatory compliance, proactive audits, and security programs</li>
+                  <li><span className="font-medium">Sustainable Growth:</span> Achieved through adaptive tokenomics, sustainable validator incentives, and a clearly defined use of funds</li>
+                </ul>
               </section>
 
               <Separator />
