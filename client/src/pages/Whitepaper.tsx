@@ -376,8 +376,12 @@ export default function Whitepaper() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col md:flex-row gap-4 items-start p-4 bg-primary/5 rounded-xl">
-                    <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xl">
-                      DO
+                    <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                      <img 
+                        src="/images/team/dan-otieno.jpg" 
+                        alt="Dan Otieno" 
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div>
                       <h3 className="font-bold text-xl">Dan Otieno</h3>
