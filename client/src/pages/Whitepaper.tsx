@@ -21,7 +21,7 @@ export default function Whitepaper() {
         
         {/* 1. Introductory Statement */}
         <p className="text-xl text-center text-foreground/80 mb-12 max-w-3xl mx-auto">
-          "Empowering global financial inclusion with decentralized innovation. PeoChain delivers secure, scalable blockchain solutions designed for universal accessibility."
+          "PeoChain is pioneering a decentralized financial revolution, empowering underbanked populations globally through cutting-edge blockchain innovation. By combining the novel Proof of Synergy (PoSyg) consensus mechanism with Dynamic Contribution Scoring (DCS), PeoChain achieves unparalleled scalability, security, and accessibility. Our blockchain platform supports ultra-low fees, instant transactions, seamless mobile integrations, and economic stability mechanisms—redefining what's possible in global decentralized finance (DeFi)."
         </p>
 
         <Card className="glass rounded-3xl border-0 shadow-sm mb-8">
