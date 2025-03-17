@@ -425,9 +425,11 @@ export default function Whitepaper() {
                 </p>
                 
                 {/* 11. Download Button */}
-                <Button className="btn-gradient text-white font-medium py-2 px-8 rounded-full">
-                  <Download className="mr-2 h-4 w-4" /> Download Full Whitepaper
-                </Button>
+                <a href="/PEOCHAIN_White_Paper.pdf" download>
+                  <Button className="btn-gradient text-white font-medium py-2 px-8 rounded-full">
+                    <Download className="mr-2 h-4 w-4" /> Download Full Whitepaper
+                  </Button>
+                </a>
               </section>
             </div>
           </CardContent>
