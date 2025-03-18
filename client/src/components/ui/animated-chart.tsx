@@ -169,7 +169,7 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
     accent: '#7c6cea',
   };
 
-  // Change chart type periodically
+  // Change chart type periodically - removed radar chart
   useEffect(() => {
     if (!isAnimating) return;
     
@@ -177,7 +177,7 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
       setChartType(prevType => {
         if (prevType === 'scalability') return 'performance';
         if (prevType === 'performance') return 'cost';
-        if (prevType === 'cost') return 'radar';
+        if (prevType === 'cost') return 'scalability';
         return 'scalability';
       });
     }, 7000);
