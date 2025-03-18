@@ -34,7 +34,7 @@ PeoChain is pioneering a decentralized financial revolution, empowering underban
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/peochain-platform.git
+   git clone https://github.com/dkrizhanovskyi/peochain_web
    cd peochain-platform
    ```
 

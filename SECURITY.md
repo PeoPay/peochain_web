@@ -14,7 +14,7 @@ Currently, these versions of PeoChain Platform are supported with security updat
 We take the security of PeoChain Platform seriously. If you believe you've found a security vulnerability, please follow these steps:
 
 1. **Do not disclose the vulnerability publicly** until it has been addressed by our team.
-2. Email your findings to security@peochain.com or contact the project maintainers directly.
+2. Email your findings to security@peochain.xyz or contact the project maintainers directly.
 3. Provide detailed information about the vulnerability, including:
    - Description of the vulnerability
    - Steps to reproduce
