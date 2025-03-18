@@ -167,8 +167,8 @@ export default function Whitepaper() {
                     </div>
                     
                     {expandedSections.consensusMechanism && (
-                      <div className="mt-4 p-3 border border-primary/10 rounded-xl">
-                        <div className="responsive-diagram w-full h-[400px]">
+                      <div className="mt-6 p-4 border border-primary/15 rounded-xl bg-white/50">
+                        <div className="responsive-diagram w-full h-[420px]">
                           <ConsensusDiagram mode="posyg" />
                         </div>
                       </div>
@@ -196,8 +196,8 @@ export default function Whitepaper() {
                     </div>
                     
                     {expandedSections.dcs && (
-                      <div className="mt-4 p-3 border border-primary/10 rounded-xl">
-                        <div className="responsive-diagram w-full h-[400px]">
+                      <div className="mt-6 p-4 border border-primary/15 rounded-xl bg-white/50">
+                        <div className="responsive-diagram w-full h-[420px]">
                           <ConsensusDiagram mode="dcs" />
                         </div>
                       </div>
@@ -268,9 +268,9 @@ export default function Whitepaper() {
                 </div>
                 
                 {expandedSections.architecture && (
-                  <div className="my-8 p-4 bg-primary/5 rounded-xl">
-                    <h3 className="font-bold text-xl mb-4 text-center">Subnet Validator Architecture</h3>
-                    <div className="flex justify-center responsive-diagram w-full h-[450px]">
+                  <div className="my-8 p-5 bg-primary/5 rounded-xl">
+                    <h3 className="font-bold text-xl mb-5 text-center">Subnet Validator Architecture</h3>
+                    <div className="responsive-diagram w-full h-[450px]">
                       <SubnetDiagram />
                     </div>
                     

@@ -57,14 +57,27 @@
     font-family: ui-sans-serif, system-ui, sans-serif;
   }
   
-  /* Whitepaper specific styles */
+  /* Enhanced whitepaper specific styles */
   .whitepaper-section {
     transition: all 0.3s ease;
+    padding: 1.5rem;
+    border-radius: 1rem;
   }
   
   .whitepaper-section:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(90, 131, 100, 0.1);
+    box-shadow: 0 8px 16px rgba(90, 131, 100, 0.12);
+  }
+  
+  /* Ensure clear separation between text content and visualizations */
+  .whitepaper-section .responsive-diagram,
+  .whitepaper-section .responsive-chart {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-top: 1px solid rgba(90, 131, 100, 0.1);
+    border-bottom: 1px solid rgba(90, 131, 100, 0.1);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
   
   /* Responsive adjustments for diagrams and charts */
@@ -75,21 +88,24 @@
     transition: font-size 0.2s ease;
   }
   
-  /* New responsive diagram and chart containers */
+  /* Enhanced responsive diagram and chart containers */
   .responsive-diagram,
   .responsive-chart {
     width: 100%;
     max-width: 100%;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 1.5rem 0;
+    position: relative;
   }
   
   .responsive-diagram svg,
   .responsive-chart svg {
     max-width: 100%;
     height: auto;
+    border-radius: 0.5rem;
   }
 
   /* Responsive adjustments for mobile */
@@ -167,16 +183,32 @@
     }
   }
   
-  /* Additional adjustments for very small screens */
+  /* Enhanced adjustments for very small screens */
   @media (max-width: 480px) {
     .responsive-chart, 
     .responsive-diagram {
-      margin: 0 -1rem; /* Negative margin to maximize space */
+      margin: 1rem -0.5rem; /* Better spacing while maximizing width */
+      padding: 0;
     }
     
     .responsive-chart svg,
     .responsive-diagram svg {
-      transform: scale(0.95); /* Slightly scale down to fit better */
+      transform: scale(0.98); /* Optimized scaling for small screens */
+      transform-origin: center;
+    }
+    
+    /* Improve spacing on small devices */
+    .whitepaper-section {
+      padding: 1rem !important;
+    }
+    
+    .whitepaper-section h3 {
+      margin-bottom: 0.5rem !important;
+    }
+    
+    /* Ensure proper separation between text and visuals */
+    .whitepaper-section > div:not(:first-child) {
+      margin-top: 1rem;
     }
   }
 }
