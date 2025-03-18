@@ -552,14 +552,14 @@ export function TokenomicsDiagram({
         ) : (
           // Desktop view with improved bar chart
           <div className="w-full" style={{ height: "450px" }}>
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="90%" height="100%">
               <BarChart
                 data={displayData}
                 layout="vertical"
                 margin={{
                   top: 25,
-                  right: 150, // Further increased right margin for labels
-                  left: 200, // Further increased left margin for names
+                  right: 190, // Further increased right margin for labels
+                  left: 240, // Further increased left margin for names
                   bottom: 45,
                 }}
               >
@@ -590,14 +590,14 @@ export function TokenomicsDiagram({
                 <YAxis
                   dataKey="name"
                   type="category"
-                  width={195} // Wider to accommodate full labels
+                  width={230} // Much wider to accommodate full labels
                   tick={{
                     fontSize: 12,
                     fontWeight: 500,
-                    width: 190, // Increased width for text content
+                    width: 225, // Significantly increased width for text content
                     fill: "#333",
                   }}
-                  tickMargin={20} // Increased margin between axis and names
+                  tickMargin={25} // Further increased margin between axis and names
                 />
                 <Tooltip
                   formatter={(value: number) => [formatNumber(value), "Tokens"]}
@@ -624,6 +624,7 @@ export function TokenomicsDiagram({
                   dataKey="value"
                   name="Token Amount"
                   barSize={24} // Slightly smaller for better proportions
+                  maxBarSize={24} // Ensure consistent size regardless of scale
                   label={{
                     position: "right",
                     formatter: enhancedFormatter,
