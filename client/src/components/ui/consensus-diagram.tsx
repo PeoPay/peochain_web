@@ -56,7 +56,7 @@ const Node: React.FC<NodeProps> = ({
           y={y + radius + 15}
           textAnchor="middle"
           fill="currentColor"
-          fontSize="10"
+          fontSize={radius * 1.1} // Scale text with node size
           fontWeight="bold"
         >
           {label}
@@ -65,10 +65,10 @@ const Node: React.FC<NodeProps> = ({
       {role && (
         <text
           x={x}
-          y={y + radius + 28}
+          y={y + radius + 27}
           textAnchor="middle"
           fill="currentColor"
-          fontSize="9"
+          fontSize={radius * 0.95} // Scale text with node size
           opacity={0.8}
         >
           {role}
@@ -294,27 +294,28 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
             />
           ))}
           
-          {/* Consensus Title */}
+          {/* Consensus Title - made responsive */}
           <text
             x={centerX}
             y={centerY}
             textAnchor="middle"
             fill="#276749"
-            fontSize={Math.max(12, Math.min(14, width * 0.028))}
+            fontSize={Math.max(12, Math.min(14, width * 0.03))}
             fontWeight="bold"
           >
             Proof of Synergy
           </text>
           
-          {/* Consensus Description */}
+          {/* Consensus Description - shortened for small screens */}
           <text
             x={centerX}
             y={height - 15}
             textAnchor="middle"
             fill="currentColor"
-            fontSize={Math.max(9, Math.min(11, width * 0.022))}
+            fontSize={Math.max(8, Math.min(11, width * 0.022))}
           >
-            Validators collaborate through synergistic relationships for optimized consensus
+            {width < 380 ? "Synergistic validator collaboration" : 
+              "Validators collaborate through synergistic relationships for optimized consensus"}
           </text>
         </svg>
         
@@ -342,35 +343,36 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
     const centerX = width / 2;
     const centerY = height / 2 - 20;
     
-    // Define scoring factors
+    // Define scoring factors - shortened names for mobile
+    const isMobileView = width < 400;
     const factors = [
-      { name: 'Availability', score: 95, color: '#38a169' },
-      { name: 'Security', score: 98, color: '#276749' },
-      { name: 'Performance', score: 92, color: '#68d391' },
-      { name: 'Participation', score: 88, color: '#48bb78' },
-      { name: 'Reliability', score: 90, color: '#2f855a' }
+      { name: isMobileView ? 'Avail.' : 'Availability', score: 95, color: '#38a169' },
+      { name: isMobileView ? 'Sec.' : 'Security', score: 98, color: '#276749' },
+      { name: isMobileView ? 'Perf.' : 'Performance', score: 92, color: '#68d391' },
+      { name: isMobileView ? 'Part.' : 'Participation', score: 88, color: '#48bb78' },
+      { name: isMobileView ? 'Rel.' : 'Reliability', score: 90, color: '#2f855a' }
     ];
     
-    // Calculate bar width and spacing - scale based on available width
+    // Calculate bar width and spacing - improved scaling with width safeguards
     const totalBars = factors.length;
-    const barWidth = Math.max(20, Math.min(50, width / 15)); // Responsive bar width
-    const spacing = Math.max(5, Math.min(15, width / 50)); // Responsive spacing
+    const barWidth = Math.max(width < 400 ? 15 : 20, Math.min(50, width / 15)); // Smaller on mobile
+    const spacing = Math.max(width < 400 ? 3 : 5, Math.min(15, width / 50)); // Less spacing on mobile
     const totalWidth = (barWidth + spacing) * totalBars - spacing;
     const startX = centerX - totalWidth / 2;
     
     return (
       <>
         <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} className="consensus-diagram">
-          {/* Title */}
+          {/* Title - shortened for smallest screens */}
           <text
             x={centerX}
             y={30}
             textAnchor="middle"
             fill="#276749"
-            fontSize={Math.max(12, Math.min(14, width * 0.028))}
+            fontSize={Math.max(11, Math.min(14, width * 0.028))}
             fontWeight="bold"
           >
-            Dynamic Contribution Scoring (DCS)
+            {width < 360 ? "DCS Scoring" : "Dynamic Contribution Scoring (DCS)"}
           </text>
           
           {/* Base Score Line */}
@@ -489,34 +491,35 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
             </text>
           </g>
           
-          {/* Description */}
+          {/* Description - optimized for different screen sizes */}
           <text
             x={centerX}
             y={height - 15}
             textAnchor="middle"
             fill="currentColor"
-            fontSize={Math.max(9, Math.min(11, width * 0.022))}
+            fontSize={Math.max(8, Math.min(11, width * 0.022))}
           >
-            Dynamic scoring ensures fair rewards based on multiple performance metrics
+            {width < 360 ? "Fair rewards based on multiple metrics" : 
+              "Dynamic scoring ensures fair rewards based on multiple performance metrics"}
           </text>
         </svg>
       </>
     );
   };
   
-  // Responsive diagram adjustments
-  const [diagramSize, setDiagramSize] = React.useState({ width: 600, height: 450 });
+  // Responsive diagram adjustments - increased heights for better text spacing
+  const [diagramSize, setDiagramSize] = React.useState({ width: 600, height: 480 });
   
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 480) {
-        setDiagramSize({ width: 320, height: 300 });
+        setDiagramSize({ width: 340, height: 360 }); // Small mobile
       } else if (window.innerWidth <= 640) {
-        setDiagramSize({ width: 400, height: 350 });
+        setDiagramSize({ width: 420, height: 400 }); // Mobile
       } else if (window.innerWidth <= 768) {
-        setDiagramSize({ width: 500, height: 400 });
+        setDiagramSize({ width: 500, height: 440 }); // Tablet
       } else {
-        setDiagramSize({ width: 600, height: 450 });
+        setDiagramSize({ width: 600, height: 480 }); // Desktop
       }
     };
     
