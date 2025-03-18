@@ -177,8 +177,10 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
   const renderPoSygDiagram = (width = 500, height = 320) => {
     const centerX = width / 2;
     const centerY = height / 2 - 20;
-    const radius = Math.min(width, height) * 0.25; // Adaptive radius
-    const nodeRadius = Math.max(8, Math.min(width, height) * 0.03); // Responsive node size
+    // Increased radius for better visibility proportionate to container
+    const radius = Math.min(width, height) * 0.32; // Larger adaptive radius
+    // Enlarged node size for better visibility
+    const nodeRadius = Math.max(10, Math.min(width, height) * 0.035); // Bigger responsive node size
     
     // Calculate positions for nodes in a circle
     const nodeCount = 8;
@@ -193,7 +195,7 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
       let role = "Validator";
       let isActive = false;
       
-      // Differentiate special nodes
+      // Differentiate special nodes with more prominent colors
       if (i === 0) {
         color = "#38a169";
         role = "Leader";
@@ -354,10 +356,12 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
       { name: isMobileView ? 'Rel.' : 'Reliability', score: 90, color: '#2f855a' }
     ];
     
-    // Calculate bar width and spacing - improved scaling with width safeguards
+    // Calculate bar width and spacing - significant improvements for visibility
     const totalBars = factors.length;
-    const barWidth = Math.max(width < 400 ? 15 : 20, Math.min(50, width / 15)); // Smaller on mobile
-    const spacing = Math.max(width < 400 ? 3 : 5, Math.min(15, width / 50)); // Less spacing on mobile
+    // Wider bars for better visibility
+    const barWidth = Math.max(width < 400 ? 24 : 30, Math.min(60, width / 12)); // Significantly wider
+    // Adjusted spacing for proper separation
+    const spacing = Math.max(width < 400 ? 10 : 15, Math.min(25, width / 40)); // More spacing for clarity
     const totalWidth = (barWidth + spacing) * totalBars - spacing;
     const startX = centerX - totalWidth / 2;
     
@@ -446,7 +450,8 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
                   y={centerY + 115}
                   textAnchor="middle"
                   fill="currentColor"
-                  fontSize={Math.max(7, Math.min(10, width * 0.018))}
+                  fontSize={Math.max(9, Math.min(12, width * 0.022))} // Larger font size
+                  fontWeight="medium" // Added medium weight for better readability
                 >
                   {factor.name}
                 </text>
@@ -486,7 +491,8 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
               y={centerY - 30}
               textAnchor="middle"
               fill="#276749"
-              fontSize={Math.max(8, Math.min(10, width * 0.02))}
+              fontSize={Math.max(10, Math.min(14, width * 0.025))} // Larger, more readable font
+              fontWeight="medium" // Medium weight for better visibility
             >
               Synergy Score
             </text>
@@ -509,19 +515,26 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
     );
   };
   
-  // Responsive diagram adjustments - increased heights for better text spacing
-  const [diagramSize, setDiagramSize] = React.useState({ width: 600, height: 520 });
+  // Responsive diagram adjustments with improved scaling for better visibility
+  const [diagramSize, setDiagramSize] = React.useState({ width: 700, height: 580 });
   
   React.useEffect(() => {
     const handleResize = () => {
+      const containerWidth = document.querySelector('.consensus-diagram-container')?.clientWidth || window.innerWidth;
+      
+      // Use container width to determine best size while respecting minimum heights
       if (window.innerWidth <= 480) {
-        setDiagramSize({ width: 340, height: 400 }); // Small mobile
+        // Small mobile - ensure higher minimum size for visibility
+        setDiagramSize({ width: Math.max(380, containerWidth), height: 460 });
       } else if (window.innerWidth <= 640) {
-        setDiagramSize({ width: 420, height: 440 }); // Mobile
+        // Mobile - enhanced size for better visibility
+        setDiagramSize({ width: Math.max(460, containerWidth), height: 500 });
       } else if (window.innerWidth <= 768) {
-        setDiagramSize({ width: 500, height: 480 }); // Tablet
+        // Tablet - increased proportions
+        setDiagramSize({ width: Math.max(550, containerWidth), height: 540 });
       } else {
-        setDiagramSize({ width: 600, height: 520 }); // Desktop
+        // Desktop - bigger overall size
+        setDiagramSize({ width: Math.max(650, containerWidth), height: 580 });
       }
     };
     

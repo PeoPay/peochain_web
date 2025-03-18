@@ -75,25 +75,36 @@
     transition: font-size 0.2s ease;
   }
 
-  /* Responsive adjustments for mobile */
+  /* Enhanced responsive adjustments for mobile */
   @media (max-width: 640px) {
+    /* Improved text sizing for better readability */
     .consensus-diagram text,
     .subnet-diagram text,
     .tokenomics-diagram text,
     .mobile-integration-diagram text {
-      font-size: 8px !important;
+      font-size: 10px !important; /* Larger minimum font size */
+      font-weight: 500 !important; /* Medium weight for better visibility */
     }
     
+    /* Adjust diagram grid layouts for mobile */
     .whitepaper-section .flex.justify-center.gap-6 {
-      gap: 0.75rem !important;
+      gap: 1rem !important; /* Increased gap for better spacing */
     }
     
+    /* Better text size for readability */
     .whitepaper-section .flex.gap-6 span {
-      font-size: 0.65rem;
+      font-size: 0.75rem; /* Slightly larger for better readability */
     }
     
+    /* Better SVG rendering on mobile */
     .whitepaper-section svg {
       height: auto !important;
+      max-height: 450px !important; /* Taller maximum height for visibility */
+    }
+    
+    /* Improve responsive diagrams in mobile view */
+    .responsive-diagram {
+      min-height: 380px !important; /* Ensure taller diagrams on mobile */
     }
   }
 
@@ -116,13 +127,16 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    min-height: 350px; /* Ensure minimum height for content visibility */
+    overflow: visible; /* Allow content to expand outside if needed */
   }
   
   .responsive-chart svg,
   .responsive-diagram svg {
     width: 100%;
-    height: auto;
+    height: 100%; /* Use full height of container */
     max-width: 100%;
+    object-fit: contain; /* Preserve aspect ratio */
   }
 
   /* Ensure diagrams don't overflow on small screens */
