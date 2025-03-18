@@ -173,16 +173,12 @@ interface ConsensusDiagramProps {
 }
 
 export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDiagramProps) {
-  // Use responsive sizing with aspect ratio preserved
-  const width = 500;  // Base width for reference
-  const height = 320; // Base height for reference
-  
   // Diagram elements will depend on the mode
-  const renderPoSygDiagram = () => {
+  const renderPoSygDiagram = (width = 500, height = 320) => {
     const centerX = width / 2;
     const centerY = height / 2 - 20;
-    const radius = 100;
-    const nodeRadius = 15;
+    const radius = Math.min(width, height) * 0.25; // Adaptive radius
+    const nodeRadius = Math.max(8, Math.min(width, height) * 0.03); // Responsive node size
     
     // Calculate positions for nodes in a circle
     const nodeCount = 8;
@@ -341,7 +337,8 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
     );
   };
   
-  const renderDCSDiagram = () => {
+  const renderDCSDiagram = (width = 500, height = 320) => {
+    // Use passed parameters directly - no references to outer scope
     const centerX = width / 2;
     const centerY = height / 2 - 20;
     
@@ -354,10 +351,10 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
       { name: 'Reliability', score: 90, color: '#2f855a' }
     ];
     
-    // Calculate bar width and spacing
+    // Calculate bar width and spacing - scale based on available width
     const totalBars = factors.length;
-    const barWidth = 50;
-    const spacing = 15;
+    const barWidth = Math.max(20, Math.min(50, width / 15)); // Responsive bar width
+    const spacing = Math.max(5, Math.min(15, width / 50)); // Responsive spacing
     const totalWidth = (barWidth + spacing) * totalBars - spacing;
     const startX = centerX - totalWidth / 2;
     
