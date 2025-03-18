@@ -151,13 +151,13 @@ export function TokenomicsDiagram({
           className="w-full"
           style={{ height: dimensions.height }}
         >
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="95%" height="100%">
             <PieChart
               margin={{
-                top: 10,
-                right: isMobile ? 15 : 35,
-                bottom: isMobile ? 30 : 20,
-                left: isMobile ? 15 : 35,
+                top: 15,
+                right: isMobile ? 15 : 45,
+                bottom: isMobile ? 30 : 30,
+                left: isMobile ? 15 : 45,
               }}
             >
               <Pie
@@ -285,14 +285,14 @@ export function TokenomicsDiagram({
         </h3>
         <div className="w-full flex flex-col">
           {/* Line chart for main visualization */}
-          <div className="w-full" style={{ height: isMobile ? "400px" : "440px" }}>
+          <div className="w-full mx-auto" style={{ height: isMobile ? "400px" : "440px", maxWidth: "900px" }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={filteredData}
                 margin={{
                   top: 20,
-                  right: isMobile ? 45 : 75,
-                  left: isMobile ? 35 : 55,
+                  right: isMobile ? 45 : 85,
+                  left: isMobile ? 35 : 65,
                   bottom: isMobile ? 80 : 50,
                 }}
               >
@@ -551,15 +551,15 @@ export function TokenomicsDiagram({
           </div>
         ) : (
           // Desktop view with improved bar chart
-          <div className="w-full" style={{ height: "450px" }}>
-            <ResponsiveContainer width="90%" height="100%">
+          <div className="w-full mx-auto" style={{ height: "480px", maxWidth: "850px" }}>
+            <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={displayData}
                 layout="vertical"
                 margin={{
                   top: 25,
-                  right: 190, // Further increased right margin for labels
-                  left: 240, // Further increased left margin for names
+                  right: 200, // Maximum right margin for labels
+                  left: 260, // Maximum left margin for names
                   bottom: 45,
                 }}
               >
