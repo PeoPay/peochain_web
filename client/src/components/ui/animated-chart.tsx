@@ -303,11 +303,11 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
           <BarChart
             data={filteredData}
             margin={isMobile ? 
-              { top: 5, right: 45, left: 5, bottom: 5 } : 
-              { top: 10, right: 80, left: 5, bottom: 10 }
+              { top: 10, right: 50, left: 85, bottom: 20 } : 
+              { top: 10, right: 80, left: 100, bottom: 15 }
             }
             layout="vertical"
-            barSize={isMobile ? 15 : 20}
+            barSize={isMobile ? 16 : 22}
           >
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} horizontal={false} />
             <XAxis 
@@ -329,14 +329,17 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
               dataKey="name" 
               type="category" 
               tick={{ 
-                fontSize: isMobile ? 10 : 12,
-                width: isMobile ? 65 : 90,
+                fontSize: isMobile ? 11 : 13,
+                width: isMobile ? 75 : 100,
                 fill: 'currentColor',
                 fontWeight: 500
               }}
-              tickMargin={5}
-              tickFormatter={(value) => isMobile && value.length > 7 ? value.substring(0, 6) + '...' : value}
-              width={isMobile ? 70 : 90}
+              tickMargin={8}
+              tickFormatter={(value) => {
+                // Display full blockchain names without truncation
+                return value;
+              }}
+              width={isMobile ? 80 : 95}
             />
             <Tooltip 
               formatter={(value: number) => [`${value.toLocaleString()} TPS`, 'Transactions Per Second']}
@@ -389,30 +392,66 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
         return (
           <ComposedChart
             data={mobileCostData}
-            margin={isMobile ? { top: 5, right: 5, left: 5, bottom: 5 } : { top: 5, right: 30, left: 20, bottom: 5 }}
+            margin={isMobile ? 
+              { top: 10, right: 10, left: 10, bottom: 60 } : 
+              { top: 15, right: 30, left: 20, bottom: 40 }}
           >
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
             <XAxis 
               dataKey="name" 
-              tick={{ fontSize: isMobile ? 8 : 10, width: isMobile ? 35 : 80 }}
+              tick={{ 
+                fontSize: isMobile ? 10 : 12, 
+                width: isMobile ? 50 : 80,
+                fill: 'currentColor' 
+              }}
               angle={isMobile ? -45 : 0}
               textAnchor={isMobile ? "end" : "middle"}
-              height={isMobile ? 60 : 30}
-              tickFormatter={(value) => isMobile && value.length > 7 ? value.substring(0, 5) + '...' : value}
+              height={isMobile ? 65 : 35}
+              tickFormatter={(value) => {
+                // Use full names for better readability
+                return value;
+              }}
+              tickLine={{ stroke: 'rgba(0,0,0,0.1)' }}
             />
             <YAxis 
-              tick={{ fontSize: 10 }} 
+              tick={{ 
+                fontSize: isMobile ? 10 : 12,
+                fill: 'currentColor'
+              }} 
               scale="log" 
-              domain={[0.0001, 100]} 
+              domain={[0.00001, 100]} 
               allowDataOverflow
-              tickCount={mobileTicks}
+              tickCount={isMobile ? 4 : 5}
+              tickFormatter={(value) => `$${value.toFixed(value < 0.01 ? 5 : 2)}`}
+              width={isMobile ? 55 : 65}
             />
             <Tooltip 
               formatter={(value: number) => [`$${value.toFixed(5)}`, 'Transaction Cost']}
-              contentStyle={{ fontSize: isMobile ? '10px' : '12px', padding: isMobile ? '4px 8px' : '8px 10px' }}
-              itemStyle={{ padding: isMobile ? '1px 0' : '2px 0' }}
+              contentStyle={{ 
+                fontSize: isMobile ? '11px' : '13px', 
+                padding: isMobile ? '6px 10px' : '8px 12px',
+                borderRadius: '6px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                border: '1px solid rgba(0, 0, 0, 0.05)'
+              }}
+              itemStyle={{ 
+                padding: isMobile ? '2px 0' : '3px 0',
+                color: '#555'
+              }}
+              cursor={{ fill: 'rgba(0,0,0,0.03)' }}
             />
-            {!isMobile && <Legend />}
+            <Legend 
+              verticalAlign="top" 
+              height={30} 
+              wrapperStyle={{ 
+                fontSize: isMobile ? 11 : 13,
+                paddingTop: 5, 
+                paddingBottom: 5,
+                fontWeight: 500
+              }}
+              iconSize={10}
+            />
             <Bar 
               dataKey="cost" 
               fill={colors.primary} // Using a single color for simplicity and to fix TypeScript errors
@@ -439,8 +478,8 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
             outerRadius="75%" 
             data={radarData}
             margin={isMobile ? 
-              { top: 10, right: 10, bottom: 30, left: 10 } : 
-              { top: 20, right: 30, bottom: 40, left: 30 }
+              { top: 25, right: 25, bottom: 40, left: 25 } : 
+              { top: 30, right: 30, bottom: 50, left: 30 }
             }
           >
             <PolarGrid gridType="polygon" />
@@ -448,21 +487,21 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
               dataKey="name" 
               tick={{ 
                 fill: 'currentColor', 
-                fontSize: isMobile ? 10 : 12,
-                dy: isMobile ? 5 : 3,
-                fontWeight: "500"
+                fontSize: isMobile ? 11 : 13,
+                dy: isMobile ? 8 : 5,
+                fontWeight: "500",
+                letterSpacing: "0.2px"
               }}
               tickLine={false}
+              stroke="#38a169"
               axisLine={{ strokeWidth: 1, stroke: "#38a169", opacity: 0.4 }}
               tickFormatter={(value) => {
-                // Simplify labels on mobile for better readability
-                if (isMobile) {
-                  if (value === "Transaction Speed") return "Speed";
-                  if (value === "Decentralization") return "Decentralization";
-                  if (value === "Security Level") return "Security";
-                  if (value === "Scalability") return "Scalability";
-                  if (value === "Energy Efficiency") return "Energy";
-                }
+                // Use consistent, readable labels
+                if (value === "Transaction Speed") return "Speed";
+                if (value === "Decentralization") return "Decentralization";
+                if (value === "Security Level") return "Security";
+                if (value === "Scalability") return "Scalability";
+                if (value === "Energy Efficiency") return "Energy Efficiency";
                 return value;
               }}
             />
