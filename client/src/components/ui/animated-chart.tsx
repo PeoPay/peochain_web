@@ -337,7 +337,7 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
               width={isMobile ? 80 : 95}
             />
             <Tooltip 
-              formatter={(value: number) => [`${value.toLocaleString()} TPS`, 'Transactions Per Second']}
+              formatter={(value: number) => [`${value.toLocaleString()} TPS`]}
               contentStyle={{ 
                 fontSize: isMobile ? '11px' : '12px', 
                 padding: isMobile ? '5px 8px' : '8px 10px',
@@ -347,10 +347,9 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
               itemStyle={{ padding: isMobile ? '2px 0' : '3px 0' }}
               cursor={false}
             />
-            <Legend verticalAlign="top" height={isMobile ? 20 : 30} />
             <Bar 
               dataKey="tps" 
-              name="Transactions Per Second"
+              name=""
               animationDuration={1000}
             >
               {filteredData.map((entry, index) => (
@@ -421,7 +420,7 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
               width={isMobile ? 55 : 65}
             />
             <Tooltip 
-              formatter={(value: number) => [`$${value.toFixed(5)}`, 'Transaction Cost']}
+              formatter={(value: number) => [`$${value.toFixed(5)}`]}
               contentStyle={{ 
                 fontSize: isMobile ? '11px' : '13px', 
                 padding: isMobile ? '6px 10px' : '8px 12px',
@@ -436,21 +435,10 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
               }}
               cursor={false}
             />
-            <Legend 
-              verticalAlign="top" 
-              height={30} 
-              wrapperStyle={{ 
-                fontSize: isMobile ? 11 : 13,
-                paddingTop: 5, 
-                paddingBottom: 5,
-                fontWeight: 500
-              }}
-              iconSize={10}
-            />
             <Bar 
               dataKey="cost" 
               fill={colors.primary} // Using a single color for simplicity and to fix TypeScript errors
-              name="Transaction Cost (USD)"
+              name=""
               animationDuration={1000}
             />
             {!isMobile && (
