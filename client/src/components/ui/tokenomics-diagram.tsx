@@ -151,35 +151,36 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
     return (
       <div className="w-full h-full">
         <h3 className="text-lg font-semibold text-center mb-2 text-primary">Token Value Projection</h3>
-        <div className="w-full" style={{ height: isMobile ? '280px' : '320px' }}>
+        <div className="w-full" style={{ height: isMobile ? '300px' : '350px' }}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart 
               data={mobileData}
-              margin={{ top: 10, right: 35, left: 20, bottom: isMobile ? 50 : 35 }}
+              margin={{ top: 10, right: 45, left: 25, bottom: isMobile ? 60 : 40 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(90, 131, 100, 0.2)" />
               <XAxis 
                 dataKey="quarter" 
-                tick={{ fontSize: 9 }}
+                tick={{ fontSize: 10 }}
                 angle={isMobile ? -45 : 0}
                 textAnchor={isMobile ? "end" : "middle"}
-                height={isMobile ? 70 : 40}
-                tickMargin={isMobile ? 10 : 5}
+                height={isMobile ? 75 : 45}
+                tickMargin={isMobile ? 12 : 8}
+                padding={{ left: 5, right: 5 }}
               />
               <YAxis 
                 yAxisId="left" 
-                tick={{ fontSize: 9 }}
+                tick={{ fontSize: 10 }}
                 tickCount={5}
                 tickFormatter={(value) => `$${value.toFixed(1)}`}
-                width={35}
+                width={40}
               />
               <YAxis 
                 yAxisId="right" 
                 orientation="right" 
-                tick={{ fontSize: 9 }}
+                tick={{ fontSize: 10 }}
                 tickCount={5}
                 tickFormatter={(value) => `${value}M`}
-                width={35}
+                width={40}
               />
               <Tooltip 
                 formatter={(value: number, name) => {
@@ -224,24 +225,25 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
             <BarChart
               data={metricsData}
               layout="vertical"
-              margin={{ top: 10, right: 30, left: isMobile ? 90 : 120, bottom: 15 }}
+              margin={{ top: 15, right: 40, left: isMobile ? 135 : 170, bottom: 20 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(90, 131, 100, 0.2)" />
               <XAxis 
                 type="number" 
                 tickFormatter={formatNumber}
-                tick={{ fontSize: 9 }}
+                tick={{ fontSize: 10 }}
                 tickCount={5}
+                padding={{ left: 0, right: 10 }}
               />
               <YAxis 
                 dataKey="name" 
                 type="category"
-                width={isMobile ? 90 : 120}
+                width={isMobile ? 130 : 165}
                 tick={{ 
-                  fontSize: 9,
-                  width: isMobile ? 85 : 110
+                  fontSize: isMobile ? 9 : 10,
+                  width: isMobile ? 125 : 160
                 }}
-                tickMargin={5}
+                tickMargin={8}
               />
               <Tooltip 
                 formatter={(value: number) => [formatNumber(value), 'Tokens']}
