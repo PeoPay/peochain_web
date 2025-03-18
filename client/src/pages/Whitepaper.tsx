@@ -379,23 +379,23 @@ export default function Whitepaper() {
                   </div>
                   
                   {expandedSections.tokenomics && (
-                    <div className="mb-8 p-4 bg-primary/5 rounded-xl">
-                      <h3 className="font-bold text-xl mb-4 text-center">Token Distribution & Metrics</h3>
-                      <div className="h-[400px] mb-6 responsive-chart">
+                    <div className="mb-8 p-8 bg-primary/5 rounded-xl">
+                      <h3 className="font-bold text-xl mb-6 text-center">Token Distribution</h3>
+                      <div className="h-[460px] mb-12 responsive-chart max-w-3xl mx-auto">
                         <TokenomicsDiagram mode="distribution" />
                       </div>
                       
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="flex flex-col items-center">
-                          <h4 className="font-semibold text-lg mb-3 text-center">Token Value Projection</h4>
-                          <div className="h-[280px] w-full responsive-chart">
+                      <div className="space-y-16 mt-12">
+                        <div className="max-w-3xl mx-auto">
+                          <h4 className="font-semibold text-lg mb-4 text-center">Token Value Projection</h4>
+                          <div className="h-[460px] w-full responsive-chart">
                             <TokenomicsDiagram mode="value" />
                           </div>
                         </div>
                         
-                        <div className="flex flex-col items-center">
-                          <h4 className="font-semibold text-lg mb-3 text-center">Key Token Metrics</h4>
-                          <div className="h-[280px] w-full responsive-chart">
+                        <div className="max-w-3xl mx-auto">
+                          <h4 className="font-semibold text-lg mb-4 text-center">Key Token Metrics</h4>
+                          <div className="h-[520px] w-full responsive-chart">
                             <TokenomicsDiagram mode="metrics" />
                           </div>
                         </div>
