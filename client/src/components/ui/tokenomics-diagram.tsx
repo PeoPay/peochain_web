@@ -39,38 +39,37 @@ interface TokenomicsDiagramProps {
 }
 
 export function TokenomicsDiagram({ className = '', mode = 'distribution' }: TokenomicsDiagramProps) {
-  // Token Distribution Data
+  // Updated Token Distribution Data with accurate data
   const distributionData: TokenDistributionData[] = [
-    { name: 'Active Validators', value: 30, color: '#38a169' },
-    { name: 'Ecosystem Growth', value: 25, color: '#5a8364' },
-    { name: 'Team Commitment', value: 15, color: '#276749' },
-    { name: 'Stabilization Fund', value: 15, color: '#68d391' },
-    { name: 'Liquidity', value: 10, color: '#2f855a' },
-    { name: 'Community Adoption', value: 5, color: '#9ae6b4' }
+    { name: 'Public Allocation', value: 30, color: '#38a169' },
+    { name: 'Ecosystem Fund', value: 25, color: '#5a8364' },
+    { name: 'Team & Advisors', value: 15, color: '#276749' },
+    { name: 'Reserve Fund', value: 15, color: '#68d391' },
+    { name: 'Liquidity Provision', value: 10, color: '#2f855a' },
+    { name: 'Community Rewards', value: 5, color: '#9ae6b4' }
   ];
   
-  // Token Value Projections
+  // Updated Token Value Projections with final token value data
   const valueData: TokenValueData[] = [
-    { quarter: 'Q4 2024', price: 0.05, volume: 12 },
-    { quarter: 'Q1 2025', price: 0.08, volume: 18 },
-    { quarter: 'Q2 2025', price: 0.12, volume: 28 },
-    { quarter: 'Q3 2025', price: 0.15, volume: 35 },
-    { quarter: 'Q4 2025', price: 0.22, volume: 42 },
-    { quarter: 'Q1 2026', price: 0.30, volume: 55 },
-    { quarter: 'Q2 2026', price: 0.38, volume: 65 },
-    { quarter: 'Q3 2026', price: 0.45, volume: 78 },
-    { quarter: 'Q4 2026', price: 0.53, volume: 85 },
-    { quarter: 'Q1 2027', price: 0.62, volume: 92 },
-    { quarter: 'Q2 2027', price: 0.70, volume: 110 }
+    { quarter: 'Q3 2024', price: 0.05, volume: 12 },
+    { quarter: 'Q4 2024', price: 0.09, volume: 20 },
+    { quarter: 'Q1 2025', price: 0.14, volume: 30 },
+    { quarter: 'Q2 2025', price: 0.21, volume: 45 },
+    { quarter: 'Q3 2025', price: 0.28, volume: 60 },
+    { quarter: 'Q4 2025', price: 0.35, volume: 75 },
+    { quarter: 'Q1 2026', price: 0.44, volume: 90 },
+    { quarter: 'Q2 2026', price: 0.52, volume: 105 },
+    { quarter: 'Q3 2026', price: 0.61, volume: 120 },
+    { quarter: 'Q4 2026', price: 0.70, volume: 135 }
   ];
   
-  // Token Metrics
+  // Updated Token Metrics with more concise labels for better display
   const metricsData: TokenMetricData[] = [
     { name: 'Total Supply', value: 1000000000, color: '#38a169' },
-    { name: 'Circulating Supply (Year 1)', value: 400000000, color: '#5a8364' },
-    { name: 'Staking Rewards (Annual)', value: 80000000, color: '#276749' },
-    { name: 'Governance Allocation', value: 50000000, color: '#68d391' },
-    { name: 'Ecosystem Development', value: 120000000, color: '#2f855a' }
+    { name: 'Circulating (Y1)', value: 350000000, color: '#5a8364' },
+    { name: 'Staking Rewards', value: 75000000, color: '#276749' },
+    { name: 'Governance', value: 50000000, color: '#68d391' },
+    { name: 'Ecosystem Dev', value: 150000000, color: '#2f855a' }
   ];
   
   // Format large numbers
@@ -103,39 +102,87 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
   const renderDistributionChart = () => {
     return (
       <div className="w-full h-full">
-        <h3 className="text-lg font-semibold text-center mb-2 text-primary">Token Distribution</h3>
-        <div className="w-full" style={{ height: isMobile ? '280px' : '320px' }}>
+        <h3 className="text-lg font-semibold text-center mb-3 text-primary">Token Distribution</h3>
+        <div className="w-full" style={{ height: isMobile ? '330px' : '380px' }}>
           <ResponsiveContainer width="100%" height="100%">
-            <PieChart margin={{ top: 10, right: 30, bottom: 20, left: 30 }}>
+            <PieChart 
+              margin={{ 
+                top: 10, 
+                right: isMobile ? 10 : 30, 
+                bottom: 20, 
+                left: isMobile ? 10 : 30 
+              }}
+            >
               <Pie
                 data={distributionData}
                 cx="50%"
                 cy="45%"
-                innerRadius={isMobile ? 35 : 55}
-                outerRadius={isMobile ? 60 : 80}
-                paddingAngle={3}
+                innerRadius={isMobile ? 50 : 70}
+                outerRadius={isMobile ? 80 : 110}
+                paddingAngle={4}
                 dataKey="value"
-                label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
-                labelLine={{ stroke: '#276749', strokeWidth: 0.5 }}
+                label={({ name, percent }) => 
+                  isMobile 
+                    ? `${(percent * 100).toFixed(0)}%` 
+                    : `${name}: ${(percent * 100).toFixed(0)}%`
+                }
+                labelLine={{ 
+                  stroke: '#276749', 
+                  strokeWidth: 1,
+                  strokeOpacity: 0.8
+                }}
               >
                 {distributionData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+                  <Cell 
+                    key={`cell-${index}`} 
+                    fill={entry.color} 
+                    stroke="#fff"
+                    strokeWidth={1}
+                  />
                 ))}
               </Pie>
               <Tooltip 
                 formatter={(value: number) => [`${value}%`, 'Allocation']}
-                contentStyle={{ fontSize: '12px' }}
+                contentStyle={{ 
+                  fontSize: '13px',
+                  fontWeight: 500,
+                  borderRadius: '4px',
+                  border: '1px solid #276749',
+                  backgroundColor: 'rgba(255, 255, 255, 0.95)'
+                }}
+                labelStyle={{
+                  fontWeight: 600,
+                  marginBottom: '5px'
+                }}
               />
-              {!isMobile && <Legend layout="vertical" align="right" verticalAlign="middle" wrapperStyle={{ right: 0, paddingLeft: 20 }} />}
+              {!isMobile && (
+                <Legend 
+                  layout="vertical" 
+                  align="right" 
+                  verticalAlign="middle" 
+                  wrapperStyle={{ 
+                    right: 0, 
+                    paddingLeft: 20,
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    lineHeight: '1.5em'
+                  }}
+                  iconSize={10}
+                  iconType="circle"
+                />
+              )}
             </PieChart>
           </ResponsiveContainer>
         </div>
         {isMobile && (
-          <div className="grid grid-cols-2 gap-1 text-xs mt-2">
+          <div className="grid grid-cols-2 gap-2 text-xs mt-3 px-2">
             {distributionData.map((item, index) => (
               <div key={index} className="flex items-center">
-                <div className="w-3 h-3 rounded-full mr-1" style={{ backgroundColor: item.color }}></div>
-                <span>{item.name}: {item.value}%</span>
+                <div 
+                  className="w-3 h-3 rounded-full mr-1.5 flex-shrink-0" 
+                  style={{ backgroundColor: item.color }}
+                ></div>
+                <span className="text-sm font-medium truncate">{item.name}: {item.value}%</span>
               </div>
             ))}
           </div>
@@ -145,69 +192,142 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
   };
   
   const renderValueChart = () => {
-    // Filter for mobile to show fewer data points
+    // Filter for mobile to show fewer data points - show only every 2nd point on mobile
     const mobileData = isMobile ? valueData.filter((_, i) => i % 2 === 0) : valueData;
     
     return (
       <div className="w-full h-full">
         <h3 className="text-lg font-semibold text-center mb-2 text-primary">Token Value Projection</h3>
-        <div className="w-full" style={{ height: isMobile ? '300px' : '350px' }}>
+        <div className="w-full" style={{ height: isMobile ? '330px' : '380px' }}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart 
               data={mobileData}
-              margin={{ top: 10, right: 45, left: 25, bottom: isMobile ? 60 : 40 }}
+              margin={{ 
+                top: 20, 
+                right: isMobile ? 55 : 65, 
+                left: isMobile ? 30 : 40, 
+                bottom: isMobile ? 75 : 55 
+              }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(90, 131, 100, 0.2)" />
               <XAxis 
                 dataKey="quarter" 
-                tick={{ fontSize: 10 }}
+                tick={{ 
+                  fontSize: isMobile ? 10 : 12,
+                  fontWeight: 500 
+                }}
                 angle={isMobile ? -45 : 0}
                 textAnchor={isMobile ? "end" : "middle"}
-                height={isMobile ? 75 : 45}
-                tickMargin={isMobile ? 12 : 8}
-                padding={{ left: 5, right: 5 }}
+                height={isMobile ? 80 : 50}
+                tickMargin={isMobile ? 15 : 10}
+                padding={{ left: 10, right: 10 }}
+                stroke="#666"
               />
               <YAxis 
                 yAxisId="left" 
-                tick={{ fontSize: 10 }}
-                tickCount={5}
-                tickFormatter={(value) => `$${value.toFixed(1)}`}
-                width={40}
+                tick={{ 
+                  fontSize: isMobile ? 11 : 12,
+                  fontWeight: 500 
+                }}
+                tickCount={6}
+                domain={[0, 0.8]}
+                tickFormatter={(value) => `$${value.toFixed(2)}`}
+                width={isMobile ? 45 : 55}
+                stroke="#276749"
+                label={{ 
+                  value: 'Price ($)', 
+                  angle: -90, 
+                  position: 'insideLeft',
+                  offset: -5,
+                  style: { 
+                    textAnchor: 'middle',
+                    fill: '#276749',
+                    fontSize: isMobile ? 11 : 13,
+                    fontWeight: 500
+                  }
+                }}
               />
               <YAxis 
                 yAxisId="right" 
                 orientation="right" 
-                tick={{ fontSize: 10 }}
-                tickCount={5}
+                tick={{ 
+                  fontSize: isMobile ? 11 : 12,
+                  fontWeight: 500 
+                }}
+                tickCount={6}
+                domain={[0, 'dataMax + 20']}
                 tickFormatter={(value) => `${value}M`}
-                width={40}
+                width={isMobile ? 45 : 55}
+                stroke="#5a8364"
+                label={{ 
+                  value: 'Volume ($M)', 
+                  angle: 90, 
+                  position: 'insideRight',
+                  offset: 5,
+                  style: { 
+                    textAnchor: 'middle',
+                    fill: '#5a8364',
+                    fontSize: isMobile ? 11 : 13,
+                    fontWeight: 500
+                  }
+                }}
               />
               <Tooltip 
                 formatter={(value: number, name) => {
                   if (name === 'price') return [`$${value.toFixed(2)}`, 'Token Price'];
                   return [`$${value}M`, 'Trading Volume'];
                 }}
-                contentStyle={{ fontSize: '12px' }}
+                contentStyle={{ 
+                  fontSize: '13px',
+                  fontWeight: 500,
+                  borderRadius: '4px',
+                  border: '1px solid #276749',
+                  backgroundColor: 'rgba(255, 255, 255, 0.95)'
+                }}
+                labelStyle={{
+                  fontWeight: 600,
+                  marginBottom: '5px'
+                }}
               />
-              <Legend wrapperStyle={{ paddingTop: 10 }} />
+              <Legend 
+                wrapperStyle={{ 
+                  paddingTop: 15,
+                  paddingBottom: 10,
+                  fontWeight: 500,
+                  fontSize: '12px'
+                }} 
+                iconSize={10}
+                iconType="circle"
+              />
               <Line 
                 yAxisId="left"
                 type="monotone" 
                 dataKey="price" 
                 stroke="#276749" 
-                strokeWidth={2}
-                activeDot={{ r: 6 }}
+                strokeWidth={3}
+                activeDot={{ r: 7, fill: '#276749', stroke: '#fff', strokeWidth: 2 }}
                 name="Token Price"
-                dot={{ strokeWidth: 1, r: 3 }}
+                dot={{ 
+                  strokeWidth: 2, 
+                  r: 4, 
+                  fill: '#fff', 
+                  stroke: '#276749' 
+                }}
               />
               <Line 
                 yAxisId="right"
                 type="monotone" 
                 dataKey="volume" 
-                stroke="#9ae6b4" 
-                strokeWidth={2}
-                dot={{ strokeWidth: 1, r: 3 }}
-                name="Trading Volume ($M)"
+                stroke="#5a8364" 
+                strokeWidth={3}
+                activeDot={{ r: 7, fill: '#5a8364', stroke: '#fff', strokeWidth: 2 }}
+                name="Trading Volume"
+                dot={{ 
+                  strokeWidth: 2, 
+                  r: 4, 
+                  fill: '#fff', 
+                  stroke: '#5a8364' 
+                }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -219,40 +339,80 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
   const renderMetricsChart = () => {
     return (
       <div className="w-full h-full">
-        <h3 className="text-lg font-semibold text-center mb-2 text-primary">Token Metrics</h3>
-        <div className="w-full" style={{ height: isMobile ? '300px' : '350px' }}>
+        <h3 className="text-lg font-semibold text-center mb-2 text-primary">Key Token Metrics</h3>
+        <div className="w-full" style={{ height: isMobile ? '330px' : '380px' }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={metricsData}
               layout="vertical"
-              margin={{ top: 15, right: 40, left: isMobile ? 135 : 170, bottom: 20 }}
+              margin={{ 
+                top: 20, 
+                right: isMobile ? 60 : 80, 
+                left: isMobile ? 100 : 120, 
+                bottom: 20 
+              }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(90, 131, 100, 0.2)" />
               <XAxis 
                 type="number" 
                 tickFormatter={formatNumber}
-                tick={{ fontSize: 10 }}
+                tick={{ 
+                  fontSize: isMobile ? 11 : 12,
+                  fontWeight: 500 
+                }}
                 tickCount={5}
+                domain={[0, 'dataMax + 100000000']}
                 padding={{ left: 0, right: 10 }}
+                stroke="#666"
+                label={{ 
+                  value: 'Token Amount', 
+                  position: 'insideBottom',
+                  offset: -10,
+                  style: { 
+                    textAnchor: 'middle',
+                    fill: '#276749',
+                    fontSize: isMobile ? 11 : 13,
+                    fontWeight: 500
+                  }
+                }}
               />
               <YAxis 
                 dataKey="name" 
                 type="category"
-                width={isMobile ? 130 : 165}
+                width={isMobile ? 95 : 115}
                 tick={{ 
-                  fontSize: isMobile ? 9 : 10,
-                  width: isMobile ? 125 : 160
+                  fontSize: isMobile ? 11 : 12,
+                  fontWeight: 500,
+                  width: isMobile ? 90 : 110,
+                  fill: '#333'
                 }}
-                tickMargin={8}
+                tickMargin={10}
               />
               <Tooltip 
                 formatter={(value: number) => [formatNumber(value), 'Tokens']}
-                contentStyle={{ fontSize: '12px' }}
+                contentStyle={{ 
+                  fontSize: '13px',
+                  fontWeight: 500,
+                  borderRadius: '4px',
+                  border: '1px solid #276749',
+                  backgroundColor: 'rgba(255, 255, 255, 0.95)'
+                }}
+                labelStyle={{
+                  fontWeight: 600,
+                  marginBottom: '5px'
+                }}
               />
               <Bar 
                 dataKey="value" 
-                name="Tokens"
-                barSize={isMobile ? 12 : 20}
+                name="Token Amount"
+                barSize={isMobile ? 16 : 25}
+                label={{
+                  position: 'right',
+                  formatter: formatNumber,
+                  fill: '#333',
+                  fontSize: isMobile ? 10 : 11,
+                  fontWeight: 600
+                }}
               >
                 {metricsData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
@@ -278,19 +438,21 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
     }
   };
   
-  // Adjust sizes based on screen width - increased to prevent text overlap
-  const [chartHeight, setChartHeight] = React.useState(450);
+  // Adjust sizes based on screen width - with improved sizing for better readability
+  const [chartHeight, setChartHeight] = React.useState(480);
   
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 480) {
-        setChartHeight(340); // Small mobile (increased)
+        setChartHeight(380); // Small mobile (significantly increased)
       } else if (window.innerWidth <= 640) {
-        setChartHeight(380); // Mobile (increased)
+        setChartHeight(420); // Mobile (significantly increased)
       } else if (window.innerWidth <= 768) {
-        setChartHeight(400); // Tablet (increased)
+        setChartHeight(450); // Tablet (increased)
+      } else if (window.innerWidth <= 1024) {
+        setChartHeight(480); // Small desktop
       } else {
-        setChartHeight(450); // Desktop (increased)
+        setChartHeight(500); // Large desktop
       }
     };
     
