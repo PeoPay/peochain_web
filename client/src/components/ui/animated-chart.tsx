@@ -345,7 +345,7 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
                 boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
               }}
               itemStyle={{ padding: isMobile ? '2px 0' : '3px 0' }}
-              cursor={{ fill: 'rgba(0,0,0,0.05)' }}
+              cursor={false}
             />
             <Legend verticalAlign="top" height={isMobile ? 20 : 30} />
             <Bar 
@@ -434,7 +434,7 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
                 padding: isMobile ? '2px 0' : '3px 0',
                 color: '#555'
               }}
-              cursor={{ fill: 'rgba(0,0,0,0.03)' }}
+              cursor={false}
             />
             <Legend 
               verticalAlign="top" 
