@@ -472,8 +472,8 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
         </div>
       </div>
       
-      <div className="flex-1 min-h-[160px] md:min-h-[220px]">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="flex-1 min-h-[240px] sm:min-h-[280px] md:min-h-[320px]">
+        <ResponsiveContainer width="100%" height="100%" debounce={50}>
           {renderChart()}
         </ResponsiveContainer>
       </div>
