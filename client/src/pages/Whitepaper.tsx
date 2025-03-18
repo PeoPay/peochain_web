@@ -569,7 +569,7 @@ export default function Whitepaper() {
                   {expandedSections.integration && (
                     <div className="mb-8 p-4 bg-primary/5 rounded-xl">
                       <h3 className="font-bold text-xl mb-4 text-center">Mobile Integration Architecture</h3>
-                      <div className="w-full responsive-diagram">
+                      <div className="w-full responsive-diagram h-[350px] sm:h-[400px]">
                         <MobileIntegrationDiagram />
                       </div>
                       
