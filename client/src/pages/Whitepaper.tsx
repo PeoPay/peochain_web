@@ -1,13 +1,34 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useLocation } from "wouter";
+import { useState } from "react";
+import { AnimatedChart } from "@/components/ui/animated-chart";
+import { ConsensusDiagram } from "@/components/ui/consensus-diagram";
+import { SubnetDiagram } from "@/components/ui/subnet-diagram";
+import { TokenomicsDiagram } from "@/components/ui/tokenomics-diagram";
+import { MobileIntegrationDiagram } from "@/components/ui/mobile-integration-diagram";
 
 export default function Whitepaper() {
   const [, navigate] = useLocation();
+  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
+    consensusMechanism: false,
+    dcs: false,
+    architecture: false,
+    integration: false,
+    tokenomics: false
+  });
+
+  // Toggle section expansion
+  const toggleSection = (section: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
 
   // Navigate to home page sections
   const navigateToHome = (section: string) => {
@@ -125,7 +146,7 @@ export default function Whitepaper() {
                 <h2 className="text-2xl font-bold mb-6">Innovative Core Technologies</h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-xl">
+                  <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-xl whitepaper-section">
                     <h3 className="font-bold text-xl mb-3">Proof of Synergy (PoSyg)</h3>
                     <ul className="list-disc pl-6 space-y-2 text-foreground/80">
                       <li>Combines security, decentralization, and economic incentives in a single consensus mechanism</li>
@@ -133,9 +154,29 @@ export default function Whitepaper() {
                       <li>Achieves high performance without compromising on decentralization</li>
                       <li>Energy efficient with minimal environmental impact</li>
                     </ul>
+                    
+                    <div 
+                      className="flex items-center justify-center mt-4 text-primary cursor-pointer hover:text-primary/80 text-sm font-medium"
+                      onClick={() => toggleSection('consensusMechanism')}
+                    >
+                      {expandedSections.consensusMechanism ? (
+                        <>Show Less <ChevronUp className="ml-1 h-4 w-4" /></>
+                      ) : (
+                        <>View Consensus Mechanism Visualization <ChevronDown className="ml-1 h-4 w-4" /></>
+                      )}
+                    </div>
+                    
+                    {expandedSections.consensusMechanism && (
+                      <div className="mt-4 p-3 border border-primary/10 rounded-xl">
+                        <ConsensusDiagram mode="posyg" />
+                        <p className="text-xs text-foreground/70 mt-2 text-center">
+                          Fig. 1: Proof of Synergy (PoSyg) Mechanism − Validators form synergistic relationships to optimize transaction validation
+                        </p>
+                      </div>
+                    )}
                   </div>
                   
-                  <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-xl">
+                  <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-xl whitepaper-section">
                     <h3 className="font-bold text-xl mb-3">Dynamic Contribution Scoring (DCS)</h3>
                     <ul className="list-disc pl-6 space-y-2 text-foreground/80">
                       <li>Transparent, mathematically rigorous incentive model</li>
@@ -143,7 +184,37 @@ export default function Whitepaper() {
                       <li>Encourages long-term, sustainable network participation</li>
                       <li>Resistant to gaming or manipulation by wealthy stakeholders</li>
                     </ul>
+                    
+                    <div 
+                      className="flex items-center justify-center mt-4 text-primary cursor-pointer hover:text-primary/80 text-sm font-medium"
+                      onClick={() => toggleSection('dcs')}
+                    >
+                      {expandedSections.dcs ? (
+                        <>Show Less <ChevronUp className="ml-1 h-4 w-4" /></>
+                      ) : (
+                        <>View DCS Visualization <ChevronDown className="ml-1 h-4 w-4" /></>
+                      )}
+                    </div>
+                    
+                    {expandedSections.dcs && (
+                      <div className="mt-4 p-3 border border-primary/10 rounded-xl">
+                        <ConsensusDiagram mode="dcs" />
+                        <p className="text-xs text-foreground/70 mt-2 text-center">
+                          Fig. 2: Dynamic Contribution Scoring (DCS) − Multi-factor performance evaluation system for validators
+                        </p>
+                      </div>
+                    )}
                   </div>
+                </div>
+                
+                <div className="mt-8 p-5 bg-primary/5 rounded-xl">
+                  <h3 className="font-bold text-xl mb-4 text-center">Performance Comparison</h3>
+                  <div className="h-[300px]">
+                    <AnimatedChart />
+                  </div>
+                  <p className="text-sm text-foreground/70 mt-3 text-center">
+                    Fig. 3: PeoChain performance metrics compared to other leading blockchain networks
+                  </p>
                 </div>
               </section>
 
