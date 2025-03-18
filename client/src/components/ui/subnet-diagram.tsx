@@ -5,8 +5,36 @@ interface SubnetDiagramProps {
 }
 
 export function SubnetDiagram({ className = '' }: SubnetDiagramProps) {
-  const width = 500;
-  const height = 320;
+  // Adjust size based on responsive design needs
+  const [diagramSize, setDiagramSize] = React.useState({ width: 500, height: 380 });
+  
+  // Responsive diagram adjustments
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 480) {
+        setDiagramSize({ width: 340, height: 380 }); // Small mobile
+      } else if (window.innerWidth <= 640) {
+        setDiagramSize({ width: 420, height: 400 }); // Mobile
+      } else if (window.innerWidth <= 768) {
+        setDiagramSize({ width: 480, height: 420 }); // Tablet
+      } else {
+        setDiagramSize({ width: 500, height: 440 }); // Desktop
+      }
+    };
+    
+    // Set initial size
+    handleResize();
+    
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  const width = diagramSize.width;
+  const height = diagramSize.height;
+  const isMobile = width < 400;
   
   return (
     <div className={`w-full ${className}`}>
@@ -34,17 +62,7 @@ export function SubnetDiagram({ className = '' }: SubnetDiagramProps) {
           </marker>
         </defs>
         
-        {/* Main Title */}
-        <text
-          x={width / 2}
-          y={25}
-          textAnchor="middle"
-          fontSize="14"
-          fontWeight="bold"
-          fill="#276749"
-        >
-          Subnet Validator Architecture
-        </text>
+        {/* Main Title - removed to prevent duplication */}
         
         {/* Central Blockchain Core */}
         <circle
@@ -117,12 +135,12 @@ export function SubnetDiagram({ className = '' }: SubnetDiagramProps) {
                 strokeDasharray="2 1"
               />
               
-              {/* Subnet Label */}
+              {/* Subnet Label - improved spacing and sizing */}
               <text
                 x={centerX}
-                y={centerY - subnetRadius - 10}
+                y={centerY - subnetRadius - 12}
                 textAnchor="middle"
-                fontSize="10"
+                fontSize={isMobile ? 9 : 10}
                 fontWeight="bold"
                 fill="#5a8364"
               >
@@ -149,50 +167,54 @@ export function SubnetDiagram({ className = '' }: SubnetDiagramProps) {
                 );
               })}
               
-              {/* Subnet Function */}
+              {/* Subnet Function - improved spacing and readability */}
               <text
                 x={centerX}
                 y={centerY + subnetRadius + 15}
                 textAnchor="middle"
-                fontSize="8"
-                fill="currentColor"
+                fontSize={isMobile ? 7 : 8}
+                fill="#276749"
+                fontWeight={isMobile ? "normal" : "medium"}
               >
                 {
-                  subnetIndex === 0 ? "Payment Processing" :
-                  subnetIndex === 1 ? "Smart Contracts" :
-                  subnetIndex === 2 ? "Cross-Chain Bridge" :
-                  subnetIndex === 3 ? "Identity Services" :
-                  "Stablecoin Reserve"
+                  subnetIndex === 0 ? (isMobile ? "Payments" : "Payment Processing") :
+                  subnetIndex === 1 ? (isMobile ? "Contracts" : "Smart Contracts") :
+                  subnetIndex === 2 ? (isMobile ? "Bridge" : "Cross-Chain Bridge") :
+                  subnetIndex === 3 ? (isMobile ? "Identity" : "Identity Services") :
+                  (isMobile ? "Stablecoin" : "Stablecoin Reserve")
                 }
               </text>
             </g>
           );
         })}
         
-        {/* Descriptive Text */}
+        {/* Descriptive Text - improved positioning and readability */}
         <text
           x={width / 2}
-          y={height - 15}
+          y={height - 30}
           textAnchor="middle"
-          fontSize="10"
+          fontSize={isMobile ? 8 : 10}
           fill="currentColor"
         >
-          Independent validator subnetworks enable parallel processing and specialization
+          {isMobile ? 
+            "Subnets enable parallel processing" : 
+            "Independent validator subnetworks enable parallel processing and specialization"
+          }
         </text>
       </svg>
       
-      {/* Legend */}
-      <div className="flex justify-center gap-4 mt-2 text-xs">
+      {/* Legend - improved for mobile responsiveness */}
+      <div className={`flex flex-wrap justify-center gap-x-3 gap-y-1 mt-4 mb-6 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>
         <div className="flex items-center">
-          <div className="w-3 h-3 rounded-full bg-[#276749] mr-1"></div>
+          <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#276749] mr-1"></div>
           <span>Core Network</span>
         </div>
         <div className="flex items-center">
-          <div className="w-3 h-3 rounded-full bg-[#38a169] mr-1"></div>
+          <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#38a169] mr-1"></div>
           <span>Subnet Leader</span>
         </div>
         <div className="flex items-center">
-          <div className="w-3 h-3 rounded-full bg-[#5a8364] mr-1"></div>
+          <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#5a8364] mr-1"></div>
           <span>Subnet Validator</span>
         </div>
       </div>

@@ -5,11 +5,39 @@ interface MobileIntegrationDiagramProps {
 }
 
 export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDiagramProps) {
-  const width = 500;
-  const height = 300;
+  // Responsive diagram sizing
+  const [diagramSize, setDiagramSize] = React.useState({ width: 500, height: 350 });
+  
+  // Responsive diagram adjustments
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 480) {
+        setDiagramSize({ width: 340, height: 380 }); // Small mobile
+      } else if (window.innerWidth <= 640) {
+        setDiagramSize({ width: 420, height: 380 }); // Mobile
+      } else if (window.innerWidth <= 768) {
+        setDiagramSize({ width: 470, height: 380 }); // Tablet
+      } else {
+        setDiagramSize({ width: 500, height: 360 }); // Desktop
+      }
+    };
+    
+    // Set initial size
+    handleResize();
+    
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  const width = diagramSize.width;
+  const height = diagramSize.height;
+  const isMobile = width < 400;
   
   return (
-    <div className={`w-full ${className}`}>
+    <div className={`w-full ${className}`} style={{ minHeight: `${height}px` }}>
       <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} className="mobile-integration-diagram">
         <defs>
           <linearGradient id="mobileGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -73,64 +101,71 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
           { name: 'GCash', y: 120, icon: '💳', country: 'Philippines' },
           { name: 'MTN Money', y: 180, icon: '💰', country: 'Nigeria' },
           { name: 'Wave', y: 240, icon: '🌊', country: 'West Africa' }
-        ].map((provider, index) => (
-          <g key={`provider-${index}`}>
-            {/* Provider box */}
-            <rect
-              x={50}
-              y={provider.y - 15}
-              width={100}
-              height={30}
-              rx={4}
-              fill="#5a8364"
-              opacity={0.8}
-              filter="url(#shadow)"
-            />
-            <text
-              x={75}
-              y={provider.y + 5}
-              textAnchor="middle"
-              fontSize="10"
-              fontWeight="bold"
-              fill="white"
-            >
-              {provider.icon} {provider.name}
-            </text>
-            
-            {/* Region label */}
-            <text
-              x={100}
-              y={provider.y + 20}
-              textAnchor="middle"
-              fontSize="8"
-              fill="currentColor"
-            >
-              {provider.country}
-            </text>
-            
-            {/* Connection to platform */}
-            <path
-              d={`M${150},${provider.y} C${width/2 - 100},${provider.y} ${width/2 - 100},${height/2} ${width/2 - 75},${height/2}`}
-              stroke="url(#mobileGradient)"
-              strokeWidth={1.5}
-              fill="none"
-              markerEnd="url(#dataFlowArrow)"
-              opacity={0.7}
-              className={index === 0 ? "animate-pulse" : ""}
-            />
-            
-            {/* Label for path */}
-            <text
-              x={width/4 + 20}
-              y={index % 2 === 0 ? provider.y - 10 : provider.y + 15}
-              textAnchor="middle"
-              fontSize="8"
-              fill="#276749"
-            >
-              {index % 2 === 0 ? "Deposit" : "Withdraw"}
-            </text>
-          </g>
-        ))}
+        ].map((provider, index) => {
+          // Calculate positions based on mobile or desktop
+          const boxX = isMobile ? 30 : 50;
+          const boxWidth = isMobile ? 85 : 100;
+          const textX = isMobile ? 70 : 100;
+          
+          return (
+            <g key={`provider-${index}`}>
+              {/* Provider box */}
+              <rect
+                x={boxX}
+                y={provider.y - 15}
+                width={boxWidth}
+                height={30}
+                rx={4}
+                fill="#5a8364"
+                opacity={0.8}
+                filter="url(#shadow)"
+              />
+              <text
+                x={boxX + (boxWidth/2)}
+                y={provider.y + 5}
+                textAnchor="middle"
+                fontSize={isMobile ? 8 : 10}
+                fontWeight="bold"
+                fill="white"
+              >
+                {provider.icon} {provider.name}
+              </text>
+              
+              {/* Region label */}
+              <text
+                x={boxX + (boxWidth/2)}
+                y={provider.y + 20}
+                textAnchor="middle"
+                fontSize={isMobile ? 7 : 8}
+                fill="currentColor"
+              >
+                {provider.country}
+              </text>
+              
+              {/* Connection to platform */}
+              <path
+                d={`M${boxX + boxWidth},${provider.y} C${width/2 - 75},${provider.y} ${width/2 - 75},${height/2} ${width/2 - 75},${height/2}`}
+                stroke="url(#mobileGradient)"
+                strokeWidth={isMobile ? 1 : 1.5}
+                fill="none"
+                markerEnd="url(#dataFlowArrow)"
+                opacity={0.7}
+                className={index === 0 ? "animate-pulse" : ""}
+              />
+              
+              {/* Label for path - offset to avoid overlapping with connectors */}
+              <text
+                x={(boxX + boxWidth + width/2 - 75) / 2}
+                y={index % 2 === 0 ? provider.y - 10 : provider.y + 15}
+                textAnchor="middle"
+                fontSize={isMobile ? 7 : 8}
+                fill="#276749"
+              >
+                {index % 2 === 0 ? "Deposit" : "Withdraw"}
+              </text>
+            </g>
+          );
+        })}
         
         {/* End User Applications */}
         {[
