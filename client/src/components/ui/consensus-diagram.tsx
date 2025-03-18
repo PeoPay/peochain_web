@@ -524,17 +524,17 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
       
       // Use container width to determine best size while respecting minimum heights
       if (window.innerWidth <= 480) {
-        // Small mobile - ensure higher minimum size for visibility
-        setDiagramSize({ width: Math.max(380, containerWidth), height: 460 });
+        // Small mobile - reduced dimensions to fit better on small screens
+        setDiagramSize({ width: Math.min(340, containerWidth), height: 420 });
       } else if (window.innerWidth <= 640) {
-        // Mobile - enhanced size for better visibility
-        setDiagramSize({ width: Math.max(460, containerWidth), height: 500 });
+        // Mobile - optimized proportions for better fit
+        setDiagramSize({ width: Math.min(420, containerWidth), height: 480 });
       } else if (window.innerWidth <= 768) {
-        // Tablet - increased proportions
-        setDiagramSize({ width: Math.max(550, containerWidth), height: 540 });
+        // Tablet - balanced proportions for medium screens
+        setDiagramSize({ width: Math.min(520, containerWidth), height: 520 });
       } else {
-        // Desktop - bigger overall size
-        setDiagramSize({ width: Math.max(650, containerWidth), height: 580 });
+        // Desktop - full size for larger screens
+        setDiagramSize({ width: Math.min(620, containerWidth), height: 560 });
       }
     };
     

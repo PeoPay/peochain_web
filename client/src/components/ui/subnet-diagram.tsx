@@ -12,11 +12,11 @@ export function SubnetDiagram({ className = '' }: SubnetDiagramProps) {
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 480) {
-        setDiagramSize({ width: 340, height: 420 }); // Small mobile
+        setDiagramSize({ width: 320, height: 400 }); // Small mobile - reduced height to prevent cutoff
       } else if (window.innerWidth <= 640) {
-        setDiagramSize({ width: 420, height: 440 }); // Mobile
+        setDiagramSize({ width: 380, height: 420 }); // Mobile - optimized for better text display
       } else if (window.innerWidth <= 768) {
-        setDiagramSize({ width: 480, height: 460 }); // Tablet
+        setDiagramSize({ width: 450, height: 440 }); // Tablet - better proportions
       } else {
         setDiagramSize({ width: 500, height: 480 }); // Desktop
       }
