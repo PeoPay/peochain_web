@@ -206,8 +206,8 @@ export default function Whitepaper() {
                 </div>
                 
                 <div className="mt-8 p-5 bg-primary/5 rounded-xl">
-                  <h3 className="font-bold text-xl mb-4 text-center">Performance Comparison</h3>
-                  <div className="h-[400px] responsive-chart w-full">
+                  <h3 className="font-bold text-xl mb-5 text-center">Performance Comparison</h3>
+                  <div className="h-[450px] responsive-chart w-full">
                     <AnimatedChart />
                   </div>
                 </div>
@@ -377,9 +377,9 @@ export default function Whitepaper() {
                   </div>
                   
                   {expandedSections.tokenomics && (
-                    <div className="mb-8 p-4 bg-primary/5 rounded-xl">
-                      <h3 className="font-bold text-xl mb-4 text-center">Token Distribution & Metrics</h3>
-                      <div className="h-[450px] mb-4 responsive-chart w-full">
+                    <div className="mb-8 p-5 bg-primary/5 rounded-xl">
+                      <h3 className="font-bold text-xl mb-5 text-center">Token Distribution & Metrics</h3>
+                      <div className="h-[480px] mb-5 responsive-chart w-full">
                         <TokenomicsDiagram mode="distribution" />
                       </div>
                       
@@ -567,9 +567,9 @@ export default function Whitepaper() {
                   </div>
                   
                   {expandedSections.integration && (
-                    <div className="mb-8 p-4 bg-primary/5 rounded-xl">
-                      <h3 className="font-bold text-xl mb-4 text-center">Mobile Integration Architecture</h3>
-                      <div className="flex justify-center responsive-diagram w-full h-[500px]">
+                    <div className="mb-8 p-5 bg-primary/5 rounded-xl">
+                      <h3 className="font-bold text-xl mb-5 text-center">Mobile Integration Architecture</h3>
+                      <div className="responsive-diagram w-full h-[520px]">
                         <MobileIntegrationDiagram />
                       </div>
                       
