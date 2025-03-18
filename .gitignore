@@ -1,6 +1,68 @@
+# Dependencies
 node_modules
+/.pnp
+.pnp.js
+
+# Build files
 dist
-.DS_Store
+build
 server/public
+
+# Runtime data
+*.pid
+*.seed
+*.log
+*.out
+*.pid
+*.gz
+*.swp
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+*.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE/Editor folders
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+.project
+.settings
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Testing
+/coverage
+.nyc_output
+
+# Temporary files
+.tmp
+.temp
+.cache
+tmp/
+temp/
+
+# Misc
 vite.config.ts.*
 *.tar.gz
+.vercel
+.netlify
