@@ -506,9 +506,37 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
     );
   };
   
+  // Responsive diagram adjustments
+  const [diagramSize, setDiagramSize] = React.useState({ width: 600, height: 450 });
+  
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 480) {
+        setDiagramSize({ width: 320, height: 300 });
+      } else if (window.innerWidth <= 640) {
+        setDiagramSize({ width: 400, height: 350 });
+      } else if (window.innerWidth <= 768) {
+        setDiagramSize({ width: 500, height: 400 });
+      } else {
+        setDiagramSize({ width: 600, height: 450 });
+      }
+    };
+    
+    // Set initial size
+    handleResize();
+    
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className={`w-full ${className}`}>
-      {mode === 'posyg' ? renderPoSygDiagram() : renderDCSDiagram()}
+    <div className={`w-full consensus-diagram-container ${className}`}>
+      <div className="chart-container" style={{ height: diagramSize.height }}>
+        {mode === 'posyg' ? renderPoSygDiagram(diagramSize.width, diagramSize.height) : renderDCSDiagram(diagramSize.width, diagramSize.height)}
+      </div>
     </div>
   );
 }
