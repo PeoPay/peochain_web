@@ -63,13 +63,13 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
     { quarter: 'Q4 2026', price: 0.70, volume: 135 }
   ];
   
-  // Updated Token Metrics with more concise labels for better display
+  // Updated Token Metrics with finalized data and clear labels
   const metricsData: TokenMetricData[] = [
     { name: 'Total Supply', value: 1000000000, color: '#38a169' },
-    { name: 'Circulating (Y1)', value: 350000000, color: '#5a8364' },
-    { name: 'Staking Rewards', value: 75000000, color: '#276749' },
-    { name: 'Governance', value: 50000000, color: '#68d391' },
-    { name: 'Ecosystem Dev', value: 150000000, color: '#2f855a' }
+    { name: 'Circulating Supply (Y1)', value: 300000000, color: '#5a8364' },
+    { name: 'Staking Rewards (Annual)', value: 90000000, color: '#276749' },
+    { name: 'Governance Allocation', value: 70000000, color: '#68d391' },
+    { name: 'Ecosystem Development', value: 200000000, color: '#2f855a' }
   ];
   
   // Format large numbers
@@ -204,9 +204,9 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
               data={mobileData}
               margin={{ 
                 top: 20, 
-                right: isMobile ? 55 : 65, 
-                left: isMobile ? 30 : 40, 
-                bottom: isMobile ? 75 : 55 
+                right: isMobile ? 60 : 70, 
+                left: isMobile ? 35 : 45, 
+                bottom: isMobile ? 85 : 60 
               }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(90, 131, 100, 0.2)" />
@@ -347,9 +347,9 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
               layout="vertical"
               margin={{ 
                 top: 20, 
-                right: isMobile ? 60 : 80, 
-                left: isMobile ? 100 : 120, 
-                bottom: 20 
+                right: isMobile ? 75 : 95, 
+                left: isMobile ? 135 : 170, 
+                bottom: 30 
               }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(90, 131, 100, 0.2)" />
@@ -379,11 +379,11 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
               <YAxis 
                 dataKey="name" 
                 type="category"
-                width={isMobile ? 95 : 115}
+                width={isMobile ? 130 : 165}
                 tick={{ 
-                  fontSize: isMobile ? 11 : 12,
+                  fontSize: isMobile ? 10.5 : 12,
                   fontWeight: 500,
-                  width: isMobile ? 90 : 110,
+                  width: isMobile ? 125 : 160,
                   fill: '#333'
                 }}
                 tickMargin={10}
@@ -405,13 +405,14 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
               <Bar 
                 dataKey="value" 
                 name="Token Amount"
-                barSize={isMobile ? 16 : 25}
+                barSize={isMobile ? 18 : 26}
                 label={{
                   position: 'right',
                   formatter: formatNumber,
                   fill: '#333',
-                  fontSize: isMobile ? 10 : 11,
-                  fontWeight: 600
+                  fontSize: isMobile ? 11 : 12,
+                  fontWeight: 600,
+                  offset: 8
                 }}
               >
                 {metricsData.map((entry, index) => (
@@ -443,16 +444,32 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
   
   React.useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 480) {
-        setChartHeight(380); // Small mobile (significantly increased)
-      } else if (window.innerWidth <= 640) {
-        setChartHeight(420); // Mobile (significantly increased)
-      } else if (window.innerWidth <= 768) {
-        setChartHeight(450); // Tablet (increased)
-      } else if (window.innerWidth <= 1024) {
-        setChartHeight(480); // Small desktop
+      // Adjusting chart heights specifically for metrics mode to accommodate longer labels
+      if (mode === 'metrics') {
+        if (window.innerWidth <= 480) {
+          setChartHeight(420); // Small mobile - increased for metrics
+        } else if (window.innerWidth <= 640) {
+          setChartHeight(450); // Mobile - increased for metrics
+        } else if (window.innerWidth <= 768) {
+          setChartHeight(480); // Tablet - increased for metrics
+        } else if (window.innerWidth <= 1024) {
+          setChartHeight(500); // Small desktop - increased for metrics
+        } else {
+          setChartHeight(530); // Large desktop - increased for metrics
+        }
       } else {
-        setChartHeight(500); // Large desktop
+        // Standard heights for other chart types
+        if (window.innerWidth <= 480) {
+          setChartHeight(380); // Small mobile 
+        } else if (window.innerWidth <= 640) {
+          setChartHeight(420); // Mobile
+        } else if (window.innerWidth <= 768) {
+          setChartHeight(450); // Tablet
+        } else if (window.innerWidth <= 1024) {
+          setChartHeight(480); // Small desktop
+        } else {
+          setChartHeight(500); // Large desktop
+        }
       }
     };
     
@@ -464,7 +481,7 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
     
     // Clean up
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [mode]);
 
   return (
     <div className={`w-full tokenomics-diagram ${className}`}>
