@@ -220,7 +220,7 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
     return (
       <div className="w-full h-full">
         <h3 className="text-lg font-semibold text-center mb-2 text-primary">Token Metrics</h3>
-        <div className="w-full" style={{ height: isMobile ? '280px' : '320px' }}>
+        <div className="w-full" style={{ height: isMobile ? '300px' : '350px' }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={metricsData}
@@ -279,18 +279,18 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
   };
   
   // Adjust sizes based on screen width - increased to prevent text overlap
-  const [chartHeight, setChartHeight] = React.useState(420);
+  const [chartHeight, setChartHeight] = React.useState(450);
   
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 480) {
-        setChartHeight(320); // Small mobile
+        setChartHeight(340); // Small mobile (increased)
       } else if (window.innerWidth <= 640) {
-        setChartHeight(360); // Mobile
+        setChartHeight(380); // Mobile (increased)
       } else if (window.innerWidth <= 768) {
-        setChartHeight(380); // Tablet
+        setChartHeight(400); // Tablet (increased)
       } else {
-        setChartHeight(420); // Desktop
+        setChartHeight(450); // Desktop (increased)
       }
     };
     
