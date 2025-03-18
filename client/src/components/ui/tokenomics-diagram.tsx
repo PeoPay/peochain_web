@@ -264,9 +264,35 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
     }
   };
   
+  // Adjust sizes based on screen width
+  const [chartHeight, setChartHeight] = React.useState(350);
+  
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 640) {
+        setChartHeight(250);
+      } else if (window.innerWidth <= 768) {
+        setChartHeight(300);
+      } else {
+        setChartHeight(350);
+      }
+    };
+    
+    // Set initial size
+    handleResize();
+    
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className={`w-full ${className}`}>
-      {renderComponent()}
+    <div className={`w-full tokenomics-diagram ${className}`}>
+      <div className="chart-container" style={{ height: chartHeight }}>
+        {renderComponent()}
+      </div>
     </div>
   );
 }

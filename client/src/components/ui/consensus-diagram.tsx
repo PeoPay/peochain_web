@@ -173,8 +173,9 @@ interface ConsensusDiagramProps {
 }
 
 export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDiagramProps) {
-  const width = 500;
-  const height = 320;
+  // Use responsive sizing with aspect ratio preserved
+  const width = 500;  // Base width for reference
+  const height = 320; // Base height for reference
   
   // Diagram elements will depend on the mode
   const renderPoSygDiagram = () => {

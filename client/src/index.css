@@ -66,4 +66,71 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(90, 131, 100, 0.1);
   }
+  
+  /* Responsive adjustments for diagrams and charts */
+  .consensus-diagram text,
+  .subnet-diagram text,
+  .tokenomics-diagram text,
+  .mobile-integration-diagram text {
+    transition: font-size 0.2s ease;
+  }
+
+  /* Responsive adjustments for mobile */
+  @media (max-width: 640px) {
+    .consensus-diagram text,
+    .subnet-diagram text,
+    .tokenomics-diagram text,
+    .mobile-integration-diagram text {
+      font-size: 8px !important;
+    }
+    
+    .whitepaper-section .flex.justify-center.gap-6 {
+      gap: 0.75rem !important;
+    }
+    
+    .whitepaper-section .flex.gap-6 span {
+      font-size: 0.65rem;
+    }
+    
+    .whitepaper-section svg {
+      height: auto !important;
+    }
+  }
+
+  /* Chart container responsiveness */
+  .chart-container {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  /* Ensure diagrams don't overflow on small screens */
+  .whitepaper-section svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Better mobile experience for expanded sections */
+  @media (max-width: 768px) {
+    .whitepaper-section table {
+      font-size: 0.7rem;
+    }
+    
+    .whitepaper-section table th,
+    .whitepaper-section table td {
+      padding: 0.3rem !important;
+    }
+    
+    /* Adjust diagram heights on mobile */
+    .whitepaper-section .h-\[300px\] {
+      height: 250px !important;
+    }
+    
+    .whitepaper-section .h-\[350px\] {
+      height: 280px !important;
+    }
+    
+    .whitepaper-section .h-\[250px\] {
+      height: 200px !important;
+    }
+  }
 }
