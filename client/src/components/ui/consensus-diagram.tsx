@@ -300,7 +300,7 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
             y={centerY}
             textAnchor="middle"
             fill="#276749"
-            fontSize="14"
+            fontSize={Math.max(12, Math.min(14, width * 0.028))}
             fontWeight="bold"
           >
             Proof of Synergy
@@ -312,24 +312,24 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
             y={height - 15}
             textAnchor="middle"
             fill="currentColor"
-            fontSize="11"
+            fontSize={Math.max(9, Math.min(11, width * 0.022))}
           >
             Validators collaborate through synergistic relationships for optimized consensus
           </text>
         </svg>
         
-        {/* Legend */}
-        <div className="flex justify-center gap-6 mt-2 text-xs">
+        {/* Legend - Responsive for mobile */}
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-2 text-xs md:gap-6">
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-[#38a169] mr-1"></div>
+            <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#38a169] mr-1"></div>
             <span>Leader</span>
           </div>
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-[#68d391] mr-1"></div>
+            <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#68d391] mr-1"></div>
             <span>Verifier</span>
           </div>
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-[#276749] mr-1"></div>
+            <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#276749] mr-1"></div>
             <span>Synergy Node</span>
           </div>
         </div>
@@ -367,7 +367,7 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
             y={30}
             textAnchor="middle"
             fill="#276749"
-            fontSize="14"
+            fontSize={Math.max(12, Math.min(14, width * 0.028))}
             fontWeight="bold"
           >
             Dynamic Contribution Scoring (DCS)
@@ -390,7 +390,7 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
             y={centerY + 100}
             textAnchor="end"
             fill="currentColor"
-            fontSize="10"
+            fontSize={Math.max(8, Math.min(10, width * 0.02))}
           >
             0
           </text>
@@ -400,7 +400,7 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
             y={centerY}
             textAnchor="end"
             fill="currentColor"
-            fontSize="10"
+            fontSize={Math.max(8, Math.min(10, width * 0.02))}
           >
             100
           </text>
@@ -431,7 +431,7 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
                   y={y - 5}
                   textAnchor="middle"
                   fill={factor.color}
-                  fontSize="12"
+                  fontSize={Math.max(10, Math.min(12, width * 0.025))}
                   fontWeight="bold"
                 >
                   {factor.score}
@@ -443,7 +443,7 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
                   y={centerY + 115}
                   textAnchor="middle"
                   fill="currentColor"
-                  fontSize="10"
+                  fontSize={Math.max(7, Math.min(10, width * 0.018))}
                 >
                   {factor.name}
                 </text>
@@ -453,17 +453,18 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
           
           {/* Combined Score */}
           <g>
+            {/* Responsive circle sizes based on width */}
             <circle
               cx={centerX}
               cy={centerY - 50}
-              r={30}
+              r={Math.max(20, Math.min(30, width * 0.06))}
               fill="#276749"
               opacity={0.1}
             />
             <circle
               cx={centerX}
               cy={centerY - 50}
-              r={25}
+              r={Math.max(15, Math.min(25, width * 0.05))}
               fill="#276749"
               opacity={0.2}
             />
@@ -472,7 +473,7 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
               y={centerY - 50}
               textAnchor="middle"
               fill="#276749"
-              fontSize="18"
+              fontSize={Math.max(14, Math.min(18, width * 0.035))}
               fontWeight="bold"
             >
               93
@@ -482,7 +483,7 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
               y={centerY - 30}
               textAnchor="middle"
               fill="#276749"
-              fontSize="10"
+              fontSize={Math.max(8, Math.min(10, width * 0.02))}
             >
               Synergy Score
             </text>
@@ -494,7 +495,7 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
             y={height - 15}
             textAnchor="middle"
             fill="currentColor"
-            fontSize="11"
+            fontSize={Math.max(9, Math.min(11, width * 0.022))}
           >
             Dynamic scoring ensures fair rewards based on multiple performance metrics
           </text>
