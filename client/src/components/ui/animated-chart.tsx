@@ -13,11 +13,6 @@ import {
   Bar,
   ComposedChart,
   Legend,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
   Scatter,
   Cell,
   LabelList
@@ -145,7 +140,7 @@ const generateSpeedData = (): RadarDataPoint[] => {
 };
 
 // Chart types
-type ChartType = 'scalability' | 'performance' | 'cost' | 'radar';
+type ChartType = 'scalability' | 'performance' | 'cost';
 
 interface AnimatedChartProps {
   className?: string;
@@ -471,93 +466,7 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
           </ComposedChart>
         );
         
-      case 'radar':
-        // Use responsive container instead of fixed dimensions for proper scaling
-        return (
-          <RadarChart 
-            outerRadius="75%" 
-            data={radarData}
-            margin={isMobile ? 
-              { top: 25, right: 25, bottom: 40, left: 25 } : 
-              { top: 30, right: 30, bottom: 50, left: 30 }
-            }
-          >
-            <PolarGrid gridType="polygon" />
-            <PolarAngleAxis 
-              dataKey="name" 
-              tick={{ 
-                fill: 'currentColor', 
-                fontSize: isMobile ? 11 : 13,
-                dy: isMobile ? 8 : 5,
-                fontWeight: "500",
-                letterSpacing: "0.2px"
-              }}
-              tickLine={false}
-              stroke="#38a169"
-              axisLine={{ strokeWidth: 1, stroke: "#38a169", opacity: 0.4 }}
-              tickFormatter={(value) => {
-                // Use consistent, readable labels
-                if (value === "Transaction Speed") return "Speed";
-                if (value === "Decentralization") return "Decentralization";
-                if (value === "Security Level") return "Security";
-                if (value === "Scalability") return "Scalability";
-                if (value === "Energy Efficiency") return "Energy Efficiency";
-                return value;
-              }}
-            />
-            <PolarRadiusAxis 
-              angle={30} 
-              domain={[0, 250]} 
-              tick={{ fontSize: isMobile ? 9 : 11, fill: "currentColor", fontWeight: "400" }}
-              tickCount={5}
-              axisLine={false}
-              stroke="#38a169"
-              strokeOpacity={0.2}
-              tickFormatter={(value) => value === 0 ? "" : value.toString()}
-            />
-            <Radar 
-              name="PEOCHAIN Performance" 
-              dataKey="value" 
-              stroke={colors.primary} 
-              fill={colors.primary} 
-              fillOpacity={0.6} 
-              isAnimationActive={true}
-              animationDuration={1500}
-              strokeWidth={2}
-            />
-            <Legend 
-              wrapperStyle={{ 
-                paddingTop: 20, 
-                paddingBottom: 5,
-                fontSize: isMobile ? 11 : 13,
-                fontWeight: 500
-              }} 
-              align="center" 
-              verticalAlign="bottom"
-              iconSize={10}
-              iconType="circle"
-            />
-            <Tooltip 
-              contentStyle={{ 
-                fontSize: isMobile ? '11px' : '13px', 
-                padding: isMobile ? '6px 10px' : '8px 12px',
-                borderRadius: '6px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                border: '1px solid rgba(0, 0, 0, 0.05)'
-              }}
-              formatter={(value, name, props) => {
-                const metric = props.payload.name;
-                return [`${value} points`, metric];
-              }}
-              labelFormatter={(label) => "Performance"}
-              itemStyle={{ 
-                padding: isMobile ? '2px 0' : '3px 0',
-                color: '#666'
-              }}
-            />
-          </RadarChart>
-        );
+      // Radar chart removed
     }
   };
   
@@ -574,8 +483,8 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
         return <Badge className="bg-primary/20 text-primary border-primary/30">🚀 Performance Comparison</Badge>;
       case 'cost':
         return <Badge className="bg-primary/20 text-primary border-primary/30">💰 Transaction Cost (USD)</Badge>;
-      case 'radar':
-        return <Badge className="bg-primary/20 text-primary border-primary/30">🔄 PEOCHAIN Network Metrics</Badge>;
+      default:
+        return <Badge className="bg-primary/20 text-primary border-primary/30">⚡ TPS Scaling</Badge>;
     }
   };
   
@@ -602,15 +511,10 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
             <span className="text-primary font-semibold">${peochainCost?.toFixed(5)}</span> per TX
           </div>
         );
-      case 'radar':
-        // Calculate average performance score across all metrics
-        const avgPerformance = Math.round(
-          radarData.reduce((acc, item) => acc + item.value, 0) / radarData.length
-        );
+      default:
         return (
-          <div className="flex items-center">
-            <span className="text-primary font-semibold">{avgPerformance}</span>
-            <span className="ml-1">Performance Score</span>
+          <div>
+            <span className="text-primary font-semibold">High Performance</span> Network
           </div>
         );
     }
@@ -628,29 +532,14 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
       </div>
       
       <div className="flex-1 mx-auto w-full min-h-[260px] sm:min-h-[300px] md:min-h-[340px]">
-        {chartType === 'radar' ? (
-          // Special handling for radar chart to ensure it's properly sized and centered
-          <div className="w-full h-full flex items-center justify-center">
-            <ResponsiveContainer 
-              width="100%" 
-              height="100%" 
-              minWidth={300}
-              minHeight={300}
-              debounce={50}
-            >
-              {renderChart()}
-            </ResponsiveContainer>
-          </div>
-        ) : (
-          // Standard responsive container for other chart types
-          <ResponsiveContainer 
-            width="100%" 
-            height="100%" 
-            debounce={50}
-          >
-            {renderChart()}
-          </ResponsiveContainer>
-        )}
+        {/* Standard responsive container for all chart types */}
+        <ResponsiveContainer 
+          width="100%" 
+          height="100%" 
+          debounce={50}
+        >
+          {renderChart()}
+        </ResponsiveContainer>
       </div>
       
       <div className={`mt-2 flex ${isMobile ? 'flex-col gap-1' : 'justify-between'} ${itemsClass} text-xs max-w-full overflow-hidden`}>
