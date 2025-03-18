@@ -82,7 +82,7 @@ export default function Whitepaper() {
                     </div>
                     <div>
                       <h3 className="font-bold text-xl">Ultra-Low Transaction Fees</h3>
-                      <p className="text-foreground/70">PeoChain dramatically reduces costs with fees as low as <span className="font-semibold">CHF 0.40 per transaction</span>, ensuring affordability and global accessibility.</p>
+                      <p className="text-foreground/70">PeoChain dramatically reduces costs with fees as low as <span className="font-semibold">USD 0.004 per transaction</span>, ensuring affordability and global accessibility.</p>
                     </div>
                   </div>
                   
