@@ -435,34 +435,67 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
       case 'radar':
         return (
           <RadarChart 
-            outerRadius={isMobile ? 70 : 90} 
-            width={isMobile ? 260 : 300} 
-            height={isMobile ? 200 : 250} 
+            outerRadius={isMobile ? 80 : 90} 
+            width={isMobile ? 280 : 300} 
+            height={isMobile ? 240 : 250}
+            cx={isMobile ? "50%" : "50%"}
+            cy={isMobile ? "50%" : "50%"}
             data={radarData}
+            margin={isMobile ? { top: 20, right: 20, bottom: 20, left: 20 } : { top: 10, right: 30, bottom: 10, left: 30 }}
           >
             <PolarGrid gridType="polygon" />
             <PolarAngleAxis 
               dataKey="name" 
               tick={{ 
                 fill: 'currentColor', 
-                fontSize: isMobile ? 7 : 10,
-                dy: isMobile ? 2 : 0,
-                width: isMobile ? 30 : 80
+                fontSize: isMobile ? 9 : 10,
+                dy: isMobile ? 3 : 0,
+                fontWeight: "500"
               }}
-              tickFormatter={(value) => isMobile && value.length > 7 ? value.substring(0, 6) + '...' : value}
+              tickLine={false}
+              axisLine={{ strokeWidth: 1, stroke: "#38a169", opacity: 0.3 }}
+              tickFormatter={(value) => {
+                // Simplify labels on mobile
+                if (isMobile) {
+                  if (value === "Transaction Speed") return "Speed";
+                  if (value === "Decentralization") return "Decent.";
+                  if (value === "Security Level") return "Security";
+                  if (value === "Scalability") return "Scale";
+                  if (value === "Energy Efficiency") return "Energy";
+                }
+                return value;
+              }}
             />
-            <PolarRadiusAxis angle={30} domain={[0, 300]} tick={false} />
+            <PolarRadiusAxis 
+              angle={30} 
+              domain={[0, 250]} 
+              tick={{ fontSize: 9, fill: "currentColor" }}
+              tickCount={5}
+              axisLine={false}
+              tickFormatter={(value) => value === 0 ? "" : value.toString()}
+            />
             <Radar 
               name="PEOCHAIN Performance" 
               dataKey="value" 
               stroke={colors.primary} 
               fill={colors.primary} 
               fillOpacity={0.6} 
+              isAnimationActive={true}
               animationDuration={1500}
             />
-            {!isMobile && <Legend />}
+            <Legend 
+              wrapperStyle={{ paddingTop: 10, fontSize: isMobile ? 10 : 12 }} 
+              align="center" 
+              verticalAlign="bottom"
+            />
             <Tooltip 
-              contentStyle={{ fontSize: isMobile ? '10px' : '12px', padding: isMobile ? '4px 8px' : '8px 10px' }}
+              contentStyle={{ 
+                fontSize: isMobile ? '10px' : '12px', 
+                padding: isMobile ? '4px 8px' : '8px 10px',
+                borderRadius: '4px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+              }}
+              formatter={(value) => [`${value} points`, 'Score']}
               itemStyle={{ padding: isMobile ? '1px 0' : '2px 0' }}
             />
           </RadarChart>
@@ -512,9 +545,14 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
           </div>
         );
       case 'radar':
+        // Calculate average performance score across all metrics
+        const avgPerformance = Math.round(
+          radarData.reduce((acc, item) => acc + item.value, 0) / radarData.length
+        );
         return (
-          <div>
-            <span className="text-primary font-semibold">297°</span> Performance
+          <div className="flex items-center">
+            <span className="text-primary font-semibold">{avgPerformance}</span>
+            <span className="ml-1">Performance Score</span>
           </div>
         );
     }
@@ -531,9 +569,15 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
         </div>
       </div>
       
-      <div className="flex-1 min-h-[240px] sm:min-h-[280px] md:min-h-[320px]">
-        <ResponsiveContainer width="100%" height="100%" debounce={50}>
-          {renderChart()}
+      <div className="flex-1 mx-auto w-full min-h-[240px] sm:min-h-[280px] md:min-h-[320px]">
+        <ResponsiveContainer 
+          width="100%" 
+          height="100%" 
+          debounce={50}
+        >
+          <div className="flex items-center justify-center w-full h-full">
+            {renderChart()}
+          </div>
         </ResponsiveContainer>
       </div>
       
