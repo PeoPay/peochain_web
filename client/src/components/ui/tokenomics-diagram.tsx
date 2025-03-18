@@ -166,10 +166,10 @@ export function TokenomicsDiagram({
                 cy={dimensions.cy}
                 innerRadius={dimensions.innerRadius}
                 outerRadius={dimensions.outerRadius}
-                paddingAngle={5} // Increased for better segment separation
+                paddingAngle={6} // Increased for better segment separation
                 dataKey="value"
-                label={false} // Keep labels disabled to prevent overlapping
-                labelLine={false} // Keep label lines disabled
+                label={false} // Completely disable labels to prevent any overlapping
+                labelLine={false} // Disable label lines
                 animationDuration={800}
                 animationBegin={100}
               >
@@ -291,23 +291,23 @@ export function TokenomicsDiagram({
                 data={filteredData}
                 margin={{
                   top: 20,
-                  right: isMobile ? 35 : 65,
-                  left: isMobile ? 25 : 40,
-                  bottom: isMobile ? 70 : 40,
+                  right: isMobile ? 45 : 75,
+                  left: isMobile ? 35 : 55,
+                  bottom: isMobile ? 80 : 50,
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(90, 131, 100, 0.15)" />
                 <XAxis
                   dataKey="quarter"
                   tick={{
-                    fontSize: isMobile ? 11 : 12,
+                    fontSize: isMobile ? 10 : 12,
                     fontWeight: 500,
                   }}
-                  angle={isMobile ? -45 : 0}
+                  angle={isMobile ? -60 : 0} // Increased angle for better separation
                   textAnchor={isMobile ? "end" : "middle"}
-                  height={isMobile ? 60 : 40}
-                  tickMargin={isMobile ? 12 : 8}
-                  padding={{ left: 15, right: 15 }}
+                  height={isMobile ? 70 : 40} // Increased height for labels
+                  tickMargin={isMobile ? 15 : 8} // Increased margin between axis and labels
+                  padding={{ left: 20, right: 20 }} // Increased padding
                   stroke="#666"
                   interval={0} // Show all filtered points
                 />
@@ -558,8 +558,8 @@ export function TokenomicsDiagram({
                 layout="vertical"
                 margin={{
                   top: 25,
-                  right: 130, // Increased right margin for labels
-                  left: 180, // Adjusted left margin for names
+                  right: 150, // Further increased right margin for labels
+                  left: 200, // Further increased left margin for names
                   bottom: 45,
                 }}
               >
@@ -590,14 +590,14 @@ export function TokenomicsDiagram({
                 <YAxis
                   dataKey="name"
                   type="category"
-                  width={175}
+                  width={195} // Wider to accommodate full labels
                   tick={{
                     fontSize: 12,
                     fontWeight: 500,
-                    width: 170,
+                    width: 190, // Increased width for text content
                     fill: "#333",
                   }}
-                  tickMargin={15}
+                  tickMargin={20} // Increased margin between axis and names
                 />
                 <Tooltip
                   formatter={(value: number) => [formatNumber(value), "Tokens"]}
@@ -623,14 +623,14 @@ export function TokenomicsDiagram({
                 <Bar
                   dataKey="value"
                   name="Token Amount"
-                  barSize={28}
+                  barSize={24} // Slightly smaller for better proportions
                   label={{
                     position: "right",
                     formatter: enhancedFormatter,
                     fill: "#333",
                     fontSize: 12,
                     fontWeight: 600,
-                    offset: 20,
+                    offset: 25, // More space between bar end and label
                   }}
                 >
                   {displayData.map((entry, index) => (
