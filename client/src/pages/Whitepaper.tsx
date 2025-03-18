@@ -274,40 +274,6 @@ export default function Whitepaper() {
                   </div>
                 </div>
                 
-                <h3 className="font-bold text-xl mb-4">Profitability and ROI Projections</h3>
-                
-                <div className="overflow-x-auto mb-6">
-                  <table className="min-w-full border-collapse">
-                    <thead>
-                      <tr className="bg-primary/10">
-                        <th className="border border-primary/20 p-3 text-left">Year</th>
-                        <th className="border border-primary/20 p-3 text-left">Projected Revenue</th>
-                        <th className="border border-primary/20 p-3 text-left">ROI Projection</th>
-                        <th className="border border-primary/20 p-3 text-left">Growth Drivers</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border border-primary/20 p-3 font-medium">2025</td>
-                        <td className="border border-primary/20 p-3">$500,000</td>
-                        <td className="border border-primary/20 p-3">~19% ROI</td>
-                        <td className="border border-primary/20 p-3 text-sm">Initial network growth, user acquisition, validator incentives</td>
-                      </tr>
-                      <tr className="bg-primary/5">
-                        <td className="border border-primary/20 p-3 font-medium">2026</td>
-                        <td className="border border-primary/20 p-3">$1,000,000</td>
-                        <td className="border border-primary/20 p-3">54% ROI</td>
-                        <td className="border border-primary/20 p-3 text-sm" rowSpan={2}>Driven by expanded validator engagement, partnerships, and widespread DeFi integrations</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-primary/20 p-3 font-medium">2027</td>
-                        <td className="border border-primary/20 p-3">$2,500,000</td>
-                        <td className="border border-primary/20 p-3">110% ROI</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                
                 <h3 className="font-bold text-xl mb-3">Viability Measures</h3>
                 <ul className="list-disc pl-6 space-y-2 text-foreground/80">
                   <li><span className="font-medium">Risk Management:</span> Robust approach through regulatory compliance, proactive audits, and security programs</li>
