@@ -67,10 +67,10 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
   // Token Metrics
   const metricsData: TokenMetricData[] = [
     { name: 'Total Supply', value: 1000000000, color: '#38a169' },
-    { name: 'Circulating Supply (Year 1)', value: 350000000, color: '#5a8364' },
-    { name: 'Staking Rewards (Annual)', value: 100000000, color: '#276749' },
-    { name: 'Governance Allocation', value: 75000000, color: '#68d391' },
-    { name: 'Ecosystem Development', value: 200000000, color: '#2f855a' }
+    { name: 'Circulating Supply (Year 1)', value: 400000000, color: '#5a8364' },
+    { name: 'Staking Rewards (Annual)', value: 80000000, color: '#276749' },
+    { name: 'Governance Allocation', value: 50000000, color: '#68d391' },
+    { name: 'Ecosystem Development', value: 120000000, color: '#2f855a' }
   ];
   
   // Format large numbers

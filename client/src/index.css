@@ -57,27 +57,14 @@
     font-family: ui-sans-serif, system-ui, sans-serif;
   }
   
-  /* Enhanced whitepaper specific styles */
+  /* Whitepaper specific styles */
   .whitepaper-section {
     transition: all 0.3s ease;
-    padding: 1.5rem;
-    border-radius: 1rem;
   }
   
   .whitepaper-section:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(90, 131, 100, 0.12);
-  }
-  
-  /* Ensure clear separation between text content and visualizations */
-  .whitepaper-section .responsive-diagram,
-  .whitepaper-section .responsive-chart {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    border-top: 1px solid rgba(90, 131, 100, 0.1);
-    border-bottom: 1px solid rgba(90, 131, 100, 0.1);
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(90, 131, 100, 0.1);
   }
   
   /* Responsive adjustments for diagrams and charts */
@@ -86,26 +73,6 @@
   .tokenomics-diagram text,
   .mobile-integration-diagram text {
     transition: font-size 0.2s ease;
-  }
-  
-  /* Enhanced responsive diagram and chart containers */
-  .responsive-diagram,
-  .responsive-chart {
-    width: 100%;
-    max-width: 100%;
-    overflow: visible;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1.5rem 0;
-    position: relative;
-  }
-  
-  .responsive-diagram svg,
-  .responsive-chart svg {
-    max-width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
   }
 
   /* Responsive adjustments for mobile */
@@ -154,61 +121,16 @@
     }
     
     /* Adjust diagram heights on mobile */
-    .whitepaper-section .h-\[300px\],
-    .responsive-chart.h-\[300px\],
-    .responsive-diagram.h-\[300px\] {
+    .whitepaper-section .h-\[300px\] {
       height: 250px !important;
     }
     
-    .whitepaper-section .h-\[350px\],
-    .responsive-chart.h-\[350px\],
-    .responsive-diagram.h-\[350px\] {
+    .whitepaper-section .h-\[350px\] {
       height: 280px !important;
     }
     
-    .whitepaper-section .h-\[250px\],
-    .responsive-chart.h-\[250px\],
-    .responsive-diagram.h-\[250px\] {
+    .whitepaper-section .h-\[250px\] {
       height: 200px !important;
-    }
-    
-    .responsive-chart.h-\[280px\],
-    .responsive-diagram.h-\[280px\] {
-      height: 240px !important;
-    }
-    
-    .responsive-chart.h-\[400px\],
-    .responsive-diagram.h-\[400px\] {
-      height: 300px !important;
-    }
-  }
-  
-  /* Enhanced adjustments for very small screens */
-  @media (max-width: 480px) {
-    .responsive-chart, 
-    .responsive-diagram {
-      margin: 1rem -0.5rem; /* Better spacing while maximizing width */
-      padding: 0;
-    }
-    
-    .responsive-chart svg,
-    .responsive-diagram svg {
-      transform: scale(0.98); /* Optimized scaling for small screens */
-      transform-origin: center;
-    }
-    
-    /* Improve spacing on small devices */
-    .whitepaper-section {
-      padding: 1rem !important;
-    }
-    
-    .whitepaper-section h3 {
-      margin-bottom: 0.5rem !important;
-    }
-    
-    /* Ensure proper separation between text and visuals */
-    .whitepaper-section > div:not(:first-child) {
-      margin-top: 1rem;
     }
   }
 }
