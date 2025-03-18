@@ -340,7 +340,7 @@ export function TokenomicsDiagram({ className = '', mode = 'distribution' }: Tok
     return (
       <div className="w-full h-full">
         <h3 className="text-lg font-semibold text-center mb-2 text-primary">Key Token Metrics</h3>
-        <div className="w-full" style={{ height: isMobile ? '330px' : '380px' }}>
+        <div className="w-full" style={{ height: isMobile ? '360px' : '420px' }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={metricsData}
