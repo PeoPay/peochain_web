@@ -98,9 +98,31 @@
   }
 
   /* Chart container responsiveness */
-  .chart-container {
+  .chart-container,
+  .responsive-chart,
+  .responsive-diagram {
     max-width: 100%;
     overflow: hidden;
+  }
+  
+  .responsive-chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .responsive-diagram {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .responsive-chart svg,
+  .responsive-diagram svg {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
   }
 
   /* Ensure diagrams don't overflow on small screens */
