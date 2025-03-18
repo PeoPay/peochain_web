@@ -18,7 +18,9 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
   Radar,
-  Scatter
+  Scatter,
+  Cell,
+  LabelList
 } from 'recharts';
 import { Badge } from './badge';
 
@@ -278,46 +280,103 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
         );
       
       case 'performance':
-        // Simplified data for mobile
+        // Sort data for better visual presentation - put PEOCHAIN last so it stands out
+        const sortedData = [...performanceData].sort((a, b) => {
+          if (a.name === 'PEOCHAIN') return 1; // Always put PEOCHAIN last
+          if (b.name === 'PEOCHAIN') return -1;
+          return a.tps - b.tps; // Sort others by TPS
+        });
+        
+        // Simplified data for mobile but always include PEOCHAIN
         const filteredData = isMobile 
-          ? performanceData.filter(d => d.name === 'PEOCHAIN' || d.name === 'Ethereum' || d.name === 'Solana')
-          : performanceData;
+          ? sortedData.filter(d => 
+              d.name === 'PEOCHAIN' || 
+              d.name === 'Ethereum' || 
+              d.name === 'Solana'
+            )
+          : sortedData;
           
+        // Determine max TPS for better scaling
+        const maxTps = Math.max(...filteredData.map(d => d.tps)) * 1.1; // Add 10% padding
+        
         return (
           <BarChart
             data={filteredData}
-            margin={mobileMargin}
+            margin={isMobile ? 
+              { top: 5, right: 45, left: 5, bottom: 5 } : 
+              { top: 10, right: 80, left: 5, bottom: 10 }
+            }
             layout="vertical"
+            barSize={isMobile ? 15 : 20}
           >
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} horizontal={false} />
             <XAxis 
               type="number" 
-              tick={{ fontSize: 10 }} 
-              tickCount={mobileTicks}
-              domain={[0, 'dataMax']}
+              tick={{ 
+                fontSize: isMobile ? 10 : 12,
+                fill: 'currentColor'
+              }} 
+              tickCount={isMobile ? 3 : 5}
+              domain={[0, maxTps]}
+              tickFormatter={(value) => {
+                // Format large numbers with K/M suffixes
+                if (value >= 1000000) return `${(value / 1000000).toFixed(0)}M`;
+                if (value >= 1000) return `${(value / 1000).toFixed(0)}K`;
+                return value;
+              }}
             />
             <YAxis 
               dataKey="name" 
               type="category" 
               tick={{ 
-                fontSize: isMobile ? 8 : 10,
-                width: isMobile ? 60 : 80
+                fontSize: isMobile ? 10 : 12,
+                width: isMobile ? 65 : 90,
+                fill: 'currentColor',
+                fontWeight: 500
               }}
+              tickMargin={5}
               tickFormatter={(value) => isMobile && value.length > 7 ? value.substring(0, 6) + '...' : value}
+              width={isMobile ? 70 : 90}
             />
             <Tooltip 
               formatter={(value: number) => [`${value.toLocaleString()} TPS`, 'Transactions Per Second']}
-              contentStyle={{ fontSize: isMobile ? '10px' : '12px', padding: isMobile ? '4px 8px' : '8px 10px' }}
-              itemStyle={{ padding: isMobile ? '1px 0' : '2px 0' }}
+              contentStyle={{ 
+                fontSize: isMobile ? '11px' : '12px', 
+                padding: isMobile ? '5px 8px' : '8px 10px',
+                borderRadius: '4px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+              }}
+              itemStyle={{ padding: isMobile ? '2px 0' : '3px 0' }}
+              cursor={{ fill: 'rgba(0,0,0,0.05)' }}
             />
-            {!isMobile && <Legend />}
+            <Legend verticalAlign="top" height={isMobile ? 20 : 30} />
             <Bar 
               dataKey="tps" 
-              fill={colors.primary} 
               name="Transactions Per Second"
               animationDuration={1000}
-              label={isMobile ? false : { position: 'right', fill: colors.primary, fontSize: 10 }}
-            />
+            >
+              {filteredData.map((entry, index) => (
+                <Cell 
+                  key={`cell-${index}`} 
+                  fill={entry.name === 'PEOCHAIN' ? colors.primary : colors.competitors} 
+                />
+              ))}
+              <LabelList 
+                dataKey="tps" 
+                position="right" 
+                style={{ 
+                  fontSize: isMobile ? 9 : 11, 
+                  fill: 'currentColor',
+                  fontWeight: 500,
+                }} 
+                formatter={(value: number) => {
+                  // Format with K/M for better readability
+                  if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
+                  if (value >= 1000) return `${(value / 1000).toFixed(1)}K`;
+                  return value;
+                }}
+              />
+            </Bar>
           </BarChart>
         );
       
