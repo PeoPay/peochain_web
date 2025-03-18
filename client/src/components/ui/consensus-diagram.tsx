@@ -306,13 +306,14 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
             Proof of Synergy
           </text>
           
-          {/* Consensus Description - shortened for small screens */}
+          {/* Consensus Description - improved visibility */}
           <text
             x={centerX}
-            y={height - 15}
+            y={height - 20}
             textAnchor="middle"
-            fill="currentColor"
-            fontSize={Math.max(8, Math.min(11, width * 0.022))}
+            fill="#276749"
+            fontSize={Math.max(10, Math.min(12, width * 0.025))}
+            fontWeight="medium"
           >
             {width < 380 ? "Synergistic validator collaboration" : 
               "Validators collaborate through synergistic relationships for optimized consensus"}
@@ -491,13 +492,14 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
             </text>
           </g>
           
-          {/* Description - optimized for different screen sizes */}
+          {/* Description - improved visibility */}
           <text
             x={centerX}
-            y={height - 15}
+            y={height - 20}
             textAnchor="middle"
-            fill="currentColor"
-            fontSize={Math.max(8, Math.min(11, width * 0.022))}
+            fill="#276749"
+            fontSize={Math.max(10, Math.min(12, width * 0.025))}
+            fontWeight="medium"
           >
             {width < 360 ? "Fair rewards based on multiple metrics" : 
               "Dynamic scoring ensures fair rewards based on multiple performance metrics"}
@@ -508,18 +510,18 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
   };
   
   // Responsive diagram adjustments - increased heights for better text spacing
-  const [diagramSize, setDiagramSize] = React.useState({ width: 600, height: 480 });
+  const [diagramSize, setDiagramSize] = React.useState({ width: 600, height: 520 });
   
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 480) {
-        setDiagramSize({ width: 340, height: 360 }); // Small mobile
+        setDiagramSize({ width: 340, height: 400 }); // Small mobile
       } else if (window.innerWidth <= 640) {
-        setDiagramSize({ width: 420, height: 400 }); // Mobile
+        setDiagramSize({ width: 420, height: 440 }); // Mobile
       } else if (window.innerWidth <= 768) {
-        setDiagramSize({ width: 500, height: 440 }); // Tablet
+        setDiagramSize({ width: 500, height: 480 }); // Tablet
       } else {
-        setDiagramSize({ width: 600, height: 480 }); // Desktop
+        setDiagramSize({ width: 600, height: 520 }); // Desktop
       }
     };
     
