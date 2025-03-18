@@ -5,20 +5,20 @@ interface MobileIntegrationDiagramProps {
 }
 
 export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDiagramProps) {
-  // Responsive diagram sizing
-  const [diagramSize, setDiagramSize] = React.useState({ width: 500, height: 350 });
+  // Responsive diagram sizing - increased initial height
+  const [diagramSize, setDiagramSize] = React.useState({ width: 500, height: 400 });
   
   // Responsive diagram adjustments
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 480) {
-        setDiagramSize({ width: 340, height: 380 }); // Small mobile
+        setDiagramSize({ width: 340, height: 420 }); // Small mobile (increased height)
       } else if (window.innerWidth <= 640) {
-        setDiagramSize({ width: 420, height: 380 }); // Mobile
+        setDiagramSize({ width: 420, height: 420 }); // Mobile (increased height)
       } else if (window.innerWidth <= 768) {
-        setDiagramSize({ width: 470, height: 380 }); // Tablet
+        setDiagramSize({ width: 470, height: 420 }); // Tablet (increased height)
       } else {
-        setDiagramSize({ width: 500, height: 360 }); // Desktop
+        setDiagramSize({ width: 500, height: 400 }); // Desktop (increased height)
       }
     };
     
@@ -142,9 +142,12 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
                 {provider.country}
               </text>
               
-              {/* Connection to platform - adjusted curve for mobile */}
+              {/* Connection to platform - curve adjusted to avoid text overlap */}
               <path
-                d={`M${boxX + boxWidth},${provider.y} C${width/2 - (isMobile ? 60 : 75)},${provider.y} ${width/2 - (isMobile ? 60 : 75)},${height/2} ${width/2 - (isMobile ? 60 : 75)},${height/2}`}
+                d={`M${boxX + boxWidth},${provider.y} 
+                   C${boxX + boxWidth + 40},${provider.y} 
+                   ${width/2 - (isMobile ? 80 : 95)},${provider.y + (index % 2 === 0 ? -15 : 15)} 
+                   ${width/2 - (isMobile ? 60 : 75)},${height/2}`}
                 stroke="url(#mobileGradient)"
                 strokeWidth={isMobile ? 1 : 1.5}
                 fill="none"
@@ -153,16 +156,29 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
                 className={index === 0 ? "animate-pulse" : ""}
               />
               
-              {/* Label for path - offset to avoid overlapping with connectors */}
-              <text
-                x={(boxX + boxWidth + width/2 - 75) / 2}
-                y={index % 2 === 0 ? provider.y - 10 : provider.y + 15}
-                textAnchor="middle"
-                fontSize={isMobile ? 7 : 8}
-                fill="#276749"
-              >
-                {index % 2 === 0 ? "Deposit" : "Withdraw"}
-              </text>
+              {/* Label for path - significantly offset to avoid overlapping with connectors */}
+              <g>
+                {/* Background for label to ensure readability */}
+                <rect
+                  x={(boxX + boxWidth + width/2 - (isMobile ? 110 : 135)) / 2 - 25}
+                  y={index % 2 === 0 ? provider.y - 18 : provider.y + 7}
+                  width={50}
+                  height={13}
+                  fill="white"
+                  opacity={0.8}
+                  rx={3}
+                />
+                <text
+                  x={(boxX + boxWidth + width/2 - (isMobile ? 110 : 135)) / 2}
+                  y={index % 2 === 0 ? provider.y - 8 : provider.y + 17}
+                  textAnchor="middle"
+                  fontSize={isMobile ? 7 : 8}
+                  fontWeight="bold"
+                  fill="#276749"
+                >
+                  {index % 2 === 0 ? "Deposit" : "Withdraw"}
+                </text>
+              </g>
             </g>
           );
         })}
@@ -213,9 +229,12 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
                 {isMobile && app.type.length > 10 ? app.type.split(' ')[0] : app.type}
               </text>
               
-              {/* Connection from platform - adjusted curve for mobile */}
+              {/* Connection from platform - curve adjusted to avoid text overlap */}
               <path
-                d={`M${width/2 + (isMobile ? 60 : 75)},${height/2} C${width/2 + (isMobile ? 45 : 60)},${height/2} ${width/2 + (isMobile ? 45 : 60)},${app.y} ${boxX},${app.y}`}
+                d={`M${width/2 + (isMobile ? 60 : 75)},${height/2} 
+                   C${width/2 + (isMobile ? 90 : 115)},${height/2} 
+                   ${boxX - 40},${app.y + (index % 2 === 0 ? -15 : 15)}
+                   ${boxX},${app.y}`}
                 stroke="url(#mobileGradient)"
                 strokeWidth={isMobile ? 1 : 1.5}
                 fill="none"
@@ -224,40 +243,80 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
                 className={index === 1 ? "animate-pulse" : ""}
               />
               
-              {/* Label for path - positioned to avoid overlap with curves */}
-              <text
-                x={(width/2 + (isMobile ? 60 : 75) + boxX) / 2}
-                y={index % 2 === 0 ? app.y - 10 : app.y + 15}
-                textAnchor="middle"
-                fontSize={isMobile ? 7 : 8}
-                fill="#276749"
-              >
-                {index % 2 === 0 ? "Integration" : "API Access"}
-              </text>
+              {/* Label for path - with background to avoid overlap with curves */}
+              <g>
+                {/* Background for label to ensure readability */}
+                <rect
+                  x={(width/2 + (isMobile ? 60 : 75) + boxX) / 2 - 28}
+                  y={index % 2 === 0 ? app.y - 18 : app.y + 7}
+                  width={56}
+                  height={13}
+                  fill="white"
+                  opacity={0.8}
+                  rx={3}
+                />
+                <text
+                  x={(width/2 + (isMobile ? 60 : 75) + boxX) / 2}
+                  y={index % 2 === 0 ? app.y - 8 : app.y + 17}
+                  textAnchor="middle"
+                  fontSize={isMobile ? 7 : 8}
+                  fontWeight="bold"
+                  fill="#276749"
+                >
+                  {index % 2 === 0 ? "Integration" : "API Access"}
+                </text>
+              </g>
             </g>
           );
         })}
         
-        {/* Blockchain Layer - adjusted for mobile */}
-        <rect
-          x={width / 2 - (isMobile ? 110 : 130)}
-          y={height / 2 + 40}
-          width={isMobile ? 220 : 260}
-          height={25}
-          rx={4}
-          fill="#38a169"
-          opacity={0.6}
-        />
-        <text
-          x={width / 2}
-          y={height / 2 + 55}
-          textAnchor="middle"
-          fontSize={isMobile ? 8 : 10}
-          fontWeight="bold"
-          fill="white"
-        >
-          {isMobile ? "100,000 TPS / 1s Finality" : "Blockchain Layer - 100,000 TPS / 1s Finality"}
-        </text>
+        {/* Blockchain Layer - adjusted for better visibility and to avoid overlap */}
+        <g>
+          {/* Create space between platform and blockchain layer */}
+          <rect
+            x={width / 2 - (isMobile ? 115 : 140)}
+            y={height / 2 + 50}
+            width={isMobile ? 230 : 280}
+            height={30}
+            rx={4}
+            fill="#38a169"
+            opacity={0.8}
+            filter="url(#shadow)"
+          />
+          {/* Bold divider line to separate layers */}
+          <line
+            x1={width / 2 - (isMobile ? 100 : 120)}
+            y1={height / 2 + 40}
+            x2={width / 2 + (isMobile ? 100 : 120)}
+            y2={height / 2 + 40}
+            stroke="#276749"
+            strokeWidth={isMobile ? 0.7 : 1}
+            strokeDasharray="3,2"
+            opacity={0.8}
+          />
+          {/* Blockchain label */}
+          <text
+            x={width / 2}
+            y={height / 2 + 64}
+            textAnchor="middle"
+            fontSize={isMobile ? 9 : 11}
+            fontWeight="bold"
+            fill="white"
+          >
+            {isMobile ? "Blockchain Layer" : "Blockchain Layer"}
+          </text>
+          {/* Performance metrics on second line if mobile */}
+          <text
+            x={width / 2}
+            y={height / 2 + (isMobile ? 74 : 64)}
+            textAnchor="middle"
+            fontSize={isMobile ? 7 : 9}
+            fill="white"
+            opacity={0.9}
+          >
+            {isMobile ? "100,000 TPS / 1s Finality" : "100,000 TPS / 1s Finality"}
+          </text>
+        </g>
         
         {/* Descriptive Footer - improved readability */}
         <text
