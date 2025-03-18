@@ -74,6 +74,23 @@
   .mobile-integration-diagram text {
     transition: font-size 0.2s ease;
   }
+  
+  /* New responsive diagram and chart containers */
+  .responsive-diagram,
+  .responsive-chart {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .responsive-diagram svg,
+  .responsive-chart svg {
+    max-width: 100%;
+    height: auto;
+  }
 
   /* Responsive adjustments for mobile */
   @media (max-width: 640px) {
@@ -121,16 +138,45 @@
     }
     
     /* Adjust diagram heights on mobile */
-    .whitepaper-section .h-\[300px\] {
+    .whitepaper-section .h-\[300px\],
+    .responsive-chart.h-\[300px\],
+    .responsive-diagram.h-\[300px\] {
       height: 250px !important;
     }
     
-    .whitepaper-section .h-\[350px\] {
+    .whitepaper-section .h-\[350px\],
+    .responsive-chart.h-\[350px\],
+    .responsive-diagram.h-\[350px\] {
       height: 280px !important;
     }
     
-    .whitepaper-section .h-\[250px\] {
+    .whitepaper-section .h-\[250px\],
+    .responsive-chart.h-\[250px\],
+    .responsive-diagram.h-\[250px\] {
       height: 200px !important;
+    }
+    
+    .responsive-chart.h-\[280px\],
+    .responsive-diagram.h-\[280px\] {
+      height: 240px !important;
+    }
+    
+    .responsive-chart.h-\[400px\],
+    .responsive-diagram.h-\[400px\] {
+      height: 300px !important;
+    }
+  }
+  
+  /* Additional adjustments for very small screens */
+  @media (max-width: 480px) {
+    .responsive-chart, 
+    .responsive-diagram {
+      margin: 0 -1rem; /* Negative margin to maximize space */
+    }
+    
+    .responsive-chart svg,
+    .responsive-diagram svg {
+      transform: scale(0.95); /* Slightly scale down to fit better */
     }
   }
 }

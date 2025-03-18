@@ -569,12 +569,9 @@ export default function Whitepaper() {
                   {expandedSections.integration && (
                     <div className="mb-8 p-4 bg-primary/5 rounded-xl">
                       <h3 className="font-bold text-xl mb-4 text-center">Mobile Integration Architecture</h3>
-                      <div className="flex justify-center">
+                      <div className="flex justify-center responsive-diagram">
                         <MobileIntegrationDiagram />
                       </div>
-                      <p className="text-sm text-foreground/70 mt-3 text-center">
-                        Fig. 8: PeoChain's mobile integration framework showing interaction between blockchain, mobile money systems, and user applications
-                      </p>
                       
                       <div className="mt-6 grid gap-4 md:grid-cols-2">
                         <div className="bg-white/50 p-4 rounded-lg">
