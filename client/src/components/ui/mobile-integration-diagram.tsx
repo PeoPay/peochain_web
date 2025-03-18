@@ -213,19 +213,7 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
           {/* Blockchain labels removed as requested */}
         </g>
         
-        {/* Descriptive Footer - improved readability */}
-        <text
-          x={width / 2}
-          y={height - (isMobile ? 25 : 15)}
-          textAnchor="middle"
-          fontSize={isMobile ? 8 : 10}
-          fill="currentColor"
-        >
-          {isMobile 
-            ? "Mobile payment networks integration" 
-            : "Seamless integration with established mobile payment networks enables financial inclusion"
-          }
-        </text>
+        {/* Footer text removed as requested */}
       </svg>
     </div>
   );
