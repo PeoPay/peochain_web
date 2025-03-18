@@ -61,23 +61,23 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
           </marker>
         </defs>
         
-        {/* Title */}
+        {/* Title - adjusted for better mobile viewing */}
         <text
           x={width / 2}
           y={25}
           textAnchor="middle"
-          fontSize="14"
+          fontSize={isMobile ? "12" : "14"}
           fontWeight="bold"
           fill="#276749"
         >
-          PeoChain Mobile Integration Architecture
+          {isMobile ? "PeoChain Mobile Integration" : "PeoChain Mobile Integration Architecture"}
         </text>
         
-        {/* Central PeoChain Platform */}
+        {/* Central PeoChain Platform - adjusted for better proportions */}
         <rect
-          x={width / 2 - 75}
+          x={width / 2 - (isMobile ? 60 : 75)}
           y={height / 2 - 20}
-          width={150}
+          width={isMobile ? 120 : 150}
           height={40}
           rx={6}
           fill="#276749"
@@ -88,7 +88,7 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
           x={width / 2}
           y={height / 2 + 5}
           textAnchor="middle"
-          fontSize="12"
+          fontSize={isMobile ? "10" : "12"}
           fontWeight="bold"
           fill="white"
         >
@@ -142,9 +142,9 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
                 {provider.country}
               </text>
               
-              {/* Connection to platform */}
+              {/* Connection to platform - adjusted curve for mobile */}
               <path
-                d={`M${boxX + boxWidth},${provider.y} C${width/2 - 75},${provider.y} ${width/2 - 75},${height/2} ${width/2 - 75},${height/2}`}
+                d={`M${boxX + boxWidth},${provider.y} C${width/2 - (isMobile ? 60 : 75)},${provider.y} ${width/2 - (isMobile ? 60 : 75)},${height/2} ${width/2 - (isMobile ? 60 : 75)},${height/2}`}
                 stroke="url(#mobileGradient)"
                 strokeWidth={isMobile ? 1 : 1.5}
                 fill="none"
@@ -173,70 +173,76 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
           { name: 'Payments', y: 120, icon: '💸', type: 'Cross-border' },
           { name: 'Wallet', y: 180, icon: '👛', type: 'Self-custody' },
           { name: 'Marketplaces', y: 240, icon: '🛒', type: 'P2P Trading' }
-        ].map((app, index) => (
-          <g key={`app-${index}`}>
-            {/* App box */}
-            <rect
-              x={width - 150}
-              y={app.y - 15}
-              width={100}
-              height={30}
-              rx={4}
-              fill="#5a8364"
-              opacity={0.8}
-              filter="url(#shadow)"
-            />
-            <text
-              x={width - 100}
-              y={app.y + 5}
-              textAnchor="middle"
-              fontSize="10"
-              fontWeight="bold"
-              fill="white"
-            >
-              {app.icon} {app.name}
-            </text>
-            
-            {/* App type label */}
-            <text
-              x={width - 100}
-              y={app.y + 20}
-              textAnchor="middle"
-              fontSize="8"
-              fill="currentColor"
-            >
-              {app.type}
-            </text>
-            
-            {/* Connection from platform */}
-            <path
-              d={`M${width/2 + 75},${height/2} C${width/2 + 100},${height/2} ${width/2 + 100},${app.y} ${width - 150},${app.y}`}
-              stroke="url(#mobileGradient)"
-              strokeWidth={1.5}
-              fill="none"
-              markerEnd="url(#dataFlowArrow)"
-              opacity={0.7}
-              className={index === 1 ? "animate-pulse" : ""}
-            />
-            
-            {/* Label for path */}
-            <text
-              x={width/2 + 100}
-              y={index % 2 === 0 ? app.y - 10 : app.y + 15}
-              textAnchor="middle"
-              fontSize="8"
-              fill="#276749"
-            >
-              {index % 2 === 0 ? "Integration" : "API Access"}
-            </text>
-          </g>
-        ))}
+        ].map((app, index) => {
+          // Calculate positions based on mobile or desktop
+          const boxWidth = isMobile ? 85 : 100;
+          const boxX = width - (isMobile ? 115 : 150);
+          
+          return (
+            <g key={`app-${index}`}>
+              {/* App box */}
+              <rect
+                x={boxX}
+                y={app.y - 15}
+                width={boxWidth}
+                height={30}
+                rx={4}
+                fill="#5a8364"
+                opacity={0.8}
+                filter="url(#shadow)"
+              />
+              <text
+                x={boxX + (boxWidth/2)}
+                y={app.y + 5}
+                textAnchor="middle"
+                fontSize={isMobile ? 8 : 10}
+                fontWeight="bold"
+                fill="white"
+              >
+                {app.icon} {app.name}
+              </text>
+              
+              {/* App type label */}
+              <text
+                x={boxX + (boxWidth/2)}
+                y={app.y + 20}
+                textAnchor="middle"
+                fontSize={isMobile ? 7 : 8}
+                fill="currentColor"
+              >
+                {isMobile && app.type.length > 10 ? app.type.split(' ')[0] : app.type}
+              </text>
+              
+              {/* Connection from platform - adjusted curve for mobile */}
+              <path
+                d={`M${width/2 + (isMobile ? 60 : 75)},${height/2} C${width/2 + (isMobile ? 45 : 60)},${height/2} ${width/2 + (isMobile ? 45 : 60)},${app.y} ${boxX},${app.y}`}
+                stroke="url(#mobileGradient)"
+                strokeWidth={isMobile ? 1 : 1.5}
+                fill="none"
+                markerEnd="url(#dataFlowArrow)"
+                opacity={0.7}
+                className={index === 1 ? "animate-pulse" : ""}
+              />
+              
+              {/* Label for path - positioned to avoid overlap with curves */}
+              <text
+                x={(width/2 + (isMobile ? 60 : 75) + boxX) / 2}
+                y={index % 2 === 0 ? app.y - 10 : app.y + 15}
+                textAnchor="middle"
+                fontSize={isMobile ? 7 : 8}
+                fill="#276749"
+              >
+                {index % 2 === 0 ? "Integration" : "API Access"}
+              </text>
+            </g>
+          );
+        })}
         
-        {/* Blockchain Layer */}
+        {/* Blockchain Layer - adjusted for mobile */}
         <rect
-          x={width / 2 - 130}
+          x={width / 2 - (isMobile ? 110 : 130)}
           y={height / 2 + 40}
-          width={260}
+          width={isMobile ? 220 : 260}
           height={25}
           rx={4}
           fill="#38a169"
@@ -246,22 +252,25 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
           x={width / 2}
           y={height / 2 + 55}
           textAnchor="middle"
-          fontSize="10"
+          fontSize={isMobile ? 8 : 10}
           fontWeight="bold"
           fill="white"
         >
-          Blockchain Layer - 100,000 TPS / 1s Finality
+          {isMobile ? "100,000 TPS / 1s Finality" : "Blockchain Layer - 100,000 TPS / 1s Finality"}
         </text>
         
-        {/* Descriptive Footer */}
+        {/* Descriptive Footer - improved readability */}
         <text
           x={width / 2}
-          y={height - 15}
+          y={height - (isMobile ? 25 : 15)}
           textAnchor="middle"
-          fontSize="10"
+          fontSize={isMobile ? 8 : 10}
           fill="currentColor"
         >
-          Seamless integration with established mobile payment networks enables financial inclusion
+          {isMobile 
+            ? "Mobile payment networks integration" 
+            : "Seamless integration with established mobile payment networks enables financial inclusion"
+          }
         </text>
       </svg>
     </div>
