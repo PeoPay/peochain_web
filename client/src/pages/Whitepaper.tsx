@@ -224,12 +224,23 @@ export default function Whitepaper() {
               <section>
                 <h2 className="text-2xl font-bold mb-6">Technical Highlights</h2>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="border border-primary/20 p-5 rounded-xl">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                  <div className="border border-primary/20 p-5 rounded-xl whitepaper-section">
                     <h3 className="font-bold text-lg mb-2">Subnet Validator Network</h3>
                     <p className="text-foreground/70 text-sm">
                       Independent validator subnetworks enable parallel transaction processing, dramatically boosting network throughput and decentralization.
                     </p>
+                    
+                    <div 
+                      className="flex items-center justify-center mt-4 text-primary cursor-pointer hover:text-primary/80 text-xs font-medium"
+                      onClick={() => toggleSection('architecture')}
+                    >
+                      {expandedSections.architecture ? (
+                        <>Hide Architecture <ChevronUp className="ml-1 h-3 w-3" /></>
+                      ) : (
+                        <>View Architecture <ChevronDown className="ml-1 h-3 w-3" /></>
+                      )}
+                    </div>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
@@ -260,6 +271,95 @@ export default function Whitepaper() {
                     </p>
                   </div>
                 </div>
+                
+                {expandedSections.architecture && (
+                  <div className="my-8 p-4 bg-primary/5 rounded-xl">
+                    <h3 className="font-bold text-xl mb-4 text-center">Subnet Validator Architecture</h3>
+                    <div className="flex justify-center">
+                      <SubnetDiagram />
+                    </div>
+                    <p className="text-sm text-foreground/70 mt-3 text-center">
+                      Fig. 4: PeoChain's subnet validator network architecture enables parallel processing and specialized functions
+                    </p>
+                    
+                    <div className="mt-6 grid gap-4 md:grid-cols-2">
+                      <div className="bg-white/50 p-4 rounded-lg">
+                        <h4 className="font-semibold text-primary">Parallel Processing Advantages</h4>
+                        <ul className="list-disc pl-6 mt-2 text-sm space-y-1">
+                          <li>Horizontal scaling without compromising security</li>
+                          <li>Specialized subnet roles for optimized performance</li>
+                          <li>Improved fault tolerance and redundancy</li>
+                          <li>Enhanced transaction throughput</li>
+                        </ul>
+                      </div>
+                      
+                      <div className="bg-white/50 p-4 rounded-lg">
+                        <h4 className="font-semibold text-primary">Subnet Validator Selection</h4>
+                        <ul className="list-disc pl-6 mt-2 text-sm space-y-1">
+                          <li>Validators assigned to specialized subnets based on capacity and performance</li>
+                          <li>Dynamic rotation ensures distributed responsibility</li>
+                          <li>Subnet leaders selected by DCS algorithm</li>
+                          <li>Synergy score influences subnet assignment</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                <div className="p-5 bg-primary/5 rounded-xl">
+                  <h3 className="font-bold text-lg mb-3">Technical Architecture Comparison with Leading Blockchains</h3>
+                  
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="bg-primary/10">
+                          <th className="border border-primary/20 p-2 text-left">Feature</th>
+                          <th className="border border-primary/20 p-2 text-left">PeoChain</th>
+                          <th className="border border-primary/20 p-2 text-left">Ethereum</th>
+                          <th className="border border-primary/20 p-2 text-left">Solana</th>
+                          <th className="border border-primary/20 p-2 text-left">Avalanche</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-sm">
+                        <tr>
+                          <td className="border border-primary/20 p-2 font-medium">Consensus</td>
+                          <td className="border border-primary/20 p-2">Proof of Synergy</td>
+                          <td className="border border-primary/20 p-2">Proof of Stake</td>
+                          <td className="border border-primary/20 p-2">Proof of History</td>
+                          <td className="border border-primary/20 p-2">Avalanche Consensus</td>
+                        </tr>
+                        <tr className="bg-primary/5">
+                          <td className="border border-primary/20 p-2 font-medium">TPS</td>
+                          <td className="border border-primary/20 p-2 font-semibold">100,000</td>
+                          <td className="border border-primary/20 p-2">15-30</td>
+                          <td className="border border-primary/20 p-2">65,000</td>
+                          <td className="border border-primary/20 p-2">4,500</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-primary/20 p-2 font-medium">Finality</td>
+                          <td className="border border-primary/20 p-2 font-semibold">1 second</td>
+                          <td className="border border-primary/20 p-2">12-15 minutes</td>
+                          <td className="border border-primary/20 p-2">400ms</td>
+                          <td className="border border-primary/20 p-2">2-3 seconds</td>
+                        </tr>
+                        <tr className="bg-primary/5">
+                          <td className="border border-primary/20 p-2 font-medium">Mobile Integration</td>
+                          <td className="border border-primary/20 p-2 font-semibold">Native Integrations</td>
+                          <td className="border border-primary/20 p-2">Complex, Limited</td>
+                          <td className="border border-primary/20 p-2">Partial, External</td>
+                          <td className="border border-primary/20 p-2">Limited, Emerging</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-primary/20 p-2 font-medium">Fee Structure</td>
+                          <td className="border border-primary/20 p-2 font-semibold">Fixed Low Fees</td>
+                          <td className="border border-primary/20 p-2">Variable Gas Fees</td>
+                          <td className="border border-primary/20 p-2">Low Fixed</td>
+                          <td className="border border-primary/20 p-2">Medium Fixed</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </section>
 
               <Separator />
@@ -272,32 +372,79 @@ export default function Whitepaper() {
                   PeoChain's tokenomics strategically support long-term economic sustainability and incentivize active participation:
                 </p>
                 
-                <div className="bg-primary/5 p-6 rounded-xl mb-6">
-                  <h3 className="font-bold text-xl mb-3">Balanced Token Distribution</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
-                    <div className="p-3">
-                      <div className="text-3xl font-bold text-primary mb-1">30%</div>
-                      <div className="text-sm text-foreground/70">Active Validators</div>
+                <div className="whitepaper-section">
+                  <div 
+                    className="flex items-center justify-center mb-6 text-primary cursor-pointer hover:text-primary/80 text-sm font-medium"
+                    onClick={() => toggleSection('tokenomics')}
+                  >
+                    {expandedSections.tokenomics ? (
+                      <>Hide Tokenomics Charts <ChevronUp className="ml-1 h-4 w-4" /></>
+                    ) : (
+                      <>View Tokenomics Charts <ChevronDown className="ml-1 h-4 w-4" /></>
+                    )}
+                  </div>
+                  
+                  {expandedSections.tokenomics && (
+                    <div className="mb-8 p-4 bg-primary/5 rounded-xl">
+                      <h3 className="font-bold text-xl mb-4 text-center">Token Distribution & Metrics</h3>
+                      <div className="h-[350px] mb-4">
+                        <TokenomicsDiagram mode="distribution" />
+                      </div>
+                      <p className="text-sm text-foreground/70 text-center mb-6">
+                        Fig. 5: PeoChain token distribution breakdown across stakeholder categories
+                      </p>
+                      
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div>
+                          <h4 className="font-semibold text-lg mb-2 text-center">Token Value Projection</h4>
+                          <div className="h-[250px]">
+                            <TokenomicsDiagram mode="value" />
+                          </div>
+                          <p className="text-xs text-foreground/70 mt-2 text-center">
+                            Fig. 6: Projected token value and trading volume over time
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold text-lg mb-2 text-center">Key Token Metrics</h4>
+                          <div className="h-[250px]">
+                            <TokenomicsDiagram mode="metrics" />
+                          </div>
+                          <p className="text-xs text-foreground/70 mt-2 text-center">
+                            Fig. 7: Key performance indicators for PeoChain token
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="p-3">
-                      <div className="text-3xl font-bold text-primary mb-1">25%</div>
-                      <div className="text-sm text-foreground/70">Ecosystem Growth</div>
-                    </div>
-                    <div className="p-3">
-                      <div className="text-3xl font-bold text-primary mb-1">15%</div>
-                      <div className="text-sm text-foreground/70">Team Commitment</div>
-                    </div>
-                    <div className="p-3">
-                      <div className="text-3xl font-bold text-primary mb-1">15%</div>
-                      <div className="text-sm text-foreground/70">Stabilization Fund</div>
-                    </div>
-                    <div className="p-3">
-                      <div className="text-3xl font-bold text-primary mb-1">10%</div>
-                      <div className="text-sm text-foreground/70">Liquidity</div>
-                    </div>
-                    <div className="p-3">
-                      <div className="text-3xl font-bold text-primary mb-1">5%</div>
-                      <div className="text-sm text-foreground/70">Community Adoption</div>
+                  )}
+                  
+                  <div className="bg-primary/5 p-6 rounded-xl mb-6">
+                    <h3 className="font-bold text-xl mb-3">Balanced Token Distribution</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
+                      <div className="p-3">
+                        <div className="text-3xl font-bold text-primary mb-1">30%</div>
+                        <div className="text-sm text-foreground/70">Active Validators</div>
+                      </div>
+                      <div className="p-3">
+                        <div className="text-3xl font-bold text-primary mb-1">25%</div>
+                        <div className="text-sm text-foreground/70">Ecosystem Growth</div>
+                      </div>
+                      <div className="p-3">
+                        <div className="text-3xl font-bold text-primary mb-1">15%</div>
+                        <div className="text-sm text-foreground/70">Team Commitment</div>
+                      </div>
+                      <div className="p-3">
+                        <div className="text-3xl font-bold text-primary mb-1">15%</div>
+                        <div className="text-sm text-foreground/70">Stabilization Fund</div>
+                      </div>
+                      <div className="p-3">
+                        <div className="text-3xl font-bold text-primary mb-1">10%</div>
+                        <div className="text-sm text-foreground/70">Liquidity</div>
+                      </div>
+                      <div className="p-3">
+                        <div className="text-3xl font-bold text-primary mb-1">5%</div>
+                        <div className="text-sm text-foreground/70">Community Adoption</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -308,6 +455,28 @@ export default function Whitepaper() {
                     <p className="text-foreground/80">
                       Employs strategic token buybacks and issuance adjustments to stabilize prices, manage volatility, and respond dynamically to market conditions, thus safeguarding economic health.
                     </p>
+                    
+                    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="bg-white/50 p-4 rounded-lg">
+                        <h4 className="font-semibold text-primary text-sm mb-2">Stability Mechanisms</h4>
+                        <ul className="list-disc pl-5 text-xs space-y-1 text-foreground/80">
+                          <li>Algorithmic supply adjustments based on market conditions</li>
+                          <li>Strategic token buybacks from transaction fees</li>
+                          <li>Validator staking incentives to reduce circulating supply</li>
+                          <li>Scheduled token release schedules to prevent market flooding</li>
+                        </ul>
+                      </div>
+                      
+                      <div className="bg-white/50 p-4 rounded-lg">
+                        <h4 className="font-semibold text-primary text-sm mb-2">Economic Sustainability</h4>
+                        <ul className="list-disc pl-5 text-xs space-y-1 text-foreground/80">
+                          <li>Transaction fee distribution model ensures network maintenance</li>
+                          <li>Ecosystem development fund for long-term growth initiatives</li>
+                          <li>Governance-approved parameter adjustments</li>
+                          <li>Emergency stabilization reserves for extreme market conditions</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="bg-primary/5 p-6 rounded-xl">
@@ -315,6 +484,46 @@ export default function Whitepaper() {
                     <p className="text-foreground/80">
                       Validators and users earn rewards proportional to their <span className="font-semibold">Synergy Scores</span>, incentivizing consistent participation, staking, governance involvement, and referrals, reinforced by periodic bonuses and gamified engagement mechanisms.
                     </p>
+                    
+                    <div className="mt-4 bg-white/50 p-4 rounded-lg">
+                      <h4 className="font-semibold text-primary text-sm mb-2">Synergy Score Calculation</h4>
+                      <table className="w-full text-xs border-collapse">
+                        <thead>
+                          <tr className="bg-primary/10">
+                            <th className="border border-primary/20 p-2 text-left">Component</th>
+                            <th className="border border-primary/20 p-2 text-left">Weight</th>
+                            <th className="border border-primary/20 p-2 text-left">Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="border border-primary/20 p-2">Staking Duration</td>
+                            <td className="border border-primary/20 p-2">30%</td>
+                            <td className="border border-primary/20 p-2">Longer staking periods earn higher scores</td>
+                          </tr>
+                          <tr className="bg-primary/5">
+                            <td className="border border-primary/20 p-2">Network Contribution</td>
+                            <td className="border border-primary/20 p-2">25%</td>
+                            <td className="border border-primary/20 p-2">Transaction validation quality and responsiveness</td>
+                          </tr>
+                          <tr>
+                            <td className="border border-primary/20 p-2">Governance Participation</td>
+                            <td className="border border-primary/20 p-2">20%</td>
+                            <td className="border border-primary/20 p-2">Voting in governance proposals</td>
+                          </tr>
+                          <tr className="bg-primary/5">
+                            <td className="border border-primary/20 p-2">Community Engagement</td>
+                            <td className="border border-primary/20 p-2">15%</td>
+                            <td className="border border-primary/20 p-2">Referrals and ecosystem expansion activities</td>
+                          </tr>
+                          <tr>
+                            <td className="border border-primary/20 p-2">Stability Contribution</td>
+                            <td className="border border-primary/20 p-2">10%</td>
+                            <td className="border border-primary/20 p-2">Participation in stability-enhancing programs</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -354,7 +563,119 @@ export default function Whitepaper() {
 
               <Separator />
 
-              {/* 8. Roadmap */}
+              {/* 8. Mobile Integration */}
+              <section>
+                <h2 className="text-2xl font-bold mb-6">Mobile Integration & User Adoption Strategy</h2>
+                
+                <p className="text-foreground/80 mb-6">
+                  PeoChain's mobile strategy directly addresses key barriers to blockchain adoption, particularly in emerging markets:
+                </p>
+                
+                <div className="whitepaper-section">
+                  <div 
+                    className="flex items-center justify-center mb-6 text-primary cursor-pointer hover:text-primary/80 text-sm font-medium"
+                    onClick={() => toggleSection('integration')}
+                  >
+                    {expandedSections.integration ? (
+                      <>Hide Mobile Integration Framework <ChevronUp className="ml-1 h-4 w-4" /></>
+                    ) : (
+                      <>View Mobile Integration Framework <ChevronDown className="ml-1 h-4 w-4" /></>
+                    )}
+                  </div>
+                  
+                  {expandedSections.integration && (
+                    <div className="mb-8 p-4 bg-primary/5 rounded-xl">
+                      <h3 className="font-bold text-xl mb-4 text-center">Mobile Integration Architecture</h3>
+                      <div className="flex justify-center">
+                        <MobileIntegrationDiagram />
+                      </div>
+                      <p className="text-sm text-foreground/70 mt-3 text-center">
+                        Fig. 8: PeoChain's mobile integration framework showing interaction between blockchain, mobile money systems, and user applications
+                      </p>
+                      
+                      <div className="mt-6 grid gap-4 md:grid-cols-2">
+                        <div className="bg-white/50 p-4 rounded-lg">
+                          <h4 className="font-semibold text-primary">Key Integration Partners</h4>
+                          <ul className="list-disc pl-6 mt-2 text-sm space-y-1">
+                            <li><span className="font-medium">M-Pesa</span> (Kenya): 30M+ active users</li>
+                            <li><span className="font-medium">GCash</span> (Philippines): 76M+ registered users</li>
+                            <li><span className="font-medium">MTN MoMo</span> (Nigeria): 55M+ active users</li>
+                            <li>Additional partnerships in development stages across LATAM and South Asia</li>
+                          </ul>
+                        </div>
+                        
+                        <div className="bg-white/50 p-4 rounded-lg">
+                          <h4 className="font-semibold text-primary">Integration Benefits</h4>
+                          <ul className="list-disc pl-6 mt-2 text-sm space-y-1">
+                            <li>Seamless crypto-to-mobile money transfers</li>
+                            <li>Minimal technical knowledge required for users</li>
+                            <li>Familiar payment interfaces with enhanced capabilities</li>
+                            <li>Rapid settlement via PeoChain's high TPS infrastructure</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div className="bg-primary/5 p-6 rounded-xl">
+                      <h3 className="font-bold text-xl mb-3">Simplified User Experience</h3>
+                      <p className="text-foreground/80 mb-4">
+                        PeoChain's mobile-first approach eliminates traditional blockchain complexity through:
+                      </p>
+                      <ul className="list-disc pl-6 space-y-2 text-foreground/80">
+                        <li>Intuitive interfaces requiring minimal technical knowledge</li>
+                        <li>QR code-based transactions for seamless transfers</li>
+                        <li>Automated wallet creation and management</li>
+                        <li>Progressive disclosure of advanced features</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-primary/5 p-6 rounded-xl">
+                      <h3 className="font-bold text-xl mb-3">Strategic Partnerships</h3>
+                      <p className="text-foreground/80 mb-4">
+                        PeoChain builds ecosystem strength through strategic collaborations:
+                      </p>
+                      <ul className="list-disc pl-6 space-y-2 text-foreground/80">
+                        <li>Mobile money providers in target emerging markets</li>
+                        <li>Local financial institutions for regulatory compliance</li>
+                        <li>Telecom companies for enhanced distribution</li>
+                        <li>Merchant networks for real-world utility and adoption</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-primary/5 p-6 rounded-xl">
+                    <h3 className="font-bold text-xl mb-3">Educational Initiatives & Adoption Strategy</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="border-l-2 border-primary/30 pl-4">
+                        <h4 className="font-medium text-lg text-primary">Learn</h4>
+                        <p className="text-sm text-foreground/80">
+                          Multi-language educational resources, community workshops, and gamified learning modules to build blockchain literacy.
+                        </p>
+                      </div>
+                      
+                      <div className="border-l-2 border-primary/30 pl-4">
+                        <h4 className="font-medium text-lg text-primary">Engage</h4>
+                        <p className="text-sm text-foreground/80">
+                          Progressive rewards system, referral incentives, and local ambassador programs to drive community engagement and organic growth.
+                        </p>
+                      </div>
+                      
+                      <div className="border-l-2 border-primary/30 pl-4">
+                        <h4 className="font-medium text-lg text-primary">Apply</h4>
+                        <p className="text-sm text-foreground/80">
+                          Strategic merchant partnerships, real-world use cases, and tailored solutions addressing specific regional needs and challenges.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              
+              <Separator />
+
+              {/* 9. Roadmap */}
               <section>
                 <h2 className="text-2xl font-bold mb-6">Roadmap to Global Adoption</h2>
                 
