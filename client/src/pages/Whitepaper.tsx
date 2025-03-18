@@ -15,9 +15,7 @@ export default function Whitepaper() {
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
     consensusMechanism: false,
     dcs: false,
-    architecture: false,
-    integration: false,
-    tokenomics: false
+    architecture: false
   });
 
   // Toggle section expansion
@@ -391,114 +389,7 @@ export default function Whitepaper() {
 
               <Separator />
 
-              {/* 8. Mobile Integration */}
-              <section>
-                <h2 className="text-2xl font-bold mb-6">Mobile Integration & User Adoption Strategy</h2>
-                
-                <p className="text-foreground/80 mb-6">
-                  PeoChain's mobile strategy directly addresses key barriers to blockchain adoption, particularly in emerging markets:
-                </p>
-                
-                <div className="whitepaper-section">
-                  <div 
-                    className="flex items-center justify-center mb-6 text-primary cursor-pointer hover:text-primary/80 text-sm font-medium"
-                    onClick={() => toggleSection('integration')}
-                  >
-                    {expandedSections.integration ? (
-                      <>Hide Mobile Integration Framework <ChevronUp className="ml-1 h-4 w-4" /></>
-                    ) : (
-                      <>View Mobile Integration Framework <ChevronDown className="ml-1 h-4 w-4" /></>
-                    )}
-                  </div>
-                  
-                  {expandedSections.integration && (
-                    <div className="mb-8 p-4 bg-primary/5 rounded-xl">
-                      <h3 className="font-bold text-xl mb-4 text-center">Mobile Integration Architecture</h3>
-                      <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
-                        <MobileIntegrationDiagram />
-                      </div>
-                      
-                      <div className="mt-6 grid gap-4 md:grid-cols-2">
-                        <div className="bg-white/50 p-4 rounded-lg">
-                          <h4 className="font-semibold text-primary text-center mb-3">Key Integration Partners</h4>
-                          <ul className="list-disc pl-6 mt-2 text-sm space-y-1">
-                            <li><span className="font-medium">M-Pesa</span> (Kenya): 30M+ active users</li>
-                            <li><span className="font-medium">GCash</span> (Philippines): 76M+ registered users</li>
-                            <li><span className="font-medium">MTN MoMo</span> (Nigeria): 55M+ active users</li>
-                            <li>Additional partnerships in development stages across LATAM and South Asia</li>
-                          </ul>
-                        </div>
-                        
-                        <div className="bg-white/50 p-4 rounded-lg">
-                          <h4 className="font-semibold text-primary text-center mb-3">Integration Benefits</h4>
-                          <ul className="list-disc pl-6 mt-2 text-sm space-y-1">
-                            <li>Seamless crypto-to-mobile money transfers</li>
-                            <li>Minimal technical knowledge required for users</li>
-                            <li>Familiar payment interfaces with enhanced capabilities</li>
-                            <li>Rapid settlement via PeoChain's high TPS infrastructure</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div className="bg-primary/5 p-6 rounded-xl">
-                      <h3 className="font-bold text-xl mb-3">Simplified User Experience</h3>
-                      <p className="text-foreground/80 mb-4">
-                        PeoChain's mobile-first approach eliminates traditional blockchain complexity through:
-                      </p>
-                      <ul className="list-disc pl-6 space-y-2 text-foreground/80">
-                        <li>Intuitive interfaces requiring minimal technical knowledge</li>
-                        <li>QR code-based transactions for seamless transfers</li>
-                        <li>Automated wallet creation and management</li>
-                        <li>Progressive disclosure of advanced features</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-primary/5 p-6 rounded-xl">
-                      <h3 className="font-bold text-xl mb-3">Strategic Partnerships</h3>
-                      <p className="text-foreground/80 mb-4">
-                        PeoChain builds ecosystem strength through strategic collaborations:
-                      </p>
-                      <ul className="list-disc pl-6 space-y-2 text-foreground/80">
-                        <li>Mobile money providers in target emerging markets</li>
-                        <li>Local financial institutions for regulatory compliance</li>
-                        <li>Telecom companies for enhanced distribution</li>
-                        <li>Merchant networks for real-world utility and adoption</li>
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-primary/5 p-6 rounded-xl">
-                    <h3 className="font-bold text-xl mb-3">Educational Initiatives & Adoption Strategy</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="border-l-2 border-primary/30 pl-4">
-                        <h4 className="font-medium text-lg text-primary">Learn</h4>
-                        <p className="text-sm text-foreground/80">
-                          Multi-language educational resources, community workshops, and gamified learning modules to build blockchain literacy.
-                        </p>
-                      </div>
-                      
-                      <div className="border-l-2 border-primary/30 pl-4">
-                        <h4 className="font-medium text-lg text-primary">Engage</h4>
-                        <p className="text-sm text-foreground/80">
-                          Progressive rewards system, referral incentives, and local ambassador programs to drive community engagement and organic growth.
-                        </p>
-                      </div>
-                      
-                      <div className="border-l-2 border-primary/30 pl-4">
-                        <h4 className="font-medium text-lg text-primary">Apply</h4>
-                        <p className="text-sm text-foreground/80">
-                          Strategic merchant partnerships, real-world use cases, and tailored solutions addressing specific regional needs and challenges.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-              
-              <Separator />
+
 
               {/* 9. Roadmap */}
               <section>
