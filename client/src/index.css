@@ -82,21 +82,23 @@
     .subnet-diagram text,
     .tokenomics-diagram text,
     .mobile-integration-diagram text {
-      font-size: 10px !important; /* Larger minimum font size */
+      font-size: 10px !important; /* Consistent minimum font size */
       font-weight: 500 !important; /* Medium weight for better visibility */
+      letter-spacing: 0.01em !important; /* Improved letter spacing */
     }
     
     /* Adjust diagram grid layouts for mobile */
     .whitepaper-section .flex.justify-center.gap-6 {
-      gap: 1rem !important; /* Increased gap for better spacing */
+      gap: 0.75rem !important; /* More compact spacing for mobile */
+      align-items: center !important; /* Ensure vertical alignment */
     }
     
     /* Better text size for readability */
     .whitepaper-section .flex.gap-6 span {
-      font-size: 0.75rem; /* Slightly larger for better readability */
+      font-size: 0.8rem; /* Improved font size for better readability */
     }
     
-    /* Better SVG rendering on mobile */
+    /* Consistent SVG rendering on mobile */
     .whitepaper-section svg {
       height: auto !important;
       max-height: 450px !important; /* Taller maximum height for visibility */
@@ -108,18 +110,21 @@
     }
   }
 
-  /* Chart container responsiveness */
+  /* Chart container responsiveness with consistent sizing */
   .chart-container,
   .responsive-chart,
   .responsive-diagram {
     max-width: 100%;
     overflow: hidden;
+    margin: 0 auto; /* Center all charts and diagrams */
   }
   
   .responsive-chart {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative; /* Create positioning context */
+    width: 100%; /* Ensure full width usage */
   }
   
   .responsive-diagram {
@@ -128,7 +133,7 @@
     align-items: center;
     width: 100%;
     min-height: 350px; /* Ensure minimum height for content visibility */
-    overflow: visible; /* Allow content to expand outside if needed */
+    position: relative; /* Create positioning context */
   }
   
   .responsive-chart svg,
@@ -137,6 +142,7 @@
     height: 100%; /* Use full height of container */
     max-width: 100%;
     object-fit: contain; /* Preserve aspect ratio */
+    display: block; /* Remove default inline spacing */
   }
 
   /* Ensure diagrams don't overflow on small screens */

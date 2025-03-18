@@ -167,8 +167,9 @@ export default function Whitepaper() {
                     </div>
                     
                     {expandedSections.consensusMechanism && (
-                      <div className="mt-4 p-3 border border-primary/10 rounded-xl">
-                        <div className="w-full responsive-diagram h-[350px] sm:h-[400px]">
+                      <div className="mt-4 p-4 bg-primary/5 rounded-xl">
+                        <h3 className="font-bold text-xl mb-4 text-center">Proof of Synergy (PoSyg) Consensus</h3>
+                        <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
                           <ConsensusDiagram mode="posyg" />
                         </div>
                       </div>
@@ -196,8 +197,9 @@ export default function Whitepaper() {
                     </div>
                     
                     {expandedSections.dcs && (
-                      <div className="mt-4 p-3 border border-primary/10 rounded-xl">
-                        <div className="w-full responsive-diagram h-[350px] sm:h-[400px]">
+                      <div className="mt-4 p-4 bg-primary/5 rounded-xl">
+                        <h3 className="font-bold text-xl mb-4 text-center">Dynamic Contribution Scoring</h3>
+                        <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
                           <ConsensusDiagram mode="dcs" />
                         </div>
                       </div>
@@ -270,13 +272,13 @@ export default function Whitepaper() {
                 {expandedSections.architecture && (
                   <div className="my-8 p-4 bg-primary/5 rounded-xl">
                     <h3 className="font-bold text-xl mb-4 text-center">Subnet Validator Architecture</h3>
-                    <div className="w-full responsive-diagram h-[350px] sm:h-[400px]">
+                    <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
                       <SubnetDiagram />
                     </div>
                     
                     <div className="mt-6 grid gap-4 md:grid-cols-2">
                       <div className="bg-white/50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-primary">Parallel Processing Advantages</h4>
+                        <h4 className="font-semibold text-primary text-center mb-3">Parallel Processing Advantages</h4>
                         <ul className="list-disc pl-6 mt-2 text-sm space-y-1">
                           <li>Horizontal scaling without compromising security</li>
                           <li>Specialized subnet roles for optimized performance</li>
@@ -286,7 +288,7 @@ export default function Whitepaper() {
                       </div>
                       
                       <div className="bg-white/50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-primary">Subnet Validator Selection</h4>
+                        <h4 className="font-semibold text-primary text-center mb-3">Subnet Validator Selection</h4>
                         <ul className="list-disc pl-6 mt-2 text-sm space-y-1">
                           <li>Validators assigned to specialized subnets based on capacity and performance</li>
                           <li>Dynamic rotation ensures distributed responsibility</li>
@@ -379,21 +381,21 @@ export default function Whitepaper() {
                   {expandedSections.tokenomics && (
                     <div className="mb-8 p-4 bg-primary/5 rounded-xl">
                       <h3 className="font-bold text-xl mb-4 text-center">Token Distribution & Metrics</h3>
-                      <div className="h-[400px] mb-4 responsive-chart">
+                      <div className="h-[400px] mb-6 responsive-chart">
                         <TokenomicsDiagram mode="distribution" />
                       </div>
                       
                       <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                          <h4 className="font-semibold text-lg mb-2 text-center">Token Value Projection</h4>
-                          <div className="h-[280px] responsive-chart">
+                        <div className="flex flex-col items-center">
+                          <h4 className="font-semibold text-lg mb-3 text-center">Token Value Projection</h4>
+                          <div className="h-[280px] w-full responsive-chart">
                             <TokenomicsDiagram mode="value" />
                           </div>
                         </div>
                         
-                        <div>
-                          <h4 className="font-semibold text-lg mb-2 text-center">Key Token Metrics</h4>
-                          <div className="h-[280px] responsive-chart">
+                        <div className="flex flex-col items-center">
+                          <h4 className="font-semibold text-lg mb-3 text-center">Key Token Metrics</h4>
+                          <div className="h-[280px] w-full responsive-chart">
                             <TokenomicsDiagram mode="metrics" />
                           </div>
                         </div>
@@ -569,13 +571,13 @@ export default function Whitepaper() {
                   {expandedSections.integration && (
                     <div className="mb-8 p-4 bg-primary/5 rounded-xl">
                       <h3 className="font-bold text-xl mb-4 text-center">Mobile Integration Architecture</h3>
-                      <div className="w-full responsive-diagram h-[350px] sm:h-[400px]">
+                      <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
                         <MobileIntegrationDiagram />
                       </div>
                       
                       <div className="mt-6 grid gap-4 md:grid-cols-2">
                         <div className="bg-white/50 p-4 rounded-lg">
-                          <h4 className="font-semibold text-primary">Key Integration Partners</h4>
+                          <h4 className="font-semibold text-primary text-center mb-3">Key Integration Partners</h4>
                           <ul className="list-disc pl-6 mt-2 text-sm space-y-1">
                             <li><span className="font-medium">M-Pesa</span> (Kenya): 30M+ active users</li>
                             <li><span className="font-medium">GCash</span> (Philippines): 76M+ registered users</li>
@@ -585,7 +587,7 @@ export default function Whitepaper() {
                         </div>
                         
                         <div className="bg-white/50 p-4 rounded-lg">
-                          <h4 className="font-semibold text-primary">Integration Benefits</h4>
+                          <h4 className="font-semibold text-primary text-center mb-3">Integration Benefits</h4>
                           <ul className="list-disc pl-6 mt-2 text-sm space-y-1">
                             <li>Seamless crypto-to-mobile money transfers</li>
                             <li>Minimal technical knowledge required for users</li>
