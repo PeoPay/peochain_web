@@ -6,19 +6,19 @@ interface SubnetDiagramProps {
 
 export function SubnetDiagram({ className = '' }: SubnetDiagramProps) {
   // Adjust size based on responsive design needs
-  const [diagramSize, setDiagramSize] = React.useState({ width: 500, height: 380 });
+  const [diagramSize, setDiagramSize] = React.useState({ width: 500, height: 480 });
   
-  // Responsive diagram adjustments
+  // Responsive diagram adjustments - increased heights to accommodate elements
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 480) {
-        setDiagramSize({ width: 340, height: 380 }); // Small mobile
+        setDiagramSize({ width: 340, height: 420 }); // Small mobile
       } else if (window.innerWidth <= 640) {
-        setDiagramSize({ width: 420, height: 400 }); // Mobile
+        setDiagramSize({ width: 420, height: 440 }); // Mobile
       } else if (window.innerWidth <= 768) {
-        setDiagramSize({ width: 480, height: 420 }); // Tablet
+        setDiagramSize({ width: 480, height: 460 }); // Tablet
       } else {
-        setDiagramSize({ width: 500, height: 440 }); // Desktop
+        setDiagramSize({ width: 500, height: 480 }); // Desktop
       }
     };
     
@@ -203,21 +203,40 @@ export function SubnetDiagram({ className = '' }: SubnetDiagramProps) {
         </text>
       </svg>
       
-      {/* Legend - improved for mobile responsiveness */}
-      <div className={`flex flex-wrap justify-center gap-x-3 gap-y-1 mt-4 mb-6 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#276749] mr-1"></div>
-          <span>Core Network</span>
+      {/* Legend - completely redesigned for better clarity and separation */}
+      {isMobile ? (
+        /* Stacked layout for mobile */
+        <div className="grid grid-cols-1 gap-y-2 mt-4 mb-6 text-xs">
+          <div className="flex items-center justify-center">
+            <div className="w-3 h-3 rounded-full bg-[#276749] mr-2"></div>
+            <span>Core Network</span>
+          </div>
+          <div className="flex items-center justify-center">
+            <div className="w-3 h-3 rounded-full bg-[#38a169] mr-2"></div>
+            <span>Subnet Leader</span>
+          </div>
+          <div className="flex items-center justify-center">
+            <div className="w-3 h-3 rounded-full bg-[#5a8364] mr-2"></div>
+            <span>Subnet Validator</span>
+          </div>
         </div>
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#38a169] mr-1"></div>
-          <span>Subnet Leader</span>
+      ) : (
+        /* Horizontal layout with ample spacing for larger screens */
+        <div className="flex justify-center gap-x-6 mt-4 mb-6 text-xs">
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-full bg-[#276749] mr-2"></div>
+            <span>Core Network</span>
+          </div>
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-full bg-[#38a169] mr-2"></div>
+            <span>Subnet Leader</span>
+          </div>
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-full bg-[#5a8364] mr-2"></div>
+            <span>Subnet Validator</span>
+          </div>
         </div>
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#5a8364] mr-1"></div>
-          <span>Subnet Validator</span>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
