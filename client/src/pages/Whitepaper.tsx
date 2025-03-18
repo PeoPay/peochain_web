@@ -168,10 +168,9 @@ export default function Whitepaper() {
                     
                     {expandedSections.consensusMechanism && (
                       <div className="mt-4 p-3 border border-primary/10 rounded-xl">
-                        <ConsensusDiagram mode="posyg" />
-                        <p className="text-xs text-foreground/70 mt-2 text-center">
-                          Fig. 1: Proof of Synergy (PoSyg) Mechanism − Validators form synergistic relationships to optimize transaction validation
-                        </p>
+                        <div className="responsive-diagram">
+                          <ConsensusDiagram mode="posyg" />
+                        </div>
                       </div>
                     )}
                   </div>
@@ -198,10 +197,9 @@ export default function Whitepaper() {
                     
                     {expandedSections.dcs && (
                       <div className="mt-4 p-3 border border-primary/10 rounded-xl">
-                        <ConsensusDiagram mode="dcs" />
-                        <p className="text-xs text-foreground/70 mt-2 text-center">
-                          Fig. 2: Dynamic Contribution Scoring (DCS) − Multi-factor performance evaluation system for validators
-                        </p>
+                        <div className="responsive-diagram">
+                          <ConsensusDiagram mode="dcs" />
+                        </div>
                       </div>
                     )}
                   </div>
@@ -209,12 +207,9 @@ export default function Whitepaper() {
                 
                 <div className="mt-8 p-5 bg-primary/5 rounded-xl">
                   <h3 className="font-bold text-xl mb-4 text-center">Performance Comparison</h3>
-                  <div className="h-[300px]">
+                  <div className="h-[350px] responsive-chart">
                     <AnimatedChart />
                   </div>
-                  <p className="text-sm text-foreground/70 mt-3 text-center">
-                    Fig. 3: PeoChain performance metrics compared to other leading blockchain networks
-                  </p>
                 </div>
               </section>
 
@@ -275,12 +270,9 @@ export default function Whitepaper() {
                 {expandedSections.architecture && (
                   <div className="my-8 p-4 bg-primary/5 rounded-xl">
                     <h3 className="font-bold text-xl mb-4 text-center">Subnet Validator Architecture</h3>
-                    <div className="flex justify-center">
+                    <div className="flex justify-center responsive-diagram">
                       <SubnetDiagram />
                     </div>
-                    <p className="text-sm text-foreground/70 mt-3 text-center">
-                      Fig. 4: PeoChain's subnet validator network architecture enables parallel processing and specialized functions
-                    </p>
                     
                     <div className="mt-6 grid gap-4 md:grid-cols-2">
                       <div className="bg-white/50 p-4 rounded-lg">
@@ -387,32 +379,23 @@ export default function Whitepaper() {
                   {expandedSections.tokenomics && (
                     <div className="mb-8 p-4 bg-primary/5 rounded-xl">
                       <h3 className="font-bold text-xl mb-4 text-center">Token Distribution & Metrics</h3>
-                      <div className="h-[350px] mb-4">
+                      <div className="h-[400px] mb-4 responsive-chart">
                         <TokenomicsDiagram mode="distribution" />
                       </div>
-                      <p className="text-sm text-foreground/70 text-center mb-6">
-                        Fig. 5: PeoChain token distribution breakdown across stakeholder categories
-                      </p>
                       
                       <div className="grid md:grid-cols-2 gap-6">
                         <div>
                           <h4 className="font-semibold text-lg mb-2 text-center">Token Value Projection</h4>
-                          <div className="h-[250px]">
+                          <div className="h-[280px] responsive-chart">
                             <TokenomicsDiagram mode="value" />
                           </div>
-                          <p className="text-xs text-foreground/70 mt-2 text-center">
-                            Fig. 6: Projected token value and trading volume over time
-                          </p>
                         </div>
                         
                         <div>
                           <h4 className="font-semibold text-lg mb-2 text-center">Key Token Metrics</h4>
-                          <div className="h-[250px]">
+                          <div className="h-[280px] responsive-chart">
                             <TokenomicsDiagram mode="metrics" />
                           </div>
-                          <p className="text-xs text-foreground/70 mt-2 text-center">
-                            Fig. 7: Key performance indicators for PeoChain token
-                          </p>
                         </div>
                       </div>
                     </div>
