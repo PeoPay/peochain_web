@@ -379,14 +379,14 @@ export default function Whitepaper() {
                   {expandedSections.tokenomics && (
                     <div className="mb-8 p-4 bg-primary/5 rounded-xl">
                       <h3 className="font-bold text-xl mb-4 text-center">Token Distribution & Metrics</h3>
-                      <div className="h-[400px] mb-4 responsive-chart">
+                      <div className="h-[450px] mb-4 responsive-chart w-full">
                         <TokenomicsDiagram mode="distribution" />
                       </div>
                       
                       <div className="grid md:grid-cols-2 gap-6">
                         <div>
                           <h4 className="font-semibold text-lg mb-2 text-center">Token Value Projection</h4>
-                          <div className="h-[280px] responsive-chart">
+                          <div className="h-[320px] responsive-chart w-full">
                             <TokenomicsDiagram mode="value" />
                           </div>
                         </div>

@@ -61,17 +61,7 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
           </marker>
         </defs>
         
-        {/* Title - adjusted for better mobile viewing */}
-        <text
-          x={width / 2}
-          y={25}
-          textAnchor="middle"
-          fontSize={isMobile ? "12" : "14"}
-          fontWeight="bold"
-          fill="#276749"
-        >
-          {isMobile ? "PeoChain Mobile Integration" : "PeoChain Mobile Integration Architecture"}
-        </text>
+        {/* Title removed as requested */}
         
         {/* Central PeoChain Platform - adjusted for better proportions */}
         <rect
@@ -84,16 +74,6 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
           opacity={0.8}
           filter="url(#shadow)"
         />
-        <text
-          x={width / 2}
-          y={height / 2 + 5}
-          textAnchor="middle"
-          fontSize={isMobile ? "10" : "12"}
-          fontWeight="bold"
-          fill="white"
-        >
-          PeoChain Platform
-        </text>
         
         {/* Mobile Providers */}
         {[
@@ -120,26 +100,16 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
                 opacity={0.8}
                 filter="url(#shadow)"
               />
+              {/* Provider icon only - no text */}
               <text
                 x={boxX + (boxWidth/2)}
                 y={provider.y + 5}
                 textAnchor="middle"
-                fontSize={isMobile ? 8 : 10}
+                fontSize={isMobile ? 12 : 16}
                 fontWeight="bold"
                 fill="white"
               >
-                {provider.icon} {provider.name}
-              </text>
-              
-              {/* Region label */}
-              <text
-                x={boxX + (boxWidth/2)}
-                y={provider.y + 20}
-                textAnchor="middle"
-                fontSize={isMobile ? 7 : 8}
-                fill="currentColor"
-              >
-                {provider.country}
+                {provider.icon}
               </text>
               
               {/* Connection to platform - curve adjusted to avoid text overlap */}
@@ -156,29 +126,7 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
                 className={index === 0 ? "animate-pulse" : ""}
               />
               
-              {/* Label for path - significantly offset to avoid overlapping with connectors */}
-              <g>
-                {/* Background for label to ensure readability */}
-                <rect
-                  x={(boxX + boxWidth + width/2 - (isMobile ? 110 : 135)) / 2 - 25}
-                  y={index % 2 === 0 ? provider.y - 18 : provider.y + 7}
-                  width={50}
-                  height={13}
-                  fill="white"
-                  opacity={0.8}
-                  rx={3}
-                />
-                <text
-                  x={(boxX + boxWidth + width/2 - (isMobile ? 110 : 135)) / 2}
-                  y={index % 2 === 0 ? provider.y - 8 : provider.y + 17}
-                  textAnchor="middle"
-                  fontSize={isMobile ? 7 : 8}
-                  fontWeight="bold"
-                  fill="#276749"
-                >
-                  {index % 2 === 0 ? "Deposit" : "Withdraw"}
-                </text>
-              </g>
+              {/* Connection labels removed as requested */}
             </g>
           );
         })}
@@ -207,26 +155,16 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
                 opacity={0.8}
                 filter="url(#shadow)"
               />
+              {/* App icon only - no text */}
               <text
                 x={boxX + (boxWidth/2)}
                 y={app.y + 5}
                 textAnchor="middle"
-                fontSize={isMobile ? 8 : 10}
+                fontSize={isMobile ? 12 : 16}
                 fontWeight="bold"
                 fill="white"
               >
-                {app.icon} {app.name}
-              </text>
-              
-              {/* App type label */}
-              <text
-                x={boxX + (boxWidth/2)}
-                y={app.y + 20}
-                textAnchor="middle"
-                fontSize={isMobile ? 7 : 8}
-                fill="currentColor"
-              >
-                {isMobile && app.type.length > 10 ? app.type.split(' ')[0] : app.type}
+                {app.icon}
               </text>
               
               {/* Connection from platform - curve adjusted to avoid text overlap */}
@@ -243,29 +181,7 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
                 className={index === 1 ? "animate-pulse" : ""}
               />
               
-              {/* Label for path - with background to avoid overlap with curves */}
-              <g>
-                {/* Background for label to ensure readability */}
-                <rect
-                  x={(width/2 + (isMobile ? 60 : 75) + boxX) / 2 - 28}
-                  y={index % 2 === 0 ? app.y - 18 : app.y + 7}
-                  width={56}
-                  height={13}
-                  fill="white"
-                  opacity={0.8}
-                  rx={3}
-                />
-                <text
-                  x={(width/2 + (isMobile ? 60 : 75) + boxX) / 2}
-                  y={index % 2 === 0 ? app.y - 8 : app.y + 17}
-                  textAnchor="middle"
-                  fontSize={isMobile ? 7 : 8}
-                  fontWeight="bold"
-                  fill="#276749"
-                >
-                  {index % 2 === 0 ? "Integration" : "API Access"}
-                </text>
-              </g>
+              {/* Connection labels removed as requested */}
             </g>
           );
         })}
@@ -294,28 +210,7 @@ export function MobileIntegrationDiagram({ className = '' }: MobileIntegrationDi
             strokeDasharray="3,2"
             opacity={0.8}
           />
-          {/* Blockchain label */}
-          <text
-            x={width / 2}
-            y={height / 2 + 64}
-            textAnchor="middle"
-            fontSize={isMobile ? 9 : 11}
-            fontWeight="bold"
-            fill="white"
-          >
-            {isMobile ? "Blockchain Layer" : "Blockchain Layer"}
-          </text>
-          {/* Performance metrics on second line if mobile */}
-          <text
-            x={width / 2}
-            y={height / 2 + (isMobile ? 74 : 64)}
-            textAnchor="middle"
-            fontSize={isMobile ? 7 : 9}
-            fill="white"
-            opacity={0.9}
-          >
-            {isMobile ? "100,000 TPS / 1s Finality" : "100,000 TPS / 1s Finality"}
-          </text>
+          {/* Blockchain labels removed as requested */}
         </g>
         
         {/* Descriptive Footer - improved readability */}
