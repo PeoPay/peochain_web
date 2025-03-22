@@ -30,8 +30,18 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export async function registerRoutes(app: Express): Promise<Server> {
-  // Waitlist API endpoint
+export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
+  const errorHandler = (error: unknown, res: Response): void => {
+    if (error instanceof ZodError) {
+      const validationError = fromZodError(error);
+      res.status(400).json({ success: false, message: validationError.message });
+      return;
+    }
+    console.error('Unexpected error:', error);
+    res.status(500).json({ success: false, message: 'An unexpected error occurred' });
+  };
+
+  // Waitlist API endpoint with improved error handling
   app.post("/api/waitlist", async (req: Request, res: Response) => {
     try {
       // Validate the request body against the schema

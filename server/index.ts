@@ -70,8 +70,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
  * - Starts server to listen on a consistent, explicitly defined port (5000).
  */
 (async () => {
-  // Register API routes and obtain server instance
-  const server = await registerRoutes(app);
+  // Register API routes with proper DI
+  const server = await registerRoutes(app, storage);
 
   /**
    * Global error handling middleware

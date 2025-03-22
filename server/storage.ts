@@ -48,10 +48,28 @@ export interface IStorage {
   }>;
 }
 
-export class DatabaseStorage implements IStorage {
+// Split into separate service classes for better SRP
+export class UserService {
   async getUser(id: number): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user || undefined;
+    try {
+      const [user] = await db.select().from(users).where(eq(users.id, id));
+      return user || undefined;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      throw new Error('Failed to fetch user');
+    }
+  }
+}
+
+export class DatabaseStorage implements IStorage {
+  private userService: UserService;
+  
+  constructor() {
+    this.userService = new UserService();
+  }
+  
+  async getUser(id: number): Promise<User | undefined> {
+    return this.userService.getUser(id);
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
