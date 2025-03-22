@@ -52,7 +52,7 @@ export default function Footer() {
               <FaDiscord className="w-6 h-6" />
             </a>
             <a
-              href="https://t.me/+3LLM7mD3gwRkZjgy"
+              href="https://t.me/peochain"
               target="_blank"
               rel="noopener noreferrer"
               className="social-icon text-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-primary/10"
