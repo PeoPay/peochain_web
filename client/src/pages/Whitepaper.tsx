@@ -145,10 +145,10 @@ export default function Whitepaper() {
                   <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-xl whitepaper-section">
                     <h3 className="font-bold text-xl mb-3">Proof of Synergy (PoSyg)</h3>
                     <ul className="list-disc pl-6 space-y-2 text-foreground/80">
-                      <li>Directly rewards real-world economic participation through token distribution tied to economic activity</li>
-                      <li>Enables income generation for network participants through honest validation and governance</li>
-                      <li>Transforms network security from a cost center to an income-generating opportunity</li>
-                      <li>Secures the network while simultaneously empowering users' financial activities</li>
+                      <li>Combines security, decentralization, and economic incentives in a single consensus mechanism</li>
+                      <li>Dynamically rewards honest validators while penalizing malicious actors</li>
+                      <li>Achieves high performance without compromising on decentralization</li>
+                      <li>Energy efficient with minimal environmental impact</li>
                     </ul>
                     
                     <div 
@@ -175,10 +175,10 @@ export default function Whitepaper() {
                   <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-xl whitepaper-section">
                     <h3 className="font-bold text-xl mb-3">Dynamic Contribution Scoring (DCS)</h3>
                     <ul className="list-disc pl-6 space-y-2 text-foreground/80">
-                      <li>Quantifies economic contribution to the ecosystem, enabling fair compensation for all participants</li>
-                      <li>Democratizes income potential regardless of wealth status—rewards actual contribution over accumulated assets</li>
-                      <li>Creates sustainable income streams through long-term participation in the economic ecosystem</li>
-                      <li>Protects small entrepreneurs and individuals from being economically overshadowed by wealthy stakeholders</li>
+                      <li>Transparent, mathematically rigorous incentive model</li>
+                      <li>Evaluates network participation quality beyond simple stake amounts</li>
+                      <li>Encourages long-term, sustainable network participation</li>
+                      <li>Resistant to gaming or manipulation by wealthy stakeholders</li>
                     </ul>
                     
                     <div 
@@ -221,7 +221,7 @@ export default function Whitepaper() {
                   <div className="border border-primary/20 p-5 rounded-xl whitepaper-section">
                     <h3 className="font-bold text-lg mb-2">Subnet Validator Network</h3>
                     <p className="text-foreground/70 text-sm">
-                      Instantly process thousands of transactions, making PEOCHAIN perfect for gig economy payments, SME finance, and mass-market microtransactions.
+                      Independent validator subnetworks enable parallel transaction processing, dramatically boosting network throughput and decentralization.
                     </p>
                     
                     <div 
@@ -239,28 +239,28 @@ export default function Whitepaper() {
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="font-bold text-lg mb-2">Zero-Knowledge Proofs (ZK-Proofs)</h3>
                     <p className="text-foreground/70 text-sm">
-                      Securely manage confidential financial activities—perfect for sensitive B2B trade, escrow payments, and regulatory-compliant lending.
+                      Advanced cryptographic protocols ensuring secure, confidential transactions while preserving public verifiability, enhancing both privacy and scalability.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="font-bold text-lg mb-2">Threshold Signature Scheme (TSS)</h3>
                     <p className="text-foreground/70 text-sm">
-                      Decentralized validator signing ensures unmatched security, making PEOCHAIN ideal for cooperative banking, insurance, and critical financial services.
+                      Collaborative validation method improving fault tolerance and security, eliminating single points of failure through decentralized signature generation.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="font-bold text-lg mb-2">Adaptive Block Production</h3>
                     <p className="text-foreground/70 text-sm">
-                      Consistently fast transactions even at peak trade volumes—ideal for merchants, traders, and high-demand economic activities.
+                      Real-time adjustments in block validation difficulty and reward distribution, maintaining optimal network performance under varying conditions.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="font-bold text-lg mb-2">Cross-Chain Compatibility</h3>
+                    <h3 className="font-bold text-lg mb-2">Cross-Chain Interoperability</h3>
                     <p className="text-foreground/70 text-sm">
-                      Effortlessly integrate with global markets, unlocking liquidity and trade opportunities for SMEs and cross-border businesses.
+                      Seamless integration with major blockchains (Ethereum, Solana, Polkadot, Cosmos), facilitating asset transfers, enhancing liquidity, and extending decentralized financial opportunities.
                     </p>
                   </div>
                 </div>

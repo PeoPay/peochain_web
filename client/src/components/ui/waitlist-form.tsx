@@ -160,7 +160,7 @@ export function WaitlistForm() {
                   Processing...
                 </span>
               ) : (
-                <span>Secure My Economic Opportunity</span>
+                <span>Secure My Spot</span>
               )}
             </Button>
           </form>
@@ -176,16 +176,16 @@ export function WaitlistForm() {
                 <div className="ml-3">
                   <h3 className="font-medium text-foreground">You're In!</h3>
                   <p className="mt-2 text-foreground/70 text-sm">
-                    Thank you for joining! You've secured early access to PEOCHAIN's income-generating tools. We'll notify you when your economic opportunity is ready!
+                    Thank you for joining the waitlist. We'll notify you when we launch!
                   </p>
                 </div>
               </div>
               
               {referralData && (
                 <div className="mt-6 border-t border-primary/20 pt-6">
-                  <h4 className="font-medium text-foreground mb-2">Refer Friends & Maximize Your Economic Benefits</h4>
+                  <h4 className="font-medium text-foreground mb-2">Refer Friends & Skip the Line</h4>
                   <p className="text-sm text-foreground/70 mb-4">
-                    Share your referral link with friends to gain higher token allocation and earlier access to income-generating features!
+                    Share your referral link with friends to gain priority access to PEOCHAIN!
                   </p>
                   
                   <div className="flex flex-col space-y-4">

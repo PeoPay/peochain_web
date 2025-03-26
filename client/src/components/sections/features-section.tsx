@@ -11,7 +11,7 @@ const features: Feature[] = [
   {
     icon: <CircuitBoard className="w-8 h-8" />,
     title: "Proof of Synergy (PoSyg)",
-    description: "Rewarding Real-World Economic Actions—Earn tokens through honest participation, governance, and economic transactions. PoSyg secures the network and empowers your financial activities simultaneously."
+    description: "Our innovative consensus mechanism champions trust, fairness, and collaboration, creating a vibrant community where ethical contributors are rewarded."
   },
   {
     icon: <Banknote className="w-8 h-8" />,
@@ -21,7 +21,7 @@ const features: Feature[] = [
   {
     icon: <Globe2 className="w-8 h-8" />,
     title: "Financial Inclusion",
-    description: "We're Not Just Giving You Wallets—We're Giving You Opportunities. PEOCHAIN directly increases earning potential, enables affordable loans, and connects you to local and global markets."
+    description: "Breaking barriers to build a more inclusive financial future, serving the underbanked and unlocking opportunities for the next billion users."
   },
   {
     icon: <Shield className="w-8 h-8" />,
@@ -36,7 +36,7 @@ const features: Feature[] = [
   {
     icon: <Smartphone className="w-8 h-8" />,
     title: "Mobile-First Design",
-    description: "Access income-generating opportunities anytime, anywhere. Whether you're at home or on the go, PEOCHAIN puts economic tools in your pocket that can directly increase your earnings and business potential."
+    description: "Access the power of decentralized finance anytime, anywhere. Whether you're at home or on the go, PEOCHAIN puts financial freedom in your pocket."
   }
 ];
 
@@ -48,7 +48,7 @@ export default function FeaturesSection() {
           Why Join PEOCHAIN?
         </h2>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-          Join PEOCHAIN and Transform Your Economic Reality—Access Blockchain-Powered Loans, Payments, and Market Opportunities. Increase Your Income Potential, Not Just Your Wallet.
+          Welcome to PEOCHAIN, where traditional banking barriers vanish, and financial empowerment begins! Our platform brings decentralized finance to your fingertips—anytime, anywhere.
         </p>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg mt-4">
           We drive progress by blending unparalleled security, accessibility, and collaboration, all underpinned by our innovative <span className="text-primary font-medium">Proof of Synergy (PoSyg)</span> mechanism.
@@ -67,7 +67,7 @@ export default function FeaturesSection() {
                 {feature.description}
               </p>
               <a href="#waitlist" className="flex items-center text-primary cursor-pointer">
-                <span className="font-medium">Secure Economic Opportunity</span>
+                <span className="font-medium">Join Waitlist</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
               </a>
             </CardContent>

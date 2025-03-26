@@ -14,20 +14,20 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
       <div className="flex flex-col lg:flex-row items-center">
         <div className="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
           <h1 className="font-poppins font-bold text-4xl md:text-5xl leading-tight mb-6 text-foreground">
-            Unlock <span className="text-primary">Economic Opportunity</span> with PEOCHAIN — Empower Your Financial Future!
+            Unlock <span className="text-primary">Financial Freedom</span> with PEOCHAIN – Join the Revolution Today!
           </h1>
           <p className="text-lg md:text-xl mb-6 text-foreground/80 max-w-xl">
-            Lend, Borrow, Earn, and Create—Powered by Secure Blockchain Designed to Boost Your Income and Business Potential.
+            Lend, borrow, and earn like never before—powered by secure blockchain technology and built for YOU. Be among the first to experience decentralized finance redefined.
           </p>
           <p className="text-lg md:text-xl mb-8 text-foreground/80 max-w-xl">
-            PEOCHAIN is more than DeFi—It's your Gateway to Real Income and Productivity. We blend Advanced Blockchain Innovation, Economic Empowerment, and Secure, Inclusive Financial Services.
+            PEOCHAIN isn't just a DeFi platform. It's a movement built on innovation, inclusivity, and robust security—designed for everyone from experienced professionals to blockchain newcomers.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Button 
               onClick={onJoinClick}
               className="btn-gradient text-white font-semibold py-3 px-8 rounded-full text-center w-full sm:w-auto"
             >
-              Secure My Spot for Economic Empowerment
+              Join the Waitlist
             </Button>
             <Button 
               onClick={onExploreClick}

@@ -13,7 +13,7 @@ export function SocialShare({ referralCode, className = '' }: SocialShareProps) 
   const referralLink = `${window.location.origin}/?ref=${referralCode}`;
   const shareImageUrl = `${window.location.origin}/images/peochain-share.png`;
   const shareMessage = encodeURIComponent(
-    "I just joined PEOCHAIN to boost my economic potential! Get priority access to income-generating tools by using my referral link: "
+    "I just joined the PEOCHAIN waitlist! Skip the line by using my referral link: "
   );
 
   const handleCopyReferral = () => {
@@ -41,9 +41,9 @@ export function SocialShare({ referralCode, className = '' }: SocialShareProps) 
   };
 
   const shareEmail = () => {
-    const subject = encodeURIComponent("Boost Your Income with PEOCHAIN");
+    const subject = encodeURIComponent("Join me on PEOCHAIN waitlist");
     const body = encodeURIComponent(
-      `I just joined PEOCHAIN to access their income-generating blockchain tools. Early adopters get exclusive economic benefits including zero transaction fees and priority access to earning opportunities. Use my referral link to gain these advantages: ${referralLink}`
+      `I just joined the PEOCHAIN waitlist and thought you might be interested too! Use my referral link to skip the line: ${referralLink}`
     );
     window.open(`mailto:?subject=${subject}&body=${body}`, '_blank', 'noopener,noreferrer');
   };
@@ -101,7 +101,7 @@ export function SocialShare({ referralCode, className = '' }: SocialShareProps) 
 
       <div className="flex items-center p-3 rounded-lg bg-primary/5 border border-primary/10">
         <div className="text-xs text-foreground/70 flex-1">
-          <span className="font-medium">Pro tip:</span> More referrals = earlier access to income-generating features and higher token allocation
+          <span className="font-medium">Pro tip:</span> The more friends you refer, the earlier you'll get access
         </div>
       </div>
     </div>

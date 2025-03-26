@@ -13,27 +13,27 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     question: "What is PEOCHAIN?",
-    answer: "PEOCHAIN is a revolutionary economic platform built on DeFi technology! Our system directly increases your earning potential through income-generating features, affordable loans, and global market access. With seamless cross-chain compatibility, mobile-first accessibility, and decentralized lending solutions, PEOCHAIN transforms blockchain technology into practical tools for economic advancement."
+    answer: "PEOCHAIN is the future of decentralized finance (DeFi)! Built on innovation, inclusivity, and unparalleled security, it empowers individuals and businesses to thrive in a decentralized economy. With seamless cross-chain compatibility, mobile-first accessibility, and decentralized lending solutions, PEOCHAIN is rewriting the rules of finance!"
   },
   {
     question: "What makes PEOCHAIN different from other DeFi platforms?",
-    answer: "PEOCHAIN focuses on tangible economic benefits—our platform is designed to boost your income and business potential! At its core is our groundbreaking Proof of Synergy (PoSyg) consensus mechanism that rewards actual economic activity. With our system, small businesses and individuals earn meaningful income by contributing to the network, creating economic opportunities for people previously excluded from traditional finance."
+    answer: "PEOCHAIN is not just another DeFi platform—it's a movement! At its core is our groundbreaking Proof of Synergy (PoSyg) consensus mechanism, fostering trust and collaboration. Add to that seamless cross-chain compatibility, mobile-first design, and community-driven governance. PEOCHAIN isn't just accessible—it's transformative, making DeFi sustainable and empowering for all."
   },
   {
     question: "What is Proof of Synergy (PoSyg)?",
-    answer: "Proof of Synergy (PoSyg) is PEOCHAIN's income-generating engine! This innovative system rewards economic contribution rather than just capital size. Small entrepreneurs and individuals earn tokens through actual participation—validating transactions, supporting governance, and maintaining network security. PoSyg converts your blockchain participation into real income potential, making security profitable for everyone."
+    answer: "Proof of Synergy (PoSyg) is the heart of PEOCHAIN, setting it apart from the rest! This innovative consensus mechanism champions trust, fairness, and collaboration. Ethical contributors and team players are rewarded, creating a vibrant, united community. PoSyg is more than technology—it's a movement of shared success!"
   },
   {
     question: "Can I access PEOCHAIN on my mobile device?",
-    answer: "Yes, you can! PEOCHAIN is built with mobile-first accessibility, giving you income-generating opportunities anytime, anywhere. Whether you're at home, in the city, or on the move, PEOCHAIN puts economic tools in your pocket that can directly increase your earnings and business potential."
+    answer: "Yes, you can! PEOCHAIN is built with mobile-first accessibility, giving you the power of decentralized finance anytime, anywhere. Whether you're at home, in the city, or off the grid, PEOCHAIN puts financial freedom right in your pocket."
   },
   {
     question: "How does decentralized lending work on PEOCHAIN?",
-    answer: "Say goodbye to expensive traditional loans! PEOCHAIN's decentralized lending lets small businesses access affordable capital while lenders earn competitive interest. Entrepreneurs can secure business loans without excessive collateral requirements, while those with capital can generate passive income by providing liquidity. Our platform turns lending into an economic growth engine for both sides of the transaction."
+    answer: "Say goodbye to traditional banking barriers! PEOCHAIN's decentralized lending lets you lend, borrow, and earn with flexibility and ease. Deposit assets to earn competitive interest or borrow instantly—all powered by secure blockchain technology. Financial freedom has never been this effortless!"
   },
   {
-    question: "How does PEOCHAIN improve economic opportunities?",
-    answer: "We're creating practical economic solutions for everyday people! PEOCHAIN focuses on three key areas: increasing earning potential through network participation rewards, enabling affordable business loans for entrepreneurs, and connecting small businesses to global markets they couldn't access before. Our technology bridges the economic gap, helping local businesses, gig workers, and small traders increase their income directly."
+    question: "How does PEOCHAIN contribute to financial inclusion?",
+    answer: "We're breaking barriers to build a more inclusive financial future! PEOCHAIN leverages fast, secure blockchain solutions to serve the underbanked, unlocking opportunities for the next billion users. With decentralized lending, cross-chain innovation, and mobile-first design, we're bridging the financial gap and empowering communities worldwide."
   }
 ];
 
@@ -45,7 +45,7 @@ export default function FAQSection() {
           Frequently Asked Questions
         </h2>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-          Learn more about how PEOCHAIN creates real economic opportunities through blockchain innovation
+          Learn more about how PEOCHAIN is revolutionizing decentralized finance
         </p>
       </div>
 
@@ -64,7 +64,7 @@ export default function FAQSection() {
       
       <div className="text-center mt-12">
         <a href="#waitlist" className="btn-gradient inline-block text-white font-medium py-3 px-8 rounded-full">
-          Secure My Spot for Economic Empowerment
+          Join the Waitlist
         </a>
       </div>
     </section>
