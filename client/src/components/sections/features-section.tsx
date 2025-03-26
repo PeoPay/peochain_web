@@ -21,7 +21,7 @@ const features: Feature[] = [
   {
     icon: <Globe2 className="w-8 h-8" />,
     title: "Financial Inclusion",
-    description: "Breaking barriers to build a more inclusive financial future, serving the underbanked and unlocking opportunities for the next billion users."
+    description: "We're Not Just Giving You Wallets—We're Giving You Opportunities. PEOCHAIN directly increases earning potential, enables affordable loans, and connects you to local and global markets."
   },
   {
     icon: <Shield className="w-8 h-8" />,
@@ -36,7 +36,7 @@ const features: Feature[] = [
   {
     icon: <Smartphone className="w-8 h-8" />,
     title: "Mobile-First Design",
-    description: "Access the power of decentralized finance anytime, anywhere. Whether you're at home or on the go, PEOCHAIN puts financial freedom in your pocket."
+    description: "Access income-generating opportunities anytime, anywhere. Whether you're at home or on the go, PEOCHAIN puts economic tools in your pocket that can directly increase your earnings and business potential."
   }
 ];
 
