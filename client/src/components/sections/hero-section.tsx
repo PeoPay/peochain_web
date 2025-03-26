@@ -20,7 +20,7 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
             Lend, Borrow, Earn, and Create—Powered by Secure Blockchain Designed to Boost Your Income and Business Potential.
           </p>
           <p className="text-lg md:text-xl mb-8 text-foreground/80 max-w-xl">
-            PEOCHAIN isn't just a DeFi platform. It's a movement built on innovation, inclusivity, and robust security—designed for everyone from experienced professionals to blockchain newcomers.
+            PEOCHAIN is more than DeFi—It's your Gateway to Real Income and Productivity. We blend Advanced Blockchain Innovation, Economic Empowerment, and Secure, Inclusive Financial Services.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Button 
