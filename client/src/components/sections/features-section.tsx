@@ -11,7 +11,7 @@ const features: Feature[] = [
   {
     icon: <CircuitBoard className="w-8 h-8" />,
     title: "Proof of Synergy (PoSyg)",
-    description: "Our innovative consensus mechanism champions trust, fairness, and collaboration, creating a vibrant community where ethical contributors are rewarded."
+    description: "Proof of Synergy (PoSyg) combines the energy efficiency and decentralization of Proof of Stake (PoS) with advanced cryptographic security, rewarding participants for securing and contributing actively to the network's resilience."
   },
   {
     icon: <Banknote className="w-8 h-8" />,
@@ -112,10 +112,17 @@ export default function FeaturesSection() {
               <p className="text-foreground/70 mb-6 flex-grow">
                 {feature.description}
               </p>
-              <a href="#waitlist" className="flex items-center text-primary cursor-pointer">
-                <span className="font-medium">Join Waitlist</span>
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </a>
+              {index === 0 ? (
+                <a href="/whitepaper" className="flex items-center text-primary cursor-pointer">
+                  <span className="font-medium">Discover PoSyg</span>
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </a>
+              ) : (
+                <a href="#waitlist" className="flex items-center text-primary cursor-pointer">
+                  <span className="font-medium">Join Waitlist</span>
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </a>
+              )}
             </CardContent>
           </Card>
         ))}
