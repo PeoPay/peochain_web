@@ -221,7 +221,7 @@ export default function Whitepaper() {
                   <div className="border border-primary/20 p-5 rounded-xl whitepaper-section">
                     <h3 className="font-bold text-lg mb-2">Subnet Validator Network</h3>
                     <p className="text-foreground/70 text-sm">
-                      Independent validator subnetworks enable parallel transaction processing, dramatically boosting network throughput and decentralization.
+                      Instantly process thousands of transactions, making PEOCHAIN perfect for gig economy payments, SME finance, and mass-market microtransactions.
                     </p>
                     
                     <div 
@@ -239,14 +239,14 @@ export default function Whitepaper() {
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="font-bold text-lg mb-2">Zero-Knowledge Proofs (ZK-Proofs)</h3>
                     <p className="text-foreground/70 text-sm">
-                      Advanced cryptographic protocols ensuring secure, confidential transactions while preserving public verifiability, enhancing both privacy and scalability.
+                      Securely manage confidential financial activities—perfect for sensitive B2B trade, escrow payments, and regulatory-compliant lending.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="font-bold text-lg mb-2">Threshold Signature Scheme (TSS)</h3>
                     <p className="text-foreground/70 text-sm">
-                      Collaborative validation method improving fault tolerance and security, eliminating single points of failure through decentralized signature generation.
+                      Decentralized validator signing ensures unmatched security, making PEOCHAIN ideal for cooperative banking, insurance, and critical financial services.
                     </p>
                   </div>
                   
