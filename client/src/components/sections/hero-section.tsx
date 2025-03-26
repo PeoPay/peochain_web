@@ -14,13 +14,10 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
       <div className="flex flex-col lg:flex-row items-center">
         <div className="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
           <h1 className="font-poppins font-bold text-4xl md:text-5xl leading-tight mb-6 text-foreground">
-            Welcome to <span className="text-primary">PEOCHAIN</span> – The Next Generation of Blockchain
+            <span className="text-primary">PEOCHAIN</span>: Redefining Blockchain for the Next Generation
           </h1>
-          <p className="text-lg md:text-xl mb-6 text-foreground/80 max-w-xl">
-            Solving blockchain's scalability, security, and decentralization challenges to power a future of economic freedom.
-          </p>
           <p className="text-lg md:text-xl mb-8 text-foreground/80 max-w-xl">
-            PEOCHAIN isn't just a DeFi platform. It's a movement built on innovation, inclusivity, and robust security—designed for everyone from experienced professionals to blockchain newcomers.
+            Advanced technology solving blockchain's biggest challenges—scalability, security, and decentralization.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Button 
