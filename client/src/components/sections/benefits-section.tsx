@@ -10,8 +10,8 @@ interface Benefit {
 const benefits: Benefit[] = [
   {
     icon: <BadgeDollarSign className="w-6 h-6" />,
-    title: "Zero-Fee Transactions",
-    description: "Enjoy zero fees for the first three months of transactions."
+    title: "Beta Testing Program",
+    description: "Participate in our technical testing program to help shape PEOCHAIN's core protocols."
   },
   {
     icon: <Trophy className="w-6 h-6" />,
@@ -20,8 +20,8 @@ const benefits: Benefit[] = [
   },
   {
     icon: <Sparkles className="w-6 h-6" />,
-    title: "Exclusive Token Allocation",
-    description: "Early supporters receive a special allocation of PEOCHAIN tokens."
+    title: "Advanced API Access",
+    description: "Early access to our comprehensive API suite and developer tools for building applications on PEOCHAIN."
   },
   {
     icon: <Headset className="w-6 h-6" />,
