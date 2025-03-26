@@ -19,14 +19,6 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
           <p className="text-lg md:text-xl mb-6 text-foreground/80 max-w-xl">
             Solving blockchain's scalability, security, and decentralization challenges to power a future of economic freedom.
           </p>
-          
-          <div className="bg-primary/5 border border-primary/10 rounded-xl p-4 mb-8">
-            <h2 className="font-bold text-xl text-primary mb-2">Why PEOCHAIN?</h2>
-            <p className="text-foreground/80">
-              Traditional blockchains face the 'Blockchain Trilemma'—struggling to simultaneously achieve scalability, security, and decentralization. PEOCHAIN resolves this with innovative technology designed specifically to overcome these limitations.
-            </p>
-          </div>
-          
           <p className="text-lg md:text-xl mb-8 text-foreground/80 max-w-xl">
             PEOCHAIN isn't just a DeFi platform. It's a movement built on innovation, inclusivity, and robust security—designed for everyone from experienced professionals to blockchain newcomers.
           </p>
