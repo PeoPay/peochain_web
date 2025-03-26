@@ -82,8 +82,7 @@ export default function TechnologySection() {
           Our Technologies
         </h2>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-          PEOCHAIN is a blockchain platform built for speed, security, and scalability, 
-          aiming to promote global financial inclusion through innovative technology.
+          PEOCHAIN is a blockchain platform built for speed, security, and scalability.
         </p>
       </div>
       
@@ -126,7 +125,7 @@ export default function TechnologySection() {
                 </p>
                 <p className="text-foreground/70">
                   These features make PEOCHAIN a leader in blockchain innovation, accessibility, and performance, 
-                  designed to meet the financial needs of underserved communities worldwide.
+                  designed to enable next-generation decentralized applications worldwide.
                 </p>
               </div>
               <div className="md:w-1/3 flex justify-center">

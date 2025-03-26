@@ -28,9 +28,8 @@ export default function Footer() {
             />
           </div>
           <p className="text-foreground/70 mb-6 md:max-w-xl md:mx-auto">
-            PEOCHAIN drives progress by blending unparalleled security,
-            accessibility, and collaboration. We're not just a platform, we're a
-            movement for financial inclusion.
+            PEOCHAIN is redefining blockchain capabilities—building scalable, secure, 
+            and truly decentralized infrastructure.
           </p>
           <div className="flex space-x-6 mb-8 md:justify-center">
             <a
@@ -83,8 +82,7 @@ export default function Footer() {
 
         <div className="p-4 rounded-lg bg-primary/5 text-center mb-8">
           <p className="text-foreground/80">
-            The next billion users are counting on this. Be part of something
-            bigger—PEOCHAIN launches soon.
+            The future of blockchain technology awaits. Be part of the revolution—PEOCHAIN launches soon.
           </p>
         </div>
 
