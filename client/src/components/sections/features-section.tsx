@@ -55,11 +55,50 @@ export default function FeaturesSection() {
         </div>
         
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-          Welcome to PEOCHAIN, where traditional banking barriers vanish, and financial empowerment begins! Our platform brings decentralized finance to your fingertips—anytime, anywhere.
+          PEOCHAIN isn't another blockchain—it's a revolutionary new architecture designed to solve fundamental blockchain limitations. Our groundbreaking technology ensures security, scalability, and decentralization like never before.
         </p>
-        <p className="text-foreground/70 max-w-2xl mx-auto text-lg mt-4">
-          We drive progress by blending unparalleled security, accessibility, and collaboration, all underpinned by our innovative <span className="text-primary font-medium">Proof of Synergy (PoSyg)</span> mechanism.
-        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 max-w-3xl mx-auto text-left">
+          <div className="flex items-start gap-2">
+            <div className="text-primary mt-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <p className="text-foreground/90">
+              <span className="font-medium">Solves Blockchain Trilemma:</span> Delivers scalability, security, and decentralization simultaneously.
+            </p>
+          </div>
+          <div className="flex items-start gap-2">
+            <div className="text-primary mt-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <p className="text-foreground/90">
+              <span className="font-medium">Unmatched Security:</span> Advanced cryptography ensures your transactions remain secure and private.
+            </p>
+          </div>
+          <div className="flex items-start gap-2">
+            <div className="text-primary mt-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <p className="text-foreground/90">
+              <span className="font-medium">Massively Scalable:</span> Designed to handle up to 100,000 TPS with 1-second finality.
+            </p>
+          </div>
+          <div className="flex items-start gap-2">
+            <div className="text-primary mt-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <p className="text-foreground/90">
+              <span className="font-medium">Truly Decentralized:</span> Innovative consensus mechanism ensuring no single points of failure.
+            </p>
+          </div>
+        </div>
       </div>
       
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
