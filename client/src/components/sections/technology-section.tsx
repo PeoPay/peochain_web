@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ShieldCheck, BarChart3, Zap, SmartphoneCharging, Medal, Shield, Gauge } from "lucide-react";
+import { ShieldCheck, BarChart3, Zap, SmartphoneCharging, Medal, Shield, Gauge, Network, LockKeyhole, Link as LinkIcon, BarChart, LineChart } from "lucide-react";
 
 interface TechFeature {
   title: string;
@@ -10,24 +10,34 @@ interface TechFeature {
 
 const techFeatures: TechFeature[] = [
   {
+    icon: <Network className="h-6 w-6" />,
+    title: "Subnet Validator Networks",
+    description: "Independent subnetworks validate transactions simultaneously, enabling unprecedented scalability without compromising decentralization."
+  },
+  {
     icon: <ShieldCheck className="h-6 w-6" />,
-    title: "Proof of Synergy (PoSyg)",
-    description: "A hybrid consensus system combining the energy efficiency of Proof of Stake with the strong security of Proof of Work, ensuring a secure network with low energy consumption."
+    title: "Proof of Synergy (PoSyg™)",
+    description: "Our innovative consensus mechanism blends the strongest attributes of Proof of Stake with collaborative validation to ensure maximum security and energy efficiency."
   },
   {
-    icon: <BarChart3 className="h-6 w-6" />,
-    title: "Dynamic Contribution Scoring",
-    description: "Rewards users for supporting the network—whether by staking or participating in governance—building an active, community-driven ecosystem."
+    icon: <BarChart className="h-6 w-6" />,
+    title: "Dynamic Contribution Scoring (DCS)",
+    description: "Reward system transparently incentivizes community contributions, creating trust and sustainable growth on-chain."
   },
   {
-    icon: <Zap className="h-6 w-6" />,
-    title: "High Performance",
-    description: "Process up to 100,000 transactions per second with 1-second finality, making it one of the fastest blockchain platforms ideal for microtransactions."
+    icon: <LockKeyhole className="h-6 w-6" />,
+    title: "Zero-Knowledge Proofs (ZK-Proofs)",
+    description: "Advanced cryptography ensures privacy and scalability simultaneously, enabling truly secure decentralized finance."
   },
   {
-    icon: <SmartphoneCharging className="h-6 w-6" />,
-    title: "Mobile Money Integration",
-    description: "Connects with platforms like M-Pesa and GCash, giving users in emerging markets access to DeFi services without needing a traditional bank account."
+    icon: <Shield className="h-6 w-6" />,
+    title: "Threshold Signature Scheme (TSS)",
+    description: "Collaborative validation improving network reliability and resilience, eliminating single points of failure."
+  },
+  {
+    icon: <LinkIcon className="h-6 w-6" />,
+    title: "Cross-Chain Compatibility",
+    description: "Seamlessly interact with multiple blockchain networks, enhancing liquidity, usability, and decentralization."
   }
 ];
 
@@ -69,7 +79,7 @@ export default function TechnologySection() {
     <section id="technology" className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
       <div className="text-center mb-16">
         <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
-          Our Technology
+          Our Technologies
         </h2>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
           PEOCHAIN is a blockchain platform built for speed, security, and scalability, 
