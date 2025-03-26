@@ -76,36 +76,36 @@ const architectureLayers = [
 
 export default function TechnologySection() {
   return (
-    <section id="technology" className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
-          Our Technologies
+    <section id="technology" className="px-4 md:px-8 py-20 md:py-28 max-w-7xl mx-auto">
+      <div className="text-center mb-20">
+        <h2 className="font-poppins font-bold text-3xl md:text-5xl text-foreground mb-6 tracking-tight">
+          Core <span className="text-primary">Technology</span>
         </h2>
-        <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-          PEOCHAIN is a blockchain platform built for speed, security, and scalability.
+        <p className="text-foreground/70 max-w-2xl mx-auto text-lg leading-relaxed">
+          PEOCHAIN is engineered for next-generation performance, security, and scalability.
         </p>
       </div>
       
       <Tabs defaultValue="features" className="w-full">
-        <div className="flex justify-center mb-8">
-          <TabsList className="bg-primary/10">
-            <TabsTrigger value="features" className="text-base">Key Features</TabsTrigger>
-            <TabsTrigger value="architecture" className="text-base">System Architecture</TabsTrigger>
+        <div className="flex justify-center mb-12">
+          <TabsList className="bg-muted border border-border">
+            <TabsTrigger value="features" className="text-base px-8">Features</TabsTrigger>
+            <TabsTrigger value="architecture" className="text-base px-8">Architecture</TabsTrigger>
           </TabsList>
         </div>
         
         <TabsContent value="features" className="mt-0">
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-10">
             {techFeatures.map((feature, index) => (
-              <Card key={index} className="feature-card glass rounded-3xl border-0 shadow-sm">
-                <CardContent className="p-6 md:p-8">
+              <Card key={index} className="feature-card glass rounded-lg border border-primary/10 overflow-hidden">
+                <CardContent className="p-8">
                   <div className="flex items-start">
-                    <div className="bg-primary/10 p-3 rounded-xl mr-4 mt-1 text-primary">
+                    <div className="bg-primary/10 p-4 rounded-lg mr-6 mt-1 text-primary">
                       {feature.icon}
                     </div>
                     <div>
-                      <h3 className="font-poppins font-semibold text-xl mb-2 text-foreground">{feature.title}</h3>
-                      <p className="text-foreground/70">
+                      <h3 className="font-poppins font-semibold text-xl mb-4 text-foreground">{feature.title}</h3>
+                      <p className="text-foreground/70 leading-relaxed">
                         {feature.description}
                       </p>
                     </div>
@@ -115,7 +115,9 @@ export default function TechnologySection() {
             ))}
           </div>
           
-          <div className="mt-12 p-6 bg-primary/5 rounded-3xl">
+          <div className="section-divider my-16"></div>
+          
+          <div className="glass rounded-lg p-8 border border-primary/10">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="md:w-2/3">
                 <h3 className="font-poppins font-semibold text-2xl mb-4 text-foreground">Scalability for Mass Adoption</h3>

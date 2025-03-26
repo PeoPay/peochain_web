@@ -15,16 +15,30 @@
 @layer components {
   .gradient-background {
     background-color: #e1eae3;
+    background-image: 
+      radial-gradient(circle at 15% 50%, hsla(135, 18%, 53%, 0.08) 0%, transparent 25%),
+      radial-gradient(circle at 85% 30%, hsla(142, 15%, 44%, 0.08) 0%, transparent 25%);
   }
 
   .glass {
     background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(109, 158, 121, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
   }
 
   .btn-gradient {
-    background: linear-gradient(135deg, #5a8364 0%, #4a6a52 100%);
+    background: linear-gradient(135deg, #6d9e79 0%, #5b8466 100%);
+  }
+  
+  .section-divider {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(109, 158, 121, 0.3) 50%, 
+      transparent 100%);
+    margin: 3rem 0;
   }
   
   .social-icon {
@@ -60,11 +74,14 @@
   /* Whitepaper specific styles */
   .whitepaper-section {
     transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(109, 158, 121, 0.2);
   }
   
   .whitepaper-section:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(90, 131, 100, 0.1);
+    box-shadow: 0 4px 12px rgba(109, 158, 121, 0.15);
+    border: 1px solid rgba(109, 158, 121, 0.4);
   }
   
   /* Responsive adjustments for diagrams and charts */
