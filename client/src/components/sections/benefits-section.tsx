@@ -11,22 +11,22 @@ const benefits: Benefit[] = [
   {
     icon: <BadgeDollarSign className="w-6 h-6" />,
     title: "Zero-Fee Transactions",
-    description: "Early adopters will receive zero-fee transactions for the first three months after launch."
+    description: "Enjoy zero fees for the first three months of transactions."
   },
   {
     icon: <Trophy className="w-6 h-6" />,
     title: "Priority Access",
-    description: "Be the first to experience new features and products before they're available to the general public."
+    description: "First to experience new technological upgrades and feature launches."
   },
   {
     icon: <Sparkles className="w-6 h-6" />,
     title: "Exclusive Token Allocation",
-    description: "Waitlist members will receive an exclusive allocation of PEOCHAIN tokens during our initial offering."
+    description: "Early supporters receive a special allocation of PEOCHAIN tokens."
   },
   {
     icon: <Headset className="w-6 h-6" />,
-    title: "Dedicated Support",
-    description: "Early adopters get access to a dedicated support channel for personalized assistance."
+    title: "Dedicated Technical Support",
+    description: "Priority assistance and technical insights directly from our expert team."
   }
 ];
 
@@ -42,11 +42,11 @@ export default function BenefitsSection() {
               Early Bird Benefits
             </h2>
             <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-              Early birds get exclusive perks—don't wait for the future, shape it with us! Join our waitlist today.
+              Join Early—Gain Exclusive Technical & Strategic Advantages:
             </p>
             <div className="bg-primary/10 rounded-xl p-4 max-w-xl mx-auto mt-4">
               <p className="text-foreground/80 text-md">
-                <span className="font-semibold text-primary">Proof of Synergy (PoSyg):</span> Our innovative consensus mechanism that combines security, accessibility, and collaboration to create a truly inclusive financial ecosystem for everyone.
+                <span className="font-semibold text-primary">Tech Advantage:</span> Early adopters will have first access to our groundbreaking Proof of Synergy (PoSyg) consensus mechanism, with full API integration capabilities and developer tools.
               </p>
             </div>
           </div>
