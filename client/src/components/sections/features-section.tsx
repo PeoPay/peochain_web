@@ -48,7 +48,7 @@ export default function FeaturesSection() {
           Why Join PEOCHAIN?
         </h2>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-          Welcome to PEOCHAIN, where traditional banking barriers vanish, and financial empowerment begins! Our platform brings decentralized finance to your fingertips—anytime, anywhere.
+          Join PEOCHAIN and Transform Your Economic Reality—Access Blockchain-Powered Loans, Payments, and Market Opportunities. Increase Your Income Potential, Not Just Your Wallet.
         </p>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg mt-4">
           We drive progress by blending unparalleled security, accessibility, and collaboration, all underpinned by our innovative <span className="text-primary font-medium">Proof of Synergy (PoSyg)</span> mechanism.
