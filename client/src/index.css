@@ -5,16 +5,24 @@
 @tailwind utilities;
 
 :root {
+  /* Base colors with improved contrast */
   --background: #e1eae3;
-  --foreground: #38503f;
+  --foreground: #273A2E; /* Darkened for better contrast against light backgrounds */
   --primary: #38503f;
-  --primary-light: #6d9e79;
-  --primary-lighter: #a1c1a8;
-  --primary-dark: #2a3c2f;
-  --accent: #5b8466;
+  --primary-light: #5A8662; /* Darkened for better contrast on light backgrounds */
+  --primary-lighter: #91B098; /* Adjusted for better visibility */
+  --primary-dark: #1E2B22; /* Deepened for maximum contrast when needed */
+  --accent: #4B6E53; /* Enhanced for better contrast */
   --accent-foreground: #ffffff;
-  --border-light: rgba(109, 158, 121, 0.2);
-  --card-bg: rgba(255, 255, 255, 0.85);
+  --border-light: rgba(91, 132, 102, 0.25); /* Increased opacity for better visibility */
+  --card-bg: rgba(255, 255, 255, 0.92); /* Increased opacity for better readability */
+  
+  /* Accessibility-specific colors */
+  --focus-ring: #4b6e53; /* Focus indicator color */
+  --error: #d23f3f; /* High contrast error color */
+  --success: #2e7d32; /* High contrast success color */
+  --info: #0277bd; /* High contrast info color */
+  --warning: #ed6c02; /* High contrast warning color */
 }
 
 @layer base {
@@ -22,38 +30,89 @@
     @apply border-border;
   }
 
+  /* Basic document styling */
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    color-adjust: exact; /* For print media contrast */
+    line-height: 1.6; /* Improved line height for readability */
   }
 
-  /* Typography Hierarchy */
+  /* Improved keyboard focus indicators for all interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0 3px rgba(91, 132, 102, 0.4);
+    position: relative;
+    z-index: 2; /* Ensure focus rings appear above other elements */
+  }
+
+  /* Skip to content link for keyboard users */
+  .skip-to-content {
+    @apply sr-only;
+  }
+
+  .skip-to-content:focus {
+    @apply not-sr-only fixed left-0 top-0 z-50;
+    background: var(--background);
+    color: var(--foreground);
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--primary);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Typography Hierarchy with improved contrast and readability */
   h1, .h1 {
     @apply text-4xl md:text-5xl lg:text-6xl font-poppins font-bold tracking-tight leading-tight mb-6;
+    color: var(--foreground); /* Ensure high contrast */
   }
 
   h2, .h2 {
     @apply text-3xl md:text-4xl font-poppins font-bold tracking-tight leading-tight mb-5;
+    color: var(--foreground); /* Ensure high contrast */
   }
 
   h3, .h3 {
     @apply text-2xl md:text-3xl font-poppins font-semibold tracking-tight leading-tight mb-4;
+    color: var(--foreground); /* Ensure high contrast */
   }
 
   h4, .h4 {
     @apply text-xl font-poppins font-semibold leading-snug mb-3;
+    color: var(--foreground); /* Ensure high contrast */
   }
 
   p {
     @apply leading-relaxed mb-4;
+    max-width: 75ch; /* Optimal line length for readability */
   }
 
-  /* Technical text */
+  /* Technical text with improved contrast */
   .technical-term {
-    @apply font-code text-sm text-primary bg-primary/5 px-1.5 py-0.5 rounded;
+    @apply font-code text-sm px-1.5 py-0.5 rounded;
+    background-color: rgba(56, 80, 63, 0.1);
+    color: var(--primary-dark); /* Darker for better contrast */
+    border: 1px solid rgba(56, 80, 63, 0.2);
+  }
+  
+  /* ARIA attributes to indicate regions for screen readers */
+  [aria-hidden="true"] {
+    display: none !important;
+  }
+
+  /* Make sure user agent styles help with keyboard focus */
+  :focus {
+    outline: auto; /* Fallback focus style if focus-visible is not supported */
   }
 }
 
 @layer components {
+  /* Accessible gradient background with reduced motion preference consideration */
   .gradient-background {
     background-color: var(--background);
     background-image: 
@@ -62,6 +121,7 @@
     background-attachment: fixed;
   }
 
+  /* Glass effect with improved contrast for text readability */
   .glass {
     background: var(--card-bg);
     backdrop-filter: blur(12px);
@@ -70,17 +130,49 @@
     border-radius: 0.5rem;
   }
 
+  /* Button with good contrast for accessibility */
   .btn-gradient {
     background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
     transition: all 0.3s ease;
     box-shadow: 0 2px 10px rgba(91, 132, 102, 0.2);
+    color: white; /* Ensure text contrast */
+    font-weight: 500; /* Better readability */
+    position: relative; /* For focus state */
+    min-height: 2.5rem; /* Ensure good touch target size */
+    min-width: 2.5rem; /* Ensure good touch target size */
   }
   
+  /* Accessible hover state */
   .btn-gradient:hover {
     box-shadow: 0 4px 15px rgba(91, 132, 102, 0.3);
     transform: translateY(-1px);
   }
   
+  /* Focused state for keyboard navigation */
+  .btn-gradient:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+  
+  /* Active state for click feedback */
+  .btn-gradient:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 5px rgba(91, 132, 102, 0.3);
+  }
+  
+  /* Respect user preferences for reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .btn-gradient,
+    .tech-card,
+    .whitepaper-section,
+    .social-icon {
+      transition: none !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
+  
+  /* Section divider with semantic meaning */
   .section-divider {
     height: 1px;
     width: 100%;
@@ -90,6 +182,44 @@
       transparent 100%);
     margin: 4rem 0;
     opacity: 0.3;
+    position: relative;
+  }
+  
+  /* Visually hidden text for screen readers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  /* Accessible link styling */
+  .accessible-link {
+    color: var(--primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease;
+  }
+  
+  .accessible-link:hover {
+    color: var(--primary-dark);
+    text-decoration-thickness: 2px;
+  }
+  
+  /* Improved focus indicator for interactive elements */
+  .focus-ring {
+    outline: none;
+  }
+  
+  .focus-ring:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
   }
   
   /* Tech card styles */

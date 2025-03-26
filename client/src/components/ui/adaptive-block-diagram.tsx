@@ -131,15 +131,31 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
   }, []);
 
   return (
-    <div className={`p-4 md:p-6 rounded-lg border border-primary/10 ${className}`}>
+    <div 
+      className={`p-4 md:p-6 rounded-lg border border-primary/10 ${className}`}
+      role="region" 
+      aria-label="Adaptive Block Production Visualization"
+    >
+      {/* Hidden descriptive text for screen readers */}
+      <div className="sr-only">
+        <p>This interactive diagram demonstrates PeoChain's adaptive block production mechanism. 
+        The visualization shows how the blockchain dynamically adjusts block size and production rate 
+        based on network load. When network traffic increases, block size expands and block time decreases 
+        to handle more transactions. During lower traffic periods, the system optimizes for security with larger 
+        validation windows. The current simulation shows transaction flow from the transaction queue into blocks, 
+        which are then added to the blockchain.</p>
+      </div>
+      
       <div className="flex flex-wrap justify-between items-center mb-4 md:mb-6">
-        <h3 className="text-lg md:text-xl font-semibold flex items-center gap-1 md:gap-2">
-          <Gauge className="text-primary" size={isMobile ? 18 : 24} />
+        <h3 className="text-lg md:text-xl font-semibold flex items-center gap-1 md:gap-2" id="adaptive-block-title">
+          <Gauge className="text-primary" size={isMobile ? 18 : 24} aria-hidden="true" />
           <span>Adaptive Block Production</span>
         </h3>
         <button 
           onClick={() => setAnimationActive(!animationActive)}
-          className="px-2 py-1 text-xs rounded-md border border-primary/30 text-primary mt-2 sm:mt-0"
+          className="px-2 py-1 text-xs rounded-md border border-primary/30 text-primary mt-2 sm:mt-0 focus-ring"
+          aria-label={`${animationActive ? 'Pause' : 'Start'} the simulation`}
+          aria-pressed={animationActive}
         >
           {animationActive ? 'Pause' : 'Simulate'}
         </button>
@@ -147,14 +163,23 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
         {/* Left column - metrics display */}
-        <div className="space-y-4 md:space-y-6">
+        <div className="space-y-4 md:space-y-6" aria-labelledby="metrics-heading">
+          <h4 id="metrics-heading" className="sr-only">Real-time Blockchain Metrics</h4>
+          
           {/* Network load gauge */}
           <div className="mb-3 md:mb-4">
             <div className="flex justify-between text-xs md:text-sm text-foreground/70 mb-1">
-              <span>Network Load</span>
-              <span>{Math.round(networkLoad)}%</span>
+              <span id="network-load-label">Network Load</span>
+              <span aria-labelledby="network-load-label">{Math.round(networkLoad)}%</span>
             </div>
-            <div className="h-2 md:h-3 bg-muted rounded-full overflow-hidden">
+            <div 
+              className="h-2 md:h-3 bg-muted rounded-full overflow-hidden" 
+              role="progressbar" 
+              aria-valuenow={Math.round(networkLoad)} 
+              aria-valuemin={0} 
+              aria-valuemax={100}
+              aria-labelledby="network-load-label"
+            >
               <div 
                 className={`h-full ${getLoadColor()} transition-all duration-500`}
                 style={{ width: `${networkLoad}%` }}
@@ -165,25 +190,31 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
           {/* Block metrics */}
           <div className="grid grid-cols-2 gap-3 md:gap-4">
             <div className="p-3 md:p-4 rounded-lg bg-muted/50 text-center">
-              <div className="text-xs text-foreground/60 mb-1">Block Size</div>
-              <div className="text-xl md:text-2xl font-semibold text-primary flex justify-center items-center gap-1">
+              <div id="block-size-label" className="text-xs text-foreground/60 mb-1">Block Size</div>
+              <div 
+                className="text-xl md:text-2xl font-semibold text-primary flex justify-center items-center gap-1"
+                aria-labelledby="block-size-label"
+              >
                 {blockSize}
                 <span className="text-xs font-normal text-foreground/70 ml-1">KB</span>
               </div>
-              <div className="text-[10px] md:text-xs text-foreground/60 flex justify-center items-center mt-1">
-                {networkLoad > 50 ? <ChevronUp size={12} className="text-primary-light" /> : <ChevronDown size={12} className="text-primary-lighter" />}
+              <div className="text-[10px] md:text-xs text-foreground/60 flex justify-center items-center mt-1" aria-live="polite">
+                {networkLoad > 50 ? <ChevronUp size={12} className="text-primary-light" aria-hidden="true" /> : <ChevronDown size={12} className="text-primary-lighter" aria-hidden="true" />}
                 <span className="hidden xs:inline">{networkLoad > 50 ? 'Expanding' : 'Optimizing'}</span>
               </div>
             </div>
             
             <div className="p-3 md:p-4 rounded-lg bg-muted/50 text-center">
-              <div className="text-xs text-foreground/60 mb-1">Block Time</div>
-              <div className="text-xl md:text-2xl font-semibold text-primary flex justify-center items-center gap-1">
+              <div id="block-time-label" className="text-xs text-foreground/60 mb-1">Block Time</div>
+              <div 
+                className="text-xl md:text-2xl font-semibold text-primary flex justify-center items-center gap-1"
+                aria-labelledby="block-time-label"
+              >
                 {blockTime.toFixed(1)}
                 <span className="text-xs font-normal text-foreground/70 ml-1">sec</span>
               </div>
-              <div className="text-[10px] md:text-xs text-foreground/60 flex justify-center items-center mt-1">
-                {networkLoad > 50 ? <ChevronDown size={12} className="text-primary-light" /> : <ChevronUp size={12} className="text-primary-lighter" />}
+              <div className="text-[10px] md:text-xs text-foreground/60 flex justify-center items-center mt-1" aria-live="polite">
+                {networkLoad > 50 ? <ChevronDown size={12} className="text-primary-light" aria-hidden="true" /> : <ChevronUp size={12} className="text-primary-lighter" aria-hidden="true" />}
                 <span className="hidden xs:inline">{networkLoad > 50 ? 'Accelerating' : 'Stabilizing'}</span>
               </div>
             </div>
@@ -191,8 +222,12 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
           
           {/* TPS counter */}
           <div className="text-center p-3 md:p-4 rounded-lg bg-primary/5 border border-primary/10">
-            <div className="text-xs md:text-sm text-foreground/70 mb-1">Transaction Throughput</div>
-            <div className="text-2xl md:text-3xl font-bold text-primary flex justify-center items-center">
+            <div id="tps-label" className="text-xs md:text-sm text-foreground/70 mb-1">Transaction Throughput</div>
+            <div 
+              className="text-2xl md:text-3xl font-bold text-primary flex justify-center items-center"
+              aria-labelledby="tps-label"
+              aria-live="polite"
+            >
               {tps}
               <span className="text-xs md:text-sm font-normal text-foreground/70 ml-1 md:ml-2">TPS</span>
             </div>
@@ -200,18 +235,30 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
         </div>
         
         {/* Right column - visual representation */}
-        <div className="flex items-center justify-center relative mt-2 md:mt-0">
+        <div 
+          className="flex items-center justify-center relative mt-2 md:mt-0"
+          aria-labelledby="visualization-heading"
+        >
+          <h4 id="visualization-heading" className="sr-only">Blockchain Transaction Flow Visualization</h4>
+          
           <div className="relative flex flex-col items-center">
             {/* Transaction queue representation */}
-            <div className="mb-4 md:mb-6 w-full h-10 md:h-12 bg-muted/30 rounded-lg border border-primary/10 overflow-hidden relative">
+            <div 
+              className="mb-4 md:mb-6 w-full h-10 md:h-12 bg-muted/30 rounded-lg border border-primary/10 overflow-hidden relative"
+              aria-label="Transaction Queue"
+              role="img"
+            >
               <div className="absolute inset-0 flex items-center px-2 md:px-3 justify-between">
-                <Server size={isMobile ? 14 : 16} className="text-foreground/60" />
+                <Server size={isMobile ? 14 : 16} className="text-foreground/60" aria-hidden="true" />
                 <div className="text-[10px] md:text-xs text-foreground/60">Transaction Queue</div>
-                <Server size={isMobile ? 14 : 16} className="text-foreground/60" />
+                <Server size={isMobile ? 14 : 16} className="text-foreground/60" aria-hidden="true" />
               </div>
               
               {/* Animated dots representing transactions */}
-              <div className="flex items-center h-full px-6 md:px-10">
+              <div 
+                className="flex items-center h-full px-6 md:px-10"
+                aria-label={`Queue filling at ${Math.round(networkLoad)}% capacity`}
+              >
                 {Array.from({ length: isMobile ? 8 : 12 }).map((_, i) => (
                   <div 
                     key={i}
@@ -220,20 +267,28 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
                       animationDelay: `${i * 0.2}s`,
                       opacity: (networkLoad / 100) > (i / (isMobile ? 8 : 12)) ? 1 : 0.2
                     }}
+                    aria-hidden="true"
                   ></div>
                 ))}
               </div>
             </div>
             
             {/* Arrow pointing down */}
-            <ArrowRight size={isMobile ? 16 : 20} className="text-primary/60 rotate-90 mb-1 md:mb-2" />
+            <ArrowRight 
+              size={isMobile ? 16 : 20} 
+              className="text-primary/60 rotate-90 mb-1 md:mb-2" 
+              aria-hidden="true"
+              aria-label="Transactions flow down into blocks"
+            />
             
             {/* Block processing */}
             <div 
               id="block-indicator"
               className="relative w-20 h-20 md:w-24 md:h-24 flex items-center justify-center"
+              role="img"
+              aria-label={`Current block being processed: Block ${Math.floor(blockSize / 10)}`}
             >
-              <div className="absolute inset-0 rounded-lg border-2 border-primary animate-pulse"></div>
+              <div className="absolute inset-0 rounded-lg border-2 border-primary animate-pulse" aria-hidden="true"></div>
               <div className="bg-primary/10 w-16 h-16 md:w-20 md:h-20 rounded-lg flex items-center justify-center text-primary font-medium text-sm md:text-base">
                 Block
                 <br />
@@ -242,10 +297,19 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
             </div>
             
             {/* Arrow pointing down */}
-            <ArrowRight size={isMobile ? 16 : 20} className="text-primary/60 rotate-90 mt-1 md:mt-2" />
+            <ArrowRight 
+              size={isMobile ? 16 : 20} 
+              className="text-primary/60 rotate-90 mt-1 md:mt-2" 
+              aria-hidden="true"
+              aria-label="Blocks flow down into the blockchain"
+            />
             
             {/* Blockchain representation */}
-            <div className="mt-4 md:mt-6 flex items-center">
+            <div 
+              className="mt-4 md:mt-6 flex items-center"
+              role="img"
+              aria-label="Blockchain history showing previous blocks"
+            >
               {Array.from({ length: isMobile ? 4 : 5 }).map((_, i) => (
                 <div 
                   key={i}
@@ -254,6 +318,7 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
                     opacity: 1 - (i * 0.2),
                     transform: `scale(${1 - (i * 0.05)})`,
                   }}
+                  aria-label={`Previous block ${Math.floor(blockSize / 10) - i}`}
                 >
                   {Math.floor(blockSize / 10) - i}
                 </div>
@@ -263,7 +328,11 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
         </div>
       </div>
       
-      <div className="mt-4 md:mt-6 text-xs md:text-sm text-foreground/60 text-center">
+      <div 
+        className="mt-4 md:mt-6 text-xs md:text-sm text-foreground/60 text-center"
+        aria-live="polite"
+        role="status"
+      >
         <p>
           {networkLoad < 30 
             ? isMobile ? "Low load: Security optimized." : "Low network load: Optimizing for security with larger validation windows." 
@@ -274,8 +343,14 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
         </p>
       </div>
       
+      {/* Add keyboard focus styles for better accessibility */}
       <style dangerouslySetInnerHTML={{
         __html: `
+        .focus-ring:focus-visible {
+          outline: 2px solid #38503f;
+          outline-offset: 2px;
+        }
+        
         .pulse-animation {
           animation: block-pulse 0.5s ease-out;
         }
