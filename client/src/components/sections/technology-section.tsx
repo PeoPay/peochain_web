@@ -33,33 +33,33 @@ const techFeatures: TechFeature[] = [
 
 const architectureLayers = [
   {
-    title: "Consensus Layer",
+    title: "Economic Reward Layer",
     items: [
-      "Proof of Synergy (PoSyg): Balances efficiency and security",
-      "Dynamic Contribution Scoring (DCS): Rewards network contributors",
-      "Validator management and reward distribution"
+      "Proof of Synergy (PoSyg): Converts network participation into income streams",
+      "Dynamic Contribution Scoring (DCS): Ensures fair economic rewards based on actual contribution",
+      "Income distribution system for individual validators and small businesses"
     ]
   },
   {
-    title: "EVM Compatibility Layer",
+    title: "Business Application Layer",
     items: [
-      "Smart contract and state management support",
-      "Optimized for low-cost transactions"
+      "Smart contracts for business automation and cost reduction",
+      "Ultra-low transaction fees enabling micro-businesses and gig economy services"
     ]
   },
   {
-    title: "Cross-Chain Bridge",
+    title: "Market Access Bridge",
     items: [
-      "Secure asset transfers between blockchains",
-      "Advanced security for smooth interoperability"
+      "Connect small businesses to global markets and trading opportunities",
+      "Unlock previously inaccessible liquidity for small enterprises"
     ]
   },
   {
-    title: "PeoPay API Layer",
+    title: "Financial Inclusion API",
     items: [
-      "REST API endpoints for easier development",
-      "Mobile integration for better user experience",
-      "Real-time transaction processing"
+      "Simplified integration with existing business software",
+      "Mobile payment compatibility for underbanked entrepreneurs",
+      "Real-time settlement for immediate business cash flow"
     ]
   }
 ];
@@ -69,11 +69,11 @@ export default function TechnologySection() {
     <section id="technology" className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
       <div className="text-center mb-16">
         <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
-          Our Technology
+          Technology That Builds Your Income
         </h2>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-          PEOCHAIN is a blockchain platform built for speed, security, and scalability, 
-          aiming to promote global financial inclusion through innovative technology.
+          PEOCHAIN transforms complex blockchain innovations into practical tools for real economic growth. 
+          Our technology directly connects to income generation, market access, and business expansion opportunities.
         </p>
       </div>
       
@@ -161,28 +161,28 @@ export default function TechnologySection() {
               <div className="bg-white/40 p-5 rounded-2xl">
                 <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
                   <Medal className="h-5 w-5 text-primary mr-2" />
-                  Synergy Scoring
+                  Income Generation
                 </h4>
                 <p className="text-foreground/70 text-sm">
-                  Validators earn points by reliably proposing blocks and participating in governance, encouraging consistent contributions.
+                  Convert your network participation into real income—validators earn tokens through economic contributions like processing transactions and supporting governance.
                 </p>
               </div>
               <div className="bg-white/40 p-5 rounded-2xl">
                 <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
                   <ShieldCheck className="h-5 w-5 text-primary mr-2" />
-                  Security Features
+                  Economic Fairness
                 </h4>
                 <p className="text-foreground/70 text-sm">
-                  Synergy-weighted voting strengthens the network against attacks like Sybil and 51% attacks, ensuring resilience.
+                  Our system prevents wealth concentration, ensuring small entrepreneurs and individuals receive fair compensation based on actual participation, not just capital size.
                 </p>
               </div>
               <div className="bg-white/40 p-5 rounded-2xl">
                 <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
                   <Gauge className="h-5 w-5 text-primary mr-2" />
-                  High Performance
+                  Business Enablement
                 </h4>
                 <p className="text-foreground/70 text-sm">
-                  With 1-second finality and the ability to process up to 100,000 TPS, PEOCHAIN is optimized for high-demand applications.
+                  Ultra-fast transaction processing (100,000 TPS) with 1-second finality enables new business models like micro-payments, gig economy services, and real-time settlements.
                 </p>
               </div>
             </div>

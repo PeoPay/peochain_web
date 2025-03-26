@@ -10,23 +10,23 @@ interface Benefit {
 const benefits: Benefit[] = [
   {
     icon: <BadgeDollarSign className="w-6 h-6" />,
-    title: "Zero-Fee Transactions",
-    description: "Early adopters will receive zero-fee transactions for the first three months after launch."
+    title: "Income-Generating Transactions",
+    description: "Your transactions on PeoChain don't just move money—they earn you money through our unique PoSyg rewards system."
   },
   {
     icon: <Trophy className="w-6 h-6" />,
-    title: "Priority Access",
-    description: "Be the first to experience new features and products before they're available to the general public."
+    title: "Economic Staking Rewards",
+    description: "Earn substantial passive income through our improved staking system that rewards actual economic contribution, not just capital size."
   },
   {
     icon: <Sparkles className="w-6 h-6" />,
-    title: "Exclusive Token Allocation",
-    description: "Waitlist members will receive an exclusive allocation of PEOCHAIN tokens during our initial offering."
+    title: "Exclusive Earning Opportunities",
+    description: "Early adopters gain priority access to lucrative income-generating features like validator nodes, DeFi lending, and special commercial incentives."
   },
   {
     icon: <Headset className="w-6 h-6" />,
-    title: "Dedicated Support",
-    description: "Early adopters get access to a dedicated support channel for personalized assistance."
+    title: "Business Development Support",
+    description: "Connect with our business advisors for tailored guidance on monetizing PeoChain within your existing businesses or new entrepreneurial ventures."
   }
 ];
 
@@ -39,14 +39,14 @@ export default function BenefitsSection() {
         <CardContent className="p-8 md:p-12 relative z-10">
           <div className="text-center mb-16">
             <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
-              Early Bird Benefits
+              Economic Advantages for Early Adopters
             </h2>
             <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-              Early birds get exclusive perks—don't wait for the future, shape it with us! Join our waitlist today.
+              Boost your income potential and business growth by joining early. PeoChain pioneers gain exclusive access to our most lucrative economic opportunities.
             </p>
             <div className="bg-primary/10 rounded-xl p-4 max-w-xl mx-auto mt-4">
               <p className="text-foreground/80 text-md">
-                <span className="font-semibold text-primary">Proof of Synergy (PoSyg):</span> Our innovative consensus mechanism that combines security, accessibility, and collaboration to create a truly inclusive financial ecosystem for everyone.
+                <span className="font-semibold text-primary">Proof of Synergy (PoSyg):</span> Earn tokens by contributing to the network through real economic activities. Our innovative system converts blockchain participation into actual income potential—security becomes profitable.
               </p>
             </div>
           </div>
