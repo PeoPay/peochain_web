@@ -16,7 +16,7 @@ const features: Feature[] = [
   {
     icon: <Shield className="w-8 h-8" />,
     title: "Advanced Security",
-    description: "Cutting-edge protocols protect you from emerging threats, ensuring peace of mind while you focus on innovating and growing in this new technological era."
+    description: "Multi-layered security architecture combining zero-knowledge proofs, threshold signatures, and cryptographic validation to mitigate attack vectors and ensure transaction integrity."
   },
   {
     icon: <LinkIcon className="w-8 h-8" />,
@@ -60,7 +60,7 @@ export default function FeaturesSection() {
               </svg>
             </div>
             <p className="text-foreground/90">
-              <span className="font-medium">Unmatched Security:</span> Advanced cryptography ensures your transactions remain secure and private.
+              <span className="font-medium">Unmatched Security:</span> Advanced cryptography provides robust transaction validation and data integrity.
             </p>
           </div>
           <div className="flex items-start gap-2">
