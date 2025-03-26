@@ -4,7 +4,7 @@ import { ShieldCheck, BarChart3, Zap, SmartphoneCharging, Medal, Shield, Gauge, 
 import { useState } from "react";
 
 // Import our new interactive components
-import { TechCard, availableTechnologies } from "@/components/ui/tech-tooltip";
+import { TechCard, getAvailableTechnologies } from "@/components/ui/tech-tooltip";
 import { SubnetDiagram } from "@/components/ui/subnet-diagram";
 import { AdaptiveBlockDiagram } from "@/components/ui/adaptive-block-diagram";
 import { MetricsDashboard } from "@/components/ui/metrics-dashboard";

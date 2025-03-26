@@ -111,11 +111,11 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
     };
   }, [networkLoad]);
   
-  // Network load visual representation
+  // Network load visual representation with earthy palette
   const getLoadColor = () => {
-    if (networkLoad < 30) return 'bg-green-500';
-    if (networkLoad < 70) return 'bg-yellow-500';
-    return 'bg-red-500';
+    if (networkLoad < 30) return 'bg-primary-lighter';
+    if (networkLoad < 70) return 'bg-primary-light';
+    return 'bg-primary';
   };
   
   return (
@@ -159,7 +159,7 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
                 <span className="text-xs font-normal text-foreground/70 ml-1">KB</span>
               </div>
               <div className="text-xs text-foreground/60 flex justify-center items-center mt-1">
-                {networkLoad > 50 ? <ChevronUp size={14} className="text-green-500" /> : <ChevronDown size={14} className="text-blue-500" />}
+                {networkLoad > 50 ? <ChevronUp size={14} className="text-primary-light" /> : <ChevronDown size={14} className="text-primary-lighter" />}
                 {networkLoad > 50 ? 'Expanding' : 'Optimizing'}
               </div>
             </div>
@@ -171,7 +171,7 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
                 <span className="text-xs font-normal text-foreground/70 ml-1">sec</span>
               </div>
               <div className="text-xs text-foreground/60 flex justify-center items-center mt-1">
-                {networkLoad > 50 ? <ChevronDown size={14} className="text-green-500" /> : <ChevronUp size={14} className="text-blue-500" />}
+                {networkLoad > 50 ? <ChevronDown size={14} className="text-primary-light" /> : <ChevronUp size={14} className="text-primary-lighter" />}
                 {networkLoad > 50 ? 'Accelerating' : 'Stabilizing'}
               </div>
             </div>
@@ -271,15 +271,15 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
         @keyframes block-pulse {
           0% {
             transform: scale(1);
-            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            box-shadow: 0 0 0 0 rgba(109, 158, 121, 0.7);
           }
           50% {
             transform: scale(1.1);
-            box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+            box-shadow: 0 0 0 10px rgba(109, 158, 121, 0);
           }
           100% {
             transform: scale(1);
-            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            box-shadow: 0 0 0 0 rgba(109, 158, 121, 0);
           }
         }
         `
