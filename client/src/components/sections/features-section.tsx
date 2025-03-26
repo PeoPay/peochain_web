@@ -67,7 +67,7 @@ export default function FeaturesSection() {
                 {feature.description}
               </p>
               <a href="#waitlist" className="flex items-center text-primary cursor-pointer">
-                <span className="font-medium">Join Waitlist</span>
+                <span className="font-medium">Secure Economic Opportunity</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
               </a>
             </CardContent>

@@ -192,7 +192,7 @@ export default function TechnologySection() {
       
       <div className="text-center mt-12">
         <a href="#waitlist" className="btn-gradient inline-block text-white font-medium py-3 px-8 rounded-full">
-          Join the Waitlist
+          Secure My Spot for Economic Empowerment
         </a>
       </div>
     </section>

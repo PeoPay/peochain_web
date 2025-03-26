@@ -27,7 +27,7 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
               onClick={onJoinClick}
               className="btn-gradient text-white font-semibold py-3 px-8 rounded-full text-center w-full sm:w-auto"
             >
-              Join the Waitlist
+              Secure My Spot for Economic Empowerment
             </Button>
             <Button 
               onClick={onExploreClick}

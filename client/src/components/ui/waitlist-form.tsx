@@ -160,7 +160,7 @@ export function WaitlistForm() {
                   Processing...
                 </span>
               ) : (
-                <span>Secure My Spot</span>
+                <span>Secure My Economic Opportunity</span>
               )}
             </Button>
           </form>
