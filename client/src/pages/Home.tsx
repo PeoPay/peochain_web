@@ -2,6 +2,7 @@ import { useRef } from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import HeroSection from "@/components/sections/hero-section";
+import TechHighlightsSection from "@/components/sections/tech-highlights-section";
 import FeaturesSection from "@/components/sections/features-section";
 import BenefitsSection from "@/components/sections/benefits-section";
 import WaitlistSection from "@/components/sections/waitlist-section";
@@ -35,6 +36,9 @@ export default function Home() {
         <HeroSection 
           onExploreClick={() => scrollToRef(featuresRef)}
           onJoinClick={() => scrollToRef(waitlistRef)}
+        />
+        <TechHighlightsSection 
+          onExploreClick={() => scrollToRef(technologyRef)}
         />
         <div id="features" ref={featuresRef}>
           <FeaturesSection />
