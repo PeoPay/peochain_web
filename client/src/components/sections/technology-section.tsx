@@ -1,11 +1,19 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ShieldCheck, BarChart3, Zap, SmartphoneCharging, Medal, Shield, Gauge, Network, LockKeyhole, Link as LinkIcon, BarChart, LineChart } from "lucide-react";
+import { useState } from "react";
+
+// Import our new interactive components
+import { TechCard, availableTechnologies } from "@/components/ui/tech-tooltip";
+import { SubnetDiagram } from "@/components/ui/subnet-diagram";
+import { AdaptiveBlockDiagram } from "@/components/ui/adaptive-block-diagram";
+import { MetricsDashboard } from "@/components/ui/metrics-dashboard";
 
 interface TechFeature {
   title: string;
   description: string;
   icon: React.ReactNode;
+  techId?: string; // For linking to tech tooltips
 }
 
 const techFeatures: TechFeature[] = [
@@ -75,6 +83,8 @@ const architectureLayers = [
 ];
 
 export default function TechnologySection() {
+  const [simulateMetrics, setSimulateMetrics] = useState(true);
+  
   return (
     <section id="technology" className="px-4 md:px-8 py-20 md:py-28 max-w-7xl mx-auto">
       <div className="text-center mb-20">
@@ -91,28 +101,26 @@ export default function TechnologySection() {
           <TabsList className="bg-muted border border-border">
             <TabsTrigger value="features" className="text-base px-8">Features</TabsTrigger>
             <TabsTrigger value="architecture" className="text-base px-8">Architecture</TabsTrigger>
+            <TabsTrigger value="visualizations" className="text-base px-8">Visualizations</TabsTrigger>
           </TabsList>
         </div>
         
         <TabsContent value="features" className="mt-0">
-          <div className="grid md:grid-cols-2 gap-10">
-            {techFeatures.map((feature, index) => (
-              <Card key={index} className="feature-card glass rounded-lg border border-primary/10 overflow-hidden">
-                <CardContent className="p-8">
-                  <div className="flex items-start">
-                    <div className="bg-primary/10 p-4 rounded-lg mr-6 mt-1 text-primary">
-                      {feature.icon}
-                    </div>
-                    <div>
-                      <h3 className="font-poppins font-semibold text-xl mb-4 text-foreground">{feature.title}</h3>
-                      <p className="text-foreground/70 leading-relaxed">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="mb-16">
+            <h3 className="font-poppins font-semibold text-2xl mb-8 text-foreground text-center">
+              Interactive Technology Cards
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <TechCard techId="posyg" />
+              <TechCard techId="subnet" />
+              <TechCard techId="adaptive-block" />
+              <TechCard techId="zk-proofs" />
+              <TechCard techId="tss" />
+              <TechCard techId="cross-chain" />
+            </div>
+            <div className="text-center mt-2 text-sm text-foreground/60">
+              Click on any card to learn more about the technology
+            </div>
           </div>
           
           <div className="section-divider my-16"></div>
@@ -142,7 +150,7 @@ export default function TechnologySection() {
         <TabsContent value="architecture" className="mt-0">
           <div className="grid md:grid-cols-2 gap-8">
             {architectureLayers.map((layer, index) => (
-              <Card key={index} className="glass rounded-3xl border-0 shadow-sm">
+              <Card key={index} className="glass rounded-lg border border-primary/10 shadow-sm">
                 <CardContent className="p-6 md:p-8">
                   <h3 className="font-poppins font-semibold text-xl mb-4 text-foreground">
                     {layer.title}
@@ -164,12 +172,12 @@ export default function TechnologySection() {
             ))}
           </div>
           
-          <div className="mt-12 p-6 bg-primary/5 rounded-3xl">
+          <div className="mt-12 p-6 bg-primary/5 rounded-lg border border-primary/10">
             <h3 className="font-poppins font-semibold text-2xl mb-4 text-foreground text-center">
               PoSyg + DCS: Key Highlights
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-              <div className="bg-white/40 p-5 rounded-2xl">
+              <div className="bg-card p-5 rounded-lg border border-primary/5">
                 <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
                   <Medal className="h-5 w-5 text-primary mr-2" />
                   Synergy Scoring
@@ -178,7 +186,7 @@ export default function TechnologySection() {
                   Validators earn points by reliably proposing blocks and participating in governance, encouraging consistent contributions.
                 </p>
               </div>
-              <div className="bg-white/40 p-5 rounded-2xl">
+              <div className="bg-card p-5 rounded-lg border border-primary/5">
                 <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
                   <ShieldCheck className="h-5 w-5 text-primary mr-2" />
                   Security Features
@@ -187,7 +195,7 @@ export default function TechnologySection() {
                   Synergy-weighted voting strengthens the network against attacks like Sybil and 51% attacks, ensuring resilience.
                 </p>
               </div>
-              <div className="bg-white/40 p-5 rounded-2xl">
+              <div className="bg-card p-5 rounded-lg border border-primary/5">
                 <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
                   <Gauge className="h-5 w-5 text-primary mr-2" />
                   High Performance
@@ -199,10 +207,42 @@ export default function TechnologySection() {
             </div>
           </div>
         </TabsContent>
+        
+        <TabsContent value="visualizations" className="mt-0">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+            <div className="glass rounded-lg border border-primary/10 p-6">
+              <h3 className="font-poppins font-semibold text-xl mb-6 text-foreground text-center">
+                Subnet Validator Networks
+              </h3>
+              <div className="bg-muted/30 rounded-lg p-4">
+                <SubnetDiagram className="w-full h-auto" />
+              </div>
+              <p className="text-sm text-foreground/70 text-center mt-4">
+                Hover over different parts of the network to see how subnets interact
+              </p>
+            </div>
+            
+            <div className="glass rounded-lg border border-primary/10 p-6">
+              <h3 className="font-poppins font-semibold text-xl mb-6 text-foreground text-center">
+                Adaptive Block Production
+              </h3>
+              <div className="bg-muted/30 rounded-lg">
+                <AdaptiveBlockDiagram />
+              </div>
+            </div>
+          </div>
+          
+          <div className="glass rounded-lg border border-primary/10 p-6 mt-12">
+            <MetricsDashboard 
+              simulationActive={simulateMetrics}
+              onToggleSimulation={() => setSimulateMetrics(!simulateMetrics)}
+            />
+          </div>
+        </TabsContent>
       </Tabs>
       
       <div className="text-center mt-12">
-        <a href="#waitlist" className="btn-gradient inline-block text-white font-medium py-3 px-8 rounded-full">
+        <a href="#waitlist" className="btn-gradient inline-block text-white font-medium py-3 px-10 rounded-lg">
           Join the Waitlist
         </a>
       </div>
