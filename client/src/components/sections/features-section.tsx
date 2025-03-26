@@ -21,7 +21,7 @@ const features: Feature[] = [
   {
     icon: <LinkIcon className="w-8 h-8" />,
     title: "Cross-Chain Compatibility",
-    description: "Seamlessly operate across multiple blockchains without complicated technical knowledge, breaking down barriers between blockchain ecosystems."
+    description: "Advanced interoperability protocols enabling seamless communication between blockchain networks through standardized cross-chain messaging."
   }
 ];
 
