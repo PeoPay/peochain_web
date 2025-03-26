@@ -5,24 +5,24 @@
 @tailwind utilities;
 
 :root {
-  /* Base colors with improved contrast */
-  --background: #e1eae3;
-  --foreground: #273A2E; /* Darkened for better contrast against light backgrounds */
-  --primary: #38503f;
-  --primary-light: #5A8662; /* Darkened for better contrast on light backgrounds */
-  --primary-lighter: #91B098; /* Adjusted for better visibility */
-  --primary-dark: #1E2B22; /* Deepened for maximum contrast when needed */
-  --accent: #4B6E53; /* Enhanced for better contrast */
-  --accent-foreground: #ffffff;
-  --border-light: rgba(91, 132, 102, 0.25); /* Increased opacity for better visibility */
-  --card-bg: rgba(255, 255, 255, 0.92); /* Increased opacity for better readability */
+  /* Base colors from earthy palette */
+  --background: #e1eae3; /* Soft neutral background */
+  --foreground: #38503f; /* Deep, readable contrast */
+  --primary: #6d9e79; /* Primary accent—dynamic, tech-oriented */
+  --primary-light: #5b8466; /* Secondary accent—subtle highlights */
+  --primary-lighter: #a9c6b0; /* Lighter variant of primary for backgrounds */
+  --primary-dark: #4a6a52; /* Tertiary accent—supportive UI elements */
+  --accent: #4a6a52; /* Tertiary accent—supportive UI elements */
+  --accent-foreground: #e1eae3; /* Background color as foreground on dark areas */
+  --border-light: rgba(109, 158, 121, 0.25); /* Border with primary color */
+  --card-bg: rgba(255, 255, 255, 0.95); /* High opacity for better readability */
   
   /* Accessibility-specific colors */
-  --focus-ring: #4b6e53; /* Focus indicator color */
-  --error: #d23f3f; /* High contrast error color */
-  --success: #2e7d32; /* High contrast success color */
-  --info: #0277bd; /* High contrast info color */
-  --warning: #ed6c02; /* High contrast warning color */
+  --focus-ring: #6d9e79; /* Focus indicator color using primary */
+  --error: #e35b5b; /* High contrast error color from guide */
+  --success: #5b8466; /* Success color from secondary accent */
+  --info: #4a7aaa; /* Complementary blue for information */
+  --warning: #e09d41; /* Complementary amber for warnings */
 }
 
 @layer base {

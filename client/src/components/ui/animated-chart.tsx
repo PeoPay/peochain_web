@@ -519,12 +519,13 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
         </div>
       </div>
       
-      <div className="flex-1 mx-auto w-full min-h-[260px] sm:min-h-[300px] md:min-h-[340px]">
+      <div className="flex-1 mx-auto w-full min-h-[260px] sm:min-h-[300px] md:min-h-[340px] aspect-[1.6/1]">
         {/* Standard responsive container for all chart types */}
         <ResponsiveContainer 
           width="100%" 
           height="100%" 
           debounce={50}
+          aspect={1.6}
         >
           {renderChart()}
         </ResponsiveContainer>
