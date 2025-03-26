@@ -12,22 +12,22 @@ const techFeatures: TechFeature[] = [
   {
     icon: <ShieldCheck className="h-6 w-6" />,
     title: "Proof of Synergy (PoSyg)",
-    description: "A hybrid consensus system combining the energy efficiency of Proof of Stake with the strong security of Proof of Work, ensuring a secure network with low energy consumption."
+    description: "Our unique consensus mechanism lets you earn income by contributing to network security—perfect for individuals looking to participate in the digital economy with minimal upfront investment."
   },
   {
     icon: <BarChart3 className="h-6 w-6" />,
     title: "Dynamic Contribution Scoring",
-    description: "Rewards users for supporting the network—whether by staking or participating in governance—building an active, community-driven ecosystem."
+    description: "Earn greater rewards based on your participation—helping small businesses and individual contributors receive fair compensation proportional to their actual economic contribution."
   },
   {
     icon: <Zap className="h-6 w-6" />,
     title: "High Performance",
-    description: "Process up to 100,000 transactions per second with 1-second finality, making it one of the fastest blockchain platforms ideal for microtransactions."
+    description: "Our platform processes 100,000 transactions per second with 1-second finality, enabling gig workers, small merchants and service providers to receive instant payments without delays."
   },
   {
     icon: <SmartphoneCharging className="h-6 w-6" />,
     title: "Mobile Money Integration",
-    description: "Connects with platforms like M-Pesa and GCash, giving users in emerging markets access to DeFi services without needing a traditional bank account."
+    description: "Direct integration with popular mobile payment systems like M-Pesa and GCash lets unbanked entrepreneurs access loans, payment systems, and global markets previously unavailable to them."
   }
 ];
 
@@ -109,14 +109,14 @@ export default function TechnologySection() {
           <div className="mt-12 p-6 bg-primary/5 rounded-3xl">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="md:w-2/3">
-                <h3 className="font-poppins font-semibold text-2xl mb-4 text-foreground">Scalability for Mass Adoption</h3>
+                <h3 className="font-poppins font-semibold text-2xl mb-4 text-foreground">Economic Opportunity at Scale</h3>
                 <p className="text-foreground/70 mb-4">
-                  With 1-second finality and the ability to process up to 100,000 TPS, PEOCHAIN is optimized for 
-                  high-demand applications and mass adoption.
+                  Our infrastructure supports millions of entrepreneur transactions daily, creating real income for merchants, 
+                  service providers, and small businesses previously excluded from digital economies.
                 </p>
                 <p className="text-foreground/70">
-                  These features make PEOCHAIN a leader in blockchain innovation, accessibility, and performance, 
-                  designed to meet the financial needs of underserved communities worldwide.
+                  PEOCHAIN democratizes financial services, turning technical capabilities into tangible economic empowerment—transforming 
+                  blockchain from speculative technology into a practical tool for immediate income generation worldwide.
                 </p>
               </div>
               <div className="md:w-1/3 flex justify-center">

@@ -253,14 +253,14 @@ export default function Whitepaper() {
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="font-bold text-lg mb-2">Adaptive Block Production</h3>
                     <p className="text-foreground/70 text-sm">
-                      Real-time adjustments in block validation difficulty and reward distribution, maintaining optimal network performance under varying conditions.
+                      Consistently fast transactions even at peak trade volumes—ideal for merchants, traders, and high-demand economic activities.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="font-bold text-lg mb-2">Cross-Chain Interoperability</h3>
+                    <h3 className="font-bold text-lg mb-2">Cross-Chain Compatibility</h3>
                     <p className="text-foreground/70 text-sm">
-                      Seamless integration with major blockchains (Ethereum, Solana, Polkadot, Cosmos), facilitating asset transfers, enhancing liquidity, and extending decentralized financial opportunities.
+                      Effortlessly integrate with global markets, unlocking liquidity and trade opportunities for SMEs and cross-border businesses.
                     </p>
                   </div>
                 </div>
