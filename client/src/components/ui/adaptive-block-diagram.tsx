@@ -118,31 +118,43 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
     return 'bg-primary';
   };
   
+  // Check if on mobile
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
-    <div className={`p-6 rounded-lg border border-primary/10 ${className}`}>
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-semibold flex items-center gap-2">
-          <Gauge className="text-primary" size={24} />
+    <div className={`p-4 md:p-6 rounded-lg border border-primary/10 ${className}`}>
+      <div className="flex flex-wrap justify-between items-center mb-4 md:mb-6">
+        <h3 className="text-lg md:text-xl font-semibold flex items-center gap-1 md:gap-2">
+          <Gauge className="text-primary" size={isMobile ? 18 : 24} />
           <span>Adaptive Block Production</span>
         </h3>
         <button 
           onClick={() => setAnimationActive(!animationActive)}
-          className="px-3 py-1 text-xs rounded-md border border-primary/30 text-primary"
+          className="px-2 py-1 text-xs rounded-md border border-primary/30 text-primary mt-2 sm:mt-0"
         >
           {animationActive ? 'Pause' : 'Simulate'}
         </button>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
         {/* Left column - metrics display */}
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {/* Network load gauge */}
-          <div className="mb-4">
-            <div className="flex justify-between text-sm text-foreground/70 mb-1">
+          <div className="mb-3 md:mb-4">
+            <div className="flex justify-between text-xs md:text-sm text-foreground/70 mb-1">
               <span>Network Load</span>
               <span>{Math.round(networkLoad)}%</span>
             </div>
-            <div className="h-3 bg-muted rounded-full overflow-hidden">
+            <div className="h-2 md:h-3 bg-muted rounded-full overflow-hidden">
               <div 
                 className={`h-full ${getLoadColor()} transition-all duration-500`}
                 style={{ width: `${networkLoad}%` }}
@@ -151,62 +163,62 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
           </div>
           
           {/* Block metrics */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg bg-muted/50 text-center">
+          <div className="grid grid-cols-2 gap-3 md:gap-4">
+            <div className="p-3 md:p-4 rounded-lg bg-muted/50 text-center">
               <div className="text-xs text-foreground/60 mb-1">Block Size</div>
-              <div className="text-2xl font-semibold text-primary flex justify-center items-center gap-1">
+              <div className="text-xl md:text-2xl font-semibold text-primary flex justify-center items-center gap-1">
                 {blockSize}
                 <span className="text-xs font-normal text-foreground/70 ml-1">KB</span>
               </div>
-              <div className="text-xs text-foreground/60 flex justify-center items-center mt-1">
-                {networkLoad > 50 ? <ChevronUp size={14} className="text-primary-light" /> : <ChevronDown size={14} className="text-primary-lighter" />}
-                {networkLoad > 50 ? 'Expanding' : 'Optimizing'}
+              <div className="text-[10px] md:text-xs text-foreground/60 flex justify-center items-center mt-1">
+                {networkLoad > 50 ? <ChevronUp size={12} className="text-primary-light" /> : <ChevronDown size={12} className="text-primary-lighter" />}
+                <span className="hidden xs:inline">{networkLoad > 50 ? 'Expanding' : 'Optimizing'}</span>
               </div>
             </div>
             
-            <div className="p-4 rounded-lg bg-muted/50 text-center">
+            <div className="p-3 md:p-4 rounded-lg bg-muted/50 text-center">
               <div className="text-xs text-foreground/60 mb-1">Block Time</div>
-              <div className="text-2xl font-semibold text-primary flex justify-center items-center gap-1">
+              <div className="text-xl md:text-2xl font-semibold text-primary flex justify-center items-center gap-1">
                 {blockTime.toFixed(1)}
                 <span className="text-xs font-normal text-foreground/70 ml-1">sec</span>
               </div>
-              <div className="text-xs text-foreground/60 flex justify-center items-center mt-1">
-                {networkLoad > 50 ? <ChevronDown size={14} className="text-primary-light" /> : <ChevronUp size={14} className="text-primary-lighter" />}
-                {networkLoad > 50 ? 'Accelerating' : 'Stabilizing'}
+              <div className="text-[10px] md:text-xs text-foreground/60 flex justify-center items-center mt-1">
+                {networkLoad > 50 ? <ChevronDown size={12} className="text-primary-light" /> : <ChevronUp size={12} className="text-primary-lighter" />}
+                <span className="hidden xs:inline">{networkLoad > 50 ? 'Accelerating' : 'Stabilizing'}</span>
               </div>
             </div>
           </div>
           
           {/* TPS counter */}
-          <div className="text-center p-4 rounded-lg bg-primary/5 border border-primary/10">
-            <div className="text-sm text-foreground/70 mb-1">Transaction Throughput</div>
-            <div className="text-3xl font-bold text-primary flex justify-center items-center">
+          <div className="text-center p-3 md:p-4 rounded-lg bg-primary/5 border border-primary/10">
+            <div className="text-xs md:text-sm text-foreground/70 mb-1">Transaction Throughput</div>
+            <div className="text-2xl md:text-3xl font-bold text-primary flex justify-center items-center">
               {tps}
-              <span className="text-sm font-normal text-foreground/70 ml-2">TPS</span>
+              <span className="text-xs md:text-sm font-normal text-foreground/70 ml-1 md:ml-2">TPS</span>
             </div>
           </div>
         </div>
         
         {/* Right column - visual representation */}
-        <div className="flex items-center justify-center relative">
+        <div className="flex items-center justify-center relative mt-2 md:mt-0">
           <div className="relative flex flex-col items-center">
             {/* Transaction queue representation */}
-            <div className="mb-6 w-full h-12 bg-muted/30 rounded-lg border border-primary/10 overflow-hidden relative">
-              <div className="absolute inset-0 flex items-center px-3 justify-between">
-                <Server size={16} className="text-foreground/60" />
-                <div className="text-xs text-foreground/60">Transaction Queue</div>
-                <Server size={16} className="text-foreground/60" />
+            <div className="mb-4 md:mb-6 w-full h-10 md:h-12 bg-muted/30 rounded-lg border border-primary/10 overflow-hidden relative">
+              <div className="absolute inset-0 flex items-center px-2 md:px-3 justify-between">
+                <Server size={isMobile ? 14 : 16} className="text-foreground/60" />
+                <div className="text-[10px] md:text-xs text-foreground/60">Transaction Queue</div>
+                <Server size={isMobile ? 14 : 16} className="text-foreground/60" />
               </div>
               
               {/* Animated dots representing transactions */}
-              <div className="flex items-center h-full px-10">
-                {Array.from({ length: 12 }).map((_, i) => (
+              <div className="flex items-center h-full px-6 md:px-10">
+                {Array.from({ length: isMobile ? 8 : 12 }).map((_, i) => (
                   <div 
                     key={i}
-                    className="h-2 w-2 rounded-full bg-primary/60 mx-1 animate-pulse"
+                    className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-primary/60 mx-0.5 md:mx-1 animate-pulse"
                     style={{ 
                       animationDelay: `${i * 0.2}s`,
-                      opacity: (networkLoad / 100) > (i / 12) ? 1 : 0.2
+                      opacity: (networkLoad / 100) > (i / (isMobile ? 8 : 12)) ? 1 : 0.2
                     }}
                   ></div>
                 ))}
@@ -214,15 +226,15 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
             </div>
             
             {/* Arrow pointing down */}
-            <ArrowRight size={20} className="text-primary/60 rotate-90 mb-2" />
+            <ArrowRight size={isMobile ? 16 : 20} className="text-primary/60 rotate-90 mb-1 md:mb-2" />
             
             {/* Block processing */}
             <div 
               id="block-indicator"
-              className="relative w-24 h-24 flex items-center justify-center"
+              className="relative w-20 h-20 md:w-24 md:h-24 flex items-center justify-center"
             >
               <div className="absolute inset-0 rounded-lg border-2 border-primary animate-pulse"></div>
-              <div className="bg-primary/10 w-20 h-20 rounded-lg flex items-center justify-center text-primary font-medium">
+              <div className="bg-primary/10 w-16 h-16 md:w-20 md:h-20 rounded-lg flex items-center justify-center text-primary font-medium text-sm md:text-base">
                 Block
                 <br />
                 {Math.floor(blockSize / 10)}
@@ -230,14 +242,14 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
             </div>
             
             {/* Arrow pointing down */}
-            <ArrowRight size={20} className="text-primary/60 rotate-90 mt-2" />
+            <ArrowRight size={isMobile ? 16 : 20} className="text-primary/60 rotate-90 mt-1 md:mt-2" />
             
             {/* Blockchain representation */}
-            <div className="mt-6 flex items-center">
-              {Array.from({ length: 5 }).map((_, i) => (
+            <div className="mt-4 md:mt-6 flex items-center">
+              {Array.from({ length: isMobile ? 4 : 5 }).map((_, i) => (
                 <div 
                   key={i}
-                  className="w-10 h-10 rounded border border-primary/40 flex items-center justify-center mx-1 bg-muted text-xs"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded border border-primary/40 flex items-center justify-center mx-0.5 md:mx-1 bg-muted text-[10px] md:text-xs"
                   style={{
                     opacity: 1 - (i * 0.2),
                     transform: `scale(${1 - (i * 0.05)})`,
@@ -251,13 +263,13 @@ export function AdaptiveBlockDiagram({ className = '' }: AdaptiveBlockDiagramPro
         </div>
       </div>
       
-      <div className="mt-6 text-sm text-foreground/60 text-center">
+      <div className="mt-4 md:mt-6 text-xs md:text-sm text-foreground/60 text-center">
         <p>
           {networkLoad < 30 
-            ? "Low network load: Optimizing for security with larger validation windows." 
+            ? isMobile ? "Low load: Security optimized." : "Low network load: Optimizing for security with larger validation windows." 
             : networkLoad < 70 
-              ? "Moderate network load: Balanced block production for optimal performance." 
-              : "High network load: Accelerating block production and increasing block size."
+              ? isMobile ? "Moderate load: Balanced performance." : "Moderate network load: Balanced block production for optimal performance." 
+              : isMobile ? "High load: Accelerated blocks." : "High network load: Accelerating block production and increasing block size."
           }
         </p>
       </div>

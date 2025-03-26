@@ -243,11 +243,11 @@ export function TechTooltip({ techId }: { techId: string }) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="tech-card cursor-help p-5 bg-white/85 backdrop-blur-sm transition-all duration-300">
-            <div className="bg-primary/10 p-3 rounded-lg inline-flex text-primary mb-3">
+          <div className="tech-card cursor-help p-4 md:p-5 bg-white/85 backdrop-blur-sm transition-all duration-300 rounded-lg border border-primary/10 hover:border-primary/30 touch-manipulation">
+            <div className="bg-primary/10 p-2 md:p-3 rounded-lg inline-flex text-primary mb-2 md:mb-3">
               {tech.icon}
             </div>
-            <h3 className="font-poppins font-semibold text-lg mb-2 text-foreground">
+            <h3 className="font-poppins font-semibold text-base md:text-lg mb-1 md:mb-2 text-foreground">
               {tech.title}
             </h3>
             <p className="text-foreground/70 text-sm leading-relaxed">
@@ -255,9 +255,9 @@ export function TechTooltip({ techId }: { techId: string }) {
             </p>
           </div>
         </TooltipTrigger>
-        <TooltipContent side="top" className="max-w-xs p-4 border border-primary/20 bg-white/95 shadow-lg">
-          <p className="font-medium text-primary">{tech.title}</p>
-          <p className="text-sm mt-2 text-foreground/80 leading-relaxed">{tech.longDescription}</p>
+        <TooltipContent side="top" className="max-w-[280px] sm:max-w-xs p-3 md:p-4 border border-primary/20 bg-white/95 shadow-lg z-50">
+          <p className="font-medium text-primary text-sm md:text-base">{tech.title}</p>
+          <p className="text-xs md:text-sm mt-1 md:mt-2 text-foreground/80 leading-relaxed">{tech.longDescription.substring(0, 120)}...</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -274,17 +274,17 @@ export function TechCard({ techId }: { techId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="tech-card cursor-pointer transition-all duration-300 bg-white/85 backdrop-blur-sm p-6">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-primary-light to-primary text-white mb-4">
+        <div className="tech-card cursor-pointer transition-all duration-300 bg-white/85 backdrop-blur-sm p-5 md:p-6 rounded-lg border border-primary/10 hover:border-primary/30 active:bg-primary/5 touch-manipulation">
+          <div className="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-primary-light to-primary text-white mb-3 md:mb-4">
             {tech.icon}
           </div>
-          <h3 className="font-poppins font-semibold text-lg mb-3 text-foreground">
+          <h3 className="font-poppins font-semibold text-base md:text-lg mb-2 md:mb-3 text-foreground">
             {tech.title}
           </h3>
           <p className="text-foreground/70 text-sm leading-relaxed">
             {tech.shortDescription}
           </p>
-          <div className="mt-4 flex items-center gap-2 text-xs text-primary-light font-medium">
+          <div className="mt-3 md:mt-4 flex items-center gap-2 text-xs text-primary-light font-medium">
             <span>Technical details</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M7 17l9.2-9.2M17 17V7H7" />
@@ -292,60 +292,60 @@ export function TechCard({ techId }: { techId: string }) {
           </div>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl bg-white/95 backdrop-blur-md border border-primary/20">
+      <DialogContent className="w-[calc(100%-2rem)] sm:max-w-2xl p-4 md:p-6 bg-white/95 backdrop-blur-md border border-primary/20 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-md bg-gradient-to-br from-primary-light to-primary text-white mb-2">
+          <div className="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-md bg-gradient-to-br from-primary-light to-primary text-white mb-2">
             {tech.icon}
           </div>
-          <DialogTitle className="text-2xl text-primary">
+          <DialogTitle className="text-xl md:text-2xl text-primary">
             {tech.title}
           </DialogTitle>
-          <DialogDescription className="text-base text-foreground/80 leading-relaxed mt-2">
+          <DialogDescription className="text-sm md:text-base text-foreground/80 leading-relaxed mt-2">
             {tech.longDescription}
           </DialogDescription>
         </DialogHeader>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-          <div className="bg-primary/5 rounded-lg p-5">
-            <h4 className="font-semibold text-lg mb-4 text-primary flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mt-4 md:mt-6">
+          <div className="bg-primary/5 rounded-lg p-4">
+            <h4 className="font-semibold text-base md:text-lg mb-3 md:mb-4 text-primary flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
                 <path d="m9 12 2 2 4-4" />
               </svg>
               Key Benefits
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2 md:space-y-3">
               {tech.benefits.map((benefit, i) => (
-                <li key={i} className="flex items-start gap-3">
+                <li key={i} className="flex items-start gap-2 md:gap-3">
                   <div className="text-primary-light mt-1 flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                   </div>
-                  <span className="text-foreground/80 text-sm leading-relaxed">{benefit}</span>
+                  <span className="text-foreground/80 text-xs md:text-sm leading-relaxed">{benefit}</span>
                 </li>
               ))}
             </ul>
           </div>
           
-          <div className="bg-foreground/5 rounded-lg p-5">
-            <h4 className="font-semibold text-lg mb-4 text-foreground flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="bg-foreground/5 rounded-lg p-4">
+            <h4 className="font-semibold text-base md:text-lg mb-3 md:mb-4 text-foreground flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="3" width="20" height="14" rx="2" />
                 <line x1="8" y1="21" x2="16" y2="21" />
                 <line x1="12" y1="17" x2="12" y2="21" />
               </svg>
               Technical Details
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2 md:space-y-3">
               {tech.technicalPoints.map((point, i) => (
-                <li key={i} className="flex items-start gap-3">
+                <li key={i} className="flex items-start gap-2 md:gap-3">
                   <div className="text-primary-light mt-1 flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                   </div>
-                  <span className="text-foreground/80 text-sm leading-relaxed font-code">{point}</span>
+                  <span className="text-foreground/80 text-xs md:text-sm leading-relaxed">{point}</span>
                 </li>
               ))}
             </ul>
@@ -359,7 +359,7 @@ export function TechCard({ techId }: { techId: string }) {
 // Export a collection of tech cards for convenience
 export function TechCards({ techIds, tooltipOnly }: { techIds: string[], tooltipOnly?: boolean }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {techIds.map(id => (
         tooltipOnly ? 
           <TechTooltip key={id} techId={id} /> : 

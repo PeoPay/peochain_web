@@ -101,17 +101,29 @@ function MetricCard({
 }: MetricCardProps) {
   const isPositive = change >= 0;
   
+  // Check if on small screen
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
   return (
-    <div className="bg-card rounded-lg p-5 border border-primary/10 shadow-sm">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2 text-foreground/70">
+    <div className="bg-card rounded-lg p-3 md:p-5 border border-primary/10 shadow-sm">
+      <div className="flex items-center justify-between mb-2 md:mb-4">
+        <div className="flex items-center gap-1 md:gap-2 text-foreground/70">
           <span className={mainColor}>{icon}</span>
-          <span className="text-sm font-medium">{title}</span>
+          <span className="text-xs md:text-sm font-medium">{title}</span>
         </div>
         
         {change !== 0 && (
-          <div className={`text-xs flex items-center gap-1 font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-            {isPositive ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
+          <div className={`text-[10px] md:text-xs flex items-center gap-0.5 md:gap-1 font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+            {isPositive ? <ArrowUpRight size={isMobile ? 12 : 14} /> : <ArrowDownRight size={isMobile ? 12 : 14} />}
             {Math.abs(change)}%
           </div>
         )}
@@ -122,15 +134,15 @@ function MetricCard({
           value={value} 
           prefix={prefix} 
           suffix={suffix} 
-          className={`text-2xl font-bold ${mainColor}`} 
+          className={`text-lg md:text-2xl font-bold ${mainColor}`} 
         />
         
         {chartData.length > 0 && (
-          <div className="flex items-end h-8 gap-[2px]">
+          <div className="flex items-end h-6 md:h-8 gap-[1px] md:gap-[2px]">
             {chartData.map((dataPoint, i) => (
               <div 
                 key={i}
-                className={`w-1 rounded-sm ${mainColor.replace('text-', 'bg-')}/70`}
+                className={`w-[3px] rounded-sm ${mainColor.replace('text-', 'bg-')}/70`}
                 style={{ 
                   height: `${dataPoint}%`,
                   opacity: 0.5 + ((i + 1) / chartData.length) * 0.5
@@ -215,34 +227,46 @@ export function MetricsDashboard({
     return () => clearInterval(updateInterval);
   }, [simulationActive, tps, validators, blockTime, totalStaked, avgFee]);
   
+  // Check if on mobile
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <div className={`${className}`}>
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-semibold flex items-center gap-2">
-          <Activity className="text-primary" size={24} />
+      <div className="flex flex-wrap justify-between items-center mb-4 md:mb-6 gap-y-2">
+        <h3 className="text-lg md:text-xl font-semibold flex items-center gap-1 md:gap-2">
+          <Activity className="text-primary" size={isMobile ? 18 : 24} />
           <span>Network Metrics</span>
         </h3>
         
         <Button 
           variant="outline" 
           size="sm"
-          className="text-xs h-8"
+          className="text-xs h-7 md:h-8 px-2 md:px-3"
           onClick={onToggleSimulation}
         >
           {simulationActive ? (
-            <PauseCircle size={14} className="mr-1" />
+            <PauseCircle size={isMobile ? 12 : 14} className="mr-1" />
           ) : (
-            <RotateCw size={14} className="mr-1" />
+            <RotateCw size={isMobile ? 12 : 14} className="mr-1" />
           )}
           {simulationActive ? 'Pause' : 'Simulate'}
         </Button>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-4">
         <MetricCard
-          title="Transactions/sec"
+          title="TPS"
           value={tps}
-          icon={<BarChart3 size={18} />}
+          icon={<BarChart3 size={isMobile ? 16 : 18} />}
           change={3.2}
           chartData={tpsChart}
           mainColor="text-primary"
@@ -250,9 +274,9 @@ export function MetricsDashboard({
         />
         
         <MetricCard
-          title="Active Validators"
+          title="Validators"
           value={validators}
-          icon={<Users size={18} />}
+          icon={<Users size={isMobile ? 16 : 18} />}
           change={0.8}
           chartData={validatorsChart}
           mainColor="text-primary"
@@ -263,7 +287,7 @@ export function MetricsDashboard({
           title="Block Time"
           value={blockTime}
           suffix="s"
-          icon={<Clock size={18} />}
+          icon={<Clock size={isMobile ? 16 : 18} />}
           change={-1.4}
           chartData={blockTimeChart}
           mainColor="text-primary"
@@ -274,7 +298,7 @@ export function MetricsDashboard({
           title="Total Staked"
           value={totalStaked}
           prefix="$"
-          icon={<Shield size={18} />}
+          icon={<Shield size={isMobile ? 16 : 18} />}
           change={2.7}
           chartData={stakedChart}
           mainColor="text-primary"
@@ -282,10 +306,10 @@ export function MetricsDashboard({
         />
         
         <MetricCard
-          title="Avg. Transaction Fee"
+          title="Avg. Fee"
           value={avgFee}
           prefix="$"
-          icon={<Database size={18} />}
+          icon={<Database size={isMobile ? 16 : 18} />}
           change={-2.1}
           chartData={feeChart}
           mainColor="text-primary"
@@ -293,7 +317,7 @@ export function MetricsDashboard({
         />
       </div>
       
-      <div className="text-xs text-center text-foreground/60 mt-4">
+      <div className="text-[10px] md:text-xs text-center text-foreground/60 mt-3 md:mt-4">
         * All metrics shown are simulated and for demonstration purposes only
       </div>
     </div>
