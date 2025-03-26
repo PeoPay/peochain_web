@@ -47,6 +47,13 @@ export default function FeaturesSection() {
         <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
           Why Join PEOCHAIN?
         </h2>
+        
+        <div className="bg-primary/5 p-6 rounded-xl mb-8 max-w-3xl mx-auto">
+          <p className="text-foreground/90 text-lg font-medium">
+            Traditional blockchains face the 'Blockchain Trilemma'—struggling to simultaneously achieve scalability, security, and decentralization. PEOCHAIN resolves this with innovative technology designed specifically to overcome these limitations.
+          </p>
+        </div>
+        
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
           Welcome to PEOCHAIN, where traditional banking barriers vanish, and financial empowerment begins! Our platform brings decentralized finance to your fingertips—anytime, anywhere.
         </p>
