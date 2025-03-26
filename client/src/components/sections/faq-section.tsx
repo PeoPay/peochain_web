@@ -13,27 +13,27 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     question: "What is PEOCHAIN?",
-    answer: "PEOCHAIN is the future of decentralized finance (DeFi)! Built on innovation, inclusivity, and unparalleled security, it empowers individuals and businesses to thrive in a decentralized economy. With seamless cross-chain compatibility, mobile-first accessibility, and decentralized lending solutions, PEOCHAIN is rewriting the rules of finance!"
+    answer: "PEOCHAIN is an advanced blockchain architecture designed to overcome fundamental limitations of existing blockchain networks. With innovative subnetting, layer-2 scaling solutions, and our proprietary consensus mechanism, PEOCHAIN delivers enterprise-grade performance (100,000+ TPS) with uncompromising security and decentralization."
   },
   {
-    question: "What makes PEOCHAIN different from other DeFi platforms?",
-    answer: "PEOCHAIN is not just another DeFi platform—it's a movement! At its core is our groundbreaking Proof of Synergy (PoSyg) consensus mechanism, fostering trust and collaboration. Add to that seamless cross-chain compatibility, mobile-first design, and community-driven governance. PEOCHAIN isn't just accessible—it's transformative, making DeFi sustainable and empowering for all."
+    question: "What core blockchain problems does PEOCHAIN solve?",
+    answer: "PEOCHAIN solves scalability, security, and decentralization issues simultaneously using advanced techniques like subnetting, PoSyg, and Zero-Knowledge proofs. Our architecture breaks through the 'blockchain trilemma' that has constrained other platforms."
   },
   {
-    question: "What is Proof of Synergy (PoSyg)?",
-    answer: "Proof of Synergy (PoSyg) is the heart of PEOCHAIN, setting it apart from the rest! This innovative consensus mechanism champions trust, fairness, and collaboration. Ethical contributors and team players are rewarded, creating a vibrant, united community. PoSyg is more than technology—it's a movement of shared success!"
+    question: "How does PoSyg improve over traditional consensus algorithms?",
+    answer: "PoSyg combines the efficiency of PoS with additional layers of security and decentralized consensus—delivering secure validation without the centralization risks or environmental costs of older blockchain technologies. It enables high throughput while maintaining robust Byzantine Fault Tolerance."
   },
   {
-    question: "Can I access PEOCHAIN on my mobile device?",
-    answer: "Yes, you can! PEOCHAIN is built with mobile-first accessibility, giving you the power of decentralized finance anytime, anywhere. Whether you're at home, in the city, or off the grid, PEOCHAIN puts financial freedom right in your pocket."
+    question: "What makes PEOCHAIN different from other blockchain platforms?",
+    answer: "PEOCHAIN's technical advantage comes from our innovative subnet validator network architecture, Zero-Knowledge implementation, and Proof of Synergy consensus. Together, these technologies enable 1-second finality with throughput exceeding 100,000 TPS while maintaining truly decentralized operation and military-grade security."
   },
   {
-    question: "How does decentralized lending work on PEOCHAIN?",
-    answer: "Say goodbye to traditional banking barriers! PEOCHAIN's decentralized lending lets you lend, borrow, and earn with flexibility and ease. Deposit assets to earn competitive interest or borrow instantly—all powered by secure blockchain technology. Financial freedom has never been this effortless!"
+    question: "Is PEOCHAIN just for finance or broader applications?",
+    answer: "While initially optimized for decentralized finance, PEOCHAIN's architecture supports numerous sectors like supply-chain, healthcare, and identity management. Our technical foundation is designed to be versatile and adaptable to any enterprise or application requiring high-performance, secure blockchain infrastructure."
   },
   {
-    question: "How does PEOCHAIN contribute to financial inclusion?",
-    answer: "We're breaking barriers to build a more inclusive financial future! PEOCHAIN leverages fast, secure blockchain solutions to serve the underbanked, unlocking opportunities for the next billion users. With decentralized lending, cross-chain innovation, and mobile-first design, we're bridging the financial gap and empowering communities worldwide."
+    question: "How does PEOCHAIN handle interoperability with other blockchains?",
+    answer: "PEOCHAIN implements advanced cross-chain bridges and communication protocols that enable seamless asset and data transfers between different blockchain networks. Our architecture supports both native cross-chain operations and integration with industry-standard bridge solutions, creating a truly interconnected blockchain ecosystem."
   }
 ];
 
@@ -45,7 +45,7 @@ export default function FAQSection() {
           Frequently Asked Questions
         </h2>
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
-          Learn more about how PEOCHAIN is revolutionizing decentralized finance
+          Learn more about PEOCHAIN's revolutionary blockchain technology and architecture
         </p>
       </div>
 
@@ -64,7 +64,7 @@ export default function FAQSection() {
       
       <div className="text-center mt-12">
         <a href="#waitlist" className="btn-gradient inline-block text-white font-medium py-3 px-8 rounded-full">
-          Join the Waitlist
+          Join Our Tech Pioneer Program
         </a>
       </div>
     </section>
