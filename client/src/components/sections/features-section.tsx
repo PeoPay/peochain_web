@@ -11,7 +11,7 @@ const features: Feature[] = [
   {
     icon: <CircuitBoard className="w-8 h-8" />,
     title: "Proof of Synergy (PoSyg)",
-    description: "Our innovative consensus mechanism champions trust, fairness, and collaboration, creating a vibrant community where ethical contributors are rewarded."
+    description: "Rewarding Real-World Economic Actions—Earn tokens through honest participation, governance, and economic transactions. PoSyg secures the network and empowers your financial activities simultaneously."
   },
   {
     icon: <Banknote className="w-8 h-8" />,
