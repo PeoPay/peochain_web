@@ -8,13 +8,13 @@ export default function WaitlistSection() {
         <CardContent className="p-8 md:p-12">
           <div className="text-center mb-10">
             <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
-              The Waitlist – Your VIP Pass Awaits!
+              Secure Your Early Access – Experience the Next Generation of Blockchain First!
             </h2>
             <p className="text-foreground/80 max-w-2xl mx-auto text-lg">
-              PEOCHAIN is almost here, and YOU can be at the forefront! Join our waitlist now to secure early access to this game-changing platform. Early birds get exclusive perks—don't wait for the future, shape it with us!
+              Join now for exclusive early access to PEOCHAIN's revolutionary technology, zero-fee transactions, and priority support. Be part of redefining blockchain technology from the start.
             </p>
             <p className="text-foreground/90 mt-4 max-w-2xl mx-auto text-lg italic">
-              "Imagine a world where your money works for you, not the banks. With PEOCHAIN, that's not a dream—it's your future."
+              "Our technology solves the blockchain trilemma with 100,000+ TPS and 1-second finality while maintaining true decentralization. Early adopters get first access to these capabilities."
             </p>
           </div>
           
@@ -26,7 +26,7 @@ export default function WaitlistSection() {
           
           <div className="mt-12 p-6 bg-primary/10 rounded-xl">
             <p className="text-center text-foreground/80 font-medium">
-              The next billion users are counting on this. Be part of something bigger—PEOCHAIN launches soon. Stay tuned!
+              PEOCHAIN's next-generation technology will redefine blockchain capabilities and unlock unprecedented applications. Join the technological revolution.
             </p>
           </div>
         </CardContent>
