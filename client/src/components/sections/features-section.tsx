@@ -14,29 +14,14 @@ const features: Feature[] = [
     description: "Proof of Synergy (PoSyg) combines the energy efficiency and decentralization of Proof of Stake (PoS) with advanced cryptographic security, rewarding participants for securing and contributing actively to the network's resilience."
   },
   {
-    icon: <Banknote className="w-8 h-8" />,
-    title: "Decentralized Lending",
-    description: "Say goodbye to traditional banking barriers! Lend, borrow, and earn with flexibility and ease—all powered by secure blockchain technology."
-  },
-  {
-    icon: <Globe2 className="w-8 h-8" />,
-    title: "Financial Inclusion",
-    description: "Breaking barriers to build a more inclusive financial future, serving the underbanked and unlocking opportunities for the next billion users."
-  },
-  {
     icon: <Shield className="w-8 h-8" />,
     title: "Advanced Security",
-    description: "Cutting-edge protocols protect you from emerging threats, ensuring peace of mind while you focus on innovating and growing in this new financial era."
+    description: "Cutting-edge protocols protect you from emerging threats, ensuring peace of mind while you focus on innovating and growing in this new technological era."
   },
   {
     icon: <LinkIcon className="w-8 h-8" />,
     title: "Cross-Chain Compatibility",
-    description: "Seamlessly operate across multiple blockchains without complicated technical knowledge, breaking down barriers between ecosystems."
-  },
-  {
-    icon: <Smartphone className="w-8 h-8" />,
-    title: "Mobile-First Design",
-    description: "Access the power of decentralized finance anytime, anywhere. Whether you're at home or on the go, PEOCHAIN puts financial freedom in your pocket."
+    description: "Seamlessly operate across multiple blockchains without complicated technical knowledge, breaking down barriers between blockchain ecosystems."
   }
 ];
 
