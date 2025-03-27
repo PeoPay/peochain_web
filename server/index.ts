@@ -102,6 +102,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     await setupVite(app, server);
   } else {
     serveStatic(app);
+    // Ensure all routes that aren't API routes serve the index.html for client-side routing
+    app.get('*', (req, res) => {
+      if (!req.path.startsWith('/api')) {
+        res.sendFile(path.join(process.cwd(), 'dist/public/index.html'));
+      }
+    });
   }
 
   /**
@@ -112,8 +118,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
    * - Enables port reuse to enhance scalability and availability.
    * - Logs confirmation when the server starts successfully.
    */
-  const port = process.env.PORT || 5000;
-  server.listen(port, "0.0.0.0", () => {
-    log(`serving on port ${port} in ${app.get('env')} mode`);
+  const port = parseInt(process.env.PORT || "5000", 10);
+  server.listen({
+    port: port,
+    host: "0.0.0.0"
+  }, () => {
+    log(`Server listening on port ${port} in ${app.get('env')} mode`);
   });
 })();
