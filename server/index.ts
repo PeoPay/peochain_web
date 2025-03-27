@@ -119,9 +119,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
    * - Logs confirmation when the server starts successfully.
    */
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+  const isDev = process.env.NODE_ENV !== 'production';
+
   server.listen({
     port: port,
-    host: "0.0.0.0"
+    host: "0.0.0.0",
+    backlog: isDev ? 0 : 511
   }, () => {
     log(`Server listening on port ${port} in ${app.get('env')} mode`);
   });
