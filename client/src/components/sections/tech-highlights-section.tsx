@@ -57,10 +57,10 @@ export default function TechHighlightsSection({ onExploreClick }: TechHighlights
               <div className="bg-primary/10 p-3 inline-flex rounded-full mb-4 text-primary">
                 {highlight.icon}
               </div>
-              <h3 className="font-poppins font-semibold text-lg mb-2 text-foreground">
+              <h3 className="feature-title mb-2">
                 {highlight.title}
               </h3>
-              <p className="text-foreground/70 text-sm">
+              <p className="description text-sm">
                 {highlight.description}
               </p>
             </div>

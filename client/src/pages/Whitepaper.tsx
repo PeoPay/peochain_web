@@ -164,7 +164,7 @@ export default function Whitepaper() {
                     
                     {expandedSections.consensusMechanism && (
                       <div className="mt-4 p-4 bg-primary/5 rounded-xl">
-                        <h3 className="font-bold text-xl mb-4 text-center">Proof of Synergy (PoSyg) Consensus</h3>
+                        <h3 className="sub-section-title mb-4 text-center">Proof of Synergy (PoSyg) Consensus</h3>
                         <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
                           <ConsensusDiagram mode="posyg" />
                         </div>
@@ -173,7 +173,7 @@ export default function Whitepaper() {
                   </div>
                   
                   <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-xl whitepaper-section">
-                    <h3 className="font-bold text-xl mb-3">Dynamic Contribution Scoring (DCS)</h3>
+                    <h3 className="sub-section-title mb-3">Dynamic Contribution Scoring (DCS)</h3>
                     <ul className="list-disc pl-6 space-y-2 text-foreground/80">
                       <li>Transparent, mathematically rigorous incentive model</li>
                       <li>Evaluates network participation quality beyond simple stake amounts</li>
@@ -194,7 +194,7 @@ export default function Whitepaper() {
                     
                     {expandedSections.dcs && (
                       <div className="mt-4 p-4 bg-primary/5 rounded-xl">
-                        <h3 className="font-bold text-xl mb-4 text-center">Dynamic Contribution Scoring</h3>
+                        <h3 className="sub-section-title mb-4 text-center">Dynamic Contribution Scoring</h3>
                         <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
                           <ConsensusDiagram mode="dcs" />
                         </div>
@@ -204,7 +204,7 @@ export default function Whitepaper() {
                 </div>
                 
                 <div className="mt-8 p-5 bg-primary/5 rounded-xl">
-                  <h3 className="font-bold text-xl mb-4 text-center">Performance Comparison</h3>
+                  <h3 className="sub-section-title mb-4 text-center">Performance Comparison</h3>
                   <div className="h-[350px] responsive-chart">
                     <AnimatedChart />
                   </div>
@@ -215,12 +215,12 @@ export default function Whitepaper() {
 
               {/* 5. Technical Highlights */}
               <section>
-                <h2 className="text-2xl font-bold mb-6">Technical Highlights</h2>
+                <h2 className="section-title mb-6">Technical Highlights</h2>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                   <div className="border border-primary/20 p-5 rounded-xl whitepaper-section">
-                    <h3 className="font-bold text-lg mb-2">Subnet Validator Network</h3>
-                    <p className="text-foreground/70 text-sm">
+                    <h3 className="feature-title mb-2">Subnet Validator Network</h3>
+                    <p className="description text-sm">
                       Independent validator subnetworks enable parallel transaction processing, dramatically boosting network throughput and decentralization.
                     </p>
                     
@@ -237,29 +237,29 @@ export default function Whitepaper() {
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="font-bold text-lg mb-2">Zero-Knowledge Proofs (ZK-Proofs)</h3>
-                    <p className="text-foreground/70 text-sm">
+                    <h3 className="feature-title mb-2">Zero-Knowledge Proofs (ZK-Proofs)</h3>
+                    <p className="description text-sm">
                       Advanced cryptographic protocols ensuring secure, confidential transactions while preserving public verifiability, enhancing both privacy and scalability.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="font-bold text-lg mb-2">Threshold Signature Scheme (TSS)</h3>
-                    <p className="text-foreground/70 text-sm">
+                    <h3 className="feature-title mb-2">Threshold Signature Scheme (TSS)</h3>
+                    <p className="description text-sm">
                       Collaborative validation method improving fault tolerance and security, eliminating single points of failure through decentralized signature generation.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="font-bold text-lg mb-2">Adaptive Block Production</h3>
-                    <p className="text-foreground/70 text-sm">
+                    <h3 className="feature-title mb-2">Adaptive Block Production</h3>
+                    <p className="description text-sm">
                       Real-time adjustments in block validation difficulty and reward distribution, maintaining optimal network performance under varying conditions.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="font-bold text-lg mb-2">Cross-Chain Interoperability</h3>
-                    <p className="text-foreground/70 text-sm">
+                    <h3 className="feature-title mb-2">Cross-Chain Interoperability</h3>
+                    <p className="description text-sm">
                       Seamless integration with major blockchains (Ethereum, Solana, Polkadot, Cosmos), facilitating asset transfers, enhancing liquidity, and extending decentralized financial opportunities.
                     </p>
                   </div>
@@ -267,7 +267,7 @@ export default function Whitepaper() {
                 
                 {expandedSections.architecture && (
                   <div className="my-8 p-4 bg-primary/5 rounded-xl">
-                    <h3 className="font-bold text-xl mb-4 text-center">Subnet Validator Architecture</h3>
+                    <h3 className="sub-section-title mb-4 text-center">Subnet Validator Architecture</h3>
                     <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
                       <SubnetDiagram />
                     </div>
@@ -297,7 +297,7 @@ export default function Whitepaper() {
                 )}
                 
                 <div className="p-5 bg-primary/5 rounded-xl">
-                  <h3 className="font-bold text-lg mb-3">Technical Architecture Comparison with Leading Blockchains</h3>
+                  <h3 className="feature-title mb-3">Technical Architecture Comparison with Leading Blockchains</h3>
                   
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse">

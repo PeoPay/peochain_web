@@ -78,10 +78,10 @@ export default function TechnologySection() {
   return (
     <section id="technology" className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
       <div className="text-center mb-16">
-        <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
+        <h2 className="section-title">
           Our Technologies
         </h2>
-        <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
+        <p className="description max-w-2xl mx-auto text-lg">
           PEOCHAIN is a blockchain platform built for speed, security, and scalability.
         </p>
       </div>
@@ -104,8 +104,8 @@ export default function TechnologySection() {
                       {feature.icon}
                     </div>
                     <div>
-                      <h3 className="font-poppins font-semibold text-xl mb-2 text-foreground">{feature.title}</h3>
-                      <p className="text-foreground/70">
+                      <h3 className="feature-title">{feature.title}</h3>
+                      <p className="description">
                         {feature.description}
                       </p>
                     </div>
@@ -118,12 +118,12 @@ export default function TechnologySection() {
           <div className="mt-12 p-6 bg-primary/5 rounded-3xl">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="md:w-2/3">
-                <h3 className="font-poppins font-semibold text-2xl mb-4 text-foreground">Scalability for Mass Adoption</h3>
-                <p className="text-foreground/70 mb-4">
+                <h3 className="sub-section-title">Scalability for Mass Adoption</h3>
+                <p className="description mb-4">
                   With 1-second finality and the ability to process up to 100,000 TPS, PEOCHAIN is optimized for 
                   high-demand applications and mass adoption.
                 </p>
-                <p className="text-foreground/70">
+                <p className="description">
                   These features make PEOCHAIN a leader in blockchain innovation, accessibility, and performance, 
                   designed to enable next-generation decentralized applications worldwide.
                 </p>
@@ -142,7 +142,7 @@ export default function TechnologySection() {
             {architectureLayers.map((layer, index) => (
               <Card key={index} className="glass rounded-3xl border-0 shadow-sm">
                 <CardContent className="p-6 md:p-8">
-                  <h3 className="font-poppins font-semibold text-xl mb-4 text-foreground">
+                  <h3 className="feature-title mb-4">
                     {layer.title}
                   </h3>
                   <ul className="space-y-2">
@@ -153,7 +153,7 @@ export default function TechnologySection() {
                             <polyline points="20 6 9 17 4 12"></polyline>
                           </svg>
                         </div>
-                        <span className="text-foreground/70">{item}</span>
+                        <span className="description">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -163,34 +163,34 @@ export default function TechnologySection() {
           </div>
           
           <div className="mt-12 p-6 bg-primary/5 rounded-3xl">
-            <h3 className="font-poppins font-semibold text-2xl mb-4 text-foreground text-center">
+            <h3 className="sub-section-title mb-4 text-center">
               PoSyg + DCS: Key Highlights
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
               <div className="bg-white/40 p-5 rounded-2xl">
-                <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
+                <h4 className="feature-title flex items-center">
                   <Medal className="h-5 w-5 text-primary mr-2" />
                   Synergy Scoring
                 </h4>
-                <p className="text-foreground/70 text-sm">
+                <p className="description text-sm">
                   Validators earn points by reliably proposing blocks and participating in governance, encouraging consistent contributions.
                 </p>
               </div>
               <div className="bg-white/40 p-5 rounded-2xl">
-                <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
+                <h4 className="feature-title flex items-center">
                   <ShieldCheck className="h-5 w-5 text-primary mr-2" />
                   Security Features
                 </h4>
-                <p className="text-foreground/70 text-sm">
+                <p className="description text-sm">
                   Synergy-weighted voting strengthens the network against attacks like Sybil and 51% attacks, ensuring resilience.
                 </p>
               </div>
               <div className="bg-white/40 p-5 rounded-2xl">
-                <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
+                <h4 className="feature-title flex items-center">
                   <Gauge className="h-5 w-5 text-primary mr-2" />
                   High Performance
                 </h4>
-                <p className="text-foreground/70 text-sm">
+                <p className="description text-sm">
                   With 1-second finality and the ability to process up to 100,000 TPS, PEOCHAIN is optimized for high-demand applications.
                 </p>
               </div>
