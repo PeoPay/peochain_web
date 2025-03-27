@@ -8,14 +8,32 @@ export default function WaitlistSection() {
         <CardContent className="p-8 md:p-12">
           <div className="text-center mb-10">
             <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
-              Secure Your Early Access – Experience the Next Generation of Blockchain First!
+              Early Access to Developer APIs and SDKs
             </h2>
             <p className="text-foreground/80 max-w-2xl mx-auto text-lg">
-              Join now for exclusive early access to PEOCHAIN's revolutionary technology, zero-fee transactions, and priority support. Be part of redefining blockchain technology from the start.
+              Join our developer community for priority access to PEOCHAIN's comprehensive API suite, developer toolkit, and technical documentation. Build the next generation of blockchain applications with our cutting-edge infrastructure.
             </p>
-            <p className="text-foreground/90 mt-4 max-w-2xl mx-auto text-lg italic">
-              "Our technology solves the blockchain trilemma with 100,000+ TPS and 1-second finality while maintaining true decentralization. Early adopters get first access to these capabilities."
-            </p>
+            <div className="bg-primary/10 rounded-xl p-4 mt-4 max-w-2xl mx-auto">
+              <h3 className="text-primary font-medium text-lg mb-2">Developer Benefits</h3>
+              <ul className="text-left grid md:grid-cols-2 gap-3">
+                <li className="flex items-start">
+                  <span className="text-primary mr-2">✓</span>
+                  <span>Early API access</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2">✓</span>
+                  <span>Technical documentation</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2">✓</span>
+                  <span>Development sandbox</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2">✓</span>
+                  <span>Direct engineer support</span>
+                </li>
+              </ul>
+            </div>
           </div>
           
           <WaitlistForm />
@@ -25,9 +43,25 @@ export default function WaitlistSection() {
           </p>
           
           <div className="mt-12 p-6 bg-primary/10 rounded-xl">
-            <p className="text-center text-foreground/80 font-medium">
-              PEOCHAIN's next-generation technology will redefine blockchain capabilities and unlock unprecedented applications. Join the technological revolution.
-            </p>
+            <h4 className="text-center font-medium text-primary mb-3">Technical Resources for Developers</h4>
+            <div className="grid md:grid-cols-4 gap-4 text-sm">
+              <div className="text-center">
+                <h5 className="font-medium mb-2">API Documentation</h5>
+                <p className="text-foreground/70">Comprehensive API references and integration guides</p>
+              </div>
+              <div className="text-center">
+                <h5 className="font-medium mb-2">SDK Libraries</h5>
+                <p className="text-foreground/70">Developer toolkits for JavaScript, Python, Rust and Go</p>
+              </div>
+              <div className="text-center">
+                <h5 className="font-medium mb-2">Development Environment</h5>
+                <p className="text-foreground/70">Local testnet setup and sandbox environment</p>
+              </div>
+              <div className="text-center">
+                <h5 className="font-medium mb-2">Technical Support</h5>
+                <p className="text-foreground/70">Direct access to PEOCHAIN's engineering team</p>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>

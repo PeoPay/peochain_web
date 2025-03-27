@@ -160,7 +160,7 @@ export function WaitlistForm() {
                   Processing...
                 </span>
               ) : (
-                <span>Secure My Spot</span>
+                <span>Register for Developer Access</span>
               )}
             </Button>
           </form>
@@ -183,9 +183,9 @@ export function WaitlistForm() {
               
               {referralData && (
                 <div className="mt-6 border-t border-primary/20 pt-6">
-                  <h4 className="font-medium text-foreground mb-2">Refer Friends & Skip the Line</h4>
+                  <h4 className="font-medium text-foreground mb-2">Refer Fellow Developers</h4>
                   <p className="text-sm text-foreground/70 mb-4">
-                    Share your referral link with friends to gain priority access to PEOCHAIN!
+                    Share your referral link with other developers to gain priority API access and expanded quotas.
                   </p>
                   
                   <div className="flex flex-col space-y-4">

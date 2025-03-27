@@ -9,6 +9,7 @@ import { useState } from "react";
 import { AnimatedChart } from "@/components/ui/animated-chart";
 import { ConsensusDiagram } from "@/components/ui/consensus-diagram";
 import { SubnetDiagram } from "@/components/ui/subnet-diagram";
+import { TechTooltip } from "@/components/ui/tech-tooltip";
 
 export default function Whitepaper() {
   const [, navigate] = useLocation();
@@ -143,7 +144,25 @@ export default function Whitepaper() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-xl whitepaper-section">
-                    <h3 className="font-bold text-xl mb-3">Proof of Synergy (PoSyg)</h3>
+                    <h3 className="font-bold text-xl mb-3">
+                      <TechTooltip 
+                        expanded={true} 
+                        content={
+                          <div>
+                            <h4 className="font-semibold text-primary mb-1">Proof of Synergy (PoSyg)</h4>
+                            <p className="text-sm">A novel consensus mechanism that combines the benefits of proof-of-stake with validator reputation scoring, achieving high performance without sacrificing decentralization.</p>
+                            <ul className="text-xs mt-2 space-y-1 list-disc pl-4">
+                              <li>Validators are selected based on stake and contribution quality</li>
+                              <li>Energy-efficient validation process</li>
+                              <li>Dynamic penalties for malicious behavior</li>
+                              <li>Resistant to centralization pressures</li>
+                            </ul>
+                          </div>
+                        }
+                      >
+                        Proof of Synergy (PoSyg)
+                      </TechTooltip>
+                    </h3>
                     <ul className="list-disc pl-6 space-y-2 text-foreground/80">
                       <li>Combines security, decentralization, and economic incentives in a single consensus mechanism</li>
                       <li>Dynamically rewards honest validators while penalizing malicious actors</li>
@@ -219,7 +238,25 @@ export default function Whitepaper() {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                   <div className="border border-primary/20 p-5 rounded-xl whitepaper-section">
-                    <h3 className="feature-title mb-2">Subnet Validator Network</h3>
+                    <h3 className="feature-title mb-2">
+                      <TechTooltip 
+                        expanded={true}
+                        content={
+                          <div>
+                            <h4 className="font-semibold text-primary mb-1">Subnet Validator Network</h4>
+                            <p className="text-sm">A network architecture where validators are organized into specialized subnets that process transactions in parallel, significantly increasing throughput and fault tolerance.</p>
+                            <ul className="text-xs mt-2 space-y-1 list-disc pl-4">
+                              <li>Each subnet specializes in specific transaction types</li>
+                              <li>Enables horizontal scaling without security compromise</li>
+                              <li>Separates validator roles for optimized performance</li>
+                              <li>Improves network resilience against attacks</li>
+                            </ul>
+                          </div>
+                        }
+                      >
+                        Subnet Validator Network
+                      </TechTooltip>
+                    </h3>
                     <p className="description text-sm">
                       Independent validator subnetworks enable parallel transaction processing, dramatically boosting network throughput and decentralization.
                     </p>
@@ -237,28 +274,100 @@ export default function Whitepaper() {
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="feature-title mb-2">Zero-Knowledge Proofs (ZK-Proofs)</h3>
+                    <h3 className="feature-title mb-2">
+                      <TechTooltip 
+                        expanded={true}
+                        content={
+                          <div>
+                            <h4 className="font-semibold text-primary mb-1">Zero-Knowledge Proofs (ZK-Proofs)</h4>
+                            <p className="text-sm">Cryptographic method that allows one party to prove to another that a statement is true without revealing any additional information beyond the validity of the statement itself.</p>
+                            <ul className="text-xs mt-2 space-y-1 list-disc pl-4">
+                              <li>Enables private transaction verification</li>
+                              <li>Reduces blockchain data storage requirements</li>
+                              <li>Ensures data privacy while maintaining security</li>
+                              <li>Significantly improves transaction throughput</li>
+                            </ul>
+                          </div>
+                        }
+                      >
+                        Zero-Knowledge Proofs (ZK-Proofs)
+                      </TechTooltip>
+                    </h3>
                     <p className="description text-sm">
                       Advanced cryptographic protocols ensuring secure, confidential transactions while preserving public verifiability, enhancing both privacy and scalability.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="feature-title mb-2">Threshold Signature Scheme (TSS)</h3>
+                    <h3 className="feature-title mb-2">
+                      <TechTooltip 
+                        expanded={true}
+                        content={
+                          <div>
+                            <h4 className="font-semibold text-primary mb-1">Threshold Signature Scheme (TSS)</h4>
+                            <p className="text-sm">Cryptographic protocol where multiple parties must collaborate to generate a valid signature, ensuring no single validator has complete control over transaction validation.</p>
+                            <ul className="text-xs mt-2 space-y-1 list-disc pl-4">
+                              <li>Requires consensus from multiple validators to approve transactions</li>
+                              <li>Eliminates single points of failure in the network</li>
+                              <li>Enhances security against compromise attempts</li>
+                              <li>Maintains network function even if some validators are offline</li>
+                            </ul>
+                          </div>
+                        }
+                      >
+                        Threshold Signature Scheme (TSS)
+                      </TechTooltip>
+                    </h3>
                     <p className="description text-sm">
                       Collaborative validation method improving fault tolerance and security, eliminating single points of failure through decentralized signature generation.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="feature-title mb-2">Adaptive Block Production</h3>
+                    <h3 className="feature-title mb-2">
+                      <TechTooltip 
+                        expanded={true}
+                        content={
+                          <div>
+                            <h4 className="font-semibold text-primary mb-1">Adaptive Block Production</h4>
+                            <p className="text-sm">Dynamic system that automatically adjusts block parameters in real-time based on network conditions, ensuring consistent performance under varying loads.</p>
+                            <ul className="text-xs mt-2 space-y-1 list-disc pl-4">
+                              <li>Dynamically changes block size and generation frequency</li>
+                              <li>Adjusts validation parameters based on network traffic</li>
+                              <li>Prevents congestion during high-demand periods</li>
+                              <li>Optimizes fee structures based on current usage</li>
+                            </ul>
+                          </div>
+                        }
+                      >
+                        Adaptive Block Production
+                      </TechTooltip>
+                    </h3>
                     <p className="description text-sm">
                       Real-time adjustments in block validation difficulty and reward distribution, maintaining optimal network performance under varying conditions.
                     </p>
                   </div>
                   
                   <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="feature-title mb-2">Cross-Chain Interoperability</h3>
+                    <h3 className="feature-title mb-2">
+                      <TechTooltip 
+                        expanded={true}
+                        content={
+                          <div>
+                            <h4 className="font-semibold text-primary mb-1">Cross-Chain Interoperability</h4>
+                            <p className="text-sm">Technology that enables seamless interaction and asset transfer between different blockchain networks without requiring trust in intermediaries.</p>
+                            <ul className="text-xs mt-2 space-y-1 list-disc pl-4">
+                              <li>Built-in bridges to major blockchain ecosystems</li>
+                              <li>Atomic swaps for secure cross-chain transactions</li>
+                              <li>Cross-chain smart contract execution capability</li>
+                              <li>Unified liquidity pools across multiple chains</li>
+                            </ul>
+                          </div>
+                        }
+                      >
+                        Cross-Chain Interoperability
+                      </TechTooltip>
+                    </h3>
                     <p className="description text-sm">
                       Seamless integration with major blockchains (Ethereum, Solana, Polkadot, Cosmos), facilitating asset transfers, enhancing liquidity, and extending decentralized financial opportunities.
                     </p>
