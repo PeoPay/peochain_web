@@ -18,7 +18,7 @@ app.use(express.static(path.join(process.cwd(), "public")));
 
 /**
  * Middleware for logging API requests.
- * 
+ *
  * - Captures the start time to measure request duration.
  * - Intercepts JSON responses to include response body in logs.
  * - Logs HTTP method, path, status code, duration, and JSON response (truncated at 80 characters for readability).
@@ -64,7 +64,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 /**
  * Immediately Invoked Async Function Expression (IIAFE)
- * 
+ *
  * - Registers all API routes and associated middleware.
  * - Sets up a global error handling middleware to catch and handle errors gracefully.
  * - Initializes Vite in development mode or serves static files in production.
@@ -76,7 +76,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
   /**
    * Global error handling middleware
-   * 
+   *
    * - Captures errors from previous middleware and routes.
    * - Returns structured JSON error response with appropriate HTTP status.
    * - Throws the error for further logging or handling as required.
@@ -93,7 +93,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
   /**
    * Environment-specific server setup
-   * 
+   *
    * - In development mode, configures Vite middleware to enable hot module replacement (HMR) and improved dev experience.
    * - In production mode, serves prebuilt static assets for optimized performance.
    * - Vite is initialized after routes to ensure correct route handling precedence.
@@ -103,29 +103,32 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   } else {
     serveStatic(app);
     // Ensure all routes that aren't API routes serve the index.html for client-side routing
-    app.get('*', (req, res) => {
-      if (!req.path.startsWith('/api')) {
-        res.sendFile(path.join(process.cwd(), 'dist/public/index.html'));
+    app.get("*", (req, res) => {
+      if (!req.path.startsWith("/api")) {
+        res.sendFile(path.join(process.cwd(), "dist/public/index.html"));
       }
     });
   }
 
   /**
    * Server configuration
-   * 
+   *
    * - Explicitly sets the server to listen on port 5000 for both API and client-side requests.
    * - Binds server to all network interfaces ("0.0.0.0") for accessibility.
    * - Enables port reuse to enhance scalability and availability.
    * - Logs confirmation when the server starts successfully.
    */
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
-  const isDev = process.env.NODE_ENV !== 'production';
+  const isDev = process.env.NODE_ENV !== "production";
 
-  server.listen({
-    port: port,
-    host: "0.0.0.0",
-    backlog: isDev ? 0 : 511
-  }, () => {
-    log(`Server listening on port ${port} in ${app.get('env')} mode`);
-  });
+  server.listen(
+    {
+      port: port,
+      host: "0.0.0.0",
+      backlog: isDev ? 0 : 511,
+    },
+    () => {
+      console.log(`Server listening on port ${port} in ${app.get("env")} mode`);
+    },
+  );
 })();
