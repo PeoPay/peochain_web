@@ -5,7 +5,7 @@ import HeroSection from "@/components/sections/hero-section";
 import TechHighlightsSection from "@/components/sections/tech-highlights-section";
 import FeaturesSection from "@/components/sections/features-section";
 import BenefitsSection from "@/components/sections/benefits-section";
-import WaitlistSection from "@/components/sections/waitlist-section";
+import DualWaitlistSection from "@/components/sections/dual-waitlist-section";
 import FAQSection from "@/components/sections/faq-section";
 import TechnologySection from "@/components/sections/technology-section";
 import WhyItMattersSection from "@/components/sections/why-it-matters-section";
@@ -52,7 +52,7 @@ export default function Home() {
         </div>
         <WhyItMattersSection />
         <div id="waitlist" ref={waitlistRef}>
-          <WaitlistSection />
+          <DualWaitlistSection />
         </div>
         <div id="faq" ref={faqRef}>
           <FAQSection />

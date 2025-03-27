@@ -49,7 +49,8 @@ function UserWaitlistForm() {
       email: "",
       referredBy: "",
       agreeToTerms: false,
-      userType: "user" as const
+      userType: "user" as const,
+      metadata: ""
     },
   });
   
@@ -304,7 +305,8 @@ function DeveloperWaitlistForm() {
       agreeToTerms: false,
       role: "Developer",
       githubUrl: "",
-      userType: "developer" as const
+      userType: "developer" as const,
+      metadata: ""
     },
   });
   
@@ -356,11 +358,8 @@ function DeveloperWaitlistForm() {
       referredBy: data.referredBy,
       agreeToTerms: data.agreeToTerms,
       userType: "developer" as const,
-      // We'll store the additional fields in metadata in the backend
-      metadata: JSON.stringify({
-        role: data.role,
-        githubUrl: data.githubUrl
-      })
+      role: data.role,
+      githubUrl: data.githubUrl
     };
     
     waitlistMutation.mutate(formData);
