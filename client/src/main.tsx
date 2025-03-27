@@ -4,32 +4,32 @@ import "./index.css";
 
 const fontStyles = `
   :root {
-    --background: 134 20% 90%;
-    --foreground: 142 16% 27%;
+    --background: 120 22% 90%;
+    --foreground: 134 16% 27%;
     --card: 0 0% 100%;
-    --card-foreground: 142 16% 27%;
+    --card-foreground: 134 16% 27%;
     --popover: 0 0% 100%;
-    --popover-foreground: 142 16% 27%;
+    --popover-foreground: 134 16% 27%;
     --primary: 135 18% 53%;
     --primary-foreground: 0 0% 100%;
     --secondary: 142 15% 44%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 134 20% 95%;
-    --muted-foreground: 142 16% 45%;
-    --accent: 142 15% 44%;
-    --accent-foreground: 0 0% 100%;
+    --muted: 120 22% 95%;
+    --muted-foreground: 134 16% 45%;
+    --accent: 120 22% 95%;
+    --accent-foreground: 134 16% 27%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 134 12% 85%;
-    --input: 134 12% 85%;
+    --border: 134 16% 85%;
+    --input: 134 16% 85%;
     --ring: 135 18% 53%;
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     
     --chart-1: 135 18% 53%;
     --chart-2: 142 15% 44%;
-    --chart-3: 142 20% 36%;
-    --chart-4: 134 20% 90%;
-    --chart-5: 142 16% 27%;
+    --chart-3: 139 19% 36%;
+    --chart-4: 120 22% 90%;
+    --chart-5: 134 16% 27%;
   }
 
   *::-webkit-scrollbar, *::-webkit-scrollbar-track {

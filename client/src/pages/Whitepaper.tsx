@@ -41,7 +41,7 @@ export default function Whitepaper() {
         onFaqClick={() => navigateToHome('faq')}
       />
 
-      <main id="main-content" tabIndex={-1} className="container max-w-4xl mx-auto px-4 py-12">
+      <main className="container max-w-4xl mx-auto px-4 py-12">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-8">PEOCHAIN Whitepaper</h1>
         
         {/* 1. Introductory Statement */}

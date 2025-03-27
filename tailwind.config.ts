@@ -4,11 +4,6 @@ export default {
   darkMode: ["class"],
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    fontFamily: {
-      sans: ['Inter', 'Roboto', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-      code: ['IBM Plex Mono', 'monospace'],
-      poppins: ['Poppins', 'sans-serif'],
-    },
     extend: {
       borderRadius: {
         lg: "var(--radius)",

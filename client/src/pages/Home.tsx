@@ -33,7 +33,7 @@ export default function Home() {
         onWaitlistClick={() => scrollToRef(waitlistRef)}
         onFaqClick={() => scrollToRef(faqRef)}
       />
-      <main id="main-content" tabIndex={-1}>
+      <main>
         <HeroSection 
           onExploreClick={() => scrollToRef(featuresRef)}
           onJoinClick={() => scrollToRef(waitlistRef)}

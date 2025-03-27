@@ -49,35 +49,29 @@ export default function TechHighlightsSection({ onExploreClick }: TechHighlights
   ];
   
   return (
-    <section className="px-4 md:px-8 py-20 max-w-7xl mx-auto">
-      <div className="glass rounded-lg p-10 md:p-16 border border-primary/10">
-        <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-12 text-center tracking-tight">
-          Key <span className="text-primary">Technologies</span>
-        </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-12">
+    <section className="px-4 md:px-8 py-12 max-w-7xl mx-auto">
+      <div className="glass rounded-3xl p-6 md:p-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
           {highlights.map((highlight, index) => (
-            <div key={index} className="text-center p-4">
-              <div className="bg-primary/10 p-5 inline-flex rounded-lg mb-8 text-primary">
+            <div key={index} className="text-center">
+              <div className="bg-primary/10 p-3 inline-flex rounded-full mb-4 text-primary">
                 {highlight.icon}
               </div>
-              <h3 className="font-poppins font-semibold text-lg mb-5 text-foreground">
+              <h3 className="font-poppins font-semibold text-lg mb-2 text-foreground">
                 {highlight.title}
               </h3>
-              <p className="text-foreground/70 text-sm leading-relaxed">
+              <p className="text-foreground/70 text-sm">
                 {highlight.description}
               </p>
             </div>
           ))}
         </div>
         
-        <div className="section-divider my-12"></div>
-        
-        <div className="text-center mt-10">
+        <div className="text-center mt-8">
           <Button 
             onClick={onExploreClick}
             variant="outline"
-            className="font-medium py-3 px-10 rounded-lg border-primary/40 text-primary hover:bg-primary/5"
+            className="font-medium py-2 px-6 rounded-full border-primary text-primary hover:bg-primary/10"
           >
             Explore Our Technology
           </Button>

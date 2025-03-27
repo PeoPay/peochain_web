@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Book, BarChart, Network, Gauge, Users } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useLocation } from "wouter";
 
 interface HeaderProps {
@@ -15,22 +15,6 @@ interface HeaderProps {
 export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyClick, onWaitlistClick, onFaqClick }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [, setLocation] = useLocation();
-  const [scrolled, setScrolled] = useState(false);
-
-  // Add scroll event listener
-  useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 10;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [scrolled]);
 
   const handleMobileNavClick = (callback: () => void) => {
     setIsOpen(false);
@@ -57,13 +41,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
   };
   
   return (
-    <header className={`w-full py-4 px-4 md:px-8 flex justify-between items-center fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-background/95 backdrop-blur-md shadow-md' : 'bg-transparent'
-    }`}>
-      {/* Skip to content link for keyboard users */}
-      <a href="#main-content" className="skip-to-content focus-ring">
-        Skip to main content
-      </a>
+    <header className="w-full py-6 px-4 md:px-8 flex justify-between items-center">
       <div className="flex items-center">
         <a href="/" className="flex items-center">
           <img 
@@ -75,46 +53,41 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
       </div>
       
       <div className="hidden md:flex items-center space-x-8">
-        <nav className="flex items-center space-x-5 mr-6">
+        <nav className="flex items-center space-x-6 mr-6">
           <button 
             onClick={() => navigateToHomeSection('features')}
-            className="text-foreground hover:text-primary transition-colors font-medium flex items-center gap-1.5"
+            className="text-foreground hover:text-primary transition-colors font-medium"
           >
-            <BarChart className="h-4 w-4" />
             Features
           </button>
           <button 
-            onClick={() => navigateToHomeSection('technology')}
-            className="text-foreground hover:text-primary transition-colors font-medium flex items-center gap-1.5"
+            onClick={() => navigateToHomeSection('benefits')}
+            className="text-foreground hover:text-primary transition-colors font-medium"
           >
-            <Network className="h-4 w-4" />
+            Benefits
+          </button>
+          <button 
+            onClick={() => navigateToHomeSection('technology')}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
             Technology
           </button>
           <button 
-            onClick={() => navigateToHomeSection('technology-architecture')}
-            className="text-foreground hover:text-primary transition-colors font-medium flex items-center gap-1.5"
+            onClick={() => navigateToHomeSection('faq')}
+            className="text-foreground hover:text-primary transition-colors font-medium"
           >
-            <Gauge className="h-4 w-4" />
-            Architecture
-          </button>
-          <button 
-            onClick={() => navigateToHomeSection('technology-metrics')}
-            className="text-foreground hover:text-primary transition-colors font-medium flex items-center gap-1.5"
-          >
-            <BarChart className="h-4 w-4" />
-            Metrics
+            FAQ
           </button>
           <button 
             onClick={navigateToWhitepaper}
-            className="text-foreground hover:text-primary transition-colors font-medium flex items-center gap-1.5"
+            className="text-foreground hover:text-primary transition-colors font-medium"
           >
-            <Book className="h-4 w-4" />
             Whitepaper
           </button>
         </nav>
         <Button 
           onClick={() => navigateToHomeSection('waitlist')}
-          className="btn-gradient text-white font-medium py-2 px-6 rounded-lg"
+          className="btn-gradient text-white font-medium py-2 px-6 rounded-full"
         >
           Join Waitlist
         </Button>
@@ -132,43 +105,38 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
             <nav className="flex flex-col space-y-6 w-full">
               <button 
                 onClick={() => navigateToHomeSection('features')}
-                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left flex items-center gap-2"
+                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
               >
-                <BarChart className="h-5 w-5" />
                 Features
               </button>
               <button 
-                onClick={() => navigateToHomeSection('technology')}
-                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left flex items-center gap-2"
+                onClick={() => navigateToHomeSection('benefits')}
+                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
               >
-                <Network className="h-5 w-5" />
+                Benefits
+              </button>
+              <button 
+                onClick={() => navigateToHomeSection('technology')}
+                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
+              >
                 Technology
               </button>
               <button 
-                onClick={() => navigateToHomeSection('technology-architecture')}
-                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left flex items-center gap-2"
+                onClick={() => navigateToHomeSection('faq')}
+                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
               >
-                <Gauge className="h-5 w-5" />
-                Architecture
-              </button>
-              <button 
-                onClick={() => navigateToHomeSection('technology-metrics')}
-                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left flex items-center gap-2"
-              >
-                <BarChart className="h-5 w-5" />
-                Metrics
+                FAQ
               </button>
               <button 
                 onClick={navigateToWhitepaper}
-                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left flex items-center gap-2"
+                className="text-foreground hover:text-primary transition-colors font-medium text-xl text-left"
               >
-                <Book className="h-5 w-5" />
                 Whitepaper
               </button>
             </nav>
             <Button 
               onClick={() => navigateToHomeSection('waitlist')}
-              className="btn-gradient text-white font-medium py-2 px-8 rounded-lg text-xl w-full mt-4"
+              className="btn-gradient text-white font-medium py-2 px-8 rounded-full text-xl w-full mt-4"
             >
               Join Waitlist
             </Button>
