@@ -112,8 +112,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
    * - Enables port reuse to enhance scalability and availability.
    * - Logs confirmation when the server starts successfully.
    */
-  const port = 5000;
+  const port = process.env.PORT || 5000;
   server.listen(port, "0.0.0.0", () => {
-    log(`serving on port ${port}`);
+    log(`serving on port ${port} in ${app.get('env')} mode`);
   });
 })();
