@@ -549,8 +549,37 @@ export function ConsensusDiagram({ className = '', mode = 'posyg' }: ConsensusDi
   }, []);
 
   return (
-    <div className={`w-full consensus-diagram-container ${className}`}>
-      <div className="chart-container" style={{ height: diagramSize.height }}>
+    <div className={`w-full consensus-diagram-container ${className}`} role="img" aria-label={mode === 'posyg' ? 
+      "Proof of Synergy consensus mechanism diagram showing validators connection to a central coordinator with synergy score calculations" :
+      "Distributed Consensus System diagram showing peer-to-peer communication between validator nodes"
+    }>
+      {/* Hidden descriptive text for screen readers */}
+      <div className="sr-only">
+        {mode === 'posyg' ? (
+          <div>
+            <h3>Proof of Synergy Consensus Diagram</h3>
+            <p>This diagram illustrates PEOChain's Proof of Synergy consensus mechanism where:</p>
+            <ul>
+              <li>A central coordinator node (bright green) communicates with multiple validator nodes (blue)</li>
+              <li>Each validator has a unique synergy score displayed</li>
+              <li>Validators with higher performance metrics receive proportionally higher rewards</li>
+              <li>The system balances decentralization with high performance through dynamic scoring</li>
+            </ul>
+          </div>
+        ) : (
+          <div>
+            <h3>Distributed Consensus System Diagram</h3>
+            <p>This diagram illustrates a peer-to-peer validator network where:</p>
+            <ul>
+              <li>Multiple validator nodes (green circles) communicate directly with each other</li>
+              <li>No central coordinator exists, creating a fully decentralized system</li>
+              <li>Messages are passed between nodes to reach consensus on transactions</li>
+              <li>The system prioritizes security and decentralization</li>
+            </ul>
+          </div>
+        )}
+      </div>
+      <div className="chart-container" style={{ height: diagramSize.height }} aria-hidden="true">
         {mode === 'posyg' ? renderPoSygDiagram(diagramSize.width, diagramSize.height) : renderDCSDiagram(diagramSize.width, diagramSize.height)}
       </div>
     </div>

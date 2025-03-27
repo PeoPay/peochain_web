@@ -112,20 +112,20 @@ export default function TechHighlightsSection({ onExploreClick }: TechHighlights
   ];
   
   return (
-    <section className="px-4 md:px-8 py-12 max-w-7xl mx-auto">
+    <section className="px-4 md:px-8 py-12 max-w-7xl mx-auto" id="tech-highlights">
       <div className="glass rounded-3xl p-6 md:p-10">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
           {highlights.map((highlight, index) => (
-            <div key={index} className="text-center">
+            <div key={index} className="text-center flex flex-col items-center">
               <div className="bg-primary/10 p-3 inline-flex rounded-full mb-4 text-primary">
                 {highlight.icon}
               </div>
-              <h3 className="feature-title mb-2">
+              <h3 className="feature-title mb-2 text-sm md:text-base">
                 <TechTooltip content={highlight.tooltipContent} expanded={true}>
                   {highlight.title}
                 </TechTooltip>
               </h3>
-              <p className="description text-sm">
+              <p className="description text-xs md:text-sm">
                 {highlight.description}
               </p>
             </div>

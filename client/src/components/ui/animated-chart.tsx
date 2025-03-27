@@ -509,17 +509,56 @@ export function AnimatedChart({ className = '' }: AnimatedChartProps) {
   };
   
   return (
-    <div className={`w-full h-full flex flex-col ${className}`}>
+    <div className={`w-full h-full flex flex-col ${className}`} role="region" aria-label={`PEOCHAIN ${chartType} comparison`}>
       <div className={`flex ${isMobile ? 'flex-col' : 'justify-between'} ${itemsClass} mb-2 max-w-full overflow-hidden`}>
         <div className="truncate max-w-full">
           {getChartTitle()}
         </div>
-        <div className={`text-xs font-medium ${isMobile ? 'mt-1' : ''} truncate`}>
+        <div className={`text-xs sm:text-sm font-medium ${isMobile ? 'mt-1' : ''} truncate`}>
           {getHighlightStat()}
         </div>
       </div>
       
       <div className="flex-1 mx-auto w-full min-h-[260px] sm:min-h-[300px] md:min-h-[340px]">
+        {/* Enhanced detailed description for screen readers */}
+        <div className="sr-only">
+          {chartType === 'scalability' ? (
+            <div>
+              <h3>PEOChain Scalability Comparison</h3>
+              <p>This chart compares transaction throughput performance between PEOChain and competitor blockchains.</p>
+              <ul>
+                <li>PEOChain reaches up to 50,000 transactions per second (TPS)</li>
+                <li>Competitors average around 7,000 TPS</li>
+                <li>PEOChain's subnet architecture enables over 7x higher throughput</li>
+                <li>The performance gap widens as network demand increases</li>
+              </ul>
+            </div>
+          ) : chartType === 'performance' ? (
+            <div>
+              <h3>Multi-dimensional Performance Analysis</h3>
+              <p>This radar chart compares blockchain performance across five critical metrics:</p>
+              <ul>
+                <li>Transaction Speed: PEOChain scores 95/100 versus competitor average of 60/100</li>
+                <li>Finality Time: PEOChain scores 85/100 versus competitor average of 55/100</li>
+                <li>Security: PEOChain scores 90/100 versus competitor average of 75/100</li>
+                <li>Cost Efficiency: PEOChain scores 92/100 versus competitor average of 50/100</li>
+                <li>Decentralization: PEOChain scores 80/100 versus competitor average of 85/100</li>
+              </ul>
+            </div>
+          ) : (
+            <div>
+              <h3>Transaction Cost Comparison</h3>
+              <p>This bar chart compares transaction costs across blockchain platforms:</p>
+              <ul>
+                <li>PEOChain: $0.001 per transaction</li>
+                <li>Ethereum: $0.45-5.00 per transaction (varies with network congestion)</li>
+                <li>Bitcoin: $0.80-3.50 per transaction (varies with network congestion)</li>
+                <li>Solana: $0.002 per transaction</li>
+                <li>PEOChain's specialized subnet architecture enables near-zero transaction costs</li>
+              </ul>
+            </div>
+          )}
+        </div>
         {/* Standard responsive container for all chart types */}
         <ResponsiveContainer 
           width="100%" 

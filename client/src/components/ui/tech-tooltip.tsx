@@ -35,7 +35,7 @@ export function TechTooltip({
             {icon && <InfoIcon className="h-3 w-3 ml-1 text-primary/60 group-hover:text-primary transition-colors" />}
           </span>
         </HoverCardTrigger>
-        <HoverCardContent className="w-80 p-4 bg-white/95 backdrop-blur-sm border border-primary/20">
+        <HoverCardContent className="w-[calc(100vw-40px)] max-w-[320px] p-4 bg-white/95 backdrop-blur-sm border border-primary/20 z-50">
           <div className="space-y-2">
             {content}
           </div>
@@ -53,7 +53,7 @@ export function TechTooltip({
             {icon && <InfoIcon className="h-3 w-3 ml-1 text-primary/60 group-hover:text-primary transition-colors" />}
           </span>
         </TooltipTrigger>
-        <TooltipContent className="bg-white/95 backdrop-blur-sm border border-primary/20 p-2 max-w-xs">
+        <TooltipContent className="bg-white/95 backdrop-blur-sm border border-primary/20 p-2 max-w-[280px] z-50">
           {content}
         </TooltipContent>
       </Tooltip>

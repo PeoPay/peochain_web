@@ -37,8 +37,8 @@ export function SubnetDiagram({ className = '' }: SubnetDiagramProps) {
   const isMobile = width < 400;
   
   return (
-    <div className={`w-full ${className}`}>
-      <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} className="subnet-diagram">
+    <div className={`w-full ${className}`} role="img" aria-label="PEOChain subnet network architecture diagram showing the interconnection of different subnet networks">
+      <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} className="subnet-diagram" aria-hidden="true">
         <defs>
           <radialGradient id="subnetGradient" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
             <stop offset="0%" stopColor="#38a169" stopOpacity="0.1" />
@@ -204,9 +204,18 @@ export function SubnetDiagram({ className = '' }: SubnetDiagramProps) {
       </svg>
       
       {/* Legend - completely redesigned for better clarity and separation */}
+      <div className="sr-only">
+        <p>Network diagram legend:</p>
+        <ul>
+          <li>Dark green circles in the center represent the PEOChain Core Network</li>
+          <li>Bright green circles represent Subnet Leaders that coordinate their respective subnets</li>
+          <li>Medium green circles represent Subnet Validators that participate in consensus</li>
+          <li>Five subnets surround the core: Payment Processing, Smart Contracts, Cross-Chain Bridge, Identity Services, and Stablecoin Reserve</li>
+        </ul>
+      </div>
       {isMobile ? (
         /* Stacked layout for mobile */
-        <div className="grid grid-cols-1 gap-y-2 mt-4 mb-6 text-xs">
+        <div className="grid grid-cols-1 gap-y-2 mt-4 mb-6 text-xs" aria-hidden="true">
           <div className="flex items-center justify-center">
             <div className="w-3 h-3 rounded-full bg-[#276749] mr-2"></div>
             <span>Core Network</span>
@@ -222,7 +231,7 @@ export function SubnetDiagram({ className = '' }: SubnetDiagramProps) {
         </div>
       ) : (
         /* Horizontal layout with ample spacing for larger screens */
-        <div className="flex justify-center gap-x-6 mt-4 mb-6 text-xs">
+        <div className="flex justify-center gap-x-6 mt-4 mb-6 text-xs" aria-hidden="true">
           <div className="flex items-center">
             <div className="w-3 h-3 rounded-full bg-[#276749] mr-2"></div>
             <span>Core Network</span>

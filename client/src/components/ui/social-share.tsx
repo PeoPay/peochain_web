@@ -52,55 +52,60 @@ export function SocialShare({ referralCode, className = '' }: SocialShareProps) 
     <div className={`flex flex-col space-y-4 ${className}`}>
       <h4 className="font-medium text-foreground mb-2">Share your referral link</h4>
       
-      <div className="flex justify-between items-center space-x-2">
+      <div className="grid grid-cols-5 gap-2 sm:gap-3">
         <Button 
           variant="outline" 
           size="icon" 
-          className="flex-1 bg-white hover:bg-primary/5 border-primary/20 text-[#1DA1F2]"
+          className="bg-white hover:bg-primary/5 border-primary/20 text-[#1DA1F2] h-10 w-full max-w-10"
           onClick={shareTwitter}
+          aria-label="Share on Twitter"
         >
-          <Twitter className="h-5 w-5" />
+          <Twitter className="h-5 w-5" aria-hidden="true" />
         </Button>
         
         <Button 
           variant="outline" 
           size="icon" 
-          className="flex-1 bg-white hover:bg-primary/5 border-primary/20 text-[#1877F2]"
+          className="bg-white hover:bg-primary/5 border-primary/20 text-[#1877F2] h-10 w-full max-w-10"
           onClick={shareFacebook}
+          aria-label="Share on Facebook"
         >
-          <Facebook className="h-5 w-5" />
+          <Facebook className="h-5 w-5" aria-hidden="true" />
         </Button>
         
         <Button 
           variant="outline" 
           size="icon" 
-          className="flex-1 bg-white hover:bg-primary/5 border-primary/20 text-[#0A66C2]"
+          className="bg-white hover:bg-primary/5 border-primary/20 text-[#0A66C2] h-10 w-full max-w-10"
           onClick={shareLinkedin}
+          aria-label="Share on LinkedIn"
         >
-          <Linkedin className="h-5 w-5" />
+          <Linkedin className="h-5 w-5" aria-hidden="true" />
         </Button>
         
         <Button 
           variant="outline" 
           size="icon" 
-          className="flex-1 bg-white hover:bg-primary/5 border-primary/20 text-gray-600"
+          className="bg-white hover:bg-primary/5 border-primary/20 text-gray-600 h-10 w-full max-w-10"
           onClick={shareEmail}
+          aria-label="Share via Email"
         >
-          <Mail className="h-5 w-5" />
+          <Mail className="h-5 w-5" aria-hidden="true" />
         </Button>
         
         <Button 
           variant="outline" 
           size="icon" 
-          className="flex-1 bg-white hover:bg-primary/5 border-primary/20 text-gray-600"
+          className="bg-white hover:bg-primary/5 border-primary/20 text-gray-600 h-10 w-full max-w-10"
           onClick={handleCopyReferral}
+          aria-label="Copy referral link"
         >
-          <Share2 className="h-5 w-5" />
+          <Share2 className="h-5 w-5" aria-hidden="true" />
         </Button>
       </div>
 
       <div className="flex items-center p-3 rounded-lg bg-primary/5 border border-primary/10">
-        <div className="text-xs text-foreground/70 flex-1">
+        <div className="text-xs sm:text-sm text-foreground/80 flex-1">
           <span className="font-medium">Pro tip:</span> The more friends you refer, the earlier you'll get access
         </div>
       </div>
