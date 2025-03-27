@@ -31,12 +31,15 @@ export function SocialShare({ referralCode, className = '' }: SocialShareProps) 
   };
 
   const shareFacebook = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}&picture=${encodeURIComponent(shareImageUrl)}`;
+    // Facebook doesn't use the picture parameter in modern sharing URLs
+    // It relies on Open Graph meta tags in the HTML
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const shareLinkedin = () => {
-    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralLink)}&summary=${shareMessage}&image=${encodeURIComponent(shareImageUrl)}`;
+    // LinkedIn now relies more on Open Graph tags for image and summary
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralLink)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
