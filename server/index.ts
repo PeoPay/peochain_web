@@ -118,7 +118,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
    * - Enables port reuse to enhance scalability and availability.
    * - Logs confirmation when the server starts successfully.
    */
-  const port = parseInt(process.env.PORT || "5000", 10);
+  const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
   server.listen({
     port: port,
     host: "0.0.0.0"
