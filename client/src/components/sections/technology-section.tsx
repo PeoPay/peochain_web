@@ -97,7 +97,7 @@ export default function TechnologySection() {
         <h2 className="font-poppins font-bold text-3xl md:text-5xl text-foreground mb-6 tracking-tight">
           Core <span className="text-primary">Technology</span>
         </h2>
-        <p className="description max-w-2xl mx-auto text-lg leading-relaxed">
+        <p className="text-foreground/70 max-w-2xl mx-auto text-lg leading-relaxed">
           PEOCHAIN is engineered for next-generation performance, security, and scalability.
         </p>
       </div>
@@ -113,7 +113,7 @@ export default function TechnologySection() {
         
         <TabsContent value="features" className="mt-0">
           <div className="mb-16">
-            <h3 className="section-title text-center">
+            <h3 className="font-poppins font-semibold text-2xl mb-8 text-foreground text-center">
               Interactive Technology Cards
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -134,7 +134,7 @@ export default function TechnologySection() {
           <div className="glass rounded-lg p-8 border border-primary/10">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="md:w-2/3">
-                <h3 className="section-title mb-4">Technical Benchmarks</h3>
+                <h3 className="text-2xl mb-4 text-foreground">Technical Benchmarks</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <div className="bg-primary/10 p-2 rounded text-primary mt-1">
@@ -187,7 +187,7 @@ export default function TechnologySection() {
             {architectureLayers.map((layer, index) => (
               <Card key={index} className="glass rounded-lg border border-primary/10 shadow-sm">
                 <CardContent className="p-6 md:p-8">
-                  <h3 className="sub-section-title mb-4">
+                  <h3 className="font-poppins font-semibold text-xl mb-4 text-foreground">
                     {layer.title}
                   </h3>
                   <ul className="space-y-2">
@@ -208,34 +208,34 @@ export default function TechnologySection() {
           </div>
           
           <div className="mt-12 p-6 bg-primary/5 rounded-lg border border-primary/10">
-            <h3 className="section-title mb-4 text-center">
+            <h3 className="text-2xl mb-4 text-foreground text-center">
               PoSyg + DCS: Technical Specifications
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
               <div className="bg-card p-5 rounded-lg border border-primary/5">
-                <h4 className="sub-section-title flex items-center text-lg mb-2">
+                <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
                   <Medal className="h-5 w-5 text-primary mr-2" />
                   Validator Economics
                 </h4>
-                <p className="description text-sm">
+                <p className="text-foreground/70 text-sm">
                   <span className="technical-term">Multi-dimensional scoring</span> algorithm tracking 6 validator metrics in real-time. Utilizes <span className="technical-term">Markov chain Monte Carlo</span> (MCMC) simulations for dynamic stake weight adjustments based on historical performance.
                 </p>
               </div>
               <div className="bg-card p-5 rounded-lg border border-primary/5">
-                <h4 className="sub-section-title flex items-center text-lg mb-2">
+                <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
                   <ShieldCheck className="h-5 w-5 text-primary mr-2" />
                   Cryptographic Security
                 </h4>
-                <p className="description text-sm">
+                <p className="text-foreground/70 text-sm">
                   <span className="technical-term">BLS multi-signature scheme</span> with 256-bit security parameter and <span className="technical-term">verifiable random function</span> (VRF) for validator selection. <span className="technical-term">Vector commitment schemes</span> ensure data availability with logarithmic proof size.
                 </p>
               </div>
               <div className="bg-card p-5 rounded-lg border border-primary/5">
-                <h4 className="sub-section-title flex items-center text-lg mb-2">
+                <h4 className="font-medium text-lg mb-2 text-foreground flex items-center">
                   <Gauge className="h-5 w-5 text-primary mr-2" />
                   Performance Metrics
                 </h4>
-                <p className="description text-sm">
+                <p className="text-foreground/70 text-sm">
                   <span className="technical-term">Deterministic finality</span> in 1.2 seconds with <span className="technical-term">throughput</span> of 350,000 TPS across subnets. <span className="technical-term">Latency</span> of 50-80ms for cross-subnet communication with <span className="technical-term">DAG-based sharding</span> for horizontal scaling.
                 </p>
               </div>
@@ -246,13 +246,13 @@ export default function TechnologySection() {
         <TabsContent value="visualizations" className="mt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
             <div className="glass rounded-lg border border-primary/10 p-6">
-              <h3 className="sub-section-title mb-6 text-center">
+              <h3 className="text-xl mb-6 text-foreground text-center">
                 Subnet Validator Networks
               </h3>
               <div className="bg-muted/30 rounded-lg p-4">
                 <SubnetDiagram className="w-full h-auto" />
               </div>
-              <div className="text-sm description mt-4">
+              <div className="text-sm text-foreground/70 mt-4">
                 <p className="mb-2 text-center"><strong>Interactive subnet topology visualization</strong></p>
                 <ul className="space-y-1 px-4">
                   <li><span className="technical-term">Main subnet</span>: Processes consensus and cross-subnet communications</li>
@@ -263,13 +263,13 @@ export default function TechnologySection() {
             </div>
             
             <div className="glass rounded-lg border border-primary/10 p-6">
-              <h3 className="sub-section-title mb-6 text-center">
+              <h3 className="text-xl mb-6 text-foreground text-center">
                 Adaptive Block Production
               </h3>
               <div className="bg-muted/30 rounded-lg">
                 <AdaptiveBlockDiagram />
               </div>
-              <div className="text-sm description mt-4">
+              <div className="text-sm text-foreground/70 mt-4">
                 <p className="mb-2 text-center"><strong>Dynamic block optimization algorithm</strong></p>
                 <ul className="space-y-1 px-4">
                   <li><span className="technical-term">Block interval</span>: Dynamically adjusts between 0.5-2 seconds based on network conditions</li>
@@ -281,8 +281,8 @@ export default function TechnologySection() {
           </div>
           
           <div className="glass rounded-lg border border-primary/10 p-6 mt-12">
-            <h3 className="section-title mb-6 text-center">Network Performance Metrics</h3>
-            <div className="mb-4 description text-sm">
+            <h3 className="text-xl mb-6 text-foreground text-center">Network Performance Metrics</h3>
+            <div className="mb-4 text-sm text-foreground/70">
               <p className="text-center">Real-time monitoring of key performance indicators (KPIs) with threshold alerts and anomaly detection.</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-6">
                 <div className="bg-muted/20 p-3 rounded-md">
