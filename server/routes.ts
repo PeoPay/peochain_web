@@ -323,3 +323,43 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   const httpServer = createServer(app);
   return httpServer;
 }
+// Export analytics data
+  app.get("/api/analytics/export", authenticate, async (req: Request, res: Response) => {
+    try {
+      const overview = await storage.getAnalyticsOverview();
+      
+      // Format CSV data
+      const dailyStatsCSV = ['Date,Signups,Referrals,Conversion Rate\n'];
+      overview.dailyStats.forEach(stat => {
+        dailyStatsCSV.push(`${stat.date},${stat.signupCount},${stat.totalReferrals},${stat.conversionRate}\n`);
+      });
+
+      const regionsCSV = ['Region,Users,Conversion Rate\n'];
+      overview.topRegions.forEach(region => {
+        regionsCSV.push(`${region.region},${region.userCount},${region.conversionRate}\n`);
+      });
+
+      const channelsCSV = ['Channel,Referrals,Conversion Rate\n'];
+      overview.topChannels.forEach(channel => {
+        channelsCSV.push(`${channel.channelName},${channel.referralCount},${channel.conversionRate}\n`);
+      });
+
+      // Create ZIP file
+      const zip = new JSZip();
+      zip.file('daily_stats.csv', dailyStatsCSV.join(''));
+      zip.file('regions.csv', regionsCSV.join(''));
+      zip.file('channels.csv', channelsCSV.join(''));
+      
+      const zipContent = await zip.generateAsync({ type: 'nodebuffer' });
+      
+      res.setHeader('Content-Type', 'application/zip');
+      res.setHeader('Content-Disposition', 'attachment; filename=analytics_export.zip');
+      res.send(zipContent);
+    } catch (error) {
+      console.error("Error exporting analytics:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to export analytics data"
+      });
+    }
+  });

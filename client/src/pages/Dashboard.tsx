@@ -177,6 +177,17 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{overviewData.totalSignups.toLocaleString()}</div>
+
+      <div className="flex justify-end mb-4">
+        <Button
+          onClick={() => {
+            window.location.href = '/api/analytics/export';
+          }}
+        >
+          Export Analytics Data
+        </Button>
+      </div>
+
           </CardContent>
         </Card>
         <Card>
