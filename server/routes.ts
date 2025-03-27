@@ -1,6 +1,6 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage, type IStorage } from "./storage";
 import { 
   insertWaitlistEntrySchema, 
   insertDailyWaitlistStatsSchema,
@@ -44,11 +44,22 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   // Waitlist API endpoint with improved error handling
   app.post("/api/waitlist", async (req: Request, res: Response) => {
     try {
+      // Format any developer metadata into JSON
+      let metadata = null;
+      if (req.body.userType === 'developer' && (req.body.role || req.body.githubUrl)) {
+        metadata = JSON.stringify({
+          role: req.body.role,
+          githubUrl: req.body.githubUrl
+        });
+      }
+      
       // Validate the request body against the schema
       const data = insertWaitlistEntrySchema.parse({
         fullName: req.body.fullName,
         email: req.body.email,
         referredBy: req.body.referredBy,
+        userType: req.body.userType || 'user',
+        metadata: metadata
       });
       
       try {
@@ -61,7 +72,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             email: entry.email,
             fullName: entry.fullName,
             referralCode: entry.referralCode,
-            referralCount: entry.referralCount
+            referralCount: entry.referralCount,
+            userType: entry.userType
           } 
         });
       } catch (error) {
@@ -292,7 +304,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       const limit = req.query.limit ? parseInt(req.query.limit as string) : 10;
       const entries = await storage.getAllWaitlistEntries();
       const sortedEntries = entries
-        .sort((a, b) => b.referralCount - a.referralCount)
+        .sort((a: { referralCount: number }, b: { referralCount: number }) => b.referralCount - a.referralCount)
         .slice(0, limit);
       
       return res.status(200).json({

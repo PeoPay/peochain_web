@@ -24,6 +24,8 @@ export const waitlistEntries = pgTable("waitlist_entries", {
   referralCode: text("referral_code").notNull().unique(),
   referredBy: text("referred_by"),
   referralCount: integer("referral_count").notNull().default(0),
+  userType: text("user_type").notNull().default("user"),
+  metadata: jsonb("metadata"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
@@ -32,9 +34,13 @@ export const insertWaitlistEntrySchema = createInsertSchema(waitlistEntries)
     fullName: true,
     email: true,
     referredBy: true,
+    userType: true,
+    metadata: true,
   })
   .extend({
     referredBy: z.string().optional(),
+    userType: z.enum(["user", "developer"]).default("user"),
+    metadata: z.any().optional(),
   });
 
 export type InsertWaitlistEntry = z.infer<typeof insertWaitlistEntrySchema>;

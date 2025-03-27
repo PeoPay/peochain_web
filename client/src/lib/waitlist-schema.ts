@@ -6,7 +6,13 @@ export const waitlistFormSchema = z.object({
   referredBy: z.string().optional(),
   agreeToTerms: z.boolean().refine(val => val === true, {
     message: "You must agree to receive updates"
-  })
+  }),
+  // New fields for dual waitlist
+  userType: z.enum(["user", "developer"]).default("user"),
+  metadata: z.string().optional(),
+  // Optional fields for developer form that will be stored in metadata
+  role: z.string().optional(),
+  githubUrl: z.string().optional()
 });
 
 export type WaitlistFormData = z.infer<typeof waitlistFormSchema>;
