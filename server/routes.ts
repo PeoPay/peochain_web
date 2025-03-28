@@ -9,6 +9,7 @@ import {
 } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
+import JSZip from "jszip";
 
 // Authentication middleware for admin routes
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
@@ -320,10 +321,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
-  const httpServer = createServer(app);
-  return httpServer;
-}
-// Export analytics data
+  // Export analytics data
   app.get("/api/analytics/export", authenticate, async (req: Request, res: Response) => {
     try {
       const overview = await storage.getAnalyticsOverview();
@@ -334,9 +332,9 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         dailyStatsCSV.push(`${stat.date},${stat.signupCount},${stat.totalReferrals},${stat.conversionRate}\n`);
       });
 
-      const regionsCSV = ['Region,Users,Conversion Rate\n'];
+      const regionsCSV = ['Region,Users,Engagement Score\n'];
       overview.topRegions.forEach(region => {
-        regionsCSV.push(`${region.region},${region.userCount},${region.conversionRate}\n`);
+        regionsCSV.push(`${region.region},${region.userCount},${region.engagementScore}\n`);
       });
 
       const channelsCSV = ['Channel,Referrals,Conversion Rate\n'];
@@ -344,7 +342,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         channelsCSV.push(`${channel.channelName},${channel.referralCount},${channel.conversionRate}\n`);
       });
 
-      // Create ZIP file
+      // Create ZIP file containing all CSV data
       const zip = new JSZip();
       zip.file('daily_stats.csv', dailyStatsCSV.join(''));
       zip.file('regions.csv', regionsCSV.join(''));
@@ -363,3 +361,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       });
     }
   });
+
+  const httpServer = createServer(app);
+  return httpServer;
+}
