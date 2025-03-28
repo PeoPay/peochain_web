@@ -325,6 +325,11 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.get("/api/analytics/export", authenticate, async (req: Request, res: Response) => {
     try {
       const overview = await storage.getAnalyticsOverview();
+      const allEntries = await storage.getAllWaitlistEntries();
+      
+      // Get current date for filename
+      const currentDate = new Date();
+      const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
       
       // Format CSV data
       const dailyStatsCSV = ['Date,Signups,Referrals,Conversion Rate\n'];
@@ -341,17 +346,68 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       overview.topChannels.forEach(channel => {
         channelsCSV.push(`${channel.channelName},${channel.referralCount},${channel.conversionRate}\n`);
       });
+      
+      // Create waitlist entries CSV
+      const waitlistCSV = ['ID,Full Name,Email,Referral Code,Referral Count,User Type,Created At\n'];
+      allEntries.forEach(entry => {
+        // Escape commas in text fields by wrapping in quotes
+        const fullName = entry.fullName.includes(',') ? `"${entry.fullName}"` : entry.fullName;
+        waitlistCSV.push(`${entry.id},${fullName},${entry.email},${entry.referralCode},${entry.referralCount},${entry.userType},${entry.createdAt}\n`);
+      });
+      
+      // Create summary file
+      const totalSignups = allEntries.length;
+      const totalReferrals = overview.totalReferrals;
+      const avgReferralsPerUser = overview.avgReferralsPerUser;
+      
+      // Find signup spike day
+      let spikeDay = '';
+      let spikeCount = 0;
+      
+      overview.dailyStats.forEach(stat => {
+        if (stat.signupCount > spikeCount) {
+          spikeCount = stat.signupCount;
+          spikeDay = stat.date.toString();
+        }
+      });
+      
+      const summaryText = `
+PeoChain Analytics Summary
+Generated: ${currentDate.toLocaleString()}
+
+OVERVIEW
+--------
+Total Users: ${totalSignups}
+Total Referrals: ${totalReferrals}
+Average Referrals Per User: ${avgReferralsPerUser.toFixed(2)}
+Highest Signup Day: ${spikeDay} (${spikeCount} signups)
+
+TOP REFERRERS
+-------------
+${overview.topReferrers.slice(0, 5).map((user, index) => 
+  `${index + 1}. ${user.fullName} (${user.email}): ${user.referralCount} referrals`
+).join('\n')}
+
+EXPORT CONTENTS
+--------------
+- daily_stats.csv: Daily signup and referral metrics
+- regions.csv: Geographic distribution of users
+- channels.csv: Referral channel performance
+- waitlist.csv: Complete user waitlist data
+`;
 
       // Create ZIP file containing all CSV data
       const zip = new JSZip();
       zip.file('daily_stats.csv', dailyStatsCSV.join(''));
       zip.file('regions.csv', regionsCSV.join(''));
       zip.file('channels.csv', channelsCSV.join(''));
+      zip.file('waitlist.csv', waitlistCSV.join(''));
+      zip.file('summary.txt', summaryText);
       
       const zipContent = await zip.generateAsync({ type: 'nodebuffer' });
       
       res.setHeader('Content-Type', 'application/zip');
-      res.setHeader('Content-Disposition', 'attachment; filename=analytics_export.zip');
+      res.setHeader('Content-Disposition', `attachment; filename=peochain_analytics_${dateString}.zip`);
       res.send(zipContent);
     } catch (error) {
       console.error("Error exporting analytics:", error);
