@@ -60,7 +60,7 @@ export default function CrossChainVisualization() {
   const peoChain = {
     name: 'PeoChain',
     position: { x: 50, y: 50 },
-    color: '#6d9e79'
+    color: '#4a6fa5'
   };
   
   const demonstrations = [
