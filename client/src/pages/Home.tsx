@@ -9,6 +9,7 @@ import DualWaitlistSection from "@/components/sections/dual-waitlist-section";
 import FAQSection from "@/components/sections/faq-section";
 import TechnologySection from "@/components/sections/technology-section";
 import WhyItMattersSection from "@/components/sections/why-it-matters-section";
+import BlockchainVisualizationSection from "@/components/sections/blockchain-visualization-section";
 
 
 export default function Home() {
@@ -50,6 +51,7 @@ export default function Home() {
         <div id="technology" ref={technologyRef}>
           <TechnologySection />
         </div>
+        <BlockchainVisualizationSection />
         <WhyItMattersSection />
         <div id="waitlist" ref={waitlistRef}>
           <DualWaitlistSection />
