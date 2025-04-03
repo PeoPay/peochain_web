@@ -101,24 +101,52 @@ export default function CrossChainVisualization() {
     }
   };
   
+  // State for transaction details
+  const [transactionDetails, setTransactionDetails] = useState<{
+    title: string;
+    description: string;
+    steps: string[];
+    currentStep: number;
+  } | null>(null);
+  
   // Simulate transaction animation
   const simulateTransaction = async (source: ChainType, target: ChainType) => {
     const pathId = `${source}-${target}-${activeDemo}`;
     setActivePath(pathId);
     setAnimating(true);
     
-    // Wait for animation to complete
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Get transaction details
+    const details = getTransactionDetails(source, target);
+    setTransactionDetails({
+      ...details,
+      currentStep: 0
+    });
     
+    // Step 1: Source blockchain initiation
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setTransactionDetails(prev => prev ? { ...prev, currentStep: 1 } : null);
+    
+    // Step 2: PeoChain processing
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setTransactionDetails(prev => prev ? { ...prev, currentStep: 2 } : null);
+    
+    // Step 3: Destination blockchain confirmation
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setTransactionDetails(prev => prev ? { ...prev, currentStep: 3 } : null);
+    
+    // Mark path as completed
     setCompletedPaths([...completedPaths, pathId]);
     setActivePath(null);
+    
+    // Keep details visible but clear animation state
     setAnimating(false);
     
     // Reset selections after a delay
     setTimeout(() => {
       setSelectedSource(null);
       setSelectedTarget(null);
-    }, 1000);
+      setTransactionDetails(null);
+    }, 3000);
   };
   
   // Reset the demonstration
@@ -128,6 +156,7 @@ export default function CrossChainVisualization() {
     setActivePath(null);
     setCompletedPaths([]);
     setAnimating(false);
+    setTransactionDetails(null);
   };
   
   // Get transaction icon based on type
@@ -141,6 +170,51 @@ export default function CrossChainVisualization() {
         return <FolderClosed className="h-4 w-4 text-white" />;
       default:
         return <Send className="h-4 w-4 text-white" />;
+    }
+  };
+  
+  // Get transaction details for display
+  const getTransactionDetails = (source: ChainType, target: ChainType) => {
+    const sourceChain = chains.find(c => c.id === source)!;
+    const targetChain = chains.find(c => c.id === target)!;
+    
+    switch (activeDemo) {
+      case 'asset':
+        return {
+          title: `Asset Transfer: ${sourceChain.name} → ${targetChain.name}`,
+          description: `Transferring tokenized assets from ${sourceChain.name} to ${targetChain.name} via PeoChain's secure bridge protocol.`,
+          steps: [
+            "1. Asset locked in source chain smart contract",
+            "2. PeoChain validators verify transaction",
+            "3. Equivalent assets minted on destination chain"
+          ]
+        };
+      case 'data':
+        return {
+          title: `Data Exchange: ${sourceChain.name} → ${targetChain.name}`,
+          description: `Securely transmitting verified state data from ${sourceChain.name} to ${targetChain.name} with cryptographic proof.`,
+          steps: [
+            "1. Data cryptographically committed on source chain",
+            "2. PeoChain validates data integrity across subnets",
+            "3. State update confirmed on destination chain"
+          ]
+        };
+      case 'smart-contract':
+        return {
+          title: `Cross-Chain Contract: ${sourceChain.name} → ${targetChain.name}`,
+          description: `Executing a smart contract that spans ${sourceChain.name} and ${targetChain.name} chains simultaneously.`,
+          steps: [
+            "1. Contract execution triggered on source chain",
+            "2. PeoChain propagates function calls across networks",
+            "3. Synchronized execution completed on all chains"
+          ]
+        };
+      default:
+        return {
+          title: `Transaction: ${sourceChain.name} → ${targetChain.name}`,
+          description: "Processing cross-chain transaction...",
+          steps: []
+        };
     }
   };
   
@@ -394,6 +468,35 @@ export default function CrossChainVisualization() {
           </div>
         ))}
       </div>
+      
+      {/* Transaction details panel - shown during and after animation */}
+      {transactionDetails && (
+        <div className="bg-white/90 backdrop-blur rounded-lg p-4 mb-4 border border-primary/20 shadow-md">
+          <h4 className="font-semibold text-primary text-base mb-2">{transactionDetails.title}</h4>
+          <p className="text-sm mb-3">{transactionDetails.description}</p>
+          
+          <div className="space-y-2">
+            {transactionDetails.steps.map((step, index) => (
+              <div 
+                key={index} 
+                className={`flex items-start p-2 rounded-md transition-all duration-300 ${
+                  index === transactionDetails.currentStep ? 'bg-primary/10 text-primary font-medium' : 
+                  index < transactionDetails.currentStep ? 'text-green-600' : 'text-gray-400'
+                }`}
+              >
+                <div className={`flex-shrink-0 h-5 w-5 mr-2 rounded-full flex items-center justify-center text-xs ${
+                  index < transactionDetails.currentStep ? 'bg-green-100 text-green-600' : 
+                  index === transactionDetails.currentStep ? 'bg-primary/20 text-primary' : 
+                  'bg-gray-100 text-gray-400'
+                }`}>
+                  {index < transactionDetails.currentStep ? '✓' : (index + 1)}
+                </div>
+                <span>{step}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       
       <div className="text-center">
         <Button
