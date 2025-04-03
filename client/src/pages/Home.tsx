@@ -35,7 +35,7 @@ export default function Home() {
         onWaitlistClick={() => scrollToRef(waitlistRef)}
         onFaqClick={() => scrollToRef(faqRef)}
       />
-      <main>
+      <main className="pt-16 md:pt-20">
         <HeroSection 
           onExploreClick={() => scrollToRef(featuresRef)}
           onJoinClick={() => scrollToRef(waitlistRef)}
