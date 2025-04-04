@@ -320,10 +320,10 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
             
             <div className="flex-1 overflow-auto py-4 px-6">
               <nav className="flex flex-col space-y-1 w-full">
-                <div className="py-4 border-b border-primary/10">
-                  <div className="flex items-center mb-2">
-                    <Shield className="h-5 w-5 text-primary mr-2" />
-                    <span className="text-primary font-medium">Technology</span>
+                <div className="py-3 sm:py-4 border-b border-primary/10">
+                  <div className="flex items-center mb-1 sm:mb-2">
+                    <Shield className="h-4 sm:h-5 w-4 sm:w-5 text-primary mr-1.5 sm:mr-2" />
+                    <span className="text-primary font-medium text-sm sm:text-base">Technology</span>
                   </div>
                   <div className="pl-7 flex flex-col space-y-3 mt-3">
                     <button 

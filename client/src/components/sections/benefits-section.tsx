@@ -51,7 +51,7 @@ export default function BenefitsSection() {
             </div>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-8">
             {benefits.map((benefit, index) => (
               <div key={index} className="bg-white/40 rounded-2xl p-6 flex items-start">
                 <div className="bg-primary/10 p-3 rounded-xl mr-4 flex items-center justify-center text-primary">
