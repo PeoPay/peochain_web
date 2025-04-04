@@ -1,60 +1,71 @@
 import { createRoot } from "react-dom/client";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import App from "./App";
 import "./index.css";
-// Import Semantic UI CSS
-import 'semantic-ui-css/semantic.min.css';
 
-const fontStyles = `
-  /* Custom PeoChain Theme Variables */
-  :root {
-    --peo-primary: #6b996d;
-    --peo-secondary: #58875b;
-    --peo-accent: #445e45;
-    --peo-background: #eaf0ea;
-    --peo-text: #2d4b2e;
-    --peo-muted: #8aad8c;
-    --peo-border: #d5e3d6;
-    --peo-chart-1: #6b996d;
-    --peo-chart-2: #58875b;
-    --peo-chart-3: #445e45;
-    --peo-chart-4: #eaf0ea;
-    --peo-chart-5: #2d4b2e;
+// Define PeoChain theme colors
+const colors = {
+  peochain: {
+    primary: "#6b996d",
+    secondary: "#58875b",
+    accent: "#445e45",
+    background: "#eaf0ea",
+    text: "#2d4b2e",
+    muted: "#8aad8c",
+    border: "#d5e3d6",
+    chart1: "#6b996d",
+    chart2: "#58875b",
+    chart3: "#445e45",
+    chart4: "#eaf0ea",
+    chart5: "#2d4b2e",
   }
+};
 
-  *::-webkit-scrollbar, *::-webkit-scrollbar-track {
-    display: none;
-  }
+// Define fonts
+const fonts = {
+  heading: "'Poppins', sans-serif",
+  body: "'Inter', sans-serif",
+};
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--peo-background);
-    color: var(--peo-text);
-  }
+// Create Chakra UI theme
+const theme = extendTheme({
+  colors,
+  fonts,
+  styles: {
+    global: {
+      body: {
+        bg: "peochain.background",
+        color: "peochain.text",
+      },
+      "*::-webkit-scrollbar, *::-webkit-scrollbar-track": {
+        display: "none",
+      },
+    }
+  },
+  components: {
+    Button: {
+      variants: {
+        primary: {
+          bg: "peochain.primary",
+          color: "white",
+          _hover: {
+            bg: "peochain.secondary",
+          },
+        },
+        secondary: {
+          bg: "peochain.secondary",
+          color: "white",
+          _hover: {
+            bg: "peochain.accent",
+          },
+        },
+      },
+    },
+  },
+});
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
-    color: var(--peo-text);
-  }
-
-  /* Custom Semantic UI Overrides */
-  .ui.primary.button,
-  .ui.primary.buttons .button {
-    background-color: var(--peo-primary);
-  }
-
-  .ui.secondary.button,
-  .ui.secondary.buttons .button {
-    background-color: var(--peo-secondary);
-  }
-
-  .ui.segment {
-    border-color: var(--peo-border);
-  }
-`;
-
-// Add custom styles
-const style = document.createElement('style');
-style.textContent = fontStyles;
-document.head.appendChild(style);
-
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <ChakraProvider theme={theme}>
+    <App />
+  </ChakraProvider>
+);

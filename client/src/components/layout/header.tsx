@@ -1,6 +1,149 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
-import { Menu, Button, Dropdown, Icon, Sidebar } from 'semantic-ui-react';
+import {
+  Box,
+  Flex,
+  HStack,
+  Image,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  Link,
+  Text,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  IconButton,
+  VStack,
+  Divider,
+  Icon,
+} from "@chakra-ui/react";
+import { 
+  ChevronDownIcon, 
+  HamburgerIcon, 
+  CloseIcon,
+  QuestionIcon,
+  CheckIcon,
+  StarIcon,
+  ExternalLinkIcon
+} from "@chakra-ui/icons";
+
+// Custom icon components for the ones not available in Chakra
+const ShieldIcon = (props: any) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    {...props}
+  >
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+  </svg>
+);
+
+const FileTextIcon = (props: any) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    {...props}
+  >
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <line x1="16" y1="13" x2="8" y2="13" />
+    <line x1="16" y1="17" x2="8" y2="17" />
+    <polyline points="10 9 9 9 8 9" />
+  </svg>
+);
+
+const DollarIcon = (props: any) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    {...props}
+  >
+    <line x1="12" y1="1" x2="12" y2="23" />
+    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+  </svg>
+);
+
+const CodeIcon = (props: any) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    {...props}
+  >
+    <polyline points="16 18 22 12 16 6" />
+    <polyline points="8 6 2 12 8 18" />
+  </svg>
+);
+
+const LightningBoltIcon = (props: any) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    {...props}
+  >
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
+
+const LinkIcon = (props: any) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    {...props}
+  >
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+  </svg>
+);
 
 interface HeaderProps {
   onFeatureClick: () => void;
@@ -12,8 +155,9 @@ interface HeaderProps {
 
 export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyClick, onWaitlistClick, onFaqClick }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [, setLocation] = useLocation();
+  const btnRef = useRef<HTMLButtonElement>(null);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -26,12 +170,12 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
   }, []);
   
   const navigateToWhitepaper = () => {
-    setSidebarVisible(false);
+    onClose();
     setLocation('/whitepaper');
   };
   
   const navigateToHomeSection = (section: string) => {
-    setSidebarVisible(false);
+    onClose();
     // If already on home page, use scrollIntoView
     if (window.location.pathname === '/') {
       const element = document.getElementById(section);
@@ -44,240 +188,284 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
     }
   };
 
-  const handleSidebarHide = () => {
-    setSidebarVisible(false);
-  };
-
   return (
     <>
-      <Menu 
-        fixed="top"
-        secondary
+      <Flex
+        as="header"
+        position="fixed"
+        top="0"
+        width="100%"
+        alignItems="center"
+        justifyContent="space-between"
+        p={3}
+        bg={isScrolled ? 'rgba(234, 240, 234, 0.9)' : 'transparent'}
         style={{
-          background: isScrolled ? 'rgba(234, 240, 234, 0.9)' : 'transparent',
           backdropFilter: isScrolled ? 'blur(10px)' : 'none',
           boxShadow: isScrolled ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none',
           transition: 'all 0.3s ease',
-          padding: '0.75rem 1rem',
-          borderBottom: 'none',
-          zIndex: 1000,
         }}
+        zIndex={1000}
       >
-        <Menu.Item header>
-          <a href="/" style={{ display: 'flex', alignItems: 'center' }}>
-            <img 
-              src="/images/peochain-logo.png" 
-              alt="PEOCHAIN Logo" 
-              style={{ height: '40px' }}
-            />
-          </a>
-        </Menu.Item>
+        <Link href="/" _hover={{ textDecoration: 'none' }}>
+          <Image src="/images/peochain-logo.png" alt="PEOCHAIN Logo" h="40px" />
+        </Link>
 
-        <Menu.Menu position="right" className="hidden-mobile">
-          <Dropdown 
-            item 
-            text="Technology" 
-            style={{ 
-              color: 'var(--peo-text)',
-              fontWeight: 500
-            }}
-          >
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigateToHomeSection('technology')}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Icon name="shield" style={{ marginRight: '0.5rem', color: 'var(--peo-primary)' }} />
-                  <div>
-                    <div style={{ fontWeight: 'bold' }}>PeoChain Technology</div>
-                    <div style={{ fontSize: '0.85rem', color: 'var(--peo-text)', marginTop: '0.25rem' }}>
+        {/* Desktop Navigation */}
+        <HStack spacing={5} display={{ base: 'none', md: 'flex' }}>
+          {/* Technology Menu */}
+          <Menu>
+            <MenuButton 
+              as={Button} 
+              rightIcon={<ChevronDownIcon />}
+              variant="ghost"
+              fontWeight="500"
+              color="peochain.text"
+              _hover={{ bg: 'peochain.background' }}
+            >
+              Technology
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={() => navigateToHomeSection('technology')}>
+                <Flex align="center">
+                  <Icon as={ShieldIcon} color="peochain.primary" mr={2} />
+                  <Box>
+                    <Text fontWeight="bold">PeoChain Technology</Text>
+                    <Text fontSize="sm" color="peochain.text" mt={1}>
                       Explore our revolutionary blockchain infrastructure
-                    </div>
-                  </div>
-                </div>
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item onClick={() => navigateToHomeSection('technology')}>
-                <Icon name="bolt" style={{ color: 'var(--peo-primary)' }} />
+                    </Text>
+                  </Box>
+                </Flex>
+              </MenuItem>
+              <MenuDivider />
+              <MenuItem onClick={() => navigateToHomeSection('technology')}>
+                <Icon as={LightningBoltIcon} color="peochain.primary" mr={2} />
                 Parallel Processing
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => navigateToHomeSection('technology')}>
-                <Icon name="linkify" style={{ color: 'var(--peo-primary)' }} />
+              </MenuItem>
+              <MenuItem onClick={() => navigateToHomeSection('technology')}>
+                <Icon as={LinkIcon} color="peochain.primary" mr={2} />
                 Cross-Chain Integration
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => navigateToHomeSection('technology')}>
-                <Icon name="shield" style={{ color: 'var(--peo-primary)' }} />
+              </MenuItem>
+              <MenuItem onClick={() => navigateToHomeSection('technology')}>
+                <Icon as={ShieldIcon} color="peochain.primary" mr={2} />
                 Security Architecture
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+              </MenuItem>
+            </MenuList>
+          </Menu>
 
-          <Dropdown 
-            item 
-            text="Features" 
-            style={{ 
-              color: 'var(--peo-text)',
-              fontWeight: 500
-            }}
-          >
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigateToHomeSection('features')}>
-                <Icon name="bolt" style={{ color: 'var(--peo-primary)' }} />
+          {/* Features Menu */}
+          <Menu>
+            <MenuButton 
+              as={Button} 
+              rightIcon={<ChevronDownIcon />}
+              variant="ghost"
+              fontWeight="500"
+              color="peochain.text"
+              _hover={{ bg: 'peochain.background' }}
+            >
+              Features
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={() => navigateToHomeSection('features')}>
+                <Icon as={LightningBoltIcon} color="peochain.primary" mr={2} />
                 High-Performance Blockchain
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => navigateToHomeSection('features')}>
-                <Icon name="code" style={{ color: 'var(--peo-primary)' }} />
+              </MenuItem>
+              <MenuItem onClick={() => navigateToHomeSection('features')}>
+                <Icon as={CodeIcon} color="peochain.primary" mr={2} />
                 Developer Friendly
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => navigateToHomeSection('features')}>
-                <Icon name="dollar" style={{ color: 'var(--peo-primary)' }} />
+              </MenuItem>
+              <MenuItem onClick={() => navigateToHomeSection('features')}>
+                <Icon as={DollarIcon} color="peochain.primary" mr={2} />
                 DeFi Ecosystem
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+              </MenuItem>
+            </MenuList>
+          </Menu>
 
-          <Menu.Item 
+          <Button 
+            variant="ghost" 
             onClick={() => navigateToHomeSection('benefits')}
-            style={{ 
-              color: 'var(--peo-text)',
-              fontWeight: 500
-            }}
+            fontWeight="500"
+            color="peochain.text"
+            _hover={{ bg: 'peochain.background' }}
           >
             Benefits
-          </Menu.Item>
+          </Button>
 
-          <Menu.Item 
+          <Button 
+            variant="ghost" 
             onClick={() => navigateToHomeSection('faq')}
-            style={{ 
-              color: 'var(--peo-text)',
-              fontWeight: 500
-            }}
+            fontWeight="500"
+            color="peochain.text"
+            _hover={{ bg: 'peochain.background' }}
           >
             FAQ
-          </Menu.Item>
+          </Button>
 
-          <Menu.Item 
+          <Button 
+            variant="ghost" 
             onClick={navigateToWhitepaper}
-            style={{ 
-              color: 'var(--peo-text)',
-              fontWeight: 500
-            }}
+            fontWeight="500"
+            color="peochain.text"
+            _hover={{ bg: 'peochain.background' }}
           >
             Whitepaper
-          </Menu.Item>
+          </Button>
 
-          <Menu.Item>
-            <Button 
-              primary
-              onClick={() => navigateToHomeSection('waitlist')}
-              className="btn-gradient"
-              style={{
-                background: 'linear-gradient(135deg, var(--peo-primary) 0%, var(--peo-accent) 100%)',
-                color: 'white',
-                borderRadius: '20px',
-                padding: '0.75rem 1.5rem',
-              }}
-            >
-              Join Waitlist
-            </Button>
-          </Menu.Item>
-        </Menu.Menu>
-
-        <Menu.Item position="right" className="visible-mobile-only" onClick={() => setSidebarVisible(true)}>
-          <Icon name="bars" size="large" />
-        </Menu.Item>
-      </Menu>
-
-      {/* Mobile Sidebar Navigation */}
-      <Sidebar
-        as={Menu}
-        animation="overlay"
-        direction="right"
-        vertical
-        visible={sidebarVisible}
-        onHide={handleSidebarHide}
-        width="wide"
-        style={{
-          background: 'rgba(234, 240, 234, 0.95)',
-          backdropFilter: 'blur(10px)',
-          paddingTop: '1rem'
-        }}
-      >
-        <Menu.Item onClick={handleSidebarHide} style={{ textAlign: 'right' }}>
-          <Icon name="close" size="large" />
-        </Menu.Item>
-        
-        <Menu.Item header style={{ borderBottom: '1px solid var(--peo-border)', paddingBottom: '1rem' }}>
-          <img 
-            src="/images/peochain-logo.png" 
-            alt="PEOCHAIN Logo" 
-            style={{ height: '40px' }}
-          />
-        </Menu.Item>
-
-        <Menu.Item header style={{ color: 'var(--peo-primary)', fontWeight: 'bold' }}>
-          <Icon name="shield" />
-          Technology
-        </Menu.Item>
-        <Menu.Item onClick={() => navigateToHomeSection('technology')} style={{ paddingLeft: '2rem' }}>
-          <Icon name="bolt" />
-          Parallel Processing
-        </Menu.Item>
-        <Menu.Item onClick={() => navigateToHomeSection('technology')} style={{ paddingLeft: '2rem' }}>
-          <Icon name="linkify" />
-          Cross-Chain Integration
-        </Menu.Item>
-        <Menu.Item onClick={() => navigateToHomeSection('technology')} style={{ paddingLeft: '2rem' }}>
-          <Icon name="shield" />
-          Security Architecture
-        </Menu.Item>
-
-        <Menu.Item header style={{ color: 'var(--peo-primary)', fontWeight: 'bold', marginTop: '1rem' }}>
-          <Icon name="star" />
-          Features
-        </Menu.Item>
-        <Menu.Item onClick={() => navigateToHomeSection('features')} style={{ paddingLeft: '2rem' }}>
-          <Icon name="bolt" />
-          High-Performance Blockchain
-        </Menu.Item>
-        <Menu.Item onClick={() => navigateToHomeSection('features')} style={{ paddingLeft: '2rem' }}>
-          <Icon name="code" />
-          Developer Friendly
-        </Menu.Item>
-        <Menu.Item onClick={() => navigateToHomeSection('features')} style={{ paddingLeft: '2rem' }}>
-          <Icon name="dollar" />
-          DeFi Ecosystem
-        </Menu.Item>
-
-        <Menu.Item header style={{ marginTop: '1rem' }} onClick={() => navigateToHomeSection('benefits')}>
-          <Icon name="check" />
-          Benefits
-        </Menu.Item>
-        
-        <Menu.Item header onClick={() => navigateToHomeSection('faq')}>
-          <Icon name="question circle" />
-          FAQ
-        </Menu.Item>
-        
-        <Menu.Item header onClick={navigateToWhitepaper}>
-          <Icon name="file text" />
-          Whitepaper
-        </Menu.Item>
-        
-        <Menu.Item style={{ marginTop: '2rem' }}>
           <Button 
-            fluid
-            primary
             onClick={() => navigateToHomeSection('waitlist')}
-            className="btn-gradient"
-            style={{
-              background: 'linear-gradient(135deg, var(--peo-primary) 0%, var(--peo-accent) 100%)',
-              color: 'white',
-              padding: '1rem',
+            bgGradient="linear(to-r, peochain.primary, peochain.accent)"
+            color="white"
+            borderRadius="full"
+            px={6}
+            py={5}
+            _hover={{
+              transform: 'translateY(-2px)',
+              boxShadow: 'md',
             }}
           >
             Join Waitlist
           </Button>
-        </Menu.Item>
-      </Sidebar>
+        </HStack>
+
+        {/* Mobile Navigation Toggle */}
+        <IconButton
+          ref={btnRef}
+          display={{ base: 'flex', md: 'none' }}
+          aria-label="Open menu"
+          icon={<HamburgerIcon />}
+          onClick={onOpen}
+          variant="ghost"
+        />
+      </Flex>
+
+      {/* Mobile Sidebar */}
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
+        <DrawerOverlay backdropFilter="blur(10px)" />
+        <DrawerContent bg="rgba(234, 240, 234, 0.95)">
+          <DrawerCloseButton />
+          <DrawerHeader borderBottomWidth="1px">
+            <Image src="/images/peochain-logo.png" alt="PEOCHAIN Logo" h="40px" />
+          </DrawerHeader>
+
+          <DrawerBody>
+            <VStack align="stretch" spacing={4} mt={4}>
+              <Text fontWeight="bold" color="peochain.primary">
+                <Icon as={ShieldIcon} mr={2} />
+                Technology
+              </Text>
+              <Button 
+                variant="ghost" 
+                justifyContent="flex-start" 
+                pl={10} 
+                leftIcon={<Icon as={LightningBoltIcon} />}
+                onClick={() => navigateToHomeSection('technology')}
+              >
+                Parallel Processing
+              </Button>
+              <Button 
+                variant="ghost" 
+                justifyContent="flex-start" 
+                pl={10} 
+                leftIcon={<Icon as={LinkIcon} />}
+                onClick={() => navigateToHomeSection('technology')}
+              >
+                Cross-Chain Integration
+              </Button>
+              <Button 
+                variant="ghost" 
+                justifyContent="flex-start" 
+                pl={10} 
+                leftIcon={<Icon as={ShieldIcon} />}
+                onClick={() => navigateToHomeSection('technology')}
+              >
+                Security Architecture
+              </Button>
+
+              <Divider />
+
+              <Text fontWeight="bold" color="peochain.primary">
+                <Icon as={StarIcon} mr={2} />
+                Features
+              </Text>
+              <Button 
+                variant="ghost" 
+                justifyContent="flex-start" 
+                pl={10} 
+                leftIcon={<Icon as={LightningBoltIcon} />}
+                onClick={() => navigateToHomeSection('features')}
+              >
+                High-Performance Blockchain
+              </Button>
+              <Button 
+                variant="ghost" 
+                justifyContent="flex-start" 
+                pl={10} 
+                leftIcon={<Icon as={CodeIcon} />}
+                onClick={() => navigateToHomeSection('features')}
+              >
+                Developer Friendly
+              </Button>
+              <Button 
+                variant="ghost" 
+                justifyContent="flex-start" 
+                pl={10} 
+                leftIcon={<Icon as={DollarIcon} />}
+                onClick={() => navigateToHomeSection('features')}
+              >
+                DeFi Ecosystem
+              </Button>
+
+              <Divider />
+
+              <Button 
+                variant="ghost" 
+                justifyContent="flex-start" 
+                leftIcon={<Icon as={CheckIcon} />}
+                onClick={() => navigateToHomeSection('benefits')}
+              >
+                Benefits
+              </Button>
+              
+              <Button 
+                variant="ghost" 
+                justifyContent="flex-start" 
+                leftIcon={<Icon as={QuestionIcon} />}
+                onClick={() => navigateToHomeSection('faq')}
+              >
+                FAQ
+              </Button>
+              
+              <Button 
+                variant="ghost" 
+                justifyContent="flex-start" 
+                leftIcon={<Icon as={FileTextIcon} />}
+                onClick={navigateToWhitepaper}
+              >
+                Whitepaper
+              </Button>
+              
+              <Button
+                mt={6}
+                w="full"
+                bgGradient="linear(to-r, peochain.primary, peochain.accent)"
+                color="white"
+                py={6}
+                onClick={() => navigateToHomeSection('waitlist')}
+                _hover={{
+                  transform: 'translateY(-2px)',
+                  boxShadow: 'md',
+                }}
+              >
+                Join Waitlist
+              </Button>
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 }
