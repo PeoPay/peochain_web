@@ -1,223 +1,246 @@
 @import './colors-new.css';
 @import './styles/glass.css';
-@import './semantic-ui-styles.css';
 
-/* Base Styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--peo-background);
-  color: var(--peo-text);
-  line-height: 1.6;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', sans-serif;
-  margin-bottom: 1rem;
-  line-height: 1.2;
-}
-
-p {
-  margin-bottom: 1rem;
-}
-
-a {
-  color: var(--peo-primary);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Layout Utility Classes */
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.flex {
-  display: flex;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.justify-between {
-  justify-content: space-between;
-}
-
-.gap-4 {
-  gap: 1rem;
-}
-
-.text-center {
-  text-align: center;
-}
-
-/* Spacing Utilities */
-.mt-4 {
-  margin-top: 1rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-/* PeoChain Custom Elements */
-.gradient-background {
-  background: linear-gradient(135deg, var(--peo-background), var(--peo-primary));
-}
-
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--peo-border);
-  border-radius: 8px;
-  padding: 1.5rem;
-}
-
-.btn-gradient {
-  background: linear-gradient(135deg, var(--peo-primary) 0%, var(--peo-accent) 100%);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-
-.btn-gradient:hover {
-  opacity: 0.9;
-}
-
-/* Typography Styles */
-.section-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--peo-text);
-  margin-bottom: 1.5rem;
-}
-
-.sub-section-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--peo-text);
-  margin-bottom: 1rem;
-}
-
-.feature-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--peo-text);
-  margin-bottom: 0.5rem;
-}
-
-.description {
-  color: var(--peo-text);
-  opacity: 0.8;
-  line-height: 1.6;
-}
-
-/* Social Media Icons */
-.social-icon {
-  transition: transform 0.3s ease;
-  color: var(--peo-primary);
-  font-size: 1.5rem;
-  margin: 0 0.5rem;
-}
-
-.social-icon:hover {
-  transform: translateY(-3px);
-  color: var(--peo-accent);
-}
-
-/* Diagram Animations */
-@keyframes dash {
-  from {
-    stroke-dashoffset: 20;
+@layer base {
+  * {
+    @apply border-border;
   }
-  to {
-    stroke-dashoffset: 0;
+
+  body {
+    @apply font-sans antialiased text-foreground;
+    background-color: var(--background);
   }
 }
 
-.animate-dash {
-  stroke-dasharray: 5, 5;
-  animation: dash 1s linear infinite;
-}
+@layer components {
+  /* Main color scheme */
+  .gradient-background {
+    background: var(--background);
+    background: linear-gradient(135deg, var(--background), var(--accent1-light));
+  }
 
-/* SVG and Diagram Styles */
-.consensus-diagram text,
-.subnet-diagram text,
-.mobile-integration-diagram text {
-  font-family: 'Inter', sans-serif;
-}
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(28, 130, 74, 0.1);
+  }
 
-.responsive-diagram {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 350px;
-  position: relative;
-}
-
-.responsive-diagram svg {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Responsive Adjustments */
-@media only screen and (max-width: 767px) {
+  .btn-gradient {
+    background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 100%);
+  }
+  
+  /* Visual hierarchy classes */
   .section-title {
-    font-size: 1.75rem;
+    color: var(--accent1);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
   }
   
   .sub-section-title {
-    font-size: 1.25rem;
+    color: var(--foreground);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
   }
   
   .feature-title {
-    font-size: 1.1rem;
+    color: var(--foreground);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
   }
   
+  .description {
+    color: var(--foreground);
+    opacity: 0.8;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .social-icon {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    transform: translateY(-3px);
+  }
+  
+  /* Diagram Animations */
+  @keyframes dash {
+    from {
+      stroke-dashoffset: 20;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  .animate-dash {
+    stroke-dasharray: 5, 5;
+    animation: dash 1s linear infinite;
+  }
+  
+  /* SVG diagram styles */
+  .consensus-diagram text,
+  .subnet-diagram text,
+  .mobile-integration-diagram text {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+  
+  /* Whitepaper specific styles */
+  .whitepaper-section {
+    transition: all 0.3s ease;
+  }
+  
+  .whitepaper-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(28, 130, 74, 0.1);
+  }
+  
+  /* Responsive adjustments for diagrams and charts */
   .consensus-diagram text,
   .subnet-diagram text,
   .tokenomics-diagram text,
   .mobile-integration-diagram text {
-    font-size: 10px !important;
-    font-weight: 500 !important;
+    transition: font-size 0.2s ease;
+  }
+
+  /* Enhanced responsive adjustments for mobile */
+  @media (max-width: 640px) {
+    /* Improved text sizing for better readability */
+    .consensus-diagram text,
+    .subnet-diagram text,
+    .tokenomics-diagram text,
+    .mobile-integration-diagram text {
+      font-size: 10px !important; /* Consistent minimum font size */
+      font-weight: 500 !important; /* Medium weight for better visibility */
+      letter-spacing: 0.01em !important; /* Improved letter spacing */
+    }
+    
+    /* Adjust diagram grid layouts for mobile */
+    .whitepaper-section .flex.justify-center.gap-6 {
+      gap: 0.75rem !important; /* More compact spacing for mobile */
+      align-items: center !important; /* Ensure vertical alignment */
+    }
+    
+    /* Better text size for readability */
+    .whitepaper-section .flex.gap-6 span {
+      font-size: 0.8rem; /* Improved font size for better readability */
+    }
+    
+    /* Consistent SVG rendering on mobile */
+    .whitepaper-section svg {
+      height: auto !important;
+      max-height: 450px !important; /* Taller maximum height for visibility */
+    }
+    
+    /* Improve responsive diagrams in mobile view */
+    .responsive-diagram {
+      min-height: 380px !important; /* Ensure taller diagrams on mobile */
+    }
+  }
+
+  /* Chart container responsiveness with consistent sizing */
+  .chart-container,
+  .responsive-chart,
+  .responsive-diagram {
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0 auto; /* Center all charts and diagrams */
+  }
+  
+  .responsive-chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Create positioning context */
+    width: 100%; /* Ensure full width usage */
   }
   
   .responsive-diagram {
-    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 350px; /* Ensure minimum height for content visibility */
+    position: relative; /* Create positioning context */
+  }
+  
+  .responsive-chart svg,
+  .responsive-diagram svg {
+    width: 100%;
+    height: 100%; /* Use full height of container */
+    max-width: 100%;
+    object-fit: contain; /* Preserve aspect ratio */
+    display: block; /* Remove default inline spacing */
+  }
+
+  /* Ensure diagrams don't overflow on small screens */
+  .whitepaper-section svg {
+    max-width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Better mobile experience for expanded sections */
+  @media (max-width: 768px) {
+    /* Improved table readability on small screens */
+    .whitepaper-section table {
+      font-size: 0.7rem;
+      line-height: 1.3;
+    }
+    
+    .whitepaper-section table th,
+    .whitepaper-section table td {
+      padding: 0.3rem !important;
+      word-break: break-word;
+    }
+    
+    /* Adjust diagram heights on mobile for better visibility */
+    .whitepaper-section .h-\[300px\] {
+      height: 250px !important;
+    }
+    
+    .whitepaper-section .h-\[350px\] {
+      height: 280px !important;
+    }
+    
+    .whitepaper-section .h-\[250px\] {
+      height: 200px !important;
+    }
+    
+    /* Prevent text overlapping in SVG elements */
+    .whitepaper-section text {
+      font-size: 9px !important;
+      font-weight: 500 !important;
+    }
+    
+    /* Better spacing for mobile tables with horizontal scrolling */
+    .whitepaper-section .overflow-x-auto {
+      margin: 0 -4px;
+      padding: 0 4px;
+      width: calc(100% + 8px);
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Improve card spacing on mobile */
+    .whitepaper-section .p-6 {
+      padding: 1rem !important;
+    }
+    
+    /* Better grid layouts on mobile */
+    .whitepaper-section .grid-cols-2,
+    .whitepaper-section .grid-cols-3 {
+      grid-template-columns: 1fr !important;
+      gap: 0.75rem !important;
+    }
   }
 }

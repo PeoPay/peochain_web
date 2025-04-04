@@ -1,149 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu, ChevronDown, X, ChevronRight, Code, Shield, Zap, Network, Layers, DollarSign } from "lucide-react";
 import { useLocation } from "wouter";
 import {
-  Box,
-  Flex,
-  HStack,
-  Image,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  Link,
-  Text,
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  IconButton,
-  VStack,
-  Divider,
-  Icon,
-} from "@chakra-ui/react";
-import { 
-  ChevronDownIcon, 
-  HamburgerIcon, 
-  CloseIcon,
-  QuestionIcon,
-  CheckIcon,
-  StarIcon,
-  ExternalLinkIcon
-} from "@chakra-ui/icons";
-
-// Custom icon components for the ones not available in Chakra
-const ShieldIcon = (props: any) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    {...props}
-  >
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-  </svg>
-);
-
-const FileTextIcon = (props: any) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    {...props}
-  >
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-    <polyline points="14 2 14 8 20 8" />
-    <line x1="16" y1="13" x2="8" y2="13" />
-    <line x1="16" y1="17" x2="8" y2="17" />
-    <polyline points="10 9 9 9 8 9" />
-  </svg>
-);
-
-const DollarIcon = (props: any) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    {...props}
-  >
-    <line x1="12" y1="1" x2="12" y2="23" />
-    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-  </svg>
-);
-
-const CodeIcon = (props: any) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    {...props}
-  >
-    <polyline points="16 18 22 12 16 6" />
-    <polyline points="8 6 2 12 8 18" />
-  </svg>
-);
-
-const LightningBoltIcon = (props: any) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    {...props}
-  >
-    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-  </svg>
-);
-
-const LinkIcon = (props: any) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    {...props}
-  >
-    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-  </svg>
-);
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   onFeatureClick: () => void;
@@ -154,10 +23,9 @@ interface HeaderProps {
 }
 
 export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyClick, onWaitlistClick, onFaqClick }: HeaderProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [, setLocation] = useLocation();
-  const btnRef = useRef<HTMLButtonElement>(null);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -168,14 +36,19 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleMobileNavClick = (callback: () => void) => {
+    setIsOpen(false);
+    callback();
+  };
   
   const navigateToWhitepaper = () => {
-    onClose();
+    setIsOpen(false);
     setLocation('/whitepaper');
   };
   
   const navigateToHomeSection = (section: string) => {
-    onClose();
+    setIsOpen(false);
     // If already on home page, use scrollIntoView
     if (window.location.pathname === '/') {
       const element = document.getElementById(section);
@@ -187,285 +60,363 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
       setLocation(`/#${section}`);
     }
   };
-
+  
   return (
-    <>
-      <Flex
-        as="header"
-        position="fixed"
-        top="0"
-        width="100%"
-        alignItems="center"
-        justifyContent="space-between"
-        p={3}
-        bg={isScrolled ? 'rgba(234, 240, 234, 0.9)' : 'transparent'}
-        style={{
-          backdropFilter: isScrolled ? 'blur(10px)' : 'none',
-          boxShadow: isScrolled ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none',
-          transition: 'all 0.3s ease',
-        }}
-        zIndex={1000}
-      >
-        <Link href="/" _hover={{ textDecoration: 'none' }}>
-          <Image src="/images/peochain-logo.png" alt="PEOCHAIN Logo" h="40px" />
-        </Link>
-
-        {/* Desktop Navigation */}
-        <HStack spacing={5} display={{ base: 'none', md: 'flex' }}>
-          {/* Technology Menu */}
-          <Menu>
-            <MenuButton 
-              as={Button} 
-              rightIcon={<ChevronDownIcon />}
-              variant="ghost"
-              fontWeight="500"
-              color="peochain.text"
-              _hover={{ bg: 'peochain.background' }}
-            >
-              Technology
-            </MenuButton>
-            <MenuList>
-              <MenuItem onClick={() => navigateToHomeSection('technology')}>
-                <Flex align="center">
-                  <Icon as={ShieldIcon} color="peochain.primary" mr={2} />
-                  <Box>
-                    <Text fontWeight="bold">PeoChain Technology</Text>
-                    <Text fontSize="sm" color="peochain.text" mt={1}>
-                      Explore our revolutionary blockchain infrastructure
-                    </Text>
-                  </Box>
-                </Flex>
-              </MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={() => navigateToHomeSection('technology')}>
-                <Icon as={LightningBoltIcon} color="peochain.primary" mr={2} />
-                Parallel Processing
-              </MenuItem>
-              <MenuItem onClick={() => navigateToHomeSection('technology')}>
-                <Icon as={LinkIcon} color="peochain.primary" mr={2} />
-                Cross-Chain Integration
-              </MenuItem>
-              <MenuItem onClick={() => navigateToHomeSection('technology')}>
-                <Icon as={ShieldIcon} color="peochain.primary" mr={2} />
-                Security Architecture
-              </MenuItem>
-            </MenuList>
-          </Menu>
-
-          {/* Features Menu */}
-          <Menu>
-            <MenuButton 
-              as={Button} 
-              rightIcon={<ChevronDownIcon />}
-              variant="ghost"
-              fontWeight="500"
-              color="peochain.text"
-              _hover={{ bg: 'peochain.background' }}
-            >
-              Features
-            </MenuButton>
-            <MenuList>
-              <MenuItem onClick={() => navigateToHomeSection('features')}>
-                <Icon as={LightningBoltIcon} color="peochain.primary" mr={2} />
-                High-Performance Blockchain
-              </MenuItem>
-              <MenuItem onClick={() => navigateToHomeSection('features')}>
-                <Icon as={CodeIcon} color="peochain.primary" mr={2} />
-                Developer Friendly
-              </MenuItem>
-              <MenuItem onClick={() => navigateToHomeSection('features')}>
-                <Icon as={DollarIcon} color="peochain.primary" mr={2} />
-                DeFi Ecosystem
-              </MenuItem>
-            </MenuList>
-          </Menu>
-
-          <Button 
-            variant="ghost" 
-            onClick={() => navigateToHomeSection('benefits')}
-            fontWeight="500"
-            color="peochain.text"
-            _hover={{ bg: 'peochain.background' }}
-          >
-            Benefits
-          </Button>
-
-          <Button 
-            variant="ghost" 
-            onClick={() => navigateToHomeSection('faq')}
-            fontWeight="500"
-            color="peochain.text"
-            _hover={{ bg: 'peochain.background' }}
-          >
-            FAQ
-          </Button>
-
-          <Button 
-            variant="ghost" 
-            onClick={navigateToWhitepaper}
-            fontWeight="500"
-            color="peochain.text"
-            _hover={{ bg: 'peochain.background' }}
-          >
-            Whitepaper
-          </Button>
-
-          <Button 
-            onClick={() => navigateToHomeSection('waitlist')}
-            bgGradient="linear(to-r, peochain.primary, peochain.accent)"
-            color="white"
-            borderRadius="full"
-            px={6}
-            py={5}
-            _hover={{
-              transform: 'translateY(-2px)',
-              boxShadow: 'md',
-            }}
-          >
-            Join Waitlist
-          </Button>
-        </HStack>
-
-        {/* Mobile Navigation Toggle */}
-        <IconButton
-          ref={btnRef}
-          display={{ base: 'flex', md: 'none' }}
-          aria-label="Open menu"
-          icon={<HamburgerIcon />}
-          onClick={onOpen}
-          variant="ghost"
-        />
-      </Flex>
-
-      {/* Mobile Sidebar */}
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay backdropFilter="blur(10px)" />
-        <DrawerContent bg="rgba(234, 240, 234, 0.95)">
-          <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth="1px">
-            <Image src="/images/peochain-logo.png" alt="PEOCHAIN Logo" h="40px" />
-          </DrawerHeader>
-
-          <DrawerBody>
-            <VStack align="stretch" spacing={4} mt={4}>
-              <Text fontWeight="bold" color="peochain.primary">
-                <Icon as={ShieldIcon} mr={2} />
+    <header 
+      className={cn(
+        "fixed top-0 left-0 right-0 w-full py-3 md:py-4 px-4 md:px-8 flex justify-between items-center z-50 transition-all duration-300",
+        isScrolled 
+          ? "bg-background/80 backdrop-blur-lg shadow-md" 
+          : "bg-transparent"
+      )}
+    >
+      <div className="flex items-center">
+        <a href="/" className="flex items-center">
+          <img 
+            src="/images/peochain-logo.png" 
+            alt="PEOCHAIN Logo" 
+            className="h-8 md:h-10"
+          />
+        </a>
+      </div>
+      
+      <div className="hidden lg:flex items-center">
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger
+                className={cn(
+                  "h-9 px-4 py-2 hover:bg-transparent data-[state=open]:bg-transparent data-[active]:bg-transparent",
+                  "hover:text-primary text-base font-medium"
+                )}
+              >
                 Technology
-              </Text>
-              <Button 
-                variant="ghost" 
-                justifyContent="flex-start" 
-                pl={10} 
-                leftIcon={<Icon as={LightningBoltIcon} />}
-                onClick={() => navigateToHomeSection('technology')}
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-6 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
+                  <li className="row-span-3">
+                    <NavigationMenuLink asChild>
+                      <a
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/20 to-primary/5 p-6 no-underline outline-none focus:shadow-md"
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigateToHomeSection('technology');
+                        }}
+                      >
+                        <div className="mb-2 mt-4 flex items-center">
+                          <Shield className="h-6 w-6 text-primary mr-2" />
+                          <div className="text-lg font-medium text-primary">
+                            PeoChain Technology
+                          </div>
+                        </div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          Explore our revolutionary blockchain infrastructure with 100,000+ TPS, 
+                          subnet validators, and parallel transaction processing.
+                        </p>
+                        <div className="mt-4 flex items-center text-sm text-primary">
+                          <span>Learn more</span>
+                          <ChevronRight className="ml-1 h-4 w-4" />
+                        </div>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigateToHomeSection('technology');
+                        }}
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center">
+                          <Zap className="h-4 w-4 text-primary mr-2" />
+                          <div className="text-sm font-medium leading-none">Parallel Processing</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          High-throughput transaction processing with our subnet validation system
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigateToHomeSection('technology');
+                        }}
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center">
+                          <Network className="h-4 w-4 text-primary mr-2" />
+                          <div className="text-sm font-medium leading-none">Cross-Chain Integration</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Seamless interoperability with major blockchain networks and protocols
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigateToHomeSection('technology');
+                        }}
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center">
+                          <Shield className="h-4 w-4 text-primary mr-2" />
+                          <div className="text-sm font-medium leading-none">Security Architecture</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Advanced consensus mechanisms with quantum-resistant encryption
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger
+                className={cn(
+                  "h-9 px-4 py-2 hover:bg-transparent data-[state=open]:bg-transparent data-[active]:bg-transparent",
+                  "hover:text-primary text-base font-medium"
+                )}
               >
-                Parallel Processing
-              </Button>
-              <Button 
-                variant="ghost" 
-                justifyContent="flex-start" 
-                pl={10} 
-                leftIcon={<Icon as={LinkIcon} />}
-                onClick={() => navigateToHomeSection('technology')}
-              >
-                Cross-Chain Integration
-              </Button>
-              <Button 
-                variant="ghost" 
-                justifyContent="flex-start" 
-                pl={10} 
-                leftIcon={<Icon as={ShieldIcon} />}
-                onClick={() => navigateToHomeSection('technology')}
-              >
-                Security Architecture
-              </Button>
-
-              <Divider />
-
-              <Text fontWeight="bold" color="peochain.primary">
-                <Icon as={StarIcon} mr={2} />
                 Features
-              </Text>
-              <Button 
-                variant="ghost" 
-                justifyContent="flex-start" 
-                pl={10} 
-                leftIcon={<Icon as={LightningBoltIcon} />}
-                onClick={() => navigateToHomeSection('features')}
-              >
-                High-Performance Blockchain
-              </Button>
-              <Button 
-                variant="ghost" 
-                justifyContent="flex-start" 
-                pl={10} 
-                leftIcon={<Icon as={CodeIcon} />}
-                onClick={() => navigateToHomeSection('features')}
-              >
-                Developer Friendly
-              </Button>
-              <Button 
-                variant="ghost" 
-                justifyContent="flex-start" 
-                pl={10} 
-                leftIcon={<Icon as={DollarIcon} />}
-                onClick={() => navigateToHomeSection('features')}
-              >
-                DeFi Ecosystem
-              </Button>
-
-              <Divider />
-
-              <Button 
-                variant="ghost" 
-                justifyContent="flex-start" 
-                leftIcon={<Icon as={CheckIcon} />}
-                onClick={() => navigateToHomeSection('benefits')}
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] grid-cols-1">
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigateToHomeSection('features');
+                        }}
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center">
+                          <Zap className="h-4 w-4 text-primary mr-2" />
+                          <div className="text-sm font-medium leading-none">High-Performance Blockchain</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          100,000+ transactions per second with near-instant finality
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigateToHomeSection('features');
+                        }}
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center">
+                          <Code className="h-4 w-4 text-primary mr-2" />
+                          <div className="text-sm font-medium leading-none">Developer Friendly</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Unified API and comprehensive SDKs for simplified development
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigateToHomeSection('features');
+                        }}
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center">
+                          <DollarSign className="h-4 w-4 text-primary mr-2" />
+                          <div className="text-sm font-medium leading-none">DeFi Ecosystem</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Integrated financial services with cross-chain compatibility
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink 
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigateToHomeSection('benefits');
+                }}
+                className={cn(navigationMenuTriggerStyle(), "hover:text-primary text-base font-medium")}
               >
                 Benefits
-              </Button>
-              
-              <Button 
-                variant="ghost" 
-                justifyContent="flex-start" 
-                leftIcon={<Icon as={QuestionIcon} />}
-                onClick={() => navigateToHomeSection('faq')}
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink 
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigateToHomeSection('faq');
+                }}
+                className={cn(navigationMenuTriggerStyle(), "hover:text-primary text-base font-medium")}
               >
                 FAQ
-              </Button>
-              
-              <Button 
-                variant="ghost" 
-                justifyContent="flex-start" 
-                leftIcon={<Icon as={FileTextIcon} />}
-                onClick={navigateToWhitepaper}
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink 
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigateToWhitepaper();
+                }}
+                className={cn(navigationMenuTriggerStyle(), "hover:text-primary text-base font-medium")}
               >
                 Whitepaper
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+        
+        <Button 
+          onClick={() => navigateToHomeSection('waitlist')}
+          className="btn-gradient text-white font-medium py-2 px-6 rounded-full ml-4"
+        >
+          Join Waitlist
+        </Button>
+      </div>
+      
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetTrigger asChild className="lg:hidden">
+          <Button variant="ghost" size="icon" className="text-foreground text-2xl">
+            <Menu className="h-6 w-6" />
+            <span className="sr-only">Toggle menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="right" className="bg-background/95 backdrop-blur-lg w-full sm:max-w-md p-0 border-l border-primary/10">
+          <div className="flex flex-col h-full">
+            <div className="flex justify-between items-center p-4 border-b border-primary/10">
+              <div className="flex items-center">
+                <img 
+                  src="/images/peochain-logo.png" 
+                  alt="PEOCHAIN Logo" 
+                  className="h-8"
+                />
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+                <X className="h-5 w-5" />
               </Button>
-              
-              <Button
-                mt={6}
-                w="full"
-                bgGradient="linear(to-r, peochain.primary, peochain.accent)"
-                color="white"
-                py={6}
+            </div>
+            
+            <div className="flex-1 overflow-auto py-4 px-6">
+              <nav className="flex flex-col space-y-1 w-full">
+                <div className="py-4 border-b border-primary/10">
+                  <div className="flex items-center mb-2">
+                    <Shield className="h-5 w-5 text-primary mr-2" />
+                    <span className="text-primary font-medium">Technology</span>
+                  </div>
+                  <div className="pl-7 flex flex-col space-y-3 mt-3">
+                    <button 
+                      onClick={() => navigateToHomeSection('technology')}
+                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
+                    >
+                      <Zap className="h-4 w-4 mr-2" />
+                      Parallel Processing
+                    </button>
+                    <button 
+                      onClick={() => navigateToHomeSection('technology')}
+                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
+                    >
+                      <Network className="h-4 w-4 mr-2" />
+                      Cross-Chain Integration
+                    </button>
+                    <button 
+                      onClick={() => navigateToHomeSection('technology')}
+                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
+                    >
+                      <Layers className="h-4 w-4 mr-2" />
+                      Subnet Validators
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="py-4 border-b border-primary/10">
+                  <div className="flex items-center mb-2">
+                    <Code className="h-5 w-5 text-primary mr-2" />
+                    <span className="text-primary font-medium">Features</span>
+                  </div>
+                  <div className="pl-7 flex flex-col space-y-3 mt-3">
+                    <button 
+                      onClick={() => navigateToHomeSection('features')}
+                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
+                    >
+                      <Zap className="h-4 w-4 mr-2" />
+                      High Performance
+                    </button>
+                    <button 
+                      onClick={() => navigateToHomeSection('features')}
+                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
+                    >
+                      <Code className="h-4 w-4 mr-2" />
+                      Developer Tools
+                    </button>
+                    <button 
+                      onClick={() => navigateToHomeSection('features')}
+                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
+                    >
+                      <DollarSign className="h-4 w-4 mr-2" />
+                      DeFi Ecosystem
+                    </button>
+                  </div>
+                </div>
+                
+                <button 
+                  onClick={() => navigateToHomeSection('benefits')}
+                  className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
+                >
+                  <ChevronRight className="h-4 w-4 text-primary mr-2" />
+                  Benefits
+                </button>
+                
+                <button 
+                  onClick={() => navigateToHomeSection('faq')}
+                  className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
+                >
+                  <ChevronRight className="h-4 w-4 text-primary mr-2" />
+                  FAQ
+                </button>
+                
+                <button 
+                  onClick={navigateToWhitepaper}
+                  className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
+                >
+                  <ChevronRight className="h-4 w-4 text-primary mr-2" />
+                  Whitepaper
+                </button>
+              </nav>
+            </div>
+            
+            <div className="p-6 border-t border-primary/10">
+              <Button 
                 onClick={() => navigateToHomeSection('waitlist')}
-                _hover={{
-                  transform: 'translateY(-2px)',
-                  boxShadow: 'md',
-                }}
+                className="btn-gradient text-white font-medium py-6 px-8 rounded-full w-full"
               >
                 Join Waitlist
               </Button>
-            </VStack>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-    </>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </header>
   );
 }

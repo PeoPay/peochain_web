@@ -1,71 +1,53 @@
 import { createRoot } from "react-dom/client";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import App from "./App";
 import "./index.css";
 
-// Define PeoChain theme colors
-const colors = {
-  peochain: {
-    primary: "#6b996d",
-    secondary: "#58875b",
-    accent: "#445e45",
-    background: "#eaf0ea",
-    text: "#2d4b2e",
-    muted: "#8aad8c",
-    border: "#d5e3d6",
-    chart1: "#6b996d",
-    chart2: "#58875b",
-    chart3: "#445e45",
-    chart4: "#eaf0ea",
-    chart5: "#2d4b2e",
+const fontStyles = `
+  :root {
+    --background: 120 22% 90%;
+    --foreground: 134 16% 27%;
+    --card: 0 0% 100%;
+    --card-foreground: 134 16% 27%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 134 16% 27%;
+    --primary: 135 18% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 142 15% 44%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 120 22% 95%;
+    --muted-foreground: 134 16% 45%;
+    --accent: 120 22% 95%;
+    --accent-foreground: 134 16% 27%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 134 16% 85%;
+    --input: 134 16% 85%;
+    --ring: 135 18% 53%;
+    --radius: 0.75rem;
+    
+    --chart-1: 135 18% 53%;
+    --chart-2: 142 15% 44%;
+    --chart-3: 139 19% 36%;
+    --chart-4: 120 22% 90%;
+    --chart-5: 134 16% 27%;
   }
-};
 
-// Define fonts
-const fonts = {
-  heading: "'Poppins', sans-serif",
-  body: "'Inter', sans-serif",
-};
+  *::-webkit-scrollbar, *::-webkit-scrollbar-track {
+    display: none;
+  }
 
-// Create Chakra UI theme
-const theme = extendTheme({
-  colors,
-  fonts,
-  styles: {
-    global: {
-      body: {
-        bg: "peochain.background",
-        color: "peochain.text",
-      },
-      "*::-webkit-scrollbar, *::-webkit-scrollbar-track": {
-        display: "none",
-      },
-    }
-  },
-  components: {
-    Button: {
-      variants: {
-        primary: {
-          bg: "peochain.primary",
-          color: "white",
-          _hover: {
-            bg: "peochain.secondary",
-          },
-        },
-        secondary: {
-          bg: "peochain.secondary",
-          color: "white",
-          _hover: {
-            bg: "peochain.accent",
-          },
-        },
-      },
-    },
-  },
-});
+  body {
+    font-family: 'Inter', sans-serif;
+  }
 
-createRoot(document.getElementById("root")!).render(
-  <ChakraProvider theme={theme}>
-    <App />
-  </ChakraProvider>
-);
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+`;
+
+// Add custom styles
+const style = document.createElement('style');
+style.textContent = fontStyles;
+document.head.appendChild(style);
+
+createRoot(document.getElementById("root")!).render(<App />);
