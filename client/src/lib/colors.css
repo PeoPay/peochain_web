@@ -1,0 +1,153 @@
+:root {
+  /* Main colors from specification */
+  --background: #fcfcfc;
+  --foreground: #1f1f1f;
+  
+  /* Accent colors */
+  --accent1: #1c824a;
+  --accent2: #1d613c;
+  --accent3: #1e402d;
+  
+  /* Derived colors for UI elements */
+  --accent1-light: rgba(28, 130, 74, 0.1);
+  --accent1-medium: rgba(28, 130, 74, 0.5);
+  --accent2-light: rgba(29, 97, 60, 0.1);
+  --accent3-light: rgba(30, 64, 45, 0.1);
+  
+  /* Semantic colors */
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #3B82F6;
+}
+
+/* 
+ * Cross-browser and cross-platform optimizations
+ * These styles ensure consistent appearance across browsers and platforms
+ */
+
+/* Simple reset to ensure consistent rendering */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure smooth scrolling works consistently cross-browser */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fixes for mobile browsers */
+@media (hover: none) {
+  /* Prevent sticky hover states on mobile */
+  button:hover,
+  a:hover {
+    /* Reset hover states for touch devices */
+    background: initial;
+    color: initial;
+  }
+}
+
+/* Cross-browser form element consistency */
+input, 
+button, 
+textarea, 
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Consistent focus styles across browsers */
+:focus-visible {
+  outline: 2px solid var(--accent1);
+  outline-offset: 2px;
+}
+
+/* Tailwind utility classes for the new color palette */
+.bg-accent1 {
+  background-color: var(--accent1);
+}
+
+.bg-accent2 {
+  background-color: var(--accent2);
+}
+
+.bg-accent3 {
+  background-color: var(--accent3);
+}
+
+.text-accent1 {
+  color: var(--accent1);
+}
+
+.text-accent2 {
+  color: var(--accent2);
+}
+
+.text-accent3 {
+  color: var(--accent3);
+}
+
+.border-accent1 {
+  border-color: var(--accent1);
+}
+
+.border-accent2 {
+  border-color: var(--accent2);
+}
+
+.border-accent3 {
+  border-color: var(--accent3);
+}
+
+/* Dark mode support for browsers that support it */
+@media (prefers-color-scheme: dark) {
+  .dark-mode-support {
+    --background: #1f1f1f;
+    --foreground: #fcfcfc;
+    
+    /* Adjust accent colors for better contrast in dark mode */
+    --accent1-light: rgba(28, 130, 74, 0.2);
+    --accent2-light: rgba(29, 97, 60, 0.2);
+    --accent3-light: rgba(30, 64, 45, 0.2);
+  }
+}
+
+/* Helper class for glass effect used throughout UI */
+.glass {
+  background: rgba(252, 252, 252, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Support for Safari */
+  border: 1px solid rgba(28, 130, 74, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient background matching the accent colors */
+.gradient-background {
+  background: linear-gradient(135deg, var(--background), rgba(28, 130, 74, 0.05));
+}
+
+/* Button gradient using accent colors */
+.btn-gradient {
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  transition: opacity 0.3s ease;
+}
+
+.btn-gradient:hover {
+  opacity: 0.9;
+}
+
+/* Print-specific styles for better print quality */
+@media print {
+  body {
+    color: #000;
+    background: #fff;
+  }
+  
+  .no-print {
+    display: none;
+  }
+}

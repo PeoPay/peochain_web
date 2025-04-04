@@ -1,3 +1,5 @@
+@import './colors-new.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,29 +11,30 @@
 
   body {
     @apply font-sans antialiased text-foreground;
-    background-color: #e1eae3;
+    background-color: var(--background);
   }
 }
 
 @layer components {
   /* Main color scheme */
   .gradient-background {
-    background-color: #e1eae3;
+    background: var(--background);
+    background: linear-gradient(135deg, var(--background), var(--accent1-light));
   }
 
   .glass {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(28, 130, 74, 0.1);
   }
 
   .btn-gradient {
-    background: linear-gradient(135deg, #6d9e79 0%, #4a6a52 100%);
+    background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 100%);
   }
   
   /* Visual hierarchy classes */
   .section-title {
-    color: #6d9e79;  /* Accent 1 */
+    color: var(--accent1);
     font-size: 2rem;
     font-weight: 700;
     line-height: 1.2;
@@ -39,7 +42,7 @@
   }
   
   .sub-section-title {
-    color: #38503f; /* Foreground */
+    color: var(--foreground);
     font-size: 1.5rem;
     font-weight: 600;
     line-height: 1.3;
@@ -47,7 +50,7 @@
   }
   
   .feature-title {
-    color: #38503f; /* Foreground */
+    color: var(--foreground);
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 1.4;
@@ -55,7 +58,8 @@
   }
   
   .description {
-    color: #577060; /* lighter variant for readability */
+    color: var(--foreground);
+    opacity: 0.8;
     font-size: 1rem;
     line-height: 1.6;
   }
@@ -97,7 +101,7 @@
   
   .whitepaper-section:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(90, 131, 100, 0.1);
+    box-shadow: 0 4px 12px rgba(28, 130, 74, 0.1);
   }
   
   /* Responsive adjustments for diagrams and charts */
