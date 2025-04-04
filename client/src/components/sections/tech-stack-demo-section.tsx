@@ -1,7 +1,7 @@
 import React from 'react';
-import CrossChainVisualization from '../visualizations/cross-chain-visualization';
+import EnhancedCrossChainVisualization from '../visualizations/enhanced-cross-chain-visualization';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ChevronRight, Layers, Network, Shield, Code, Zap } from 'lucide-react';
+import { ChevronRight, Layers, Network, Shield, Code, Zap, LockKeyhole } from 'lucide-react';
 
 export default function TechStackDemoSection() {
   return (
@@ -141,7 +141,7 @@ export default function TechStackDemoSection() {
             the free flow of assets, data, and smart contract interactions across previously isolated chains.
           </p>
         </div>
-        <CrossChainVisualization />
+        <EnhancedCrossChainVisualization />
         
         <div className="mt-8 bg-white/50 backdrop-blur rounded-xl p-6">
           <h4 className="text-lg font-semibold mb-3">Key Technical Advantages</h4>

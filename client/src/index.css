@@ -1,4 +1,5 @@
 @import './colors-new.css';
+@import './styles/glass.css';
 
 @tailwind base;
 @tailwind components;
