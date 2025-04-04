@@ -14,11 +14,21 @@ export default function HeroSection({ onExploreClick, onJoinClick }: HeroSection
       <div className="flex flex-col lg:flex-row items-center">
         <div className="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
           <h1 className="font-poppins font-bold text-4xl md:text-5xl leading-tight mb-6 text-foreground">
-            <span className="text-primary">PEOCHAIN</span>: Redefining Blockchain for the Next Generation
+            <span className="text-primary">PEOCHAIN</span>: Redefining Blockchain Synergy with Proof of Synergy (PoSyg)
           </h1>
           <p className="text-lg md:text-xl mb-8 text-foreground/80 max-w-xl">
-            Advanced technology solving blockchain's biggest challenges—scalability, security, and decentralization.
+            Scalable, quantum-resistant, and interoperable—built for the future of decentralized networks.
           </p>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-2 bg-green-500/10 px-3 py-1 rounded-full">
+              <ShieldCheck className="w-4 h-4 text-green-500" />
+              <span className="text-sm text-green-600">Audited & Verified</span>
+            </div>
+            <div className="flex items-center gap-2 bg-primary/10 px-3 py-1 rounded-full">
+              <Users className="w-4 h-4 text-primary" />
+              <span className="text-sm text-primary">10,000+ Developers</span>
+            </div>
+          </div>
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Button 
               onClick={onJoinClick}

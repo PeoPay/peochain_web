@@ -26,13 +26,13 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [, setLocation] = useLocation();
-  
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       setIsScrolled(scrollPosition > 20);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -41,12 +41,12 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
     setIsOpen(false);
     callback();
   };
-  
+
   const navigateToWhitepaper = () => {
     setIsOpen(false);
     setLocation('/whitepaper');
   };
-  
+
   const navigateToHomeSection = (section: string) => {
     setIsOpen(false);
     // If already on home page, use scrollIntoView
@@ -60,7 +60,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
       setLocation(`/#${section}`);
     }
   };
-  
+
   return (
     <header 
       className={cn(
@@ -79,7 +79,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
           />
         </a>
       </div>
-      
+
       <div className="hidden lg:flex items-center">
         <NavigationMenu>
           <NavigationMenuList>
@@ -287,15 +287,24 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        
-        <Button 
-          onClick={() => navigateToHomeSection('waitlist')}
-          className="btn-gradient text-white font-medium py-2 px-6 rounded-full ml-4"
-        >
-          Join Waitlist
-        </Button>
+
+        <div className="hidden md:flex items-center gap-3">
+          <Button 
+            onClick={onWaitlistClick}
+            variant="outline"
+            className="text-primary border-primary hover:bg-primary/10"
+          >
+            Try Demo
+          </Button>
+          <Button 
+            onClick={() => window.location.href = '/whitepaper'}
+            className="btn-gradient text-white"
+          >
+            Explore Whitepaper
+          </Button>
+        </div>
       </div>
-      
+
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild className="lg:hidden">
           <Button variant="ghost" size="icon" className="text-foreground text-2xl">
@@ -317,7 +326,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                 <X className="h-5 w-5" />
               </Button>
             </div>
-            
+
             <div className="flex-1 overflow-auto py-4 px-6">
               <nav className="flex flex-col space-y-1 w-full">
                 <div className="py-3 sm:py-4 border-b border-primary/10">
@@ -349,7 +358,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                     </button>
                   </div>
                 </div>
-                
+
                 <div className="py-4 border-b border-primary/10">
                   <div className="flex items-center mb-2">
                     <Code className="h-5 w-5 text-primary mr-2" />
@@ -379,7 +388,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                     </button>
                   </div>
                 </div>
-                
+
                 <button 
                   onClick={() => navigateToHomeSection('benefits')}
                   className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
@@ -387,7 +396,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                   <ChevronRight className="h-4 w-4 text-primary mr-2" />
                   Benefits
                 </button>
-                
+
                 <button 
                   onClick={() => navigateToHomeSection('faq')}
                   className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
@@ -395,7 +404,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                   <ChevronRight className="h-4 w-4 text-primary mr-2" />
                   FAQ
                 </button>
-                
+
                 <button 
                   onClick={navigateToWhitepaper}
                   className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
@@ -405,7 +414,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                 </button>
               </nav>
             </div>
-            
+
             <div className="p-6 border-t border-primary/10">
               <Button 
                 onClick={() => navigateToHomeSection('waitlist')}
