@@ -7,7 +7,7 @@ import Home from "@/pages/Home";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import Whitepaper from "@/pages/Whitepaper";
-import CookieConsent from "@/components/CookieConsent"; // Assuming this component is defined elsewhere
+import CookieConsent from "@/components/ui/cookie-consent";
 
 function Router() {
   return (

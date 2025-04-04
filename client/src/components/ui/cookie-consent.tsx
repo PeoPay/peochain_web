@@ -1,40 +1,72 @@
-
 import { useState, useEffect } from 'react';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
+import { Link } from 'wouter';
 
-export function CookieConsent() {
-  const [show, setShow] = useState(false);
+export default function CookieConsent() {
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookie-consent');
-    if (!consent) {
-      setShow(true);
+    // Check if user has already accepted cookies
+    const hasAcceptedCookies = localStorage.getItem('cookiesAccepted');
+    if (!hasAcceptedCookies) {
+      // Show banner after a short delay
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, 1000);
+      return () => clearTimeout(timer);
     }
   }, []);
 
-  const accept = () => {
-    localStorage.setItem('cookie-consent', 'accepted');
-    setShow(false);
+  const acceptCookies = () => {
+    localStorage.setItem('cookiesAccepted', 'true');
+    setIsVisible(false);
   };
 
-  if (!show) return null;
+  const declineCookies = () => {
+    // Here you would implement logic to disable non-essential cookies
+    localStorage.setItem('cookiesAccepted', 'false');
+    setIsVisible(false);
+  };
+
+  if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur border-t border-primary/10 p-4 z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <p className="text-sm text-foreground/80">
-          We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
-          <a href="/privacy-policy" className="text-primary hover:underline ml-1">Learn more</a>
-        </p>
-        <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm" onClick={() => setShow(false)}>
+    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 bg-background/95 backdrop-blur-sm border-t border-border shadow-lg">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex-1">
+          <h3 className="text-lg font-semibold mb-2">Cookie Consent</h3>
+          <p className="text-sm text-foreground/80 max-w-3xl">
+            This website uses cookies to enhance your browsing experience. By continuing to use this site, you consent to our use of cookies in accordance with our{' '}
+            <Link href="/privacy-policy" className="text-primary underline">
+              Privacy Policy
+            </Link>.
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={declineCookies}
+            className="whitespace-nowrap"
+          >
             Decline
           </Button>
-          <Button size="sm" onClick={accept} className="bg-primary hover:bg-primary/90">
-            Accept
+          <Button 
+            onClick={acceptCookies}
+            size="sm"
+            className="whitespace-nowrap"
+          >
+            Accept Cookies
           </Button>
         </div>
+        <button 
+          onClick={() => setIsVisible(false)} 
+          className="absolute top-4 right-4 md:static md:ml-2 text-foreground/70 hover:text-foreground"
+          aria-label="Close cookie banner"
+        >
+          <X size={20} />
+        </button>
       </div>
     </div>
   );

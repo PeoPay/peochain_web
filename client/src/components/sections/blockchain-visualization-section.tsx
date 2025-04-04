@@ -1,5 +1,6 @@
 import React from 'react';
 import BlockchainVisualization from '../visualizations/blockchain-visualization';
+import { XCircle, CheckCircle2 } from 'lucide-react';
 
 export default function BlockchainVisualizationSection() {
   return (
