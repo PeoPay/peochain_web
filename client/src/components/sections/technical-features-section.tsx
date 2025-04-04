@@ -139,8 +139,7 @@ export default function TechnicalFeaturesSection() {
           <motion.div 
             key={feature.id}
             variants={itemVariants}
-            className="glass p-6 rounded-xl hover:shadow-lg transition-shadow cursor-pointer"
-            onClick={() => setSelectedFeature(feature.id)}
+            className="glass p-6 rounded-xl hover:shadow-lg transition-shadow"
           >
             <div className="flex flex-col items-center text-center">
               <div className="bg-primary/20 p-4 rounded-full text-primary mb-4">
@@ -152,6 +151,7 @@ export default function TechnicalFeaturesSection() {
                 variant="outline" 
                 size="sm" 
                 className="mt-auto"
+                onClick={() => setSelectedFeature(feature.id)}
               >
                 Learn More <ExternalLink className="ml-2 h-4 w-4" />
               </Button>

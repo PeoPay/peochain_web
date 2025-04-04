@@ -121,8 +121,10 @@ export default function PerformanceComparisonSection() {
                       {row.feature}
                       <TooltipProvider>
                         <Tooltip>
-                          <TooltipTrigger>
-                            <Info className="h-4 w-4 ml-2 text-muted-foreground" />
+                          <TooltipTrigger asChild>
+                            <span className="inline-flex ml-2">
+                              <Info className="h-4 w-4 text-muted-foreground" />
+                            </span>
                           </TooltipTrigger>
                           <TooltipContent>
                             <p className="max-w-xs">{row.tooltip}</p>
@@ -147,17 +149,18 @@ export default function PerformanceComparisonSection() {
         <div className="space-y-4">
           {comparisonData.map((row) => (
             <div key={row.id} className="glass rounded-xl overflow-hidden">
-              <Button
-                variant="ghost"
-                className="w-full flex items-center justify-between p-4 text-left"
+              <div
+                className="w-full flex items-center justify-between p-4 text-left cursor-pointer bg-transparent hover:bg-primary/5 transition-colors"
                 onClick={() => toggleRow(row.id)}
               >
                 <div className="flex items-center">
                   {row.feature}
                   <TooltipProvider>
                     <Tooltip>
-                      <TooltipTrigger>
-                        <Info className="h-4 w-4 ml-2 text-muted-foreground" />
+                      <TooltipTrigger asChild>
+                        <span className="inline-flex ml-2">
+                          <Info className="h-4 w-4 text-muted-foreground" />
+                        </span>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p className="max-w-xs">{row.tooltip}</p>
@@ -166,7 +169,7 @@ export default function PerformanceComparisonSection() {
                   </TooltipProvider>
                 </div>
                 {expandedRows[row.id] ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-              </Button>
+              </div>
               
               {expandedRows[row.id] && (
                 <div className="p-4 pt-0 space-y-3">
