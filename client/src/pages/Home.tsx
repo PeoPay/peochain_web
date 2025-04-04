@@ -11,13 +11,12 @@ import TechnologySection from "@/components/sections/technology-section";
 import WhyItMattersSection from "@/components/sections/why-it-matters-section";
 import BlockchainVisualizationSection from "@/components/sections/blockchain-visualization-section";
 import TechStackDemoSection from "@/components/sections/tech-stack-demo-section";
+import ProblemSolutionSection from "@/components/sections/problem-solution-section";
+import TechnicalFeaturesSection from "@/components/sections/technical-features-section";
 import PerformanceComparisonSection from "@/components/sections/performance-comparison-section";
 import TokenomicsSection from "@/components/sections/tokenomics-section";
 import RoadmapSection from "@/components/sections/roadmap-section";
 import CommunitySection from "@/components/sections/community-section";
-// New updated components
-import ProblemsSolutionsSection from "@/components/sections/problems-solutions-section";
-import InteractiveTechHighlightsSection from "@/components/sections/interactive-tech-highlights-section";
 
 export default function Home() {
   const featuresRef = useRef<HTMLDivElement>(null);
@@ -44,7 +43,7 @@ export default function Home() {
         onFaqClick={() => scrollToRef(faqRef)}
       />
       <main className="pt-16 md:pt-20">
-        {/* Hero Banner with updated design */}
+        {/* Hero Banner */}
         <HeroSection 
           onExploreClick={() => scrollToRef(featuresRef)}
           onJoinClick={() => scrollToRef(waitlistRef)}
@@ -55,11 +54,8 @@ export default function Home() {
           onExploreClick={() => scrollToRef(technologyRef)}
         />
 
-        {/* Problems & Solutions Table */}
-        <ProblemsSolutionsSection />
-
-        {/* Interactive Technical Highlights */}
-        <InteractiveTechHighlightsSection />
+        {/* Problem-Solution Section with interactive cards */}
+        <ProblemSolutionSection />
 
         {/* Features & Benefits */}
         <div id="features" ref={featuresRef}>
@@ -73,9 +69,11 @@ export default function Home() {
         <div id="technology" ref={technologyRef}>
           <TechnologySection />
         </div>
+        <TechnicalFeaturesSection />
         
         {/* Interactive Visualizations */}
         <BlockchainVisualizationSection />
+        <TechStackDemoSection />
         
         {/* Performance Comparison */}
         <PerformanceComparisonSection />
