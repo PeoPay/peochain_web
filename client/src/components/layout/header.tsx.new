@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { Menu, Button, Dropdown, Icon, Sidebar } from 'semantic-ui-react';
+import { Menu, Button, Dropdown, Icon, Sidebar, Segment } from 'semantic-ui-react';
 
 interface HeaderProps {
   onFeatureClick: () => void;
@@ -64,7 +64,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
         }}
       >
         <Menu.Item header>
-          <a href="/" style={{ display: 'flex', alignItems: 'center' }}>
+          <a href="/" className="flex items-center">
             <img 
               src="/images/peochain-logo.png" 
               alt="PEOCHAIN Logo" 

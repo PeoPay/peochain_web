@@ -1,35 +1,24 @@
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
+// Import Semantic UI CSS
+import 'semantic-ui-css/semantic.min.css';
 
 const fontStyles = `
+  /* Custom PeoChain Theme Variables */
   :root {
-    --background: 120 22% 90%;
-    --foreground: 134 16% 27%;
-    --card: 0 0% 100%;
-    --card-foreground: 134 16% 27%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 134 16% 27%;
-    --primary: 135 18% 53%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 142 15% 44%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 120 22% 95%;
-    --muted-foreground: 134 16% 45%;
-    --accent: 120 22% 95%;
-    --accent-foreground: 134 16% 27%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 134 16% 85%;
-    --input: 134 16% 85%;
-    --ring: 135 18% 53%;
-    --radius: 0.75rem;
-    
-    --chart-1: 135 18% 53%;
-    --chart-2: 142 15% 44%;
-    --chart-3: 139 19% 36%;
-    --chart-4: 120 22% 90%;
-    --chart-5: 134 16% 27%;
+    --peo-primary: #6b996d;
+    --peo-secondary: #58875b;
+    --peo-accent: #445e45;
+    --peo-background: #eaf0ea;
+    --peo-text: #2d4b2e;
+    --peo-muted: #8aad8c;
+    --peo-border: #d5e3d6;
+    --peo-chart-1: #6b996d;
+    --peo-chart-2: #58875b;
+    --peo-chart-3: #445e45;
+    --peo-chart-4: #eaf0ea;
+    --peo-chart-5: #2d4b2e;
   }
 
   *::-webkit-scrollbar, *::-webkit-scrollbar-track {
@@ -38,10 +27,28 @@ const fontStyles = `
 
   body {
     font-family: 'Inter', sans-serif;
+    background-color: var(--peo-background);
+    color: var(--peo-text);
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', sans-serif;
+    color: var(--peo-text);
+  }
+
+  /* Custom Semantic UI Overrides */
+  .ui.primary.button,
+  .ui.primary.buttons .button {
+    background-color: var(--peo-primary);
+  }
+
+  .ui.secondary.button,
+  .ui.secondary.buttons .button {
+    background-color: var(--peo-secondary);
+  }
+
+  .ui.segment {
+    border-color: var(--peo-border);
   }
 `;
 
