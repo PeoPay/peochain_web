@@ -1,210 +1,311 @@
-@import './colors-new.css';
-@import './styles/glass.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* ShadCN UI Theme Variables */
+    --background: 0 0% 99%;
+    --foreground: 0 0% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+    --primary: 142 55% 31%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 146 33% 31%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 97%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 143 56% 31%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 142 55% 31%;
+    --radius: 0.5rem;
+    
+    /* Sidebar Variables */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 12%;
+    --sidebar-primary: 142 55% 31%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 146 33% 31%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 142 55% 31%;
+    
+    /* Chart Colors */
+    --chart-1: 142 55% 31%;
+    --chart-2: 146 33% 31%;
+    --chart-3: 154 26% 22%;
+    --chart-4: 0 0% 97%;
+    --chart-5: 0 0% 12%;
+
+    /* Main colors from PeoChain brand */
+    --accent1: #1c824a;
+    --accent2: #1d613c;
+    --accent3: #1e402d;
+    
+    /* Derived colors for UI elements */
+    --accent1-light: rgba(28, 130, 74, 0.1);
+    --accent1-medium: rgba(28, 130, 74, 0.5);
+    --accent2-light: rgba(29, 97, 60, 0.1);
+    --accent3-light: rgba(30, 64, 45, 0.1);
+    
+    /* Semantic colors */
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --error: #EF4444;
+    --info: #3B82F6;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* ShadCN UI Dark Theme Variables */
+      --background: 0 0% 12%;
+      --foreground: 0 0% 98%;
+      --card: 0 0% 15%;
+      --card-foreground: 0 0% 98%;
+      --popover: 0 0% 15%;
+      --popover-foreground: 0 0% 98%;
+      --primary: 142 55% 31%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 146 33% 31%;
+      --secondary-foreground: 0 0% 100%;
+      --muted: 0 0% 20%;
+      --muted-foreground: 0 0% 60%;
+      --accent: 143 56% 31%;
+      --accent-foreground: 0 0% 100%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 0 0% 25%;
+      --input: 0 0% 25%;
+      --ring: 142 55% 31%;
+      
+      /* Sidebar Variables - Dark Mode */
+      --sidebar-background: 0 0% 15%;
+      --sidebar-foreground: 0 0% 98%;
+      --sidebar-primary: 142 55% 31%;
+      --sidebar-primary-foreground: 0 0% 100%;
+      --sidebar-accent: 146 33% 31%;
+      --sidebar-accent-foreground: 0 0% 100%;
+      --sidebar-border: 0 0% 25%;
+      --sidebar-ring: 142 55% 31%;
+      
+      /* Chart Colors - Adjusted for dark mode */
+      --chart-1: 142 55% 45%;
+      --chart-2: 146 33% 45%;
+      --chart-3: 154 26% 35%;
+      --chart-4: 0 0% 25%;
+      --chart-5: 0 0% 98%;
+      
+      /* Adjust accent colors for better contrast in dark mode */
+      --accent1-light: rgba(28, 130, 74, 0.2);
+      --accent2-light: rgba(29, 97, 60, 0.2);
+      --accent3-light: rgba(30, 64, 45, 0.2);
+    }
+  }
+
   * {
-    @apply border-border;
+    @apply border-border box-border m-0 p-0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    @apply scroll-smooth;
   }
 
   body {
-    @apply font-sans antialiased text-foreground;
-    background-color: var(--background);
+    @apply font-sans antialiased text-foreground bg-background;
+  }
+
+  /* Cross-browser form element consistency */
+  input, 
+  button, 
+  textarea, 
+  select {
+    @apply font-sans text-inherit;
+  }
+
+  /* Consistent focus styles across browsers */
+  :focus-visible {
+    @apply outline-accent1 outline-2 outline-offset-2;
+  }
+
+  /* SVG diagram text styling */
+  .consensus-diagram text,
+  .subnet-diagram text,
+  .mobile-integration-diagram text {
+    @apply font-sans;
   }
 }
 
 @layer components {
-  /* Main color scheme */
-  .gradient-background {
-    background: var(--background);
-    background: linear-gradient(135deg, var(--background), var(--accent1-light));
+  /* Main UI components */
+  .btn-gradient {
+    @apply bg-gradient-primary transition-opacity duration-300;
+  }
+  
+  .btn-gradient:hover {
+    @apply opacity-90;
   }
 
   .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(28, 130, 74, 0.1);
-  }
-
-  .btn-gradient {
-    background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 100%);
+    @apply bg-white/70 backdrop-blur-lg border border-accent1/10 shadow-md;
   }
   
-  /* Visual hierarchy classes */
+  .dark .glass {
+    @apply bg-black/40 border-accent1/20;
+  }
+
+  .gradient-background {
+    @apply bg-gradient-background;
+  }
+
+  /* Visual hierarchy components */
   .section-title {
-    color: var(--accent1);
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
+    @apply text-accent1 text-4xl font-bold leading-tight mb-4;
   }
   
   .sub-section-title {
-    color: var(--foreground);
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1.3;
-    margin-bottom: 0.75rem;
+    @apply text-foreground text-2xl font-semibold leading-snug mb-3;
   }
   
   .feature-title {
-    color: var(--foreground);
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.4;
-    margin-bottom: 0.5rem;
+    @apply text-foreground text-xl font-semibold leading-relaxed mb-2;
   }
   
   .description {
-    color: var(--foreground);
-    opacity: 0.8;
-    font-size: 1rem;
-    line-height: 1.6;
+    @apply text-foreground/80 text-base leading-relaxed;
   }
   
   .social-icon {
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    @apply transition-all duration-300 ease-in-out;
   }
   
   .social-icon:hover {
-    transform: translateY(-3px);
+    @apply -translate-y-[3px];
   }
   
-  /* Diagram Animations */
-  @keyframes dash {
-    from {
-      stroke-dashoffset: 20;
-    }
-    to {
-      stroke-dashoffset: 0;
-    }
+  /* Whitepaper specific components */
+  .whitepaper-section {
+    @apply transition-all duration-300 ease-in-out;
   }
   
+  .whitepaper-section:hover {
+    @apply -translate-y-0.5 shadow-[0_4px_12px_rgba(28,130,74,0.1)];
+  }
+
+  /* Diagram & Chart components */
   .animate-dash {
     stroke-dasharray: 5, 5;
     animation: dash 1s linear infinite;
   }
   
-  /* SVG diagram styles */
-  .consensus-diagram text,
-  .subnet-diagram text,
-  .mobile-integration-diagram text {
-    font-family: ui-sans-serif, system-ui, sans-serif;
+  .animate-gentle-pulse {
+    animation: gentle-pulse 2s infinite ease-in-out;
   }
   
-  /* Whitepaper specific styles */
-  .whitepaper-section {
-    transition: all 0.3s ease;
+  .transaction-particle {
+    offset-path: path('M0,0 C100,0 0,100 100,100');
+    animation: move-along-path 2s ease-in-out forwards;
   }
   
-  .whitepaper-section:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(28, 130, 74, 0.1);
-  }
-  
-  /* Responsive adjustments for diagrams and charts */
-  .consensus-diagram text,
-  .subnet-diagram text,
-  .tokenomics-diagram text,
-  .mobile-integration-diagram text {
-    transition: font-size 0.2s ease;
-  }
-
-  /* Enhanced responsive adjustments for mobile */
-  @media (max-width: 640px) {
-    /* Improved text sizing for better readability */
-    .consensus-diagram text,
-    .subnet-diagram text,
-    .tokenomics-diagram text,
-    .mobile-integration-diagram text {
-      font-size: 10px !important; /* Consistent minimum font size */
-      font-weight: 500 !important; /* Medium weight for better visibility */
-      letter-spacing: 0.01em !important; /* Improved letter spacing */
-    }
-    
-    /* Adjust diagram grid layouts for mobile */
-    .whitepaper-section .flex.justify-center.gap-6 {
-      gap: 0.75rem !important; /* More compact spacing for mobile */
-      align-items: center !important; /* Ensure vertical alignment */
-    }
-    
-    /* Better text size for readability */
-    .whitepaper-section .flex.gap-6 span {
-      font-size: 0.8rem; /* Improved font size for better readability */
-    }
-    
-    /* Consistent SVG rendering on mobile */
-    .whitepaper-section svg {
-      height: auto !important;
-      max-height: 450px !important; /* Taller maximum height for visibility */
-    }
-    
-    /* Improve responsive diagrams in mobile view */
-    .responsive-diagram {
-      min-height: 380px !important; /* Ensure taller diagrams on mobile */
-    }
-  }
-
-  /* Chart container responsiveness with consistent sizing */
   .chart-container,
   .responsive-chart,
   .responsive-diagram {
-    max-width: 100%;
-    overflow: hidden;
-    margin: 0 auto; /* Center all charts and diagrams */
+    @apply max-w-full overflow-hidden mx-auto;
   }
   
   .responsive-chart {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative; /* Create positioning context */
-    width: 100%; /* Ensure full width usage */
+    @apply flex justify-center items-center relative w-full;
   }
   
   .responsive-diagram {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 350px; /* Ensure minimum height for content visibility */
-    position: relative; /* Create positioning context */
+    @apply flex justify-center items-center w-full min-h-[350px] relative;
   }
   
   .responsive-chart svg,
   .responsive-diagram svg {
-    width: 100%;
-    height: 100%; /* Use full height of container */
-    max-width: 100%;
-    object-fit: contain; /* Preserve aspect ratio */
-    display: block; /* Remove default inline spacing */
+    @apply w-full h-full max-w-full object-contain block;
   }
-
-  /* Ensure diagrams don't overflow on small screens */
+  
   .whitepaper-section svg {
-    max-width: 100%;
-    height: auto;
-    overflow: visible;
+    @apply max-w-full h-auto overflow-visible;
+  }
+}
+
+@layer utilities {
+  /* Print-specific utilities */
+  @media print {
+    body {
+      @apply text-black bg-white;
+    }
+    
+    .no-print {
+      @apply hidden;
+    }
   }
 
-  /* Better mobile experience for expanded sections */
-  @media (max-width: 768px) {
-    /* Improved table readability on small screens */
+  /* Mobile fixes */
+  @media (hover: none) {
+    /* Prevent sticky hover states on mobile */
+    button:hover,
+    a:hover {
+      background: initial;
+      color: initial;
+    }
+  }
+  
+  /* Enhanced responsive adjustments for mobile */
+  @screen sm {
+    .consensus-diagram text,
+    .subnet-diagram text,
+    .tokenomics-diagram text,
+    .mobile-integration-diagram text {
+      font-size: 10px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.01em !important;
+      transition-property: font-size;
+      transition-duration: 200ms;
+      transition-timing-function: ease-out;
+    }
+    
+    .whitepaper-section .flex.justify-center.gap-6 {
+      gap: 0.75rem !important;
+      align-items: center !important;
+    }
+    
+    .whitepaper-section .flex.gap-6 span {
+      font-size: 0.75rem;
+    }
+    
+    .whitepaper-section svg {
+      height: auto !important;
+      max-height: 450px !important;
+    }
+    
+    .responsive-diagram {
+      min-height: 380px !important;
+    }
+  }
+  
+  /* Medium screen adjustments */
+  @screen md {
     .whitepaper-section table {
-      font-size: 0.7rem;
-      line-height: 1.3;
+      font-size: 0.75rem;
+      line-height: 1.25;
     }
     
     .whitepaper-section table th,
     .whitepaper-section table td {
       padding: 0.3rem !important;
-      word-break: break-word;
+      word-wrap: break-word;
     }
     
-    /* Adjust diagram heights on mobile for better visibility */
     .whitepaper-section .h-\[300px\] {
       height: 250px !important;
     }
@@ -217,29 +318,25 @@
       height: 200px !important;
     }
     
-    /* Prevent text overlapping in SVG elements */
     .whitepaper-section text {
       font-size: 9px !important;
       font-weight: 500 !important;
     }
     
-    /* Better spacing for mobile tables with horizontal scrolling */
     .whitepaper-section .overflow-x-auto {
-      margin: 0 -4px;
-      padding: 0 4px;
+      margin-left: -0.25rem;
+      padding-left: 0.25rem;
       width: calc(100% + 8px);
       -webkit-overflow-scrolling: touch;
     }
     
-    /* Improve card spacing on mobile */
     .whitepaper-section .p-6 {
       padding: 1rem !important;
     }
     
-    /* Better grid layouts on mobile */
     .whitepaper-section .grid-cols-2,
     .whitepaper-section .grid-cols-3 {
-      grid-template-columns: 1fr !important;
+      grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
       gap: 0.75rem !important;
     }
   }
