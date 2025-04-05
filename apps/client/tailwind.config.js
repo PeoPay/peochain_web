@@ -4,7 +4,9 @@ const path = require('path');
 module.exports = {
   content: [
     path.join(__dirname, "src/**/*.{ts,tsx,js,jsx}"),
-    path.join(__dirname, "index.html")
+    path.join(__dirname, "index.html"),
+    path.join(__dirname, "../server/src/**/*.{ts,tsx,js,jsx}"),
+    path.join(__dirname, "../../packages/**/*.{ts,tsx,js,jsx}")
   ],
   theme: {
     container: {
