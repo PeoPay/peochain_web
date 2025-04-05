@@ -1,21 +1,9 @@
 @import './colors-new.css';
 @import './styles/glass.css';
 
-/* Keep Tailwind for now during incremental migration */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Bootstrap Overrides */
-:root {
-  --bs-primary: #4CAF50;
-  --bs-success: #4CAF50;
-  --bs-teal: #009688;
-  --bs-dark: #4E7960;
-  --bs-light: #F1F8F4;
-  --bs-body-bg: #F1F8F4;
-  --bs-body-color: #2B5741;
-}
 
 @layer base {
   * {
