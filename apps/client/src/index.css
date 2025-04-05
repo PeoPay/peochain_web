@@ -69,22 +69,31 @@
  
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   .hover-scale {
-    @apply transition-transform duration-200 hover:scale-105;
+    transition-property: transform;
+    transition-duration: 200ms;
   }
-  
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+}
+
+@layer utilities {
   .fade-in {
-    @apply animate-fadeIn;
+    animation: fadeIn 0.5s ease-in-out;
   }
   
   .slide-up {
-    @apply animate-slideUp;
+    animation: slideUp 0.5s ease-in-out;
   }
 }
 
