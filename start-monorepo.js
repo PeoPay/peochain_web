@@ -29,14 +29,23 @@ function logWarning(message) {
   console.log(`${colors.yellow}[WARNING]${colors.reset} ${message}`);
 }
 
-// Ensure theme.json is available in the client directory
+// Ensure theme.json is available in both client and server directories
 const rootThemePath = path.join(process.cwd(), 'theme.json');
 const clientThemePath = path.join(process.cwd(), 'apps/client/theme.json');
+const serverThemePath = path.join(process.cwd(), 'apps/server/theme.json');
 
-if (fs.existsSync(rootThemePath) && !fs.existsSync(clientThemePath)) {
-  logInfo('Copying theme.json to client directory...');
-  fs.copyFileSync(rootThemePath, clientThemePath);
-  logSuccess('theme.json copied to client directory');
+if (fs.existsSync(rootThemePath)) {
+  if (!fs.existsSync(clientThemePath)) {
+    logInfo('Copying theme.json to client directory...');
+    fs.copyFileSync(rootThemePath, clientThemePath);
+    logSuccess('theme.json copied to client directory');
+  }
+  
+  if (!fs.existsSync(serverThemePath)) {
+    logInfo('Copying theme.json to server directory...');
+    fs.copyFileSync(rootThemePath, serverThemePath);
+    logSuccess('theme.json copied to server directory');
+  }
 }
 
 // Build the types package first

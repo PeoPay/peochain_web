@@ -13,7 +13,8 @@
  */
 
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { Pool } from 'pg';
+import pkg from 'pg';
+const { Pool } = pkg;
 import { pgTable, text, serial, integer, boolean, timestamp, jsonb, date } from 'drizzle-orm/pg-core';
 
 // Define schema locally to avoid import issues in the monorepo
