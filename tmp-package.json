@@ -1,0 +1,21 @@
+{
+  "name": "peochain",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "cd apps/server && npm run dev & cd apps/client && npm run dev",
+    "build": "cd apps/client && npm run build && cd ../server && npm run build",
+    "start": "cd apps/server && NODE_ENV=production npm run start",
+    "check": "cd apps/server && npm run check && cd ../client && npm run check",
+    "db:push": "cd apps/server && npm run db:push"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "private": true
+}
