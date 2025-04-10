@@ -69,31 +69,22 @@
  
 @layer base {
   * {
-    border-color: hsl(var(--border));
+    @apply border-border;
   }
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply bg-background text-foreground antialiased;
   }
   
   .hover-scale {
-    transition-property: transform;
-    transition-duration: 200ms;
+    @apply transition-transform duration-200 hover:scale-105;
   }
-  .hover-scale:hover {
-    transform: scale(1.05);
-  }
-}
-
-@layer utilities {
+  
   .fade-in {
-    animation: fadeIn 0.5s ease-in-out;
+    @apply animate-fadeIn;
   }
   
   .slide-up {
-    animation: slideUp 0.5s ease-in-out;
+    @apply animate-slideUp;
   }
 }
 
