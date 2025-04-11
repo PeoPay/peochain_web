@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, ChevronDown, X, ChevronRight, Code, Shield, Zap, Network, Layers, DollarSign } from "lucide-react";
+import { Menu, ChevronDown, X, ChevronRight, Code, Shield, Zap, Network, Layers, DollarSign, Moon, Sun } from "lucide-react";
 import { useLocation } from "wouter";
 import {
   NavigationMenu,
@@ -20,9 +20,19 @@ interface HeaderProps {
   onTechnologyClick?: () => void;
   onWaitlistClick: () => void;
   onFaqClick?: () => void;
+  darkMode?: boolean;
+  toggleDarkMode?: () => void;
 }
 
-export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyClick, onWaitlistClick, onFaqClick }: HeaderProps) {
+export default function Header({ 
+  onFeatureClick, 
+  onBenefitsClick, 
+  onTechnologyClick, 
+  onWaitlistClick, 
+  onFaqClick,
+  darkMode,
+  toggleDarkMode
+}: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [, setLocation] = useLocation();
@@ -288,6 +298,18 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
           </NavigationMenuList>
         </NavigationMenu>
         
+        {toggleDarkMode && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleDarkMode}
+            className="mr-2"
+            title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </Button>
+        )}
+        
         <Button 
           onClick={() => navigateToHomeSection('waitlist')}
           className="btn-gradient text-white font-medium py-2 px-6 rounded-full ml-4"
@@ -407,6 +429,20 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
             </div>
             
             <div className="p-6 border-t border-primary/10">
+              {toggleDarkMode && (
+                <div className="flex items-center justify-between mb-4 py-2 border-b border-primary/10">
+                  <span className="font-medium">Dark Mode</span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={toggleDarkMode}
+                    title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+                  >
+                    {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                  </Button>
+                </div>
+              )}
+              
               <Button 
                 onClick={() => navigateToHomeSection('waitlist')}
                 className="btn-gradient text-white font-medium py-6 px-8 rounded-full w-full"
