@@ -213,10 +213,10 @@ export class AnalyticsService {
       `;
 
       const queryApi = this.influxClient.getQueryApi(this.org);
-      const result = await queryApi.collectRows(query);
+      const result: Array<Record<string, any>> = await queryApi.collectRows(query);
       
-      if (result.length > 0) {
-        return result[0]._value as number;
+      if (result.length > 0 && '_value' in result[0]) {
+        return Number(result[0]._value);
       }
       
       return 0;
@@ -242,10 +242,10 @@ export class AnalyticsService {
       `;
 
       const queryApi = this.influxClient.getQueryApi(this.org);
-      const result = await queryApi.collectRows(query);
+      const result: Array<Record<string, any>> = await queryApi.collectRows(query);
       
-      if (result.length > 0) {
-        return result[0]._value as number;
+      if (result.length > 0 && '_value' in result[0]) {
+        return Number(result[0]._value);
       }
       
       return 0;
@@ -272,10 +272,10 @@ export class AnalyticsService {
       `;
 
       const queryApi = this.influxClient.getQueryApi(this.org);
-      const result = await queryApi.collectRows(query);
+      const result: Array<Record<string, any>> = await queryApi.collectRows(query);
       
-      if (result.length > 0) {
-        return result[0]._value as number;
+      if (result.length > 0 && '_value' in result[0]) {
+        return Number(result[0]._value);
       }
       
       return 0;

@@ -13,104 +13,98 @@
  * - Message serialization and deserialization
  */
 
+import { Server as SocketServer } from 'socket.io';
 import { Server as HTTPServer } from 'http';
-import { Server, Socket } from 'socket.io';
+import { Socket } from 'socket.io';
 import { createClient } from 'redis';
 import { log } from './vite';
+import { getAnalyticsService } from './analytics';
 
-// Define event types for type safety
+// Define the event types for better type safety
 export type WaitlistEvent = 
   | { type: 'NEW_SIGNUP'; data: { email: string; position: number; referralCode: string } }
   | { type: 'NEW_REFERRAL'; data: { referralCode: string; count: number } }
   | { type: 'ANALYTICS_UPDATE'; data: { totalSignups: number; totalReferrals: number } };
 
 export class WebSocketManager {
-  private io: Server;
-  private redisPublisher: ReturnType<typeof createClient>;
-  private redisSubscriber: ReturnType<typeof createClient>;
+  private io: SocketServer;
+  private redisPublisher: ReturnType<typeof createClient> | null = null;
+  private redisSubscriber: ReturnType<typeof createClient> | null = null;
   private redisChannel = 'peochain:events';
   private connectionCount = 0;
+  private redisEnabled = false;
 
   constructor(server: HTTPServer) {
-    // Initialize Socket.IO server
-    this.io = new Server(server, {
+    // Initialize Socket.IO with CORS settings
+    this.io = new SocketServer(server, {
       cors: {
-        origin: process.env.NODE_ENV === 'production' ? false : '*',
-        methods: ['GET', 'POST'],
-      },
-      transports: ['websocket', 'polling'],
+        origin: '*',
+        methods: ['GET', 'POST']
+      }
     });
 
-    // Initialize Redis clients
-    this.redisPublisher = createClient({
-      url: process.env.REDIS_URL || 'redis://localhost:6379',
-    });
-
-    this.redisSubscriber = createClient({
-      url: process.env.REDIS_URL || 'redis://localhost:6379',
-    });
-
+    // Initialize Redis if Redis URL is provided
     this.initialize();
   }
 
   private async initialize() {
     try {
-      // Connect to Redis
-      await this.redisPublisher.connect();
-      await this.redisSubscriber.connect();
+      const redisUrl = process.env.REDIS_URL;
+      if (redisUrl) {
+        this.redisPublisher = createClient({ url: redisUrl });
+        this.redisSubscriber = createClient({ url: redisUrl });
 
-      // Subscribe to Redis channel
-      await this.redisSubscriber.subscribe(this.redisChannel, (message) => {
-        try {
-          const event = JSON.parse(message) as WaitlistEvent;
-          this.broadcastEvent(event);
-        } catch (error) {
-          log(`Error parsing Redis message: ${error}`, 'websocket');
-        }
-      });
+        // Set up event listeners for Redis client
+        this.redisPublisher.on('error', (err) => log(`Redis publisher error: ${err}`, 'websocket'));
+        this.redisSubscriber.on('error', (err) => log(`Redis subscriber error: ${err}`, 'websocket'));
 
-      // Handle Socket.IO connections
+        // Connect to Redis
+        await this.redisPublisher.connect();
+        await this.redisSubscriber.connect();
+
+        // Subscribe to our Redis channel
+        await this.redisSubscriber.subscribe(this.redisChannel, (message) => {
+          try {
+            const event: WaitlistEvent = JSON.parse(message);
+            this.broadcastEvent(event);
+          } catch (error) {
+            log(`Error parsing Redis message: ${error}`, 'websocket');
+          }
+        });
+
+        this.redisEnabled = true;
+        log('WebSocket server initialized with Redis pub/sub', 'websocket');
+      } else {
+        log('Redis URL not provided, running in local-only mode', 'websocket');
+      }
+
+      // Set up Socket.IO connection handling
       this.io.on('connection', (socket: Socket) => this.handleConnection(socket));
-
-      log('WebSocket server initialized with Redis pub/sub', 'websocket');
     } catch (error) {
       log(`Failed to initialize WebSocket server: ${error}`, 'websocket');
-      
-      // Fallback to local-only mode if Redis connection fails
-      if (!this.io.listenerCount('connection')) {
-        this.io.on('connection', (socket: Socket) => this.handleConnection(socket));
-        log('WebSocket server initialized in local-only mode (no Redis)', 'websocket');
-      }
+      // Even if Redis fails, we can still run in local-only mode
+      this.io.on('connection', (socket: Socket) => this.handleConnection(socket));
+      log('WebSocket server initialized in local-only mode (no Redis)', 'websocket');
     }
   }
 
   private handleConnection(socket: Socket) {
     this.connectionCount++;
-    log(`Client connected. Total connections: ${this.connectionCount}`, 'websocket');
+    log(`New WebSocket connection: ${socket.id} (Total: ${this.connectionCount})`, 'websocket');
 
-    // Join analytics room for broadcast events
-    socket.join('analytics');
-    
-    // Send current stats to new client
+    // Send current stats to the newly connected client
     this.sendCurrentStats(socket);
+
+    // Handle room joining
+    socket.on('join', (room) => {
+      socket.join(room);
+      log(`Client ${socket.id} joined room: ${room}`, 'websocket');
+    });
 
     // Handle disconnection
     socket.on('disconnect', () => {
       this.connectionCount--;
-      log(`Client disconnected. Total connections: ${this.connectionCount}`, 'websocket');
-    });
-
-    // Handle authentication (optional)
-    socket.on('authenticate', (token: string) => {
-      // Implement authentication logic here
-      log(`Client authenticated: ${socket.id}`, 'websocket');
-      socket.join('admin');
-    });
-
-    // Handle room joining
-    socket.on('join', (room: string) => {
-      socket.join(room);
-      log(`Client ${socket.id} joined room: ${room}`, 'websocket');
+      log(`WebSocket disconnected: ${socket.id} (Total: ${this.connectionCount})`, 'websocket');
     });
   }
 
@@ -119,17 +113,16 @@ export class WebSocketManager {
    */
   public async publishEvent(event: WaitlistEvent) {
     try {
-      if (this.redisPublisher.isOpen) {
+      // First, broadcast to all clients on this instance
+      this.broadcastEvent(event);
+
+      // Then, if Redis is enabled, publish to Redis for other instances
+      if (this.redisEnabled && this.redisPublisher) {
         await this.redisPublisher.publish(this.redisChannel, JSON.stringify(event));
         log(`Published event to Redis: ${event.type}`, 'websocket');
-      } else {
-        // Fallback to direct broadcast if Redis is not available
-        this.broadcastEvent(event);
       }
     } catch (error) {
       log(`Error publishing event: ${error}`, 'websocket');
-      // Fallback to direct broadcast
-      this.broadcastEvent(event);
     }
   }
 
@@ -137,18 +130,21 @@ export class WebSocketManager {
    * Broadcast an event directly to all connected clients on this instance
    */
   private broadcastEvent(event: WaitlistEvent) {
-    switch (event.type) {
-      case 'NEW_SIGNUP':
-        this.io.to('analytics').emit('waitlist:signup', event.data);
-        break;
-      case 'NEW_REFERRAL':
-        this.io.to('analytics').emit('waitlist:referral', event.data);
-        break;
-      case 'ANALYTICS_UPDATE':
-        this.io.to('analytics').emit('analytics:update', event.data);
-        break;
-      default:
-        log(`Unknown event type: ${(event as any).type}`, 'websocket');
+    try {
+      switch (event.type) {
+        case 'NEW_SIGNUP':
+          this.io.to('analytics').emit('waitlist:signup', event.data);
+          break;
+        case 'NEW_REFERRAL':
+          this.io.to('analytics').emit('waitlist:referral', event.data);
+          break;
+        case 'ANALYTICS_UPDATE':
+          this.io.to('analytics').emit('analytics:update', event.data);
+          break;
+      }
+      log(`Broadcast ${event.type} event to ${this.io.sockets.adapter.rooms.get('analytics')?.size || 0} clients`, 'websocket');
+    } catch (error) {
+      log(`Error broadcasting event: ${error}`, 'websocket');
     }
   }
 
@@ -156,37 +152,44 @@ export class WebSocketManager {
    * Send current application stats to a specific client
    */
   private async sendCurrentStats(socket: Socket) {
-    // This would typically fetch current data from your database
-    // For now, just sending a placeholder event
-    socket.emit('analytics:update', {
-      totalSignups: 0,
-      totalReferrals: 0,
-    });
+    try {
+      const analyticsService = getAnalyticsService();
+      const totalSignups = await analyticsService.getTotalSignupCount();
+      const totalReferrals = await analyticsService.getTotalReferralCount();
+
+      socket.emit('analytics:update', {
+        totalSignups,
+        totalReferrals
+      });
+    } catch (error) {
+      log(`Error sending current stats: ${error}`, 'websocket');
+    }
   }
 
   /**
    * Gracefully shut down the WebSocket server and Redis connections
    */
   public async shutdown() {
-    log('Shutting down WebSocket server...', 'websocket');
-    
-    // Close all Socket.IO connections
-    this.io.disconnectSockets(true);
-    
-    // Close Redis connections
-    if (this.redisPublisher.isOpen) {
-      await this.redisPublisher.quit();
+    try {
+      // Close all Socket.IO connections
+      this.io.disconnectSockets();
+
+      // Close Redis connections if they exist
+      if (this.redisPublisher) {
+        await this.redisPublisher.quit();
+      }
+      if (this.redisSubscriber) {
+        await this.redisSubscriber.quit();
+      }
+
+      log('WebSocket server shut down', 'websocket');
+    } catch (error) {
+      log(`Error during WebSocket shutdown: ${error}`, 'websocket');
     }
-    
-    if (this.redisSubscriber.isOpen) {
-      await this.redisSubscriber.quit();
-    }
-    
-    log('WebSocket server shut down successfully', 'websocket');
   }
 }
 
-// Export a singleton instance factory
+// Singleton manager instance
 let wsManager: WebSocketManager | null = null;
 
 export function initializeWebSockets(server: HTTPServer): WebSocketManager {
