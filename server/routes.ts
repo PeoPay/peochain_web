@@ -10,6 +10,7 @@ import {
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 import JSZip from "jszip";
+import { getAnalyticsService } from "./analytics";
 
 // Authentication middleware for admin routes
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
@@ -32,6 +33,9 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
+  // Create HTTP server
+  const server = createServer(app);
+  
   const errorHandler = (error: unknown, res: Response): void => {
     if (error instanceof ZodError) {
       const validationError = fromZodError(error);
@@ -66,6 +70,27 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       try {
         // Add the entry to storage
         const entry = await storage.createWaitlistEntry(data);
+        
+        // Record signup in analytics service
+        const analyticsService = getAnalyticsService();
+        await analyticsService.recordSignup({
+          email: entry.email,
+          referredBy: entry.referredBy || undefined,
+          userType: entry.userType,
+          // Extract additional data from request headers for analytics
+          country: req.headers['cf-ipcountry'] as string || 'unknown',
+          device: req.headers['user-agent'] as string || undefined,
+          source: req.query.source as string || req.headers['referer'] as string || undefined
+        });
+        
+        // Record referral if applicable
+        if (entry.referredBy) {
+          await analyticsService.recordReferral({
+            referralCode: entry.referredBy,
+            newUserEmail: entry.email
+          });
+        }
+        
         return res.status(201).json({ 
           success: true, 
           data: {
@@ -418,6 +443,5 @@ EXPORT CONTENTS
     }
   });
 
-  const httpServer = createServer(app);
-  return httpServer;
+  return server;
 }

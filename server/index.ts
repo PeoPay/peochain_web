@@ -3,6 +3,7 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import path from "path";
 import { storage } from "./storage";
+import { initializeWebSockets } from "./websocket";
 
 // Initialize Express application
 const app = express();
@@ -73,6 +74,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 (async () => {
   // Register API routes with proper DI
   const server = await registerRoutes(app, storage);
+  
+  // Initialize WebSocket server with Redis pub/sub for horizontal scaling
+  const wsManager = initializeWebSockets(server);
 
   /**
    * Global error handling middleware
