@@ -1,5 +1,8 @@
 import React from 'react';
+import { Link } from 'wouter';
 import BlockchainVisualization from '../visualizations/blockchain-visualization';
+import { Button } from '@/components/ui/button';
+import { ExternalLink } from 'lucide-react';
 
 export default function BlockchainVisualizationSection() {
   return (
@@ -15,6 +18,18 @@ export default function BlockchainVisualizationSection() {
       
       <div className="glass rounded-3xl p-6 md:p-10">
         <BlockchainVisualization />
+      </div>
+      
+      <div className="mt-8 text-center">
+        <Link href="/cross-chain-demo">
+          <Button className="group" size="lg">
+            <ExternalLink className="mr-2 h-4 w-4 group-hover:animate-pulse" />
+            Explore Cross-Chain Interoperability Demo
+          </Button>
+        </Link>
+        <p className="text-sm text-muted-foreground mt-3">
+          Dive deeper into how PeoChain connects different blockchain networks with our interactive cross-chain visualization
+        </p>
       </div>
     </section>
   );
