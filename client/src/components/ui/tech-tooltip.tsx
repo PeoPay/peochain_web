@@ -9,20 +9,17 @@ import {
 interface TechTooltipProps {
   children: React.ReactNode;
   content: React.ReactNode;
-  expanded?: boolean;
 }
 
-export function TechTooltip({ children, content, expanded = false }: TechTooltipProps) {
+export function TechTooltip({ children, content }: TechTooltipProps) {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <span className="cursor-help border-dotted border-b border-primary">
-            {children}
-          </span>
+          {children}
         </TooltipTrigger>
-        <TooltipContent className={expanded ? "max-w-sm" : "max-w-xs"}>
-          {content}
+        <TooltipContent className="max-w-xs">
+          <p className="text-xs">{content}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
