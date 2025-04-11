@@ -1,31 +1,43 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Download, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
+import { 
+  Download, 
+  ChevronDown, 
+  ChevronUp, 
+  ExternalLink, 
+  Share2,
+  Bookmark,
+  Save
+} from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useLocation } from "wouter";
-import { useState } from "react";
 import { AnimatedChart } from "@/components/ui/animated-chart";
 import { ConsensusDiagram } from "@/components/ui/consensus-diagram";
 import { SubnetDiagram } from "@/components/ui/subnet-diagram";
 import { TechTooltip } from "@/components/ui/tech-tooltip";
+import { TableOfContents } from "@/components/ui/table-of-contents";
+import { WhitepaperProgressBar } from "@/components/ui/whitepaper-progress-bar";
 
 export default function Whitepaper() {
   const [, navigate] = useLocation();
-  const [expandedSections, setExpandedSections] = useState<{
-    [key: string]: boolean;
-  }>({
+  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
     consensusMechanism: false,
     dcs: false,
     architecture: false,
+    tokenomics: false
   });
+  const [activeSection, setActiveSection] = useState<string>("intro");
+  const [readingProgress, setReadingProgress] = useState<number>(0);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
 
   // Toggle section expansion
   const toggleSection = (section: string) => {
-    setExpandedSections((prev) => ({
+    setExpandedSections(prev => ({
       ...prev,
-      [section]: !prev[section],
+      [section]: !prev[section]
     }));
   };
 
@@ -33,34 +45,168 @@ export default function Whitepaper() {
   const navigateToHome = (section: string) => {
     navigate(`/#${section}`);
   };
+  
+  // Track scrolling for reading progress
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      setReadingProgress(progress);
+      
+      // Update active section based on scroll position
+      const sections = document.querySelectorAll("section[id]");
+      sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop < 100 && sectionTop > -100) {
+          setActiveSection(section.id);
+        }
+      });
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle("dark");
+  };
+  
+  // Download PDF with analytics tracking
+  const downloadWhitepaper = () => {
+    // Track download event
+    if (typeof window.gtag !== "undefined") {
+      window.gtag("event", "download", {
+        event_category: "whitepaper",
+        event_label: "full_whitepaper_pdf"
+      });
+    }
+    
+    // Trigger download
+    window.open("/PEOCHAIN_White_Paper.pdf", "_blank");
+  };
+  
+  // Share whitepaper
+  const shareWhitepaper = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "PeoChain Whitepaper",
+          text: "Check out the PeoChain whitepaper - a decentralized financial ecosystem for global inclusion",
+          url: window.location.href
+        });
+      } catch (error) {
+        console.log("Sharing failed", error);
+      }
+    } else {
+      // Fallback - copy URL to clipboard
+      navigator.clipboard.writeText(window.location.href);
+      // Show toast notification
+      // toast.success("URL copied to clipboard!");
+    }
+  };
+  
+  const sections = [
+    { id: "intro", label: "Introduction" },
+    { id: "problems", label: "Problems Addressed" },
+    { id: "solutions", label: "Solutions" },
+    { id: "core-tech", label: "Core Technologies" },
+    { id: "technical", label: "Technical Highlights" },
+    { id: "economic-model", label: "Economic Model" },
+    { id: "financial", label: "Financial Projections" },
+    { id: "roadmap", label: "Roadmap" },
+    { id: "leadership", label: "Leadership Team" }
+  ];
 
   return (
-    <div className="min-h-screen gradient-background">
-      <Header
-        onFeatureClick={() => navigateToHome("features")}
-        onBenefitsClick={() => navigateToHome("benefits")}
-        onTechnologyClick={() => navigateToHome("technology")}
-        onWaitlistClick={() => navigateToHome("waitlist")}
-        onFaqClick={() => navigateToHome("faq")}
+    <div className={`min-h-screen ${darkMode ? "dark-gradient-background" : "gradient-background"}`}>
+      <Header 
+        onFeatureClick={() => navigateToHome('features')}
+        onBenefitsClick={() => navigateToHome('benefits')}
+        onTechnologyClick={() => navigateToHome('technology')}
+        onWaitlistClick={() => navigateToHome('waitlist')}
+        onFaqClick={() => navigateToHome('faq')}
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
       />
+      
+      {/* Fixed Reading Progress Bar */}
+      <WhitepaperProgressBar progress={readingProgress} />
 
-      <main className="container max-w-4xl mx-auto px-4 py-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-8">
-          PEOCHAIN Whitepaper
-        </h1>
-
-        {/* 1. Introductory Statement */}
-        <p className="text-xl text-center text-foreground/80 mb-12 max-w-3xl mx-auto">
-          "PeoChain is pioneering a decentralized financial revolution,
-          empowering underbanked populations globally through cutting-edge
-          blockchain innovation. By combining the novel Proof of Synergy (PoSyg)
-          consensus mechanism with Dynamic Contribution Scoring (DCS), PeoChain
-          achieves unparalleled scalability, security, and accessibility. Our
-          blockchain platform supports ultra-low fees, instant transactions,
-          seamless mobile integrations, and economic stability
-          mechanisms—redefining what's possible in global decentralized finance
-          (DeFi)."
-        </p>
+      <main className="container max-w-5xl mx-auto px-4 py-12">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Table of Contents - Fixed on Desktop */}
+          <div className="hidden lg:block sticky top-24 h-fit w-64 flex-shrink-0">
+            <TableOfContents 
+              sections={sections} 
+              activeSection={activeSection}
+              onClick={(id) => {
+                document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+              }}
+            />
+            
+            <div className="mt-6 space-y-2">
+              <Button 
+                onClick={downloadWhitepaper}
+                className="w-full btn-gradient text-white font-medium py-2 rounded-lg"
+              >
+                <Download className="mr-2 h-4 w-4" /> Download PDF
+              </Button>
+              
+              <Button 
+                onClick={shareWhitepaper}
+                className="w-full bg-secondary/80 text-secondary-foreground font-medium py-2 rounded-lg"
+              >
+                <Share2 className="mr-2 h-4 w-4" /> Share
+              </Button>
+              
+              <Button 
+                onClick={() => window.print()}
+                className="w-full bg-secondary/30 text-secondary-foreground font-medium py-2 rounded-lg"
+              >
+                <Save className="mr-2 h-4 w-4" /> Save/Print
+              </Button>
+            </div>
+          </div>
+          
+          {/* Main Content */}
+          <div className="flex-1">
+            <h1 className="text-4xl md:text-5xl font-bold text-center mb-8">PEOCHAIN Whitepaper</h1>
+            
+            {/* Mobile Version of Download/Share Buttons */}
+            <div className="flex flex-wrap gap-2 lg:hidden mb-6 justify-center">
+              <Button 
+                onClick={downloadWhitepaper}
+                className="btn-gradient text-white font-medium py-2 rounded-lg"
+              >
+                <Download className="mr-2 h-4 w-4" /> Download
+              </Button>
+              
+              <Button 
+                onClick={shareWhitepaper}
+                className="bg-secondary/80 text-secondary-foreground font-medium py-2 rounded-lg"
+              >
+                <Share2 className="mr-2 h-4 w-4" /> Share
+              </Button>
+            </div>
+            
+            {/* 1. Introductory Statement */}
+            <section id="intro" className="scroll-mt-24">
+              <Card className="glass rounded-3xl border-0 shadow-sm mb-8">
+                <CardContent className="p-8 md:p-12">
+                  <p className="text-xl text-center text-foreground/80 mb-12 max-w-3xl mx-auto">
+                    "PeoChain is pioneering a decentralized financial revolution,
+                    empowering underbanked populations globally through cutting-edge
+                    blockchain innovation. By combining the novel Proof of Synergy (PoSyg)
+                    consensus mechanism with Dynamic Contribution Scoring (DCS), PeoChain
+                    achieves unparalleled scalability, security, and accessibility. Our
+                    blockchain platform supports ultra-low fees, instant transactions,
+                    seamless mobile integrations, and economic stability
+                    mechanisms—redefining what's possible in global decentralized finance
+                    (DeFi)."
+                  </p>
 
         <Card className="glass rounded-3xl border-0 shadow-sm mb-8">
           <CardContent className="p-8 md:p-12">
