@@ -101,6 +101,19 @@ const DialogContent = React.forwardRef<
       )
   );
 
+  // Check if children contains a DialogDescription component for accessibility
+  const hasDialogDescription = React.Children.toArray(children).some(
+    (child) => 
+      React.isValidElement(child) && 
+      (child.type === DialogDescription || 
+        (child.type === DialogHeader && 
+          React.Children.toArray(child.props.children).some(
+            (headerChild) => React.isValidElement(headerChild) && headerChild.type === DialogDescription
+          )
+        )
+      )
+  );
+
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -112,10 +125,22 @@ const DialogContent = React.forwardRef<
         )}
         {...props}
       >
-        {hasDialogTitle ? children : (
+        {hasDialogTitle ? (
+          hasDialogDescription ? children : (
+            <>
+              <DialogDescription className="sr-only">Modal dialog</DialogDescription>
+              {children}
+            </>
+          )
+        ) : (
           <>
             <DialogTitle className="sr-only">Dialog</DialogTitle>
-            {children}
+            {hasDialogDescription ? children : (
+              <>
+                <DialogDescription className="sr-only">Modal dialog</DialogDescription>
+                {children}
+              </>
+            )}
           </>
         )}
         <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">

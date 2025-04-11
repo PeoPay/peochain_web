@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import {
   Tooltip,
   TooltipContent,
@@ -11,23 +11,17 @@ interface TechTooltipProps {
   content: React.ReactNode;
 }
 
-export const TechTooltip = forwardRef<HTMLDivElement, TechTooltipProps>(
-  ({ children, content }, ref) => {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div ref={ref}>
-              {children}
-            </div>
-          </TooltipTrigger>
-          <TooltipContent className="max-w-xs">
-            <p className="text-xs">{content}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-  }
-);
-
-TechTooltip.displayName = "TechTooltip";
+export function TechTooltip({ children, content }: TechTooltipProps) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          {children}
+        </TooltipTrigger>
+        <TooltipContent className="max-w-xs">
+          <p className="text-xs">{content}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
