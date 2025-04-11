@@ -32,9 +32,15 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
+import { createWaitlistRateLimiter, createReferralRateLimiter } from './middleware/rate-limit';
+
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
   // Create HTTP server
   const server = createServer(app);
+  
+  // Initialize rate limiters
+  const waitlistRateLimiter = await createWaitlistRateLimiter();
+  const referralRateLimiter = await createReferralRateLimiter();
   
   const errorHandler = (error: unknown, res: Response): void => {
     if (error instanceof ZodError) {
@@ -46,8 +52,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     res.status(500).json({ success: false, message: 'An unexpected error occurred' });
   };
 
-  // Waitlist API endpoint with improved error handling
-  app.post("/api/waitlist", async (req: Request, res: Response) => {
+  // Waitlist API endpoint with improved error handling and rate limiting
+  app.post("/api/waitlist", waitlistRateLimiter, async (req: Request, res: Response) => {
     try {
       // Format any developer metadata into JSON
       let metadata = null;
@@ -137,8 +143,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
   
-  // Get referral information
-  app.get("/api/referral/:code", async (req: Request, res: Response) => {
+  // Get referral information with rate limiting to prevent scanning
+  app.get("/api/referral/:code", referralRateLimiter, async (req: Request, res: Response) => {
     try {
       const referralCode = req.params.code;
       const entry = await storage.getWaitlistEntryByReferralCode(referralCode);

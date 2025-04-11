@@ -301,12 +301,17 @@ export class AnalyticsService {
       `;
 
       const queryApi = this.influxClient.getQueryApi(this.org);
-      const result = await queryApi.collectRows(query);
+      const result: Array<Record<string, any>> = await queryApi.collectRows(query);
       
-      return result.map(row => ({
-        date: new Date(row._time).toISOString().split('T')[0],
-        count: row._value as number
-      }));
+      return result.map(row => {
+        if ('_time' in row && '_value' in row) {
+          return {
+            date: new Date(String(row._time)).toISOString().split('T')[0],
+            count: Number(row._value)
+          };
+        }
+        return { date: 'unknown', count: 0 };
+      });
     } catch (error) {
       log(`Error getting daily signups: ${error}`, 'analytics');
       return [];
@@ -333,12 +338,17 @@ export class AnalyticsService {
       `;
 
       const queryApi = this.influxClient.getQueryApi(this.org);
-      const result = await queryApi.collectRows(query);
+      const result: Array<Record<string, any>> = await queryApi.collectRows(query);
       
-      return result.map(row => ({
-        country: row.country as string,
-        count: row._value as number
-      }));
+      return result.map(row => {
+        if ('country' in row && '_value' in row) {
+          return {
+            country: String(row.country),
+            count: Number(row._value)
+          };
+        }
+        return { country: 'unknown', count: 0 };
+      });
     } catch (error) {
       log(`Error getting top countries: ${error}`, 'analytics');
       return [];
@@ -364,12 +374,17 @@ export class AnalyticsService {
       `;
 
       const queryApi = this.influxClient.getQueryApi(this.org);
-      const result = await queryApi.collectRows(query);
+      const result: Array<Record<string, any>> = await queryApi.collectRows(query);
       
-      return result.map(row => ({
-        code: row.referral_code as string,
-        count: row._value as number
-      }));
+      return result.map(row => {
+        if ('referral_code' in row && '_value' in row) {
+          return {
+            code: String(row.referral_code),
+            count: Number(row._value)
+          };
+        }
+        return { code: 'unknown', count: 0 };
+      });
     } catch (error) {
       log(`Error getting top referrers: ${error}`, 'analytics');
       return [];
