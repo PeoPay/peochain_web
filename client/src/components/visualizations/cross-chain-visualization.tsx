@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { SiEthereum, SiPolkadot, SiCoinbase, SiBitcoin } from "react-icons/si";
-import { Send, Award, Repeat, Globe, Zap, Shield, FolderClosed, ArrowRightLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { SiEthereum, SiPolkadot, SiCoinbase, SiBitcoin, SiSolana, SiCardano } from "react-icons/si";
+import { Send, Award, Repeat, Globe, Zap, Shield, FolderClosed, ArrowRightLeft, Database, Activity, Lock, FileText, Network, Layers, Blocks, BarChart3, Cpu, RefreshCcw, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TechTooltip } from '@/components/ui/tech-tooltip';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 // Define the types of cross-chain transactions we can demonstrate
-type TransactionType = 'asset' | 'data' | 'smart-contract';
-type ChainType = 'ethereum' | 'polkadot' | 'cosmos' | 'bitcoin';
+type TransactionType = 'asset' | 'data' | 'smart-contract' | 'governance';
+type ChainType = 'ethereum' | 'polkadot' | 'cosmos' | 'bitcoin' | 'solana' | 'cardano';
 
 interface ChainInfo {
   id: ChainType;
@@ -14,6 +16,16 @@ interface ChainInfo {
   icon: React.ReactNode;
   color: string;
   position: { x: number; y: number };
+  capabilities: string[];
+  transactionSpeed: string;
+  consensus: string;
+}
+
+interface TransactionMetrics {
+  timeToFinality: string;
+  estimatedFee: string;
+  securityLevel: 'Low' | 'Medium' | 'High';
+  carbonImpact: 'Minimal' | 'Moderate' | 'Significant';
 }
 
 export default function CrossChainVisualization() {
@@ -23,36 +35,98 @@ export default function CrossChainVisualization() {
   const [selectedTarget, setSelectedTarget] = useState<ChainType | null>(null);
   const [completedPaths, setCompletedPaths] = useState<string[]>([]);
   const [activePath, setActivePath] = useState<string | null>(null);
+  const [visualizationMode, setVisualizationMode] = useState<'standard' | 'advanced'>('standard');
+  const [metrics, setMetrics] = useState<TransactionMetrics | null>(null);
+  const [animationSpeed, setAnimationSpeed] = useState<'normal' | 'detailed'>('normal');
   
   // Define the blockchain networks to display
   const chains: ChainInfo[] = [
     { 
       id: 'ethereum', 
       name: 'Ethereum', 
-      icon: <SiEthereum className="h-8 w-8" />, 
+      icon: <div className="relative">
+              <div className="absolute inset-0 bg-blue-100 rounded-full opacity-30 animate-pulse"></div>
+              <SiEthereum className="h-8 w-8 relative z-10" />
+            </div>, 
       color: '#627EEA', 
-      position: { x: 20, y: 30 }
+      position: { x: 20, y: 30 },
+      capabilities: ['Smart Contracts', 'DeFi', 'NFTs'],
+      transactionSpeed: '~12 seconds',
+      consensus: 'Proof of Stake'
     },
     { 
       id: 'polkadot', 
       name: 'Polkadot', 
-      icon: <SiPolkadot className="h-8 w-8" />, 
+      icon: <div className="relative">
+              <div className="absolute inset-0 bg-pink-100 rounded-full opacity-30 animate-pulse"></div>
+              <SiPolkadot className="h-8 w-8 relative z-10" />
+            </div>, 
       color: '#E6007A', 
-      position: { x: 80, y: 30 }
+      position: { x: 80, y: 30 },
+      capabilities: ['Parachains', 'Interoperability', 'Governance'],
+      transactionSpeed: '~6 seconds',
+      consensus: 'Nominated Proof of Stake'
     },
     { 
       id: 'cosmos', 
       name: 'Cosmos', 
-      icon: <Globe className="h-8 w-8" />, 
+      icon: <div className="relative">
+              <div className="absolute inset-0 bg-indigo-100 rounded-full opacity-30 animate-pulse"></div>
+              <div className="relative z-10 flex items-center justify-center h-8 w-8">
+                <div className="absolute inset-0 bg-indigo-900 rounded-full opacity-10"></div>
+                <Network className="h-6 w-6 text-indigo-900" />
+              </div>
+            </div>, 
       color: '#2E3148', 
-      position: { x: 20, y: 70 }
+      position: { x: 20, y: 70 },
+      capabilities: ['IBC Protocol', 'Sovereignty', 'SDK'],
+      transactionSpeed: '~6 seconds',
+      consensus: 'Tendermint BFT'
     },
     { 
       id: 'bitcoin', 
       name: 'Bitcoin', 
-      icon: <SiBitcoin className="h-8 w-8" />, 
+      icon: <div className="relative">
+              <div className="absolute inset-0 bg-orange-100 rounded-full opacity-30 animate-pulse"></div>
+              <SiBitcoin className="h-8 w-8 relative z-10" />
+            </div>, 
       color: '#F7931A', 
-      position: { x: 80, y: 70 }
+      position: { x: 80, y: 70 },
+      capabilities: ['Store of Value', 'Lightning Network', 'Security'],
+      transactionSpeed: '~10 minutes',
+      consensus: 'Proof of Work'
+    },
+    { 
+      id: 'solana', 
+      name: 'Solana', 
+      icon: <div className="relative">
+              <div className="absolute inset-0 bg-green-100 rounded-full opacity-30 animate-pulse"></div>
+              <div className="relative z-10 flex items-center justify-center h-8 w-8">
+                <div className="absolute inset-0 bg-green-500 rounded-full opacity-10"></div>
+                <Zap className="h-6 w-6 text-green-500" />
+              </div>
+            </div>, 
+      color: '#14F195', 
+      position: { x: 50, y: 20 },
+      capabilities: ['High Throughput', 'Low Fees', 'dApps'],
+      transactionSpeed: '~400ms',
+      consensus: 'Proof of History + PoS'
+    },
+    { 
+      id: 'cardano', 
+      name: 'Cardano', 
+      icon: <div className="relative">
+              <div className="absolute inset-0 bg-blue-100 rounded-full opacity-30 animate-pulse"></div>
+              <div className="relative z-10 flex items-center justify-center h-8 w-8">
+                <div className="absolute inset-0 bg-blue-700 rounded-full opacity-10"></div>
+                <Layers className="h-6 w-6 text-blue-700" />
+              </div>
+            </div>, 
+      color: '#0033AD', 
+      position: { x: 50, y: 80 },
+      capabilities: ['Formal Verification', 'Multi-Asset', 'Hydra'],
+      transactionSpeed: '~20 seconds',
+      consensus: 'Ouroboros PoS'
     }
   ];
   
@@ -60,27 +134,52 @@ export default function CrossChainVisualization() {
   const peoChain = {
     name: 'PeoChain',
     position: { x: 50, y: 50 },
-    color: '#4a6fa5'
+    color: '#4a6fa5',
+    capabilities: [
+      'Cross-Chain Bridge',
+      'Atomic Swaps',
+      'Layer-0 Protocol',
+      'Quantum Resistance',
+      'Carbon Neutral'
+    ]
   };
   
   const demonstrations = [
     { 
       id: 'asset' as TransactionType, 
       name: 'Asset Transfer', 
-      icon: <Send className="h-5 w-5" />, 
+      icon: <div className="relative">
+              <div className="absolute inset-0 bg-blue-100 rounded-full opacity-20 animate-pulse"></div>
+              <Send className="h-5 w-5 relative z-10" />
+            </div>, 
       description: 'Send tokens and assets between blockchains'
     },
     { 
       id: 'data' as TransactionType, 
       name: 'Data Exchange', 
-      icon: <ArrowRightLeft className="h-5 w-5" />, 
+      icon: <div className="relative">
+              <div className="absolute inset-0 bg-indigo-100 rounded-full opacity-20 animate-pulse"></div>
+              <ArrowRightLeft className="h-5 w-5 relative z-10" />
+            </div>, 
       description: 'Securely share data and state between chains'
     },
     { 
       id: 'smart-contract' as TransactionType, 
       name: 'Cross-Chain Contracts', 
-      icon: <FolderClosed className="h-5 w-5" />, 
+      icon: <div className="relative">
+              <div className="absolute inset-0 bg-purple-100 rounded-full opacity-20 animate-pulse"></div>
+              <FolderClosed className="h-5 w-5 relative z-10" />
+            </div>, 
       description: 'Execute smart contracts across multiple blockchains'
+    },
+    { 
+      id: 'governance' as TransactionType,
+      name: 'Governance Integration',
+      icon: <div className="relative">
+              <div className="absolute inset-0 bg-green-100 rounded-full opacity-20 animate-pulse"></div>
+              <FileText className="h-5 w-5 relative z-10" />
+            </div>,
+      description: 'Unified voting and proposals across ecosystems'
     }
   ];
   
@@ -107,13 +206,61 @@ export default function CrossChainVisualization() {
     description: string;
     steps: string[];
     currentStep: number;
+    technicalDetails?: string[];
   } | null>(null);
+  
+  // Calculate metrics for the transaction
+  const calculateMetrics = (source: ChainType, target: ChainType, type: TransactionType): TransactionMetrics => {
+    const sourceChain = chains.find(c => c.id === source)!;
+    const targetChain = chains.find(c => c.id === target)!;
+    
+    // Simulated logic for calculating metrics
+    const timeMap: Record<TransactionType, number> = {
+      'asset': 20,
+      'data': 15,
+      'smart-contract': 35,
+      'governance': 45
+    };
+    
+    const baseTime = timeMap[type];
+    const slowdownFactor = source === 'bitcoin' || target === 'bitcoin' ? 3 : 1;
+    const speedupFactor = (source === 'solana' || target === 'solana') ? 0.7 : 1;
+    
+    const timeToFinality = Math.round(baseTime * slowdownFactor * speedupFactor);
+    
+    // Fee calculation based on chain types and transaction type
+    let fee = type === 'smart-contract' ? 2.5 : (type === 'governance' ? 1.8 : 1.2);
+    if (source === 'ethereum' || target === 'ethereum') fee *= 2;
+    if (source === 'solana' || target === 'solana') fee *= 0.3;
+    
+    // Security assessment
+    let security: 'Low' | 'Medium' | 'High' = 'Medium';
+    if (source === 'bitcoin' || target === 'bitcoin') security = 'High';
+    if (type === 'governance') security = 'High';
+    
+    // Carbon impact calculation
+    let carbonImpact: 'Minimal' | 'Moderate' | 'Significant' = 'Moderate';
+    if (source === 'bitcoin' || target === 'bitcoin') carbonImpact = 'Significant';
+    if (source === 'solana' || target === 'solana' || source === 'cardano' || target === 'cardano') 
+      carbonImpact = 'Minimal';
+    
+    return {
+      timeToFinality: `~${timeToFinality} seconds`,
+      estimatedFee: `$${fee.toFixed(2)}`,
+      securityLevel: security,
+      carbonImpact: carbonImpact
+    };
+  };
   
   // Simulate transaction animation
   const simulateTransaction = async (source: ChainType, target: ChainType) => {
     const pathId = `${source}-${target}-${activeDemo}`;
     setActivePath(pathId);
     setAnimating(true);
+    
+    // Calculate transaction metrics
+    const transactionMetrics = calculateMetrics(source, target, activeDemo);
+    setMetrics(transactionMetrics);
     
     // Get transaction details
     const details = getTransactionDetails(source, target);
@@ -122,16 +269,18 @@ export default function CrossChainVisualization() {
       currentStep: 0
     });
     
+    const stepDelay = animationSpeed === 'detailed' ? 2000 : 1000;
+    
     // Step 1: Source blockchain initiation
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, stepDelay));
     setTransactionDetails(prev => prev ? { ...prev, currentStep: 1 } : null);
     
     // Step 2: PeoChain processing
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, stepDelay * 1.5));
     setTransactionDetails(prev => prev ? { ...prev, currentStep: 2 } : null);
     
     // Step 3: Destination blockchain confirmation
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, stepDelay * 1.5));
     setTransactionDetails(prev => prev ? { ...prev, currentStep: 3 } : null);
     
     // Mark path as completed
@@ -146,7 +295,8 @@ export default function CrossChainVisualization() {
       setSelectedSource(null);
       setSelectedTarget(null);
       setTransactionDetails(null);
-    }, 3000);
+      setMetrics(null);
+    }, 5000);
   };
   
   // Reset the demonstration
@@ -157,19 +307,75 @@ export default function CrossChainVisualization() {
     setCompletedPaths([]);
     setAnimating(false);
     setTransactionDetails(null);
+    setMetrics(null);
   };
   
   // Get transaction icon based on type
   const getTransactionIcon = () => {
     switch (activeDemo) {
       case 'asset':
-        return <Send className="h-4 w-4 text-white" />;
+        return (
+          <div className="relative">
+            <div className="absolute inset-0 bg-white rounded-full opacity-30 animate-pulse"></div>
+            <Send className="h-4 w-4 text-white relative z-10" />
+          </div>
+        );
       case 'data':
-        return <ArrowRightLeft className="h-4 w-4 text-white" />;
+        return (
+          <div className="relative">
+            <div className="absolute inset-0 bg-white rounded-full opacity-30 animate-pulse"></div>
+            <ArrowRightLeft className="h-4 w-4 text-white relative z-10" />
+          </div>
+        );
       case 'smart-contract':
-        return <FolderClosed className="h-4 w-4 text-white" />;
+        return (
+          <div className="relative">
+            <div className="absolute inset-0 bg-white rounded-full opacity-30 animate-pulse"></div>
+            <FolderClosed className="h-4 w-4 text-white relative z-10" />
+          </div>
+        );
+      case 'governance':
+        return (
+          <div className="relative">
+            <div className="absolute inset-0 bg-white rounded-full opacity-30 animate-pulse"></div>
+            <FileText className="h-4 w-4 text-white relative z-10" />
+          </div>
+        );
       default:
-        return <Send className="h-4 w-4 text-white" />;
+        return (
+          <div className="relative">
+            <div className="absolute inset-0 bg-white rounded-full opacity-30 animate-pulse"></div>
+            <Send className="h-4 w-4 text-white relative z-10" />
+          </div>
+        );
+    }
+  };
+  
+  // Get security icon based on level
+  const getSecurityIcon = (level: 'Low' | 'Medium' | 'High') => {
+    switch (level) {
+      case 'Low':
+        return <Lock className="h-4 w-4 text-yellow-500" />;
+      case 'Medium':
+        return <Lock className="h-4 w-4 text-blue-500" />;
+      case 'High':
+        return <Lock className="h-4 w-4 text-green-500" />;
+      default:
+        return <Lock className="h-4 w-4" />;
+    }
+  };
+  
+  // Get carbon impact icon
+  const getCarbonIcon = (impact: 'Minimal' | 'Moderate' | 'Significant') => {
+    switch (impact) {
+      case 'Minimal':
+        return <Zap className="h-4 w-4 text-green-500" />;
+      case 'Moderate':
+        return <Zap className="h-4 w-4 text-yellow-500" />;
+      case 'Significant':
+        return <Zap className="h-4 w-4 text-red-500" />;
+      default:
+        return <Zap className="h-4 w-4" />;
     }
   };
   
@@ -182,345 +388,404 @@ export default function CrossChainVisualization() {
       case 'asset':
         return {
           title: `Asset Transfer: ${sourceChain.name} → ${targetChain.name}`,
-          description: `Transferring tokenized assets from ${sourceChain.name} to ${targetChain.name} via PeoChain's secure bridge protocol.`,
+          description: `Transferring tokenized assets from ${sourceChain.name} to ${targetChain.name} via PeoChain's secure bridge protocol with zero slippage.`,
           steps: [
-            "1. Asset locked in source chain smart contract",
-            "2. PeoChain validators verify transaction",
-            "3. Equivalent assets minted on destination chain"
+            "1. Asset locked in source chain smart contract with multi-signature verification",
+            "2. PeoChain validators reach consensus and verify transaction authenticity",
+            "3. Equivalent assets minted on destination chain with proof-of-reserve"
+          ],
+          technicalDetails: [
+            "Merkle proof validation",
+            "State transition verification",
+            "Threshold signature scheme",
+            "Atomic commitment protocol"
           ]
         };
       case 'data':
         return {
           title: `Data Exchange: ${sourceChain.name} → ${targetChain.name}`,
-          description: `Securely transmitting verified state data from ${sourceChain.name} to ${targetChain.name} with cryptographic proof.`,
+          description: `Securely transmitting verified state data from ${sourceChain.name} to ${targetChain.name} with quantum-resistant cryptographic proof.`,
           steps: [
-            "1. Data cryptographically committed on source chain",
-            "2. PeoChain validates data integrity across subnets",
-            "3. State update confirmed on destination chain"
+            "1. Data cryptographically committed on source chain with zero-knowledge proof",
+            "2. PeoChain validates data integrity across subnets with Byzantine fault tolerance",
+            "3. State update confirmed on destination chain with cryptographic attestation"
+          ],
+          technicalDetails: [
+            "Homomorphic encryption",
+            "Verifiable random function",
+            "Post-quantum cryptography",
+            "Consensus sequencing"
           ]
         };
       case 'smart-contract':
         return {
           title: `Cross-Chain Contract: ${sourceChain.name} → ${targetChain.name}`,
-          description: `Executing a smart contract that spans ${sourceChain.name} and ${targetChain.name} chains simultaneously.`,
+          description: `Executing a smart contract that spans ${sourceChain.name} and ${targetChain.name} chains simultaneously with atomic guarantees.`,
           steps: [
-            "1. Contract execution triggered on source chain",
-            "2. PeoChain propagates function calls across networks",
-            "3. Synchronized execution completed on all chains"
+            "1. Contract execution triggered on source chain with gas optimization",
+            "2. PeoChain propagates function calls across networks with state synchronization",
+            "3. Synchronized execution completed with rollback protection on all chains"
+          ],
+          technicalDetails: [
+            "Just-in-time compilation",
+            "Optimistic execution",
+            "Cross-chain virtual machine",
+            "Failure recovery mechanism"
+          ]
+        };
+      case 'governance':
+        return {
+          title: `Governance Integration: ${sourceChain.name} → ${targetChain.name}`,
+          description: `Synchronizing governance proposals and votes between ${sourceChain.name} and ${targetChain.name} via PeoChain's distributed coordination protocol.`,
+          steps: [
+            "1. Governance proposal submitted with quadratic voting on source chain",
+            "2. PeoChain propagates proposal to relevant ecosystems with sybil resistance",
+            "3. Combined voting power tallied with transparent on-chain verification"
+          ],
+          technicalDetails: [
+            "Distributed key generation",
+            "Homogeneous vote accounting",
+            "Sybil-resistant identity",
+            "Quadratic funding mechanism"
           ]
         };
       default:
         return {
           title: `Transaction: ${sourceChain.name} → ${targetChain.name}`,
-          description: "Processing cross-chain transaction...",
-          steps: []
+          description: `Transferring data between blockchains.`,
+          steps: [
+            "1. Transaction initiated",
+            "2. Cross-chain validation",
+            "3. Finalization on target chain"
+          ]
         };
     }
   };
   
-  // Get appropriate tooltip content based on transaction type
-  const getTooltipContent = (type: TransactionType) => {
-    switch (type) {
-      case 'asset':
-        return (
-          <div>
-            <h5 className="font-semibold mb-1">Cross-Chain Asset Transfer</h5>
-            <p className="text-sm">PeoChain enables seamless asset transfers between different blockchains, maintaining security and preventing double-spending.</p>
-            <ul className="text-xs mt-2 space-y-1 list-disc pl-4">
-              <li>Wrapped tokens for cross-chain compatibility</li>
-              <li>Atomic swaps for trustless exchanges</li>
-              <li>Unified liquidity pools across chains</li>
-            </ul>
-          </div>
-        );
-      case 'data':
-        return (
-          <div>
-            <h5 className="font-semibold mb-1">Cross-Chain Data Exchange</h5>
-            <p className="text-sm">Share data and state information between different blockchain networks while maintaining data integrity and security.</p>
-            <ul className="text-xs mt-2 space-y-1 list-disc pl-4">
-              <li>Oracle networks validate cross-chain data</li>
-              <li>Zero-knowledge proofs ensure privacy</li>
-              <li>Subnet validators verify data consistency</li>
-            </ul>
-          </div>
-        );
-      case 'smart-contract':
-        return (
-          <div>
-            <h5 className="font-semibold mb-1">Cross-Chain Smart Contracts</h5>
-            <p className="text-sm">Execute smart contracts that can interact with multiple blockchain environments simultaneously.</p>
-            <ul className="text-xs mt-2 space-y-1 list-disc pl-4">
-              <li>Cross-chain contract triggers and events</li>
-              <li>Multi-chain financial applications</li>
-              <li>Interoperable DApps ecosystem</li>
-            </ul>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-  
-  // Generate instructions based on selected state
-  const getInstructions = () => {
-    if (selectedSource && selectedTarget) {
-      return `Transferring from ${chains.find(c => c.id === selectedSource)?.name} to ${chains.find(c => c.id === selectedTarget)?.name}...`;
-    } else if (selectedSource) {
-      return `Select a destination blockchain to receive from ${chains.find(c => c.id === selectedSource)?.name}`;
-    } else {
-      return 'Select a source blockchain to begin';
-    }
+  // Calculate path for visualization
+  const getPath = (sourceId: ChainType, targetId: ChainType) => {
+    const source = chains.find(c => c.id === sourceId)!;
+    const target = chains.find(c => c.id === targetId)!;
+    
+    // Calculate path through PeoChain
+    return {
+      path1: `M${source.position.x},${source.position.y} L${peoChain.position.x},${peoChain.position.y}`,
+      path2: `M${peoChain.position.x},${peoChain.position.y} L${target.position.x},${target.position.y}`
+    };
   };
   
   return (
-    <div className="cross-chain-visualization">
-      <div className="mb-6 text-center">
-        <h3 className="font-semibold text-xl mb-2 text-primary">Cross-Chain Integration</h3>
-        <p className="text-sm text-muted-foreground mb-4">
-          Experience how PeoChain connects with major blockchain networks to enable seamless cross-chain operations.
-        </p>
-      </div>
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 shadow-sm">
+      <h3 className="text-xl font-semibold mb-4">Cross-Chain Interoperability Demo</h3>
       
-      {/* Demo type selection */}
-      <div className="flex justify-center mb-6">
-        <div className="inline-flex bg-primary/10 rounded-full p-1">
-          {demonstrations.map((demo) => (
+      <div className="flex flex-col gap-4">
+        {/* Transaction Type Selector */}
+        <div className="flex flex-wrap gap-2">
+          {demonstrations.map(demo => (
             <Button
               key={demo.id}
-              variant={activeDemo === demo.id ? "default" : "ghost"}
+              variant={activeDemo === demo.id ? "default" : "outline"}
               size="sm"
               onClick={() => {
-                setActiveDemo(demo.id);
-                resetDemo();
+                if (!animating) {
+                  setActiveDemo(demo.id);
+                  resetDemo();
+                }
               }}
-              className={`rounded-full px-4 ${activeDemo === demo.id ? "" : "bg-transparent hover:bg-primary/10"}`}
+              className={`flex items-center gap-2 ${activeDemo === demo.id ? '' : 'opacity-70'}`}
             >
-              <div className="flex items-center">
-                {demo.icon}
-                <span className="ml-2">{demo.name}</span>
-              </div>
+              {demo.icon}
+              <span>{demo.name}</span>
             </Button>
           ))}
         </div>
-      </div>
-      
-      {/* Visualization area */}
-      <div className="relative bg-white/80 backdrop-blur rounded-xl p-6 aspect-[3/2] w-full mb-4">
-        {/* Instructions */}
-        <div className="absolute top-2 left-0 right-0 text-center text-sm font-medium">
-          {getInstructions()}
-        </div>
         
-        {/* Demo info */}
-        <div className="absolute top-2 right-2">
-          <TechTooltip
-            content={getTooltipContent(activeDemo)}
-            expanded={true}
-            icon={true}
-          >
-            <span className="text-sm text-primary font-medium">How it works</span>
-          </TechTooltip>
-        </div>
-
-        {/* Render PeoChain Hub in the center */}
-        <div 
-          className="absolute bg-primary/10 border-2 border-primary rounded-full flex items-center justify-center cursor-pointer shadow-lg z-10"
-          style={{
-            left: `${peoChain.position.x}%`,
-            top: `${peoChain.position.y}%`,
-            width: '120px',
-            height: '120px',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <div className="text-center">
-            <div className="bg-primary rounded-full w-12 h-12 mx-auto mb-1 flex items-center justify-center">
-              <Shield className="text-white h-6 w-6" />
-            </div>
-            <div className="font-bold text-primary">PeoChain</div>
-            <div className="text-xs text-primary/70">Cross-Chain Hub</div>
-          </div>
-        </div>
-        
-        {/* Connection lines from PeoChain to each blockchain */}
-        {chains.map((chain) => {
-          // Calculate the path from PeoChain to the blockchain
-          const dx = peoChain.position.x - chain.position.x;
-          const dy = peoChain.position.y - chain.position.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          // Adjust start and end points to account for the node sizes
-          const peoRadius = 60; // Half of PeoChain hub size
-          const chainRadius = 40; // Half of blockchain node size
-          
-          const ratio1 = peoRadius / distance;
-          const ratio2 = (distance - chainRadius) / distance;
-          
-          const x1 = peoChain.position.x - dx * ratio1;
-          const y1 = peoChain.position.y - dy * ratio1;
-          
-          const x2 = peoChain.position.x - dx * ratio2;
-          const y2 = peoChain.position.y - dy * ratio2;
-          
-          // Generate path string
-          const path = `M ${x1} ${y1} L ${x2} ${y2}`;
-          
-          // Determine if this path is active in the current transaction
-          const isActivePath = (selectedSource === chain.id && !selectedTarget) ||
-                              (selectedTarget === chain.id && selectedSource) ||
-                              activePath === `${selectedSource}-${chain.id}-${activeDemo}` ||
-                              activePath === `${chain.id}-${selectedTarget}-${activeDemo}`;
-                              
-          // Check if this path has been completed
-          const isCompletedPath = completedPaths.includes(`${selectedSource}-${chain.id}-${activeDemo}`) ||
-                                 completedPaths.includes(`${chain.id}-${selectedTarget}-${activeDemo}`);
-          
-          return (
-            <svg 
-              key={`line-${chain.id}`}
-              className="absolute top-0 left-0 w-full h-full"
-              style={{ zIndex: 5 }}
+        {/* Visualization controls */}
+        <div className="flex justify-between items-center mb-2">
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => setVisualizationMode(visualizationMode === 'standard' ? 'advanced' : 'standard')}
+              className="text-xs"
             >
-              <defs>
-                <marker
-                  id={`arrowhead-${chain.id}`}
-                  markerWidth="10"
-                  markerHeight="7"
-                  refX="9"
-                  refY="3.5"
-                  orient="auto"
-                >
-                  <polygon 
-                    points="0 0, 10 3.5, 0 7" 
-                    fill={isActivePath ? peoChain.color : "#CCCCCC"} 
-                  />
-                </marker>
-              </defs>
-              <path
-                d={path}
-                stroke={isCompletedPath ? "#22C55E" : (isActivePath ? peoChain.color : "#CCCCCC")}
-                strokeWidth={isActivePath || isCompletedPath ? "3" : "2"}
-                strokeDasharray={isActivePath ? "5,5" : "none"}
-                fill="none"
-                markerEnd={`url(#arrowhead-${chain.id})`}
-                className={isActivePath ? "animate-pulse" : ""}
-              />
+              <Cpu className="h-3 w-3 mr-1" />
+              {visualizationMode === 'standard' ? 'Standard View' : 'Technical View'}
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => setAnimationSpeed(animationSpeed === 'normal' ? 'detailed' : 'normal')}
+              className="text-xs"
+            >
+              <Activity className="h-3 w-3 mr-1" />
+              {animationSpeed === 'normal' ? 'Normal Speed' : 'Detailed View'}
+            </Button>
+          </div>
+          
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={resetDemo}
+            disabled={animating}
+            className="text-xs"
+          >
+            <RefreshCcw className="h-3 w-3 mr-1" />
+            Reset
+          </Button>
+        </div>
+        
+        {/* Main visualization area */}
+        <div className="bg-white/80 rounded-lg p-4 relative min-h-[400px] border border-primary/10">
+          {/* Network visualization */}
+          <div className="relative w-full h-[350px]">
+            {/* Connection paths */}
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+              {/* Draw paths for completed transactions */}
+              {completedPaths.map(pathId => {
+                const [sourceId, targetId] = pathId.split('-');
+                const paths = getPath(sourceId as ChainType, targetId as ChainType);
+                return (
+                  <g key={pathId}>
+                    <path 
+                      d={paths.path1} 
+                      stroke="#4a6fa5" 
+                      strokeWidth="1.5" 
+                      fill="none" 
+                      strokeDasharray="1,1"
+                      className="opacity-40"
+                    />
+                    <path 
+                      d={paths.path2} 
+                      stroke="#4a6fa5" 
+                      strokeWidth="1.5" 
+                      fill="none" 
+                      strokeDasharray="1,1"
+                      className="opacity-40"
+                    />
+                  </g>
+                );
+              })}
               
-              {/* Animated transaction if this path is active */}
-              {activePath === `${selectedSource}-${chain.id}-${activeDemo}` && (
-                <g className="transaction-particle">
-                  <circle
-                    cx={peoChain.position.x}
-                    cy={peoChain.position.y}
-                    r="8"
-                    fill={peoChain.color}
-                    className="animate-ping"
+              {/* Draw active transaction path */}
+              {activePath && selectedSource && selectedTarget && (
+                <g>
+                  <path 
+                    d={getPath(selectedSource, selectedTarget).path1} 
+                    stroke="#4a6fa5" 
+                    strokeWidth="2" 
+                    fill="none"
+                    className={`${transactionDetails?.currentStep === 1 ? 'animate-pulse' : ''}`}
+                    strokeDasharray={transactionDetails?.currentStep && transactionDetails.currentStep >= 1 ? "none" : "2,2"}
+                    strokeOpacity={transactionDetails?.currentStep && transactionDetails.currentStep >= 1 ? "1" : "0.6"}
                   />
-                  <foreignObject
-                    x={x1 + (x2 - x1) * 0.5 - 10}
-                    y={y1 + (y2 - y1) * 0.5 - 10}
-                    width="20"
-                    height="20"
-                    className="animate-pulse"
-                  >
-                    <div className="h-full w-full flex items-center justify-center bg-primary rounded-full">
-                      {getTransactionIcon()}
-                    </div>
-                  </foreignObject>
+                  <path 
+                    d={getPath(selectedSource, selectedTarget).path2} 
+                    stroke="#4a6fa5" 
+                    strokeWidth="2" 
+                    fill="none"
+                    className={`${transactionDetails?.currentStep === 2 ? 'animate-pulse' : ''}`}
+                    strokeDasharray={transactionDetails?.currentStep && transactionDetails.currentStep >= 2 ? "none" : "2,2"}
+                    strokeOpacity={transactionDetails?.currentStep && transactionDetails.currentStep >= 2 ? "1" : "0.3"}
+                  />
+                  
+                  {/* Animated transaction pulse */}
+                  {transactionDetails?.currentStep === 1 && (
+                    <circle r="2" fill="#4a6fa5" className="animate-ping">
+                      <animateMotion 
+                        dur="1.5s" 
+                        repeatCount="indefinite"
+                        path={getPath(selectedSource, selectedTarget).path1}
+                      />
+                    </circle>
+                  )}
+                  
+                  {transactionDetails?.currentStep === 2 && (
+                    <circle r="2" fill="#4a6fa5" className="animate-ping">
+                      <animateMotion 
+                        dur="1.5s" 
+                        repeatCount="indefinite"
+                        path={getPath(selectedSource, selectedTarget).path2}
+                      />
+                    </circle>
+                  )}
                 </g>
               )}
             </svg>
-          );
-        })}
-        
-        {/* Render blockchain nodes */}
-        {chains.map((chain) => (
-          <div
-            key={chain.id}
-            className={`absolute bg-white border-2 rounded-full flex flex-col items-center justify-center shadow-md cursor-pointer transition-all duration-200 ${
-              selectedSource === chain.id || selectedTarget === chain.id 
-                ? `border-4 shadow-lg` 
-                : `border-2 hover:shadow-lg`
-            }`}
-            style={{
-              left: `${chain.position.x}%`,
-              top: `${chain.position.y}%`,
-              width: '80px',
-              height: '80px',
-              transform: 'translate(-50%, -50%)',
-              borderColor: selectedSource === chain.id || selectedTarget === chain.id 
-                ? chain.color 
-                : '#e5e7eb',
-              boxShadow: selectedSource === chain.id || selectedTarget === chain.id 
-                ? `0 0 0 4px ${chain.color}33` 
-                : '',
-              zIndex: 10
-            }}
-            onClick={() => handleChainClick(chain.id)}
-          >
-            <div className="text-center">
-              <div style={{ color: chain.color }} className="mb-1">
-                {chain.icon}
-              </div>
-              <div className="text-xs font-medium">{chain.name}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-      
-      {/* Transaction details panel - shown during and after animation */}
-      {transactionDetails && (
-        <div className="bg-white/90 backdrop-blur rounded-lg p-4 mb-4 border border-primary/20 shadow-md">
-          <h4 className="font-semibold text-primary text-base mb-2">{transactionDetails.title}</h4>
-          <p className="text-sm mb-3">{transactionDetails.description}</p>
-          
-          <div className="space-y-2">
-            {transactionDetails.steps.map((step, index) => (
-              <div 
-                key={index} 
-                className={`flex items-start p-2 rounded-md transition-all duration-300 ${
-                  index === transactionDetails.currentStep ? 'bg-primary/10 text-primary font-medium' : 
-                  index < transactionDetails.currentStep ? 'text-green-600' : 'text-gray-400'
-                }`}
+            
+            {/* Blockchain nodes */}
+            {chains.map(chain => (
+              <div
+                key={chain.id}
+                className={`absolute transition-all duration-300 ease-in-out flex flex-col items-center cursor-pointer
+                  ${selectedSource === chain.id ? 'scale-110 z-20' : ''}
+                  ${selectedTarget === chain.id ? 'scale-110 z-20' : ''}
+                  ${animating && (selectedSource !== chain.id && selectedTarget !== chain.id) ? 'opacity-50' : ''}
+                `}
+                style={{
+                  left: `${chain.position.x}%`,
+                  top: `${chain.position.y}%`,
+                  transform: 'translate(-50%, -50%)'
+                }}
+                onClick={() => handleChainClick(chain.id)}
               >
-                <div className={`flex-shrink-0 h-5 w-5 mr-2 rounded-full flex items-center justify-center text-xs ${
-                  index < transactionDetails.currentStep ? 'bg-green-100 text-green-600' : 
-                  index === transactionDetails.currentStep ? 'bg-primary/20 text-primary' : 
-                  'bg-gray-100 text-gray-400'
-                }`}>
-                  {index < transactionDetails.currentStep ? '✓' : (index + 1)}
+                <div className={`p-3 rounded-full ${selectedSource === chain.id || selectedTarget === chain.id ? 'bg-primary/10' : 'hover:bg-primary/5'}`}>
+                  {chain.icon}
                 </div>
-                <span>{step}</span>
+                <div className="text-sm font-medium mt-1">{chain.name}</div>
+                
+                {visualizationMode === 'advanced' && (selectedSource === chain.id || selectedTarget === chain.id) && (
+                  <div className="mt-1 px-2 py-1 bg-white/80 rounded-md shadow-sm border border-primary/10 text-xs">
+                    <div className="text-xs text-gray-500">{chain.consensus}</div>
+                    <div className="text-xs text-gray-500">{chain.transactionSpeed}</div>
+                  </div>
+                )}
               </div>
             ))}
+            
+            {/* PeoChain in the center */}
+            <div
+              className={`absolute transition-all duration-300 ease-in-out flex flex-col items-center
+                ${animating ? 'scale-110 z-20 bg-primary/10 rounded-full p-3' : 'p-3'}
+              `}
+              style={{
+                left: `${peoChain.position.x}%`,
+                top: `${peoChain.position.y}%`,
+                transform: 'translate(-50%, -50%)'
+              }}
+            >
+              <div className="flex items-center justify-center h-12 w-12 bg-gradient-to-br from-primary to-primary/80 rounded-full shadow-md">
+                {getTransactionIcon()}
+              </div>
+              <div className="text-sm font-semibold mt-1 text-primary">{peoChain.name}</div>
+              
+              {animating && (
+                <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 animate-pulse">
+                  <div className="px-2 py-1 bg-primary text-white text-xs rounded-md whitespace-nowrap">
+                    Processing...
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+          
+          {/* Transaction details display */}
+          {transactionDetails && (
+            <div className="mt-4 p-3 rounded-lg border border-primary/10 bg-white/80">
+              <h4 className="text-sm font-semibold">{transactionDetails.title}</h4>
+              <p className="text-xs text-gray-600 mt-1">{transactionDetails.description}</p>
+              
+              <div className="mt-2 space-y-2">
+                {transactionDetails.steps.map((step, index) => (
+                  <div 
+                    key={index} 
+                    className={`text-xs flex items-start gap-2 ${
+                      transactionDetails.currentStep >= index + 1 
+                        ? 'text-gray-800' 
+                        : 'text-gray-400'
+                    }`}
+                  >
+                    <div className={`mt-0.5 h-3 w-3 rounded-full flex items-center justify-center ${
+                      transactionDetails.currentStep === index + 1 
+                        ? 'bg-primary animate-pulse' 
+                        : transactionDetails.currentStep > index + 1 
+                          ? 'bg-green-500' 
+                          : 'bg-gray-200'
+                    }`}>
+                      {transactionDetails.currentStep > index + 1 && (
+                        <Check className="h-2 w-2 text-white" />
+                      )}
+                    </div>
+                    <div>{step}</div>
+                  </div>
+                ))}
+              </div>
+              
+              {visualizationMode === 'advanced' && transactionDetails.technicalDetails && (
+                <div className="mt-3 pt-3 border-t border-gray-200">
+                  <div className="text-xs font-medium text-gray-500">Technical Details:</div>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {transactionDetails.technicalDetails.map((detail, index) => (
+                      <TechTooltip key={index} content="Technical detail used in the cross-chain protocol">
+                        <Badge variant="outline" className="text-xs bg-gray-100">
+                          {detail}
+                        </Badge>
+                      </TechTooltip>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Transaction metrics */}
+              {metrics && transactionDetails.currentStep > 0 && (
+                <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                  <div className="bg-gray-50 p-2 rounded">
+                    <div className="flex items-center gap-1 text-gray-500">
+                      <Activity className="h-3 w-3" />
+                      <span>Time to Finality</span>
+                    </div>
+                    <div className="font-medium">{metrics.timeToFinality}</div>
+                  </div>
+                  <div className="bg-gray-50 p-2 rounded">
+                    <div className="flex items-center gap-1 text-gray-500">
+                      <Database className="h-3 w-3" />
+                      <span>Est. Fee</span>
+                    </div>
+                    <div className="font-medium">{metrics.estimatedFee}</div>
+                  </div>
+                  <div className="bg-gray-50 p-2 rounded">
+                    <div className="flex items-center gap-1 text-gray-500">
+                      {getSecurityIcon(metrics.securityLevel)}
+                      <span>Security</span>
+                    </div>
+                    <div className="font-medium">{metrics.securityLevel}</div>
+                  </div>
+                  <div className="bg-gray-50 p-2 rounded">
+                    <div className="flex items-center gap-1 text-gray-500">
+                      {getCarbonIcon(metrics.carbonImpact)}
+                      <span>Carbon Impact</span>
+                    </div>
+                    <div className="font-medium">{metrics.carbonImpact}</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+          
+          {/* PeoChain capabilities */}
+          {!transactionDetails && !animating && (
+            <div className="mt-4 p-3 bg-blue-50/80 rounded-lg border border-primary/10">
+              <h4 className="text-sm font-semibold text-primary">PeoChain Layer-0 Protocol</h4>
+              <p className="text-xs text-gray-600 mt-1">
+                A next-generation blockchain interoperability solution enabling seamless cross-chain communication
+              </p>
+              <div className="mt-2">
+                <div className="text-xs font-medium text-gray-700">Key Capabilities:</div>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {peoChain.capabilities.map((cap, index) => (
+                    <Badge key={index} variant="outline" className="text-xs bg-primary/5 border-primary/20">
+                      {cap}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      )}
-      
-      <div className="text-center">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={resetDemo}
-          className="mx-auto"
-        >
-          <Repeat className="h-4 w-4 mr-2" />
-          Reset Demonstration
-        </Button>
       </div>
       
       {/* Legend */}
-      <div className="mt-6 bg-white/50 rounded-lg p-4">
+      <div className="mt-6 bg-white/50 rounded-lg p-4 border border-primary/10">
         <h4 className="text-sm font-medium mb-2">How to use this demo:</h4>
         <ol className="text-sm space-y-1 list-decimal pl-4">
           <li>Select a transaction type from the options above</li>
           <li>Click on a source blockchain (Ethereum, Polkadot, etc.)</li>
           <li>Click on a destination blockchain to see the transaction flow through PeoChain</li>
+          <li>Toggle between Standard and Technical views for different detail levels</li>
         </ol>
         <p className="text-sm mt-2">
-          PeoChain acts as a central hub that facilitates seamless interaction between different blockchain ecosystems,
-          enabling unified liquidity, cross-chain applications, and interoperable smart contracts.
+          PeoChain serves as a next-generation interoperability layer that facilitates seamless interaction between different blockchain ecosystems,
+          enabling unified liquidity, cross-chain applications, and quantum-resistant security for the Web3 future.
         </p>
       </div>
     </div>
