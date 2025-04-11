@@ -1,6 +1,7 @@
 // src/components/ui/enhanced-waitlist-form.tsx
 import React, { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -48,8 +49,7 @@ import {
   ChevronUp,
   AlertCircle,
 } from "lucide-react";
-import { SocialShare } from "@/components/ui/social-share";
-import { EnhancedSocialShare } from "@/components/ui/enhanced-social-share";
+import { SocialShare, EnhancedSocialShare } from "@/components/ui/social-share";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Separator } from "../ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
