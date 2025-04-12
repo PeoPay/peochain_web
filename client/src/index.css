@@ -186,6 +186,26 @@
     overflow: visible;
   }
 
+  /* Mobile-first responsive design */
+  @media (max-width: 640px) {
+    html {
+      font-size: 14px;
+    }
+    
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    /* Improve touch targets */
+    button, 
+    [role="button"],
+    a {
+      min-height: 44px;
+      padding: 0.5rem 1rem;
+    }
+  }
+  
   /* Better mobile experience for expanded sections */
   @media (max-width: 768px) {
     /* Improved table readability on small screens */

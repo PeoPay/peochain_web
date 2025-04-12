@@ -64,9 +64,9 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 w-full py-3 md:py-4 px-4 md:px-8 flex justify-between items-center z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 w-full py-2 sm:py-3 md:py-4 px-3 sm:px-4 md:px-8 flex justify-between items-center z-50 transition-all duration-300",
         isScrolled 
-          ? "bg-background/80 backdrop-blur-lg shadow-md" 
+          ? "bg-background/95 backdrop-blur-lg shadow-md" 
           : "bg-transparent"
       )}
     >
