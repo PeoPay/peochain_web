@@ -9,14 +9,14 @@
 
   body {
     @apply font-sans antialiased text-foreground;
-    background-color: #e1eae3;
+    background-color: #fbf8f1;
   }
 }
 
 @layer components {
   /* Main color scheme */
   .gradient-background {
-    background-color: #e1eae3;
+    background-color: #fbf8f1;
   }
 
   .glass {

@@ -612,7 +612,7 @@ export default function DualWaitlistSection() {
   const [activeTab, setActiveTab] = useState<'user' | 'developer'>('user');
   
   return (
-    <div className="w-full bg-[#e1eae3] text-[#38503f] py-16">
+    <div className="w-full bg-[#fbf8f1] text-[#38503f] py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           
@@ -632,9 +632,9 @@ export default function DualWaitlistSection() {
                   <Button 
                     onClick={() => setActiveTab('user')}
                     className={`w-full ${activeTab === 'user' 
-                      ? 'bg-[#6d9e79] text-[#e1eae3]' 
-                      : 'bg-[#e1eae3] text-[#6d9e79] border border-[#6d9e79]'} 
-                      hover:bg-[#5b8466] hover:text-[#e1eae3] font-semibold py-5 px-4 rounded-xl mb-6`}
+                      ? 'bg-[#6d9e79] text-[#fbf8f1]' 
+                      : 'bg-[#fbf8f1] text-[#6d9e79] border border-[#6d9e79]'} 
+                      hover:bg-[#5b8466] hover:text-[#fbf8f1] font-semibold py-5 px-4 rounded-xl mb-6`}
                     aria-pressed={activeTab === 'user'}
                   >
                     Join the Revolution – Be Among the First Global Users
@@ -645,7 +645,7 @@ export default function DualWaitlistSection() {
               ) : (
                 <>
                   <Button 
-                    className="w-full bg-[#6d9e79] hover:bg-[#5b8466] text-[#e1eae3] font-semibold py-5 px-4 rounded-xl mb-6"
+                    className="w-full bg-[#6d9e79] hover:bg-[#5b8466] text-[#fbf8f1] font-semibold py-5 px-4 rounded-xl mb-6"
                   >
                     Join the Revolution – Be Among the First Global Users
                   </Button>
@@ -672,9 +672,9 @@ export default function DualWaitlistSection() {
                   <Button 
                     onClick={() => setActiveTab('developer')}
                     className={`w-full ${activeTab === 'developer' 
-                      ? 'bg-[#38503f] text-[#e1eae3]' 
-                      : 'bg-[#e1eae3] text-[#38503f] border border-[#38503f]'} 
-                      hover:bg-[#4a6a52] hover:text-[#e1eae3] font-semibold py-5 px-4 rounded-xl mb-6`}
+                      ? 'bg-[#38503f] text-[#fbf8f1]' 
+                      : 'bg-[#fbf8f1] text-[#38503f] border border-[#38503f]'} 
+                      hover:bg-[#4a6a52] hover:text-[#fbf8f1] font-semibold py-5 px-4 rounded-xl mb-6`}
                     aria-pressed={activeTab === 'developer'}
                   >
                     Join Our Developer Program – Early API & Beta Access
@@ -685,7 +685,7 @@ export default function DualWaitlistSection() {
               ) : (
                 <>
                   <Button 
-                    className="w-full bg-[#38503f] hover:bg-[#4a6a52] text-[#e1eae3] font-semibold py-5 px-4 rounded-xl mb-6"
+                    className="w-full bg-[#38503f] hover:bg-[#4a6a52] text-[#fbf8f1] font-semibold py-5 px-4 rounded-xl mb-6"
                   >
                     Join Our Developer Program – Early API & Beta Access
                   </Button>
