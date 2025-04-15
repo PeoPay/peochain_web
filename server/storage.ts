@@ -7,6 +7,7 @@ import {
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, sql, desc, asc, and, gte, lte } from "drizzle-orm";
+import crypto from 'crypto';
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -19,6 +20,12 @@ export interface IStorage {
   getWaitlistEntryByReferralCode(referralCode: string): Promise<WaitlistEntry | undefined>;
   incrementReferralCount(referralCode: string): Promise<void>;
   getAllWaitlistEntries(): Promise<WaitlistEntry[]>;
+  
+  // Email verification methods
+  createVerificationToken(email: string): Promise<string>;
+  verifyEmail(token: string): Promise<boolean>;
+  getWaitlistEntryByVerificationToken(token: string): Promise<WaitlistEntry | undefined>;
+  resendVerificationEmail(email: string): Promise<boolean>;
 
   // Analytics methods
   // Daily stats
@@ -66,6 +73,106 @@ export class DatabaseStorage implements IStorage {
   
   constructor() {
     this.userService = new UserService();
+  }
+  
+  // Email verification methods
+  async createVerificationToken(email: string): Promise<string> {
+    try {
+      // Find user by email
+      const waitlistEntry = await this.getWaitlistEntryByEmail(email);
+      if (!waitlistEntry) {
+        throw new Error('Email not found in waitlist');
+      }
+      
+      // Generate a random token
+      const token = crypto.randomBytes(32).toString('hex');
+      
+      // Set token expiry (24 hours from now)
+      const expiryDate = new Date();
+      expiryDate.setHours(expiryDate.getHours() + 24);
+      
+      // Update user record with verification token
+      await db
+        .update(waitlistEntries)
+        .set({
+          verificationToken: token,
+          verificationTokenExpiry: expiryDate,
+        })
+        .where(eq(waitlistEntries.id, waitlistEntry.id));
+      
+      return token;
+    } catch (error) {
+      console.error("Error creating verification token:", error);
+      throw error;
+    }
+  }
+  
+  async verifyEmail(token: string): Promise<boolean> {
+    try {
+      // Find entry with this token
+      const entry = await this.getWaitlistEntryByVerificationToken(token);
+      
+      if (!entry) {
+        return false;
+      }
+      
+      // Check if token is expired
+      if (entry.verificationTokenExpiry && new Date(entry.verificationTokenExpiry) < new Date()) {
+        return false;
+      }
+      
+      // Mark as verified and clear token
+      await db
+        .update(waitlistEntries)
+        .set({
+          isVerified: true,
+          verificationToken: null,
+          verificationTokenExpiry: null,
+        })
+        .where(eq(waitlistEntries.id, entry.id));
+      
+      return true;
+    } catch (error) {
+      console.error("Error verifying email:", error);
+      return false;
+    }
+  }
+  
+  async getWaitlistEntryByVerificationToken(token: string): Promise<WaitlistEntry | undefined> {
+    try {
+      const [entry] = await db
+        .select()
+        .from(waitlistEntries)
+        .where(eq(waitlistEntries.verificationToken, token));
+      
+      return entry || undefined;
+    } catch (error) {
+      console.error("Error getting entry by verification token:", error);
+      return undefined;
+    }
+  }
+  
+  async resendVerificationEmail(email: string): Promise<boolean> {
+    try {
+      const entry = await this.getWaitlistEntryByEmail(email);
+      
+      if (!entry) {
+        return false;
+      }
+      
+      // If already verified, no need to resend
+      if (entry.isVerified) {
+        return true;
+      }
+      
+      // Generate and save new token
+      await this.createVerificationToken(email);
+      
+      return true;
+    } catch (error) {
+      console.error("Error resending verification email:", error);
+      return false;
+    }
   }
   
   async getUser(id: number): Promise<User | undefined> {
