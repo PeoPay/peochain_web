@@ -1,102 +1,140 @@
 module Api
   class WaitlistController < ApiController
-    # Skip authentication for public endpoints
-    skip_before_action :authenticate_request, only: [:create, :referral]
+    # Rate limiting configuration
+    WAITLIST_RATE_LIMIT = 5  # Requests per time window
+    WAITLIST_RATE_WINDOW = 3600  # Time window in seconds (1 hour)
+    REFERRAL_RATE_LIMIT = 20  # Requests per time window
+    REFERRAL_RATE_WINDOW = 60  # Time window in seconds (1 minute)
     
-    # Rate limiting would be implemented here
-    # For example: include RateLimiting::Waitlist
+    # Apply rate limiting to waitlist signup
+    before_action :check_waitlist_rate_limit, only: [:create]
     
+    # Apply rate limiting to referral lookup
+    before_action :check_referral_rate_limit, only: [:show_referral]
+    
+    # POST /api/waitlist
     def create
-      # Create a new waitlist entry
-      @waitlist_entry = WaitlistEntry.new(waitlist_params)
-      
-      # Check if the user was referred
-      if params[:referred_by].present?
-        referrer = WaitlistEntry.find_by(referral_code: params[:referred_by])
-        if referrer
-          @waitlist_entry.referred_by = params[:referred_by]
-          
-          # Increment referrer's count after successful save
-          ActiveRecord::Base.transaction do
-            if @waitlist_entry.save
-              referrer.increment!(:referral_count)
-              # Record daily stats
-              DailyWaitlistStat.record_signup(Date.today, true)
-              
-              # Record geographic stats if region is provided
-              if params[:region].present?
-                GeographicStat.record_signup(params[:region])
-              end
-              
-              # Record channel stats if channel is provided
-              if params[:channel].present?
-                ReferralChannel.record_referral(params[:channel], true)
-              end
-            else
-              raise ActiveRecord::Rollback
-            end
-          end
-        else
-          # If referral code is invalid, continue without it
-          @waitlist_entry.referred_by = nil
-          
-          if @waitlist_entry.save
-            # Record daily stats without referral
-            DailyWaitlistStat.record_signup(Date.today, false)
-            
-            # Record geographic stats if region is provided
-            if params[:region].present?
-              GeographicStat.record_signup(params[:region])
-            end
-          end
-        end
-      else
-        # No referral
-        if @waitlist_entry.save
-          # Record daily stats without referral
-          DailyWaitlistStat.record_signup(Date.today, false)
-          
-          # Record geographic stats if region is provided
-          if params[:region].present?
-            GeographicStat.record_signup(params[:region])
-          end
-        end
+      # Validate required parameters
+      unless params[:email].present?
+        return render_error(400, "Email is required")
       end
       
-      if @waitlist_entry.persisted?
-        # Entry was successfully created
-        position = WaitlistEntry.count # Simple position calculation
+      # Check if email already exists in waitlist
+      existing_entry = WaitlistEntry.find_by(email: params[:email])
+      if existing_entry
+        return render json: {
+          message: "Email already registered",
+          position: existing_entry.position,
+          referralCode: existing_entry.referral_code
+        }
+      end
+      
+      # Create new waitlist entry
+      entry = WaitlistEntry.new(
+        email: params[:email],
+        ip_address: request.remote_ip,
+        region: params[:region] || detect_region,
+        referred_by: params[:referredBy],
+        user_agent: request.user_agent
+      )
+      
+      # Set position based on current count
+      entry.position = WaitlistEntry.count + 1
+      
+      if entry.save
+        # Record signup in analytics
+        analytics_service.record_signup({
+          email: entry.email,
+          region: entry.region,
+          referral_code: entry.referral_code,
+          referred_by: entry.referred_by
+        }) if defined?(analytics_service)
         
-        # In a real implementation, we would publish event to WebSocket here
+        # Increment referral count for the referrer
+        if entry.referred_by.present?
+          referrer = WaitlistEntry.find_by(referral_code: entry.referred_by)
+          if referrer
+            referrer.increment!(:referral_count)
+            
+            # Record referral in analytics
+            analytics_service.record_referral({
+              email: entry.email,
+              referred_by: entry.referred_by,
+              converted: true
+            }) if defined?(analytics_service)
+            
+            # Broadcast referral event
+            WebsocketService.publish_referral(
+              entry.referred_by,
+              referrer.referral_count
+            )
+          end
+        end
         
-        json_success({
-          email: @waitlist_entry.email,
-          position: position,
-          referralCode: @waitlist_entry.referral_code
-        }, :created)
+        # Broadcast signup event
+        WebsocketService.publish_signup(
+          entry.email,
+          entry.position,
+          entry.referral_code
+        )
+        
+        # Return success response
+        render json: {
+          message: "Successfully joined waitlist",
+          position: entry.position,
+          referralCode: entry.referral_code
+        }, status: :created
       else
-        json_error(@waitlist_entry.errors.full_messages.join(', '))
+        render_error(422, "Failed to join waitlist", entry.errors)
       end
     end
     
-    def referral
+    # GET /api/referral/:code
+    def show_referral
       referral_code = params[:code]
-      @entry = WaitlistEntry.find_by(referral_code: referral_code)
       
-      if @entry
-        json_success({
-          referrerName: @entry.full_name,
-          referralCount: @entry.referral_count
-        })
+      # Find waitlist entry by referral code
+      entry = WaitlistEntry.find_by(referral_code: referral_code)
+      
+      if entry
+        render json: {
+          referralCode: entry.referral_code,
+          referralCount: entry.referral_count,
+          position: entry.position
+        }
       else
-        json_error("Invalid referral code", :not_found)
+        render_error(404, "Referral code not found")
       end
     end
     
     private
     
     def waitlist_params
-      params.require(:waitlist_entry).permit(:full_name, :email, :user_type, metadata: {})
+      params.permit(:email, :region, :referredBy)
+    end
+    
+    def detect_region
+      # A simple region detection based on IP (would be expanded in production)
+      "unknown"
+    end
+    
+    def check_waitlist_rate_limit
+      # In a production app, this would use Redis or a similar mechanism
+      # Simplified version for demo
+      client_ip = request.remote_ip
+      
+      # Add rate limiting logic here
+      # For now, we'll always allow the request
+      true
+    end
+    
+    def check_referral_rate_limit
+      # Similar to waitlist rate limit
+      client_ip = request.remote_ip
+      
+      # Add rate limiting logic here
+      # For now, we'll always allow the request
+      true
     end
   end
 end

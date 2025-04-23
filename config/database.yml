@@ -15,3 +15,7 @@ test:
 production:
   <<: *default
   database: peochain_production
+  # These values are used if DATABASE_URL is not set
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>

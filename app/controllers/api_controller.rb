@@ -1,33 +1,37 @@
 class ApiController < ApplicationController
-  # Include common API functionality
-  before_action :authenticate_request, except: [:public_endpoints]
+  before_action :set_default_format
   
-  # Handle common errors in API endpoints
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-  rescue_from ActionController::ParameterMissing, with: :parameter_missing
-  rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
+  # Handle ActiveRecord::RecordNotFound exceptions
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
+  
+  # Handle validation errors
+  rescue_from ActiveRecord::RecordInvalid, with: :handle_validation_error
   
   private
   
-  def public_endpoints
-    # Define which endpoints are public in each controller
-    []
+  def set_default_format
+    request.format = :json
   end
   
-  def record_not_found(exception)
-    json_error("Resource not found", :not_found)
+  def handle_not_found(exception)
+    render_error(404, "Resource not found: #{exception.message}")
   end
   
-  def parameter_missing(exception)
-    json_error("Required parameter missing: #{exception.param}", :bad_request)
+  def handle_validation_error(exception)
+    render_error(422, "Validation failed", exception.record.errors)
   end
   
-  def record_invalid(exception)
-    json_error(exception.record.errors.full_messages.join(', '), :unprocessable_entity)
-  end
-  
-  def ensure_json_request
-    return if request.format.json?
-    json_error("JSON format required", :not_acceptable)
+  # Helper method to authenticate API requests
+  # Uses HTTP Basic Authentication for simplicity
+  def authenticate
+    authenticate_or_request_with_http_basic do |username, password|
+      # In production, this should be more secure
+      # For now, we'll use environment variables
+      valid_username = ENV['API_USERNAME'] || 'admin'
+      valid_password = ENV['API_PASSWORD'] || 'peochain'
+      
+      ActiveSupport::SecurityUtils.secure_compare(username, valid_username) &&
+        ActiveSupport::SecurityUtils.secure_compare(password, valid_password)
+    end
   end
 end
