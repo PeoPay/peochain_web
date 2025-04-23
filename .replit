@@ -1,5 +1,5 @@
 [workflows]
-runButton = "Start"
+runButton = "Project"
 
 [[workflows.workflow]]
 name = "Project"
@@ -13,7 +13,6 @@ args = "Start application"
 [[workflows.workflow]]
 name = "Start application"
 author = "agent"
-mode = "sequential"
 
 [workflows.workflow.metadata]
 agentRequireRestartOnSave = false
@@ -25,19 +24,6 @@ task = "packager.installForAll"
 task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
-
-[[workflows.workflow]]
-name = "Start"
-author = 39325483
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm install"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm run dev"
 
 [deployment]
 run = ["sh", "-c", "node dist/index.js"]
