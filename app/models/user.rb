@@ -1,11 +1,18 @@
 class User < ApplicationRecord
   # Validations
   validates :username, presence: true, uniqueness: true
-  validates :password, presence: true
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :password_digest, presence: true
   
-  # Additional security measures would be implemented here
-  # For example, has_secure_password if using bcrypt
+  # Password handling (if using bcrypt)
+  has_secure_password
   
-  # In production, don't store plain text passwords
-  # This is just for migration compatibility
+  # Callbacks
+  before_save :downcase_email
+  
+  private
+  
+  def downcase_email
+    self.email = email.downcase if email.present?
+  end
 end

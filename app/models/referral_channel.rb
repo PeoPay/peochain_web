@@ -1,33 +1,52 @@
 class ReferralChannel < ApplicationRecord
   # Validations
-  validates :channel_name, presence: true, uniqueness: true
-  validates :referral_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :conversion_rate, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
+  validates :name, presence: true, uniqueness: true
+  validates :user_count, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :conversion_rate, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
+  
+  # Default values
+  attribute :user_count, :integer, default: 0
+  attribute :conversion_rate, :float, default: 0.0
   
   # Scopes
-  scope :top_channels, -> (limit = 10) { order(referral_count: :desc).limit(limit) }
+  scope :top_channels, ->(limit = 10) { order(user_count: :desc).limit(limit) }
   
-  # Methods to record a referral
-  def self.record_referral(channel_name, converted = false)
-    channel = find_or_initialize_by(channel_name: channel_name)
+  # Class methods
+  def self.update_or_create(name, source = nil, user_count: 0, conversion_rate: 0.0)
+    # Find or create channel with the given name
+    channel = find_or_initialize_by(name: name)
     
-    if channel.new_record?
-      channel.referral_count = 1
-      channel.conversion_rate = converted ? 100 : 0
-    else
-      channel.referral_count += 1
-      
-      # Update conversion rate if converted
-      if converted
-        total_conversions = (channel.referral_count * channel.conversion_rate / 100.0).round + 1
-        channel.conversion_rate = (total_conversions.to_f / channel.referral_count * 100).round
-      else
-        total_conversions = (channel.referral_count * channel.conversion_rate / 100.0).round
-        channel.conversion_rate = (total_conversions.to_f / channel.referral_count * 100).round
-      end
+    # Update values
+    channel.source = source if source.present?
+    channel.user_count = user_count
+    channel.conversion_rate = conversion_rate
+    
+    # Save the record
+    channel.save
+  end
+  
+  def self.record_signup(source, converted = false)
+    # Skip if no source provided
+    return if source.blank?
+    
+    # Find or create channel with the given source
+    channel = find_or_initialize_by(name: source)
+    
+    # Set source if not already set
+    channel.source ||= source
+    
+    # Increment counter
+    channel.user_count += 1
+    
+    # Update conversion rate if converted
+    if converted
+      # Approximate conversion rate based on new conversion
+      # This is a simplified approach; in production, you'd want to store
+      # total conversions and calculate rate from that
+      channel.conversion_rate = ((channel.conversion_rate * (channel.user_count - 1)) + 1) / channel.user_count
     end
     
-    channel.save!
-    channel
+    # Save the record
+    channel.save
   end
 end

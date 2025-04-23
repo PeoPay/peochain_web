@@ -1,39 +1,53 @@
 class GeographicStat < ApplicationRecord
   # Validations
   validates :region, presence: true, uniqueness: true
-  validates :user_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :engagement_score, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
+  validates :user_count, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :referral_count, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :conversion_rate, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
+  
+  # Default values
+  attribute :user_count, :integer, default: 0
+  attribute :referral_count, :integer, default: 0
+  attribute :conversion_rate, :float, default: 0.0
   
   # Scopes
-  scope :top_regions, -> (limit = 10) { order(user_count: :desc).limit(limit) }
+  scope :top_regions, ->(limit = 10) { order(user_count: :desc).limit(limit) }
   
-  # Methods to update stats
-  def self.record_signup(region)
+  # Class methods
+  def self.update_or_create(region, user_count: 0, referral_count: 0)
+    # Find or create stats for the given region
     stat = find_or_initialize_by(region: region)
     
-    if stat.new_record?
-      stat.user_count = 1
-      stat.engagement_score = 50 # Default middle value
+    # Update values
+    stat.user_count = user_count
+    stat.referral_count = referral_count
+    
+    # Calculate conversion rate if there are users
+    if user_count > 0
+      stat.conversion_rate = referral_count.to_f / user_count
     else
-      stat.user_count += 1
+      stat.conversion_rate = 0.0
     end
     
-    stat.save!
-    stat
+    # Save the record
+    stat.save
   end
   
-  def self.update_engagement(region, score_change)
+  def self.record_signup(region, was_referred = false)
+    # Skip if no region provided
+    return if region.blank?
+    
+    # Find or create stats for the given region
     stat = find_or_initialize_by(region: region)
     
-    if stat.new_record?
-      stat.user_count = 1
-      stat.engagement_score = [50 + score_change, 100].min
-    else
-      new_score = stat.engagement_score + score_change
-      stat.engagement_score = [[new_score, 0].max, 100].min
-    end
+    # Increment counters
+    stat.user_count += 1
+    stat.referral_count += 1 if was_referred
     
-    stat.save!
-    stat
+    # Update conversion rate
+    stat.conversion_rate = stat.referral_count.to_f / stat.user_count
+    
+    # Save the record
+    stat.save
   end
 end
