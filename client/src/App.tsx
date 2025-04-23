@@ -41,6 +41,7 @@ function Router() {
         <Route path="/whitepaper" component={Whitepaper}/>
         <Route path="/dashboard" component={Dashboard}/>
         <Route path="/cross-chain-demo" component={CrossChainDemo}/>
+        <Route path="/ai-assistant" component={AIAssistant}/>
         <Route component={NotFound} />
       </Switch>
     </Suspense>

@@ -5,9 +5,18 @@ import AIChat from "@/components/ai/ai-chat";
 import { Bot, Lightbulb, BookOpen } from "lucide-react";
 
 const AIAssistant: React.FC = () => {
+  // These are dummy functions since we don't need scroll functionality on this page
+  const dummyScroll = () => {};
+  
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+      <Header 
+        onFeatureClick={dummyScroll}
+        onBenefitsClick={dummyScroll}
+        onTechnologyClick={dummyScroll}
+        onWaitlistClick={dummyScroll}
+        onFaqClick={dummyScroll}
+      />
       <main className="flex-1 container max-w-screen-xl mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">

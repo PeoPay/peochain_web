@@ -286,6 +286,17 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                 Whitepaper
               </NavigationMenuLink>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setLocation('/ai-assistant');
+                }}
+                className={cn(navigationMenuTriggerStyle(), "hover:text-primary text-base font-medium")}
+              >
+                AI Assistant
+              </NavigationMenuLink>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
         
@@ -406,6 +417,17 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                 >
                   <ChevronRight className="h-4 w-4 text-primary mr-2" />
                   Whitepaper
+                </button>
+                
+                <button 
+                  onClick={() => {
+                    setIsOpen(false);
+                    setLocation('/ai-assistant');
+                  }}
+                  className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
+                >
+                  <ChevronRight className="h-4 w-4 text-primary mr-2" />
+                  AI Assistant
                 </button>
               </nav>
             </div>
