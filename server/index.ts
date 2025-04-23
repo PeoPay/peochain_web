@@ -123,6 +123,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
    * - Logs confirmation when the server starts successfully.
    */
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+const host = '0.0.0.0';
   const isDev = process.env.NODE_ENV !== "production";
 
   server.listen(
