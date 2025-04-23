@@ -5,7 +5,9 @@ import {
   insertWaitlistEntrySchema, 
   insertDailyWaitlistStatsSchema,
   insertGeographicStatsSchema,
-  insertReferralChannelSchema 
+  insertReferralChannelSchema,
+  insertAiChatSchema,
+  insertAiMessageSchema
 } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
@@ -445,6 +447,157 @@ EXPORT CONTENTS
       return res.status(500).json({
         success: false,
         message: "Failed to export analytics data"
+      });
+    }
+  });
+
+  // AI Assistant API Endpoints
+  
+  // Create a new chat session
+  app.post("/api/ai/chat", async (req: Request, res: Response) => {
+    try {
+      // Generate a unique session ID
+      const sessionId = `chat_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+      
+      // Create chat session in database
+      const chat = await storage.createChat({
+        sessionId,
+        userId: req.body.userId,
+        waitlistEntryId: req.body.waitlistEntryId
+      });
+      
+      return res.status(201).json({
+        success: true,
+        data: {
+          chatId: chat.id,
+          sessionId: chat.sessionId
+        }
+      });
+    } catch (error) {
+      console.error("Error creating chat session:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to create chat session"
+      });
+    }
+  });
+  
+  // Send a message and get AI response
+  app.post("/api/ai/message", async (req: Request, res: Response) => {
+    try {
+      const { sessionId, message } = req.body;
+      
+      if (!sessionId || !message) {
+        return res.status(400).json({
+          success: false,
+          message: "Session ID and message are required"
+        });
+      }
+      
+      // Get or create chat session
+      let chat = await storage.getChatBySessionId(sessionId);
+      
+      if (!chat) {
+        // Create new chat if session doesn't exist
+        chat = await storage.createChat({
+          sessionId,
+          userId: req.body.userId,
+          waitlistEntryId: req.body.waitlistEntryId
+        });
+      }
+      
+      // Store user message
+      await storage.addMessageToChat({
+        chatId: chat.id,
+        role: "user",
+        content: message
+      });
+      
+      // In a real implementation, we'd call an external AI service here
+      // For now, we'll use a simple response system based on keywords
+      let aiResponse = "";
+      
+      // Simple pattern matching to generate responses
+      const lowerCaseMessage = message.toLowerCase();
+      
+      if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi")) {
+        aiResponse = "Hello! I'm PeoChain's AI assistant. How can I help you learn about blockchain technology today?";
+      } else if (lowerCaseMessage.includes("blockchain")) {
+        aiResponse = "Blockchain is a distributed ledger technology that enables secure, transparent, and immutable transactions. It's the foundation of cryptocurrencies like Bitcoin, but has many other applications!";
+      } else if (lowerCaseMessage.includes("peochain")) {
+        aiResponse = "PeoChain is an educational platform focused on transforming blockchain education through interactive, engaging digital experiences. We simplify complex blockchain concepts to make learning accessible for everyone.";
+      } else if (lowerCaseMessage.includes("waitlist")) {
+        aiResponse = "You can join our waitlist by providing your name and email. We'll notify you as soon as PeoChain launches, and you'll get early access to our platform. You can also refer friends to earn rewards!";
+      } else if (lowerCaseMessage.includes("refer") || lowerCaseMessage.includes("referral")) {
+        aiResponse = "Our referral program allows you to earn rewards by inviting friends to join the PeoChain waitlist. Once you join, you'll receive a unique referral code that you can share with others.";
+      } else if (lowerCaseMessage.includes("nft") || lowerCaseMessage.includes("token")) {
+        aiResponse = "Non-Fungible Tokens (NFTs) are unique digital assets representing ownership of items like art, collectibles, or other digital content. They use blockchain technology to verify authenticity and ownership.";
+      } else if (lowerCaseMessage.includes("defi") || lowerCaseMessage.includes("decentralized finance")) {
+        aiResponse = "Decentralized Finance (DeFi) refers to financial applications built on blockchain technology that operate without central authorities like banks. DeFi applications aim to provide traditional financial services in a decentralized way.";
+      } else if (lowerCaseMessage.includes("thank")) {
+        aiResponse = "You're welcome! If you have any other questions about blockchain or PeoChain, feel free to ask. I'm here to help!";
+      } else {
+        aiResponse = "Thank you for your message. I'm still learning about blockchain topics. Could you ask me something about blockchain technology, PeoChain, or our waitlist?";
+      }
+      
+      // Store AI response
+      const aiMessage = await storage.addMessageToChat({
+        chatId: chat.id,
+        role: "assistant",
+        content: aiResponse
+      });
+      
+      return res.status(200).json({
+        success: true,
+        data: {
+          message: aiMessage.content,
+          timestamp: aiMessage.createdAt
+        }
+      });
+    } catch (error) {
+      console.error("Error processing message:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to process message"
+      });
+    }
+  });
+  
+  // Get chat history
+  app.get("/api/ai/chat/:sessionId", async (req: Request, res: Response) => {
+    try {
+      const { sessionId } = req.params;
+      
+      const chatWithMessages = await storage.getChatWithMessagesBySessionId(sessionId);
+      
+      if (!chatWithMessages) {
+        return res.status(404).json({
+          success: false,
+          message: "Chat session not found"
+        });
+      }
+      
+      // Format messages for client
+      const formattedMessages = chatWithMessages.messages.map(msg => ({
+        id: msg.id,
+        role: msg.role,
+        content: msg.content,
+        timestamp: msg.createdAt
+      }));
+      
+      return res.status(200).json({
+        success: true,
+        data: {
+          chatId: chatWithMessages.chat.id,
+          sessionId: chatWithMessages.chat.sessionId,
+          messages: formattedMessages
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching chat history:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch chat history"
       });
     }
   });

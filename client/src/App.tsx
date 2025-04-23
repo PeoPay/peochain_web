@@ -14,6 +14,7 @@ const TermsOfService = lazy(() => import("@/pages/TermsOfService"));
 const Whitepaper = lazy(() => import("@/pages/Whitepaper"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const CrossChainDemo = lazy(() => import("@/pages/CrossChainDemo"));
+const AIAssistant = lazy(() => import("@/pages/AIAssistant"));
 
 // Loading component to display while page chunks are being loaded
 const PageLoader = () => (
