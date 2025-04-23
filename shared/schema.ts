@@ -109,3 +109,52 @@ export const insertReferralChannelSchema = createInsertSchema(referralChannels)
 
 export type InsertReferralChannel = z.infer<typeof insertReferralChannelSchema>;
 export type ReferralChannel = typeof referralChannels.$inferSelect;
+
+// AI Assistant schema for storing conversations
+export const aiChats = pgTable("ai_chats", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull().unique(),
+  userId: integer("user_id").references(() => users.id),
+  waitlistEntryId: integer("waitlist_entry_id").references(() => waitlistEntries.id),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const insertAiChatSchema = createInsertSchema(aiChats)
+  .pick({
+    sessionId: true,
+    userId: true,
+    waitlistEntryId: true,
+  })
+  .extend({
+    userId: z.number().optional(),
+    waitlistEntryId: z.number().optional(),
+  });
+
+export type InsertAiChat = z.infer<typeof insertAiChatSchema>;
+export type AiChat = typeof aiChats.$inferSelect;
+
+// AI Assistant schema for storing messages
+export const aiMessages = pgTable("ai_messages", {
+  id: serial("id").primaryKey(),
+  chatId: integer("chat_id").notNull().references(() => aiChats.id),
+  role: text("role").notNull(), // 'user' or 'assistant'
+  content: text("content").notNull(),
+  metadata: jsonb("metadata"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const insertAiMessageSchema = createInsertSchema(aiMessages)
+  .pick({
+    chatId: true,
+    role: true,
+    content: true,
+    metadata: true,
+  })
+  .extend({
+    role: z.enum(["user", "assistant"]),
+    metadata: z.any().optional(),
+  });
+
+export type InsertAiMessage = z.infer<typeof insertAiMessageSchema>;
+export type AiMessage = typeof aiMessages.$inferSelect;
