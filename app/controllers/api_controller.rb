@@ -1,37 +1,44 @@
 class ApiController < ApplicationController
-  before_action :set_default_format
+  skip_before_action :verify_authenticity_token
+  before_action :set_default_response_format
   
-  # Handle ActiveRecord::RecordNotFound exceptions
-  rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
+  protected
   
-  # Handle validation errors
-  rescue_from ActiveRecord::RecordInvalid, with: :handle_validation_error
-  
-  private
-  
-  def set_default_format
-    request.format = :json
-  end
-  
-  def handle_not_found(exception)
-    render_error(404, "Resource not found: #{exception.message}")
-  end
-  
-  def handle_validation_error(exception)
-    render_error(422, "Validation failed", exception.record.errors)
-  end
-  
-  # Helper method to authenticate API requests
-  # Uses HTTP Basic Authentication for simplicity
-  def authenticate
-    authenticate_or_request_with_http_basic do |username, password|
-      # In production, this should be more secure
-      # For now, we'll use environment variables
-      valid_username = ENV['API_USERNAME'] || 'admin'
-      valid_password = ENV['API_PASSWORD'] || 'peochain'
-      
-      ActiveSupport::SecurityUtils.secure_compare(username, valid_username) &&
-        ActiveSupport::SecurityUtils.secure_compare(password, valid_password)
+  # Authenticate the user from session or token
+  def authenticate_user
+    @current_user = User.find_by(id: session[:user_id])
+    
+    unless @current_user
+      # Try to authenticate via token
+      authenticate_with_token
     end
+    
+    unless @current_user
+      render json: { error: "Authentication required" }, status: :unauthorized
+    end
+  end
+  
+  # Authenticate via token in header
+  def authenticate_with_token
+    auth_header = request.headers['Authorization']
+    if auth_header && auth_header.start_with?('Bearer ')
+      token = auth_header.split('Bearer ').last
+      @current_user = User.find_by(auth_token: token)
+    end
+  end
+  
+  # Get the current authenticated user
+  def current_user
+    @current_user
+  end
+  
+  # Helper method to check if request format is JSON
+  def set_default_response_format
+    request.format = :json unless params[:format]
+  end
+  
+  # Error handling for API
+  def render_error(message, status = :unprocessable_entity)
+    render json: { error: message }, status: status
   end
 end

@@ -1,39 +1,57 @@
 Rails.application.routes.draw do
-  # Root route points to the landing page
+  # Root path
   root 'home#index'
   
-  # API Routes
+  # API routes
   namespace :api do
-    # Waitlist endpoints
-    post '/waitlist', to: 'waitlist#create'
-    get '/referral/:code', to: 'waitlist#show_referral'
+    # Waitlist resources
+    resources :waitlist, only: [:create] do
+      collection do
+        get 'referral/:code', to: 'waitlist#referral'
+      end
+    end
     
-    # Analytics endpoints
-    namespace :analytics do
-      get '/overview', to: 'analytics#overview'
+    # Analytics resources
+    resources :analytics, only: [] do
+      collection do
+        get 'overview'
+        get 'daily-stats'
+        post 'daily-stats'
+        get 'geographic-stats'
+        post 'geographic-stats'
+        get 'referral-channels'
+        post 'referral-channels'
+        get 'top-referrers'
+        get 'export'
+      end
+    end
+    
+    # Badge resources
+    resources :badges do
+      collection do
+        get 'categories'
+        get 'user'
+        post 'progress'
+      end
       
-      # Daily stats
-      get '/daily-stats', to: 'analytics#daily_stats'
-      post '/daily-stats', to: 'analytics#create_daily_stats'
-      
-      # Geographic stats
-      get '/geographic-stats', to: 'analytics#geographic_stats'
-      post '/geographic-stats', to: 'analytics#create_geographic_stats'
-      
-      # Referral channels
-      get '/referral-channels', to: 'analytics#referral_channels'
-      post '/referral-channels', to: 'analytics#create_referral_channel'
-      
-      # Top referrers
-      get '/top-referrers', to: 'analytics#top_referrers'
-      
-      # Export
-      get '/export', to: 'analytics#export_data'
+      member do
+        post 'award'
+      end
+    end
+    
+    # Badge category resources
+    resources :badge_categories do
+      member do
+        get 'users'
+      end
     end
   end
   
-  # Fallback route to handle client-side routing
-  get '*path', to: 'home#index', constraints: lambda { |req|
-    !req.xhr? && req.format.html? && !req.path.start_with?('/api/')
-  }
+  # Action Cable routes
+  mount ActionCable.server => '/cable'
+  
+  # Catch-all route to handle SPA routing
+  get '*path', to: 'home#index', constraints: ->(request) do
+    !request.xhr? && request.format.html?
+  end
 end
