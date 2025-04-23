@@ -37,17 +37,28 @@ const DialogContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => {
   // Check if DialogTitle exists in children to warn developers
   const hasDialogTitle = React.Children.toArray(children).some(
-    child => React.isValidElement(child) && child.type === DialogTitle
+    child => React.isValidElement(child) && 
+    (child.type === DialogTitle || 
+     (child.type === DialogHeader && 
+      React.Children.toArray(child.props.children).some(
+        headerChild => React.isValidElement(headerChild) && headerChild.type === DialogTitle
+      )))
   );
 
   // Check if DialogDescription exists in children
   const hasDialogDescription = React.Children.toArray(children).some(
-    child => React.isValidElement(child) && child.type === DialogDescription
+    child => React.isValidElement(child) && 
+    (child.type === DialogDescription || 
+     (child.type === DialogHeader && 
+      React.Children.toArray(child.props.children).some(
+        headerChild => React.isValidElement(headerChild) && headerChild.type === DialogDescription
+      )))
   );
 
-  // Log warning in development only
-  React.useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') {
+  // Only log warnings in development
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    React.useEffect(() => {
       if (!hasDialogTitle) {
         console.warn(
           'DialogContent requires a DialogTitle for the component to be accessible for screen reader users.\n\n' +
@@ -59,8 +70,8 @@ const DialogContent = React.forwardRef<
       if (!hasDialogDescription && !props['aria-describedby']) {
         console.warn('Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.');
       }
-    }
-  }, [hasDialogTitle, hasDialogDescription, props]);
+    }, []);
+  }
 
   return (
     <DialogPortal>
