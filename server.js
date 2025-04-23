@@ -1,60 +1,46 @@
-const express = require('express');
-const path = require('path');
-const { Pool } = require('pg');
-const { spawn } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Initialize Express
-const app = express();
-const PORT = process.env.PORT || 8000;
+// Get dirname in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Database connection
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-
-// Middleware
-app.use(express.json());
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', message: 'PeoChain API is running' });
-});
-
-// API routes
-app.get('/api/info', async (req, res) => {
-  try {
-    res.json({
-      name: 'PeoChain DeFi Platform',
-      version: '1.0.0',
-      description: 'A cutting-edge DeFi platform for blockchain education',
-      consensus: 'Proof of Synergy (PoSyg)',
-      features: [
-        'Dynamic Contribution Scoring',
-        'Scalable Architecture',
-        'Educational Resources',
-        'Interactive Whitepaper'
-      ]
-    });
-  } catch (error) {
-    console.error('Error fetching info:', error);
-    res.status(500).json({ error: 'Internal server error' });
+// Manual environment loading
+try {
+  const envContent = fs.readFileSync(path.join(__dirname, '.env'), 'utf8');
+  const envVars = envContent.split('\n').filter(Boolean);
+  
+  for (const line of envVars) {
+    const [key, value] = line.split('=');
+    if (key && value) {
+      process.env[key.trim()] = value.trim();
+    }
   }
-});
+} catch (error) {
+  console.log('No .env file found or error reading it, continuing without it');
+}
 
-// Start server
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`PeoChain central server running on port ${PORT}`);
-  
-  // Start client development server
-  const clientProcess = spawn('npx', ['vite'], { 
-    cwd: path.join(__dirname, 'apps/client'),
-    stdio: 'inherit',
-    shell: true
+// Check for simple mode flag
+const isSimpleMode = process.env.RUNNING_MODE === 'simple';
+
+if (isSimpleMode) {
+  console.log('Starting in SIMPLE mode for debugging...');
+  // Import the simple server
+  import('./server-simple.js');
+} else {
+  console.log('Starting in FULL mode...');
+  // Import the full server using tsx (we can't directly import TypeScript)
+  import('child_process').then(({ spawn }) => {
+    const child = spawn('tsx', ['server/index.ts'], { stdio: 'inherit' });
+    
+    child.on('error', (error) => {
+      console.error('Failed to start server:', error);
+      process.exit(1);
+    });
+    
+    // Pass through signals
+    process.on('SIGINT', () => child.kill('SIGINT'));
+    process.on('SIGTERM', () => child.kill('SIGTERM'));
   });
-  
-  clientProcess.on('error', (error) => {
-    console.error('Failed to start client:', error);
-  });
-  
-  console.log('Client development server started');
-});
+}

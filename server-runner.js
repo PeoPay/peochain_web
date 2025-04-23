@@ -1,0 +1,1 @@
+console.log("PeoChain server starting..."); require("child_process").spawn("tsx", ["server/index.ts"], {stdio: "inherit"});
