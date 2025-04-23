@@ -591,9 +591,9 @@ app.get('/api/referral/:code', (req, res) => {
   });
 });
 
-// Simple referral code generator
-function generateReferralCode(email) {
+// Simple referral code gefunction generateReferralCode(email) {
   const base = email.split('@')[0].substring(0, 5).toUpperCase();
   const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
   return `${base}-${random}`;
+}dom}`;
 }
