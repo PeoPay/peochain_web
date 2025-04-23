@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { lazy, Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 
 // Lazy load components for code splitting
 const NotFound = lazy(() => import("@/pages/not-found"));
@@ -47,10 +48,12 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router />
-      <Toaster />
-    </QueryClientProvider>
+    <ThemeProvider defaultTheme="light">
+      <QueryClientProvider client={queryClient}>
+        <Router />
+        <Toaster />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 

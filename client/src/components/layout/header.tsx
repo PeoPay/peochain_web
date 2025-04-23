@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, ChevronDown, X, ChevronRight, Code, Shield, Zap, Network, Layers, DollarSign } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useLocation } from "wouter";
 import {
   NavigationMenu,
@@ -288,12 +289,15 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
           </NavigationMenuList>
         </NavigationMenu>
         
-        <Button 
-          onClick={() => navigateToHomeSection('waitlist')}
-          className="btn-gradient text-white font-medium py-2 px-6 rounded-full ml-4"
-        >
-          Join Waitlist
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Button 
+            onClick={() => navigateToHomeSection('waitlist')}
+            className="btn-gradient text-white font-medium py-2 px-6 rounded-full ml-2"
+          >
+            Join Waitlist
+          </Button>
+        </div>
       </div>
       
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -407,6 +411,10 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
             </div>
             
             <div className="p-6 border-t border-primary/10">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-sm font-medium">Theme</span>
+                <ThemeToggle />
+              </div>
               <Button 
                 onClick={() => navigateToHomeSection('waitlist')}
                 className="btn-gradient text-white font-medium py-6 px-8 rounded-full w-full"
