@@ -12,8 +12,17 @@ if (!process.env.DATABASE_URL) {
 
 async function main() {
   console.log("Creating database connection...");
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-  const db = drizzle({ client: pool, schema });
+  let pool;
+  let db;
+  
+  try {
+    pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    db = drizzle({ client: pool, schema });
+    console.log("Database connection established successfully");
+  } catch (error) {
+    console.error("Failed to establish database connection:", error);
+    process.exit(1);
+  }
   
   console.log("Adding demo waitlist entries...");
   
@@ -135,5 +144,13 @@ async function main() {
 
 main().catch((e) => {
   console.error("Error inserting demo data:", e);
+  // Add more detailed error information
+  if (e.code === 'ECONNREFUSED') {
+    console.error("Could not connect to database. Please check your DATABASE_URL and ensure the database server is running.");
+  } else if (e.code === 'ETIMEDOUT') {
+    console.error("Connection to database timed out. Please check your network connection or database server status.");
+  } else if (e.code === '42P01') {
+    console.error("Relation does not exist. Database schema might not be initialized.");
+  }
   process.exit(1);
 });
