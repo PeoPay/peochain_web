@@ -303,7 +303,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
             <span className="sr-only">Toggle menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="bg-background/95 backdrop-blur-lg w-full sm:max-w-md p-0 border-l border-primary/10">
+        <SheetContent side="right" className="bg-background/95 backdrop-blur-lg w-[85vw] sm:max-w-md p-0 border-l border-primary/10">
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-center p-4 border-b border-primary/10">
               <div className="flex items-center">

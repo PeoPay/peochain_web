@@ -1,7 +1,7 @@
 
 import * as React from "react"
 
-const MOBILE_BREAKPOINT = 640 // Changed from 768 to better match modern devices
+const MOBILE_BREAKPOINT = 640 // Matches Tailwind's sm breakpoint
 
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean>(
