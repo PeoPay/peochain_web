@@ -1,162 +1,138 @@
-import express from 'express';
-import cors from 'cors';
-import RateLimit from 'express-rate-limit';
-import RedisStore from 'rate-limit-redis';
-import { createServer } from 'http';
-import { Server } from 'socket.io';
-import Redis from 'ioredis';
-import { setupVite } from './vite';
-import { registerRoutes } from './routes';
-import { storage } from './storage';
+import express, { type Request, Response, NextFunction } from "express";
+import { registerRoutes } from "./routes";
+import { setupVite, serveStatic, log } from "./vite";
+import path from "path";
+import { storage } from "./storage";
+import { initializeWebSockets } from "./websocket";
 
-// Initialize Express app
+// Initialize Express application
 const app = express();
-// Trust proxy to properly handle X-Forwarded-For in rate limiting
-app.set('trust proxy', 1);
-const httpServer = createServer(app);
-const port = process.env.PORT || 5000;
-const isDev = process.env.NODE_ENV !== 'production';
 
-// CRITICAL: Start server immediately to satisfy Replit workflow port check
-// All additional setup will happen after the port is open
+// Middleware to parse incoming JSON requests
 app.use(express.json());
-app.use(cors());
 
-// Health check endpoint for Replit workflow detection - must be defined early
-app.get('/__replit_health_check', (req, res) => {
-  res.status(200).send('OK');
-});
+// Middleware to parse URL-encoded data with querystring library (extended=false)
+app.use(express.urlencoded({ extended: false }));
 
-// Root endpoint
-app.get('/', (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>PeoChain DeFi Platform</title>
-        <style>body{font-family:sans-serif;text-align:center;}</style>
-      </head>
-      <body>
-        <h1>PeoChain Server</h1>
-        <p>Server is starting up...</p>
-      </body>
-    </html>
-  `);
-});
+// Middleware to serve static files located in the 'public' directory
+app.use(express.static(path.join(process.cwd(), "public")));
 
-// Start server immediately
-httpServer.listen(Number(port), '0.0.0.0', () => {
-  console.log(`⚡ Server listening on port ${port} in ${isDev ? 'development' : 'production'} mode`);
-});
+/**
+ * Middleware for logging API requests.
+ *
+ * - Captures the start time to measure request duration.
+ * - Intercepts JSON responses to include response body in logs.
+ * - Logs HTTP method, path, status code, duration, and JSON response (truncated at 80 characters for readability).
+ * - Only logs requests made to paths starting with "/api".
+ */
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const start = Date.now();
+  const path = req.path;
 
-// Initialize Socket.io
-const io = new Server(httpServer, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-  },
-});
+  // Placeholder to store the JSON response for logging purposes
+  let capturedJsonResponse: Record<string, any> | undefined = undefined;
 
-// Setup Redis for Socket.io (if Redis URL is provided)
-const redisUrl = process.env.REDIS_URL;
-let redis: Redis | null = null;
+  // Override the default res.json method to capture response body
+  const originalResJson = res.json;
+  res.json = function (bodyJson, ...args) {
+    capturedJsonResponse = bodyJson;
+    return originalResJson.apply(res, [bodyJson, ...args]);
+  };
 
-if (redisUrl) {
-  try {
-    redis = new Redis(redisUrl);
-    console.log('[websocket] Connected to Redis');
-  } catch (err) {
-    console.error('[websocket] Failed to connect to Redis:', err);
-  }
-} else {
-  console.log('[websocket] Redis URL not provided, running in local-only mode');
-}
+  // Event listener triggered when response finishes sending
+  res.on("finish", () => {
+    const duration = Date.now() - start;
 
-// Setup rate limiting
-let limiter;
-try {
-  if (redisUrl && redis) {
-    console.log('[rate-limit] Using Redis store for rate limiting');
-    limiter = RateLimit({
-      windowMs: 15 * 60 * 1000, // 15 minutes
-      max: 100, // Limit each IP to 100 requests per windowMs
-      standardHeaders: true,
-      legacyHeaders: false,
-      store: new RedisStore({
-        // Using a simpler connection approach to avoid type errors
-        sendCommand: async (...args: any[]) => redis!.call(...args),
-      }),
-    });
-  } else {
-    console.log('[rate-limit] Using Memory store for rate limiting');
-    limiter = RateLimit({
-      windowMs: 15 * 60 * 1000,
-      max: 100,
-      standardHeaders: true,
-      legacyHeaders: false,
-    });
-  }
-} catch (err) {
-  console.error('[rate-limit] Error setting up rate limiting:', err);
-  limiter = RateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    standardHeaders: true,
-    legacyHeaders: false,
-  });
-}
+    if (path.startsWith("/api")) {
+      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
 
-// Additional middleware
-app.use(limiter);
+      // Append JSON response to the log line, if available
+      if (capturedJsonResponse) {
+        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      }
 
-// API routes
-app.get('/api/info', async (req, res) => {
-  try {
-    res.json({
-      name: 'PeoChain DeFi Platform',
-      version: '1.0.0',
-      description: 'A cutting-edge DeFi platform for blockchain education',
-      consensus: 'Proof of Synergy (PoSyg)',
-      features: [
-        'Dynamic Contribution Scoring',
-        'Scalable Architecture',
-        'Educational Resources',
-        'Interactive Whitepaper'
-      ]
-    });
-  } catch (error) {
-    console.error('Error fetching info:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+      // Truncate log line if it exceeds 80 characters for readability
+      if (logLine.length > 80) {
+        logLine = logLine.slice(0, 79) + "…";
+      }
 
-// Socket.io events
-io.on('connection', (socket) => {
-  console.log('Client connected:', socket.id);
-
-  socket.on('disconnect', () => {
-    console.log('Client disconnected:', socket.id);
-  });
-});
-
-// Note: We already started the server at the top of the file
-
-// Continue setup in background
-(async () => {
-  try {
-    // Register routes 
-    console.log('Registering API routes...');
-    await registerRoutes(app, storage);
-    
-    // Setup Vite for development
-    if (isDev) {
-      console.log('Setting up Vite development server...');
-      await setupVite(app, httpServer);
-      console.log(`Frontend available at http://localhost:${port}`);
+      log(logLine);
     }
-    
-    console.log('Server setup complete.');
-  } catch (error) {
-    console.error('Error during server setup:', error);
+  });
+
+  next();
+});
+
+/**
+ * Immediately Invoked Async Function Expression (IIAFE)
+ *
+ * - Registers all API routes and associated middleware.
+ * - Sets up a global error handling middleware to catch and handle errors gracefully.
+ * - Initializes Vite in development mode or serves static files in production.
+ * - Starts server to listen on a consistent, explicitly defined port (5000).
+ */
+(async () => {
+  // Register API routes with proper DI
+  const server = await registerRoutes(app, storage);
+  
+  // Initialize WebSocket server with Redis pub/sub for horizontal scaling
+  const wsManager = initializeWebSockets(server);
+
+  /**
+   * Global error handling middleware
+   *
+   * - Captures errors from previous middleware and routes.
+   * - Returns structured JSON error response with appropriate HTTP status.
+   * - Throws the error for further logging or handling as required.
+   */
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+
+    res.status(status).json({ message });
+
+    // Propagate error to the higher-level logging/monitoring tools
+    throw err;
+  });
+
+  /**
+   * Environment-specific server setup
+   *
+   * - In development mode, configures Vite middleware to enable hot module replacement (HMR) and improved dev experience.
+   * - In production mode, serves prebuilt static assets for optimized performance.
+   * - Vite is initialized after routes to ensure correct route handling precedence.
+   */
+  if (app.get("env") === "development") {
+    await setupVite(app, server);
+  } else {
+    serveStatic(app);
+    // Ensure all routes that aren't API routes serve the index.html for client-side routing
+    app.get("*", (req, res) => {
+      if (!req.path.startsWith("/api")) {
+        res.sendFile(path.join(process.cwd(), "dist/public/index.html"));
+      }
+    });
   }
+
+  /**
+   * Server configuration
+   *
+   * - Explicitly sets the server to listen on port 5000 for both API and client-side requests.
+   * - Binds server to all network interfaces ("0.0.0.0") for accessibility.
+   * - Enables port reuse to enhance scalability and availability.
+   * - Logs confirmation when the server starts successfully.
+   */
+  const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+  const isDev = process.env.NODE_ENV !== "production";
+
+  server.listen(
+    {
+      port: port,
+      host: "0.0.0.0",
+      backlog: isDev ? 0 : 511,
+    },
+    () => {
+      console.log(`Server listening on port ${port} in ${app.get("env")} mode`);
+    },
+  );
 })();

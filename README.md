@@ -28,38 +28,36 @@ PeoChain is pioneering a decentralized financial revolution, empowering underban
 ### Prerequisites
 
 - Node.js (v16+)
-- PostgreSQL database (configured in Replit)
+- PostgreSQL database
 
-### Running the Application
+### Installation
 
-Due to a timing issue with the Replit workflow system, you'll need to run the server manually for now.
+1. Clone the repository:
+   ```
+   git clone https://github.com/dkrizhanovskyi/peochain_web
+   cd peochain-platform
+   ```
 
-#### Option 1 (Recommended): Use the interactive script
-```
-./run-app.sh
-```
-Choose option 1 to run the simple server which is guaranteed to work.
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-#### Option 2: Run the simple server directly
-```
-node server-simple.js
-```
+3. Set up environment variables:
+   Create a `.env` file in the root directory with the following:
+   ```
+   DATABASE_URL=postgresql://username:password@localhost:5432/peochain
+   ```
 
-#### Option 3: Run the full server (may have startup issues)
-```
-npm run dev
-```
+4. Initialize the database:
+   ```
+   npm run db:push
+   ```
 
-### Development Notes
-
-#### Current Status
-- The application has a working waitlist feature
-- There's an issue with the Replit workflow system detecting the server startup
-- We've created a simplified server for workaround and development
-
-#### Known Issues
-- The Replit workflow system is not properly detecting the server startup
-- The full application server takes too long to start up for the workflow check
+5. Run the development server:
+   ```
+   npm run dev
+   ```
 
 ## Project Structure
 
@@ -74,13 +72,6 @@ npm run dev
   - `db.ts`: Database connection
 - `shared/`: Shared code between client and server
   - `schema.ts`: Drizzle ORM schema definitions
-- `server-simple.js`: Simplified standalone server
-  - Contains basic API endpoints
-  - Includes working waitlist functionality
-  - Has embedded whitepaper and landing page
-- `run-app.sh`: Interactive script for running the application
-  - Helps select which server version to run
-  - Provides testing tools for development
 
 ## Contributing
 
