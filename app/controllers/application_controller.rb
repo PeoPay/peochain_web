@@ -1,37 +1,20 @@
 class ApplicationController < ActionController::Base
-  # Protect from forgery for API and web requests
+  # Prevent CSRF attacks by raising an exception
   protect_from_forgery with: :exception
   
-  # Skip CSRF token verification for API endpoints
+  # Skip CSRF for API endpoints
   skip_before_action :verify_authenticity_token, if: :json_request?
   
-  # Add JSON response helpers
-  def json_success(data, status = :ok)
-    render json: { success: true, data: data }, status: status
-  end
-  
-  def json_error(message, status = :bad_request)
-    render json: { success: false, message: message }, status: status
-  end
-  
-  private
+  protected
   
   def json_request?
-    request.format.json? || request.path.include?('/api/')
+    request.format.json? || request.path.start_with?('/api/')
   end
   
-  # Authentication method for protected endpoints
-  def authenticate_request
-    unless valid_api_key?
-      json_error("Unauthorized access. Valid API key required.", :unauthorized)
-      return false
-    end
-    true
-  end
-  
-  def valid_api_key?
-    # Simple API key check - would use more secure method in production
-    api_key = request.headers['X-API-Key'] || params[:api_key]
-    api_key.present? && api_key == ENV['API_KEY']
+  def render_error(status, message, errors = nil)
+    error_response = { error: message }
+    error_response[:errors] = errors if errors.present?
+    
+    render json: error_response, status: status
   end
 end
