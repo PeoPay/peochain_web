@@ -1,76 +1,44 @@
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useRealtime } from "@/hooks/use-realtime";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-  BarChart, Bar, PieChart, Pie, Cell
-} from "recharts";
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import { useRealtime } from "../hooks/use-realtime";
 
-// Analytics dashboard component
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
-  
-  // Setup real-time connection
-  const { subscribeToWaitlist, isConnected } = useRealtime({
-    autoConnect: true,
-    notifyOnReconnect: true
-  });
-  
-  // Real-time stats
-  const [realtimeStats, setRealtimeStats] = useState({
-    totalSignups: 0,
-    totalReferrals: 0,
-    recentSignups: [] as { email: string; time: string }[]
-  });
-  
-  // Fetch analytics data
-  const { data: analyticsData, isLoading } = useQuery({
-    queryKey: ['/api/analytics/overview'],
-    enabled: true
-  });
-  
-  // Fetch daily stats
-  const { data: dailyStats } = useQuery({
-    queryKey: ['/api/analytics/daily-stats'],
-    enabled: true
-  });
+  const [analyticsData, setAnalyticsData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { isConnected, realtimeStats } = useRealtime();
 
-  // Subscribe to realtime waitlist events
   useEffect(() => {
-    const unsubscribe = subscribeToWaitlist((event) => {
-      if (event.type === 'NEW_SIGNUP') {
-        setRealtimeStats(prev => ({
-          ...prev,
-          totalSignups: prev.totalSignups + 1,
-          recentSignups: [
-            { email: event.email, time: new Date().toLocaleTimeString() },
-            ...prev.recentSignups.slice(0, 9)
-          ]
-        }));
-      } else if (event.type === 'NEW_REFERRAL') {
-        setRealtimeStats(prev => ({
-          ...prev,
-          totalReferrals: prev.totalReferrals + 1
-        }));
-      } else if (event.type === 'ANALYTICS_UPDATE') {
-        setRealtimeStats(prev => ({
-          ...prev,
-          totalSignups: event.totalSignups,
-          totalReferrals: event.totalReferrals
-        }));
+    // Fetch analytics data when component mounts
+    const fetchAnalyticsData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch("/api/analytics/overview", {
+          headers: {
+            "x-api-key": "peochain-analytics-2025" // This should come from a secure source in production
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setAnalyticsData(data);
+        } else {
+          console.error("Failed to fetch analytics data");
+        }
+      } catch (error) {
+        console.error("Error fetching analytics data:", error);
+      } finally {
+        setIsLoading(false);
       }
-    });
-    
-    return () => {
-      unsubscribe();
     };
-  }, [subscribeToWaitlist]);
+
+    fetchAnalyticsData();
+  }, []);
 
   // Sample colors for charts
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
-  
+
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-8">
@@ -87,7 +55,7 @@ export default function Dashboard() {
           </p>
         </div>
       </div>
-      
+
       {/* Quick stats overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Card>
@@ -101,7 +69,7 @@ export default function Dashboard() {
             </div>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-2xl">Total Referrals</CardTitle>
@@ -113,7 +81,7 @@ export default function Dashboard() {
             </div>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-2xl">Avg. Referrals</CardTitle>
@@ -126,7 +94,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </div>
-      
+
       {/* Detailed analytics tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
         <TabsList className="mb-4">
@@ -135,7 +103,7 @@ export default function Dashboard() {
           <TabsTrigger value="geography">Geography</TabsTrigger>
           <TabsTrigger value="realtime">Real-time</TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="overview">
           <Card>
             <CardHeader>
@@ -143,26 +111,18 @@ export default function Dashboard() {
               <CardDescription>User signups over time</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={dailyStats?.data || []}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="signupCount" stroke="#8884d8" activeDot={{ r: 8 }} name="Signups" />
-                    <Line type="monotone" dataKey="totalReferrals" stroke="#82ca9d" name="Referrals" />
-                  </LineChart>
-                </ResponsiveContainer>
+              {/* Chart would go here */}
+              <div className="h-80 w-full bg-muted/20 flex items-center justify-center">
+                {isLoading ? (
+                  <p>Loading chart data...</p>
+                ) : (
+                  <p>Chart visualization would render here</p>
+                )}
               </div>
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         <TabsContent value="referrals">
           <Card>
             <CardHeader>
@@ -170,28 +130,25 @@ export default function Dashboard() {
               <CardDescription>Users with most successful referrals</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart
-                    data={analyticsData?.data?.topReferrers?.slice(0, 10).map((ref: any) => ({
-                      name: ref.fullName.length > 15 ? ref.fullName.slice(0, 15) + '...' : ref.fullName,
-                      count: ref.referralCount
-                    })) || []}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="count" fill="#8884d8" name="Referrals" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+              {isLoading ? (
+                <p>Loading referral data...</p>
+              ) : (
+                <ul className="space-y-2">
+                  {(analyticsData?.data?.topReferrers || []).slice(0, 5).map((referrer: any, index: number) => (
+                    <li key={index} className="flex justify-between items-center p-2 rounded-md hover:bg-muted/50">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{referrer.fullName}</span>
+                        <span className="text-sm text-muted-foreground">({referrer.email})</span>
+                      </div>
+                      <span className="font-bold">{referrer.referralCount} referrals</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         <TabsContent value="geography">
           <Card>
             <CardHeader>
@@ -199,53 +156,35 @@ export default function Dashboard() {
               <CardDescription>User distribution by region</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={analyticsData?.data?.topRegions?.slice(0, 5).map((region: any) => ({
-                        name: region.region,
-                        value: region.userCount
-                      })) || []}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={true}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="value"
-                      nameKey="name"
-                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                    >
-                      {(analyticsData?.data?.topRegions || []).map((_: any, index: number) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                    <Legend />
-                  </PieChart>
-                </ResponsiveContainer>
+              {/* Geo chart would go here */}
+              <div className="h-80 w-full bg-muted/20 flex items-center justify-center">
+                {isLoading ? (
+                  <p>Loading geographic data...</p>
+                ) : (
+                  <p>Geographic visualization would render here</p>
+                )}
               </div>
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         <TabsContent value="realtime">
           <Card>
             <CardHeader>
-              <CardTitle>Real-time Signups</CardTitle>
-              <CardDescription>Latest waitlist registrations</CardDescription>
+              <CardTitle>Live Activity</CardTitle>
+              <CardDescription>Real-time signups and referrals</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-80 overflow-auto">
-                {realtimeStats.recentSignups.length === 0 ? (
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    No recent signups. Waiting for new registrations...
-                  </div>
+              <div className="space-y-4">
+                <h3 className="text-sm font-medium">Recent Signups</h3>
+                {!isConnected ? (
+                  <p className="text-sm text-muted-foreground">WebSocket connection not established. Real-time updates unavailable.</p>
                 ) : (
                   <ul className="space-y-2">
-                    {realtimeStats.recentSignups.map((signup, index) => (
-                      <li key={index} className="border-b pb-2 flex justify-between items-center">
-                        <span className="font-medium">{signup.email}</span>
+                    {/* This would be populated with live data */}
+                    {(realtimeStats.recentSignups || []).map((signup: any) => (
+                      <li key={signup.id} className="flex justify-between items-center p-2 text-sm">
+                        <span>{signup.email}</span>
                         <span className="text-sm text-muted-foreground">{signup.time}</span>
                       </li>
                     ))}
