@@ -44,13 +44,13 @@ export default function Whitepaper() {
         onFaqClick={() => navigateToHome("faq")}
       />
 
-      <main className="container max-w-4xl mx-auto px-4 py-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-8">
+      <main className="container max-w-4xl mx-auto px-4 py-8 md:py-12">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-6 md:mb-8">
           PEOCHAIN Whitepaper
         </h1>
 
         {/* 1. Introductory Statement */}
-        <p className="text-xl text-center text-foreground/80 mb-12 max-w-3xl mx-auto">
+        <p className="text-lg md:text-xl text-center text-foreground/80 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed">
           "PeoChain is pioneering a decentralized financial revolution,
           empowering underbanked populations globally through cutting-edge
           blockchain innovation. By combining the novel Proof of Synergy (PoSyg)
@@ -67,37 +67,37 @@ export default function Whitepaper() {
             <div className="space-y-10">
               {/* 2. Key Problems Solved */}
               <section>
-                <h2 className="text-2xl font-bold mb-6">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
                   Key Problems Solved by PeoChain
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-primary/5 p-6 rounded-xl">
-                    <h3 className="font-bold text-xl mb-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                  <div className="bg-primary/5 p-4 md:p-6 rounded-xl">
+                    <h3 className="font-bold text-lg md:text-xl mb-2 md:mb-3">
                       High Transaction Costs
                     </h3>
-                    <p className="text-foreground/70">
+                    <p className="text-foreground/70 text-sm md:text-base">
                       Current blockchain and traditional financial systems
                       impose high fees, significantly restricting access for
                       underserved and underbanked communities.
                     </p>
                   </div>
 
-                  <div className="bg-primary/5 p-6 rounded-xl">
-                    <h3 className="font-bold text-xl mb-3">
+                  <div className="bg-primary/5 p-4 md:p-6 rounded-xl">
+                    <h3 className="font-bold text-lg md:text-xl mb-2 md:mb-3">
                       Scalability and Performance Issues
                     </h3>
-                    <p className="text-foreground/70">
+                    <p className="text-foreground/70 text-sm md:text-base">
                       Most existing blockchain networks struggle to handle peak
                       transaction volumes efficiently, causing delays, network
                       congestion, and reduced usability.
                     </p>
                   </div>
 
-                  <div className="bg-primary/5 p-6 rounded-xl">
-                    <h3 className="font-bold text-xl mb-3">
+                  <div className="bg-primary/5 p-4 md:p-6 rounded-xl">
+                    <h3 className="font-bold text-lg md:text-xl mb-2 md:mb-3">
                       Complex User Experiences
                     </h3>
-                    <p className="text-foreground/70">
+                    <p className="text-foreground/70 text-sm md:text-base">
                       Technical barriers, complicated interfaces, and
                       insufficient educational resources limit blockchain
                       adoption, especially among populations with limited
@@ -105,11 +105,11 @@ export default function Whitepaper() {
                     </p>
                   </div>
 
-                  <div className="bg-primary/5 p-6 rounded-xl">
-                    <h3 className="font-bold text-xl mb-3">
+                  <div className="bg-primary/5 p-4 md:p-6 rounded-xl">
+                    <h3 className="font-bold text-lg md:text-xl mb-2 md:mb-3">
                       Economic Instability and Volatility
                     </h3>
-                    <p className="text-foreground/70">
+                    <p className="text-foreground/70 text-sm md:text-base">
                       Crypto volatility undermines trust and discourages
                       everyday use, particularly in emerging economies where
                       stability and predictability are essential.
@@ -122,32 +122,33 @@ export default function Whitepaper() {
 
               {/* 3. PeoChain Solutions */}
               <section>
-                <h2 className="text-2xl font-bold mb-6">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
                   How PeoChain Solves These Problems
                 </h2>
 
-                <div className="space-y-6">
-                  <div className="flex flex-col md:flex-row gap-4 items-start">
-                    <div className="bg-primary/20 p-3 rounded-full text-primary">
+                <div className="space-y-4 md:space-y-6">
+                  <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-start">
+                    <div className="bg-primary/20 p-2 md:p-3 rounded-full text-primary shrink-0">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
+                        className="md:w-6 md:h-6"
                       >
                         <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-bold text-xl">
+                      <h3 className="font-bold text-lg md:text-xl mb-1 md:mb-2">
                         Ultra-Low Transaction Fees
                       </h3>
-                      <p className="text-foreground/70">
+                      <p className="text-foreground/70 text-sm md:text-base">
                         PeoChain dramatically reduces costs with fees as low as{" "}
                         <span className="font-semibold">
                           USD 0.004 per transaction
@@ -157,28 +158,29 @@ export default function Whitepaper() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col md:flex-row gap-4 items-start">
-                    <div className="bg-primary/20 p-3 rounded-full text-primary">
+                  <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-start">
+                    <div className="bg-primary/20 p-2 md:p-3 rounded-full text-primary shrink-0">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
+                        className="md:w-6 md:h-6"
                       >
                         <polyline points="13 17 18 12 13 7" />
                         <polyline points="6 17 11 12 6 7" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-bold text-xl">
+                      <h3 className="font-bold text-lg md:text-xl mb-1 md:mb-2">
                         High Scalability and Instant Transactions
                       </h3>
-                      <p className="text-foreground/70">
+                      <p className="text-foreground/70 text-sm md:text-base">
                         Leveraging advanced blockchain infrastructure, PeoChain
                         processes up to{" "}
                         <span className="font-semibold">
@@ -191,18 +193,19 @@ export default function Whitepaper() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col md:flex-row gap-4 items-start">
-                    <div className="bg-primary/20 p-3 rounded-full text-primary">
+                  <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-start">
+                    <div className="bg-primary/20 p-2 md:p-3 rounded-full text-primary shrink-0">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
+                        className="md:w-6 md:h-6"
                       >
                         <rect
                           width="14"
@@ -216,10 +219,10 @@ export default function Whitepaper() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-bold text-xl">
+                      <h3 className="font-bold text-lg md:text-xl mb-1 md:mb-2">
                         User-Centric Mobile Integration
                       </h3>
-                      <p className="text-foreground/70">
+                      <p className="text-foreground/70 text-sm md:text-base">
                         PeoChain simplifies blockchain adoption by seamlessly
                         integrating with established mobile payment platforms
                         like <span className="font-semibold">M-Pesa</span> and{" "}
@@ -230,18 +233,19 @@ export default function Whitepaper() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col md:flex-row gap-4 items-start">
-                    <div className="bg-primary/20 p-3 rounded-full text-primary">
+                  <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-start">
+                    <div className="bg-primary/20 p-2 md:p-3 rounded-full text-primary shrink-0">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
+                        className="md:w-6 md:h-6"
                       >
                         <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5l6.74-6.76z" />
                         <line x1="16" x2="2" y1="8" y2="22" />
@@ -249,10 +253,10 @@ export default function Whitepaper() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-bold text-xl">
+                      <h3 className="font-bold text-lg md:text-xl mb-1 md:mb-2">
                         Economic Stability Measures
                       </h3>
-                      <p className="text-foreground/70">
+                      <p className="text-foreground/70 text-sm md:text-base">
                         By deploying localized stablecoins pegged to familiar
                         fiat currencies and incorporating sophisticated
                         volatility-mitigation mechanisms, PeoChain ensures
@@ -267,15 +271,14 @@ export default function Whitepaper() {
 
               {/* 4. Innovative Core Technologies */}
               <section>
-                <h2 className="text-2xl font-bold mb-6">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
                   Innovative Core Technologies
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-xl whitepaper-section">
-                    <h3 className="font-bold text-xl mb-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                  <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-4 md:p-6 rounded-xl whitepaper-section">
+                    <h3 className="font-bold text-lg md:text-xl mb-2 md:mb-3">
                       <TechTooltip
-                        expanded={true}
                         content={
                           <div>
                             <h4 className="font-semibold text-primary mb-1">
@@ -302,7 +305,7 @@ export default function Whitepaper() {
                         Proof of Synergy (PoSyg)
                       </TechTooltip>
                     </h3>
-                    <ul className="list-disc pl-6 space-y-2 text-foreground/80">
+                    <ul className="list-disc pl-4 md:pl-6 space-y-1 md:space-y-2 text-foreground/80 text-sm md:text-base">
                       <li>
                         Combines security, decentralization, and economic
                         incentives in a single consensus mechanism
@@ -321,27 +324,27 @@ export default function Whitepaper() {
                     </ul>
 
                     <div
-                      className="flex items-center justify-center mt-4 text-primary cursor-pointer hover:text-primary/80 text-sm font-medium"
+                      className="flex items-center justify-center mt-3 md:mt-4 text-primary cursor-pointer hover:text-primary/80 text-xs md:text-sm font-medium"
                       onClick={() => toggleSection("consensusMechanism")}
                     >
                       {expandedSections.consensusMechanism ? (
                         <>
-                          Show Less <ChevronUp className="ml-1 h-4 w-4" />
+                          Show Less <ChevronUp className="ml-1 h-3 md:h-4 w-3 md:w-4" />
                         </>
                       ) : (
                         <>
                           View Consensus Mechanism Visualization{" "}
-                          <ChevronDown className="ml-1 h-4 w-4" />
+                          <ChevronDown className="ml-1 h-3 md:h-4 w-3 md:w-4" />
                         </>
                       )}
                     </div>
 
                     {expandedSections.consensusMechanism && (
-                      <div className="mt-4 p-4 bg-primary/5 rounded-xl">
-                        <h3 className="sub-section-title mb-4 text-center">
+                      <div className="mt-3 md:mt-4 p-3 md:p-4 bg-primary/5 rounded-xl">
+                        <h3 className="sub-section-title text-base md:text-lg mb-3 md:mb-4 text-center">
                           Proof of Synergy (PoSyg) Consensus
                         </h3>
-                        <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
+                        <div className="w-full flex justify-center responsive-diagram h-[280px] sm:h-[350px] md:h-[400px]">
                           <ConsensusDiagram mode="posyg" />
                         </div>
                       </div>

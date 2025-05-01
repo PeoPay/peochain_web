@@ -6,20 +6,23 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-interface TechTooltipProps {
+export interface TechTooltipProps {
   children: React.ReactNode;
   content: React.ReactNode;
+  expanded?: boolean; // Added expanded prop with optional flag
 }
 
-export function TechTooltip({ children, content }: TechTooltipProps) {
+export function TechTooltip({ children, content, expanded = false }: TechTooltipProps) {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          {children}
+          <span className="cursor-help border-b border-dotted border-foreground/30">
+            {children}
+          </span>
         </TooltipTrigger>
         <TooltipContent className="max-w-xs">
-          <p className="text-xs">{content}</p>
+          {content}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
