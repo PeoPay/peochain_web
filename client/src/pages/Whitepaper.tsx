@@ -479,8 +479,8 @@ export default function Whitepaper() {
                     </div>
                   </div>
 
-                  <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="feature-title mb-2">
+                  <div className="border border-primary/20 p-4 md:p-5 rounded-xl">
+                    <h3 className="font-bold text-lg mb-2">
                       <TechTooltip
                         content={
                           <div>
@@ -518,8 +518,8 @@ export default function Whitepaper() {
                     </p>
                   </div>
 
-                  <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="feature-title mb-2">
+                  <div className="border border-primary/20 p-4 md:p-5 rounded-xl">
+                    <h3 className="font-bold text-lg mb-2">
                       <TechTooltip
                         content={
                           <div>
@@ -562,8 +562,8 @@ export default function Whitepaper() {
                     </p>
                   </div>
 
-                  <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="feature-title mb-2">
+                  <div className="border border-primary/20 p-4 md:p-5 rounded-xl">
+                    <h3 className="font-bold text-lg mb-2">
                       <TechTooltip
                         content={
                           <div>
@@ -605,8 +605,8 @@ export default function Whitepaper() {
                     </p>
                   </div>
 
-                  <div className="border border-primary/20 p-5 rounded-xl">
-                    <h3 className="feature-title mb-2">
+                  <div className="border border-primary/20 p-4 md:p-5 rounded-xl">
+                    <h3 className="font-bold text-lg mb-2">
                       <TechTooltip
                         content={
                           <div>
@@ -650,7 +650,7 @@ export default function Whitepaper() {
 
                 {expandedSections.architecture && (
                   <div className="my-8 p-4 bg-primary/5 rounded-xl">
-                    <h3 className="sub-section-title mb-4 text-center">
+                    <h3 className="font-bold text-lg md:text-xl mb-4 text-center">
                       Subnet Validator Architecture
                     </h3>
                     <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
@@ -694,8 +694,8 @@ export default function Whitepaper() {
                   </div>
                 )}
 
-                <div className="p-5 bg-primary/5 rounded-xl">
-                  <h3 className="feature-title mb-3">
+                <div className="p-4 md:p-5 bg-primary/5 rounded-xl">
+                  <h3 className="font-bold text-lg mb-2 md:mb-3">
                     Technical Architecture Comparison with Leading Blockchains
                   </h3>
 
