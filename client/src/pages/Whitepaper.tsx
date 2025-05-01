@@ -415,13 +415,12 @@ export default function Whitepaper() {
 
               {/* 5. Technical Highlights */}
               <section>
-                <h2 className="section-title mb-6">Technical Highlights</h2>
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Technical Highlights</h2>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                  <div className="border border-primary/20 p-5 rounded-xl whitepaper-section">
-                    <h3 className="feature-title mb-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
+                  <div className="border border-primary/20 p-4 md:p-5 rounded-xl whitepaper-section">
+                    <h3 className="font-bold text-lg mb-2">
                       <TechTooltip
-                        expanded={true}
                         content={
                           <div>
                             <h4 className="font-semibold text-primary mb-1">
@@ -483,7 +482,6 @@ export default function Whitepaper() {
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="feature-title mb-2">
                       <TechTooltip
-                        expanded={true}
                         content={
                           <div>
                             <h4 className="font-semibold text-primary mb-1">
@@ -523,7 +521,6 @@ export default function Whitepaper() {
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="feature-title mb-2">
                       <TechTooltip
-                        expanded={true}
                         content={
                           <div>
                             <h4 className="font-semibold text-primary mb-1">
@@ -568,7 +565,6 @@ export default function Whitepaper() {
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="feature-title mb-2">
                       <TechTooltip
-                        expanded={true}
                         content={
                           <div>
                             <h4 className="font-semibold text-primary mb-1">
@@ -612,7 +608,6 @@ export default function Whitepaper() {
                   <div className="border border-primary/20 p-5 rounded-xl">
                     <h3 className="feature-title mb-2">
                       <TechTooltip
-                        expanded={true}
                         content={
                           <div>
                             <h4 className="font-semibold text-primary mb-1">
