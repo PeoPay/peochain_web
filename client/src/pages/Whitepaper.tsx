@@ -44,8 +44,8 @@ export default function Whitepaper() {
         onFaqClick={() => navigateToHome("faq")}
       />
 
-      <main className="container max-w-4xl mx-auto px-4 py-8 md:py-12">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-6 md:mb-8">
+      <main className="container max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-12">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 sm:mb-6 md:mb-8">
           PEOCHAIN Whitepaper
         </h1>
 
@@ -275,7 +275,7 @@ export default function Whitepaper() {
                   Innovative Core Technologies
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
                   <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-4 md:p-6 rounded-xl whitepaper-section">
                     <h3 className="font-bold text-lg md:text-xl mb-2 md:mb-3">
                       <TechTooltip
@@ -352,7 +352,7 @@ export default function Whitepaper() {
                   </div>
 
                   <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-xl whitepaper-section">
-                    <h3 className="sub-section-title mb-3">
+                    <h3 className="font-bold text-lg md:text-xl mb-2 md:mb-3">
                       Dynamic Contribution Scoring (DCS)
                     </h3>
                     <ul className="list-disc pl-6 space-y-2 text-foreground/80">
@@ -373,7 +373,7 @@ export default function Whitepaper() {
                     </ul>
 
                     <div
-                      className="flex items-center justify-center mt-4 text-primary cursor-pointer hover:text-primary/80 text-sm font-medium"
+                      className="flex items-center justify-center mt-3 md:mt-4 text-primary cursor-pointer hover:text-primary/80 text-xs md:text-sm font-medium"
                       onClick={() => toggleSection("dcs")}
                     >
                       {expandedSections.dcs ? (
@@ -390,7 +390,7 @@ export default function Whitepaper() {
 
                     {expandedSections.dcs && (
                       <div className="mt-4 p-4 bg-primary/5 rounded-xl">
-                        <h3 className="sub-section-title mb-4 text-center">
+                        <h3 className="font-bold text-base md:text-lg mb-3 md:mb-4 text-center">
                           Dynamic Contribution Scoring
                         </h3>
                         <div className="w-full flex justify-center responsive-diagram h-[350px] sm:h-[400px]">
@@ -401,8 +401,8 @@ export default function Whitepaper() {
                   </div>
                 </div>
 
-                <div className="mt-8 p-5 bg-primary/5 rounded-xl">
-                  <h3 className="sub-section-title mb-4 text-center">
+                <div className="mt-6 md:mt-8 p-4 md:p-5 bg-primary/5 rounded-xl">
+                  <h3 className="font-bold text-base md:text-lg mb-3 md:mb-4 text-center">
                     Performance Comparison
                   </h3>
                   <div className="h-[350px] responsive-chart">
