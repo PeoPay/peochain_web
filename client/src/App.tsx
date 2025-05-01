@@ -4,7 +4,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { lazy, Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ThemeProvider } from "@/components/ui/theme-provider";
 
 // Lazy load components for code splitting
 const NotFound = lazy(() => import("@/pages/not-found"));
@@ -14,7 +13,6 @@ const TermsOfService = lazy(() => import("@/pages/TermsOfService"));
 const Whitepaper = lazy(() => import("@/pages/Whitepaper"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const CrossChainDemo = lazy(() => import("@/pages/CrossChainDemo"));
-const AIAssistant = lazy(() => import("@/pages/AIAssistant"));
 
 // Loading component to display while page chunks are being loaded
 const PageLoader = () => (
@@ -41,7 +39,6 @@ function Router() {
         <Route path="/whitepaper" component={Whitepaper}/>
         <Route path="/dashboard" component={Dashboard}/>
         <Route path="/cross-chain-demo" component={CrossChainDemo}/>
-        <Route path="/ai-assistant" component={AIAssistant}/>
         <Route component={NotFound} />
       </Switch>
     </Suspense>
@@ -50,12 +47,10 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light">
-      <QueryClientProvider client={queryClient}>
-        <Router />
-        <Toaster />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <Router />
+      <Toaster />
+    </QueryClientProvider>
   );
 }
 

@@ -8,13 +8,9 @@ const Dialog = DialogPrimitive.Root
 
 const DialogTrigger = DialogPrimitive.Trigger
 
-const DialogPortal = ({
-  className,
-  ...props
-}: DialogPrimitive.DialogPortalProps) => (
-  <DialogPrimitive.Portal className={cn(className)} {...props} />
-)
-DialogPortal.displayName = DialogPrimitive.Portal.displayName
+const DialogPortal = DialogPrimitive.Portal
+
+const DialogClose = DialogPrimitive.Close
 
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
@@ -23,7 +19,7 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -31,70 +27,23 @@ const DialogOverlay = React.forwardRef<
 ))
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
-const DialogContent = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => {
-  // Check if DialogTitle exists in children to warn developers
-  const hasDialogTitle = React.Children.toArray(children).some(
-    child => React.isValidElement(child) && 
-    (child.type === DialogTitle || 
-     (child.type === DialogHeader && 
-      React.Children.toArray(child.props.children).some(
-        headerChild => React.isValidElement(headerChild) && headerChild.type === DialogTitle
-      )))
-  );
+// Define DialogTitle component first to avoid circular reference
+const DialogTitle = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Title
+    ref={ref}
+    className={cn(
+      "text-lg font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+))
+DialogTitle.displayName = DialogPrimitive.Title.displayName
 
-  // Check if DialogDescription exists in children
-  const hasDialogDescription = React.Children.toArray(children).some(
-    child => React.isValidElement(child) && 
-    (child.type === DialogDescription || 
-     (child.type === DialogHeader && 
-      React.Children.toArray(child.props.children).some(
-        headerChild => React.isValidElement(headerChild) && headerChild.type === DialogDescription
-      )))
-  );
-
-  // Only log warnings in development
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    React.useEffect(() => {
-      if (!hasDialogTitle) {
-        console.warn(
-          'DialogContent requires a DialogTitle for the component to be accessible for screen reader users.\n\n' +
-          'If you want to hide the DialogTitle, you can wrap it with our VisuallyHidden component.\n\n' +
-          'For more information, see https://radix-ui.com/primitives/docs/components/dialog'
-        );
-      }
-
-      if (!hasDialogDescription && !props['aria-describedby']) {
-        console.warn('Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.');
-      }
-    }, []);
-  }
-
-  return (
-    <DialogPortal>
-      <DialogOverlay />
-      <DialogPrimitive.Content
-        ref={ref}
-        className={cn(
-          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full",
-          className
-        )}
-        {...props}
-      >
-        {children}
-        <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
-      </DialogPrimitive.Content>
-    </DialogPortal>
-  );
-})
-DialogContent.displayName = DialogPrimitive.Content.displayName
-
+// Define DialogHeader first since it's used in the DialogContent accessibility check
 const DialogHeader = ({
   className,
   ...props
@@ -123,21 +72,6 @@ const DialogFooter = ({
 )
 DialogFooter.displayName = "DialogFooter"
 
-const DialogTitle = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title
-    ref={ref}
-    className={cn(
-      "text-lg font-semibold leading-none tracking-tight",
-      className
-    )}
-    {...props}
-  />
-))
-DialogTitle.displayName = DialogPrimitive.Title.displayName
-
 const DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
@@ -150,28 +84,84 @@ const DialogDescription = React.forwardRef<
 ))
 DialogDescription.displayName = DialogPrimitive.Description.displayName
 
-// VisuallyHidden component for accessible but visually hidden elements
-const VisuallyHidden = ({
-  children,
-  ...props
-}: React.HTMLAttributes<HTMLSpanElement>) => (
-  <span
-    className="absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0"
-    style={{ clip: 'rect(0 0 0 0)' }}
-    {...props}
-  >
-    {children}
-  </span>
-)
-VisuallyHidden.displayName = "VisuallyHidden"
+const DialogContent = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+>(({ className, children, ...props }, ref) => {
+  // Check if children contains a DialogTitle component for accessibility
+  const hasDialogTitle = React.Children.toArray(children).some(
+    (child) => 
+      React.isValidElement(child) && 
+      (child.type === DialogTitle || 
+        (child.type === DialogHeader && 
+          React.Children.toArray(child.props.children).some(
+            (headerChild) => React.isValidElement(headerChild) && headerChild.type === DialogTitle
+          )
+        )
+      )
+  );
+
+  // Check if children contains a DialogDescription component for accessibility
+  const hasDialogDescription = React.Children.toArray(children).some(
+    (child) => 
+      React.isValidElement(child) && 
+      (child.type === DialogDescription || 
+        (child.type === DialogHeader && 
+          React.Children.toArray(child.props.children).some(
+            (headerChild) => React.isValidElement(headerChild) && headerChild.type === DialogDescription
+          )
+        )
+      )
+  );
+
+  return (
+    <DialogPortal>
+      <DialogOverlay />
+      <DialogPrimitive.Content
+        ref={ref}
+        className={cn(
+          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+          className
+        )}
+        {...props}
+      >
+        {hasDialogTitle ? (
+          hasDialogDescription ? children : (
+            <>
+              <DialogDescription className="sr-only">Modal dialog</DialogDescription>
+              {children}
+            </>
+          )
+        ) : (
+          <>
+            <DialogTitle className="sr-only">Dialog</DialogTitle>
+            {hasDialogDescription ? children : (
+              <>
+                <DialogDescription className="sr-only">Modal dialog</DialogDescription>
+                {children}
+              </>
+            )}
+          </>
+        )}
+        <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </DialogPrimitive.Close>
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  );
+})
+DialogContent.displayName = DialogPrimitive.Content.displayName
 
 export {
   Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
   DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogFooter,
   DialogTitle,
   DialogDescription,
-  VisuallyHidden,
 }

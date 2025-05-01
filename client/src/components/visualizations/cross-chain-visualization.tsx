@@ -788,6 +788,6 @@ export default function CrossChainVisualization() {
           enabling unified liquidity, cross-chain applications, and quantum-resistant security for the Web3 future.
         </p>
       </div>
-    </div>iv>
+    </div>
   );
 }

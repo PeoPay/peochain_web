@@ -3,9 +3,7 @@ import {
   waitlistEntries, type WaitlistEntry, type InsertWaitlistEntry,
   dailyWaitlistStats, type DailyWaitlistStats, type InsertDailyWaitlistStats,
   geographicStats, type GeographicStats, type InsertGeographicStats,
-  referralChannels, type ReferralChannel, type InsertReferralChannel,
-  aiChats, type AiChat, type InsertAiChat,
-  aiMessages, type AiMessage, type InsertAiMessage
+  referralChannels, type ReferralChannel, type InsertReferralChannel
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, sql, desc, asc, and, gte, lte } from "drizzle-orm";
@@ -48,14 +46,6 @@ export interface IStorage {
     topChannels: ReferralChannel[];
     topRegions: GeographicStats[];
   }>;
-
-  // AI Assistant methods
-  createChat(chat: InsertAiChat): Promise<AiChat>;
-  getChatBySessionId(sessionId: string): Promise<AiChat | undefined>;
-  addMessageToChat(message: InsertAiMessage): Promise<AiMessage>;
-  getChatMessages(chatId: number): Promise<AiMessage[]>;
-  getChatWithMessages(chatId: number): Promise<{ chat: AiChat; messages: AiMessage[] } | undefined>;
-  getChatWithMessagesBySessionId(sessionId: string): Promise<{ chat: AiChat; messages: AiMessage[] } | undefined>;
 }
 
 // Split into separate service classes for better SRP
@@ -423,109 +413,6 @@ export class DatabaseStorage implements IStorage {
       topChannels,
       topRegions,
     };
-  }
-
-  // AI Assistant methods
-  async createChat(chat: InsertAiChat): Promise<AiChat> {
-    try {
-      const [newChat] = await db
-        .insert(aiChats)
-        .values({
-          ...chat,
-          updatedAt: new Date()
-        })
-        .returning();
-      
-      return newChat;
-    } catch (error) {
-      console.error("Error creating chat:", error);
-      throw error;
-    }
-  }
-
-  async getChatBySessionId(sessionId: string): Promise<AiChat | undefined> {
-    try {
-      const [chat] = await db
-        .select()
-        .from(aiChats)
-        .where(eq(aiChats.sessionId, sessionId));
-      
-      return chat || undefined;
-    } catch (error) {
-      console.error("Error getting chat by session ID:", error);
-      throw error;
-    }
-  }
-
-  async addMessageToChat(message: InsertAiMessage): Promise<AiMessage> {
-    try {
-      // Add the message
-      const [newMessage] = await db
-        .insert(aiMessages)
-        .values(message)
-        .returning();
-      
-      // Update the chat's updatedAt timestamp
-      await db
-        .update(aiChats)
-        .set({ updatedAt: new Date() })
-        .where(eq(aiChats.id, message.chatId));
-      
-      return newMessage;
-    } catch (error) {
-      console.error("Error adding message to chat:", error);
-      throw error;
-    }
-  }
-
-  async getChatMessages(chatId: number): Promise<AiMessage[]> {
-    try {
-      return db
-        .select()
-        .from(aiMessages)
-        .where(eq(aiMessages.chatId, chatId))
-        .orderBy(asc(aiMessages.createdAt));
-    } catch (error) {
-      console.error("Error getting chat messages:", error);
-      throw error;
-    }
-  }
-
-  async getChatWithMessages(chatId: number): Promise<{ chat: AiChat; messages: AiMessage[] } | undefined> {
-    try {
-      const [chat] = await db
-        .select()
-        .from(aiChats)
-        .where(eq(aiChats.id, chatId));
-      
-      if (!chat) {
-        return undefined;
-      }
-      
-      const messages = await this.getChatMessages(chatId);
-      
-      return { chat, messages };
-    } catch (error) {
-      console.error("Error getting chat with messages:", error);
-      throw error;
-    }
-  }
-
-  async getChatWithMessagesBySessionId(sessionId: string): Promise<{ chat: AiChat; messages: AiMessage[] } | undefined> {
-    try {
-      const chat = await this.getChatBySessionId(sessionId);
-      
-      if (!chat) {
-        return undefined;
-      }
-      
-      const messages = await this.getChatMessages(chat.id);
-      
-      return { chat, messages };
-    } catch (error) {
-      console.error("Error getting chat with messages by session ID:", error);
-      throw error;
-    }
   }
 }
 

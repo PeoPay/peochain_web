@@ -17,7 +17,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="px-3 sm:px-4 md:px-8 py-8 sm:py-10 md:py-12 border-t border-foreground/10">
+    <footer className="px-4 md:px-8 py-12 border-t border-foreground/10">
       <div className="max-w-7xl mx-auto">
         <div className="md:text-center">
           <div className="flex justify-center md:justify-center mb-4">

@@ -3,58 +3,13 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 39 33% 97%;
-    --foreground: 143 15% 26%;
-    --card: 0 0% 100%;
-    --card-foreground: 143 15% 26%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 143 15% 26%;
-    --primary: 142 24% 52%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 142 9% 91%;
-    --secondary-foreground: 143 15% 26%;
-    --muted: 143 6% 93%;
-    --muted-foreground: 143 7% 44%;
-    --accent: 143 12% 91%;
-    --accent-foreground: 143 15% 26%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 143 12% 90%;
-    --input: 143 12% 90%;
-    --ring: 142 24% 52%;
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    --background: 143 15% 12%;
-    --foreground: 143 15% 90%;
-    --card: 143 15% 15%;
-    --card-foreground: 143 15% 90%;
-    --popover: 143 15% 15%;
-    --popover-foreground: 143 15% 90%;
-    --primary: 142 24% 52%;
-    --primary-foreground: 143 15% 12%;
-    --secondary: 143 15% 20%;
-    --secondary-foreground: 143 15% 90%;
-    --muted: 143 15% 20%;
-    --muted-foreground: 143 15% 65%;
-    --accent: 143 15% 25%;
-    --accent-foreground: 143 15% 90%;
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 143 15% 90%;
-    --border: 143 15% 25%;
-    --input: 143 15% 25%;
-    --ring: 142 24% 52%;
-  }
-
   * {
     @apply border-border;
   }
 
   body {
-    @apply font-sans antialiased text-foreground bg-background;
-    font-size: 85%; /* Reduced text scale by 15% globally */
+    @apply font-sans antialiased text-foreground;
+    background-color: #fbf8f1;
   }
 }
 
@@ -77,7 +32,7 @@
   /* Visual hierarchy classes */
   .section-title {
     color: #6d9e79;  /* Accent 1 */
-    font-size: 1.7rem; /* Reduced by 15% from 2rem */
+    font-size: 2rem;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
@@ -85,7 +40,7 @@
   
   .sub-section-title {
     color: #38503f; /* Foreground */
-    font-size: 1.275rem; /* Reduced by 15% from 1.5rem */
+    font-size: 1.5rem;
     font-weight: 600;
     line-height: 1.3;
     margin-bottom: 0.75rem;
@@ -93,7 +48,7 @@
   
   .feature-title {
     color: #38503f; /* Foreground */
-    font-size: 1.06rem; /* Reduced by 15% from 1.25rem */
+    font-size: 1.25rem;
     font-weight: 600;
     line-height: 1.4;
     margin-bottom: 0.5rem;
@@ -101,7 +56,7 @@
   
   .description {
     color: #577060; /* lighter variant for readability */
-    font-size: 0.85rem; /* Reduced by 15% from 1rem */
+    font-size: 1rem;
     line-height: 1.6;
   }
   
@@ -173,7 +128,7 @@
     
     /* Better text size for readability */
     .whitepaper-section .flex.gap-6 span {
-      font-size: 0.68rem; /* Reduced by 15% from 0.8rem */
+      font-size: 0.8rem; /* Improved font size for better readability */
     }
     
     /* Consistent SVG rendering on mobile */
@@ -230,31 +185,11 @@
     overflow: visible;
   }
 
-  /* Mobile-first responsive design */
-  @media (max-width: 640px) {
-    html {
-      font-size: 14px;
-    }
-    
-    .container {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-    
-    /* Improve touch targets */
-    button, 
-    [role="button"],
-    a {
-      min-height: 44px;
-      padding: 0.5rem 1rem;
-    }
-  }
-  
   /* Better mobile experience for expanded sections */
   @media (max-width: 768px) {
     /* Improved table readability on small screens */
     .whitepaper-section table {
-      font-size: 0.595rem; /* Reduced by 15% from 0.7rem */
+      font-size: 0.7rem;
       line-height: 1.3;
     }
     

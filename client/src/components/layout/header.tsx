@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, ChevronDown, X, ChevronRight, Code, Shield, Zap, Network, Layers, DollarSign } from "lucide-react";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useLocation } from "wouter";
 import {
   NavigationMenu,
@@ -65,9 +64,9 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 w-full py-2 sm:py-3 md:py-4 px-3 sm:px-4 md:px-8 flex justify-between items-center z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 w-full py-3 md:py-4 px-4 md:px-8 flex justify-between items-center z-50 transition-all duration-300",
         isScrolled 
-          ? "bg-background/95 backdrop-blur-lg shadow-md" 
+          ? "bg-background/80 backdrop-blur-lg shadow-md" 
           : "bg-transparent"
       )}
     >
@@ -286,29 +285,15 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                 Whitepaper
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink 
-                onClick={(e) => {
-                  e.preventDefault();
-                  setLocation('/ai-assistant');
-                }}
-                className={cn(navigationMenuTriggerStyle(), "hover:text-primary text-base font-medium")}
-              >
-                AI Assistant
-              </NavigationMenuLink>
-            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
         
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Button 
-            onClick={() => navigateToHomeSection('waitlist')}
-            className="btn-gradient text-white font-medium py-2 px-6 rounded-full ml-2"
-          >
-            Join Waitlist
-          </Button>
-        </div>
+        <Button 
+          onClick={() => navigateToHomeSection('waitlist')}
+          className="btn-gradient text-white font-medium py-2 px-6 rounded-full ml-4"
+        >
+          Join Waitlist
+        </Button>
       </div>
       
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -418,25 +403,10 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                   <ChevronRight className="h-4 w-4 text-primary mr-2" />
                   Whitepaper
                 </button>
-                
-                <button 
-                  onClick={() => {
-                    setIsOpen(false);
-                    setLocation('/ai-assistant');
-                  }}
-                  className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
-                >
-                  <ChevronRight className="h-4 w-4 text-primary mr-2" />
-                  AI Assistant
-                </button>
               </nav>
             </div>
             
             <div className="p-6 border-t border-primary/10">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm font-medium">Theme</span>
-                <ThemeToggle />
-              </div>
               <Button 
                 onClick={() => navigateToHomeSection('waitlist')}
                 className="btn-gradient text-white font-medium py-6 px-8 rounded-full w-full"
