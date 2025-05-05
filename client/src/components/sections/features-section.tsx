@@ -1,35 +1,78 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { CircuitBoard, Banknote, Globe2, Shield, Link as LinkIcon, Smartphone, ArrowRight } from "lucide-react";
+import { CircuitBoard, Shield, Link as LinkIcon, Smartphone, ArrowRight, Zap, Network } from "lucide-react";
+import { SectionContainer } from "@/components/ui/section-container";
+import { FeatureCard } from "@/components/ui/feature-card";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface Feature {
   icon: React.ReactNode;
   title: string;
   description: string;
+  delay?: number;
 }
 
 const features: Feature[] = [
   {
-    icon: <CircuitBoard className="w-8 h-8" />,
+    icon: <CircuitBoard className="w-6 h-6 text-primary" />,
     title: "Proof of Synergy (PoSyg)",
-    description: "Proof of Synergy (PoSyg) combines the energy efficiency and decentralization of Proof of Stake (PoS) with advanced cryptographic security, rewarding participants for securing and contributing actively to the network's resilience."
+    description: "Proof of Synergy (PoSyg) combines the energy efficiency and decentralization of Proof of Stake (PoS) with advanced cryptographic security, rewarding participants for securing and contributing actively to the network's resilience.",
+    delay: 0
   },
   {
-    icon: <Shield className="w-8 h-8" />,
+    icon: <Shield className="w-6 h-6 text-primary" />,
     title: "Advanced Security",
-    description: "Multi-layered security architecture combining zero-knowledge proofs, threshold signatures, and cryptographic validation to mitigate attack vectors and ensure transaction integrity."
+    description: "Multi-layered security architecture combining zero-knowledge proofs, threshold signatures, and cryptographic validation to mitigate attack vectors and ensure transaction integrity.",
+    delay: 100
   },
   {
-    icon: <LinkIcon className="w-8 h-8" />,
+    icon: <LinkIcon className="w-6 h-6 text-primary" />,
     title: "Cross-Chain Compatibility",
-    description: "Advanced interoperability protocols enabling seamless communication between blockchain networks through standardized cross-chain messaging."
+    description: "Advanced interoperability protocols enabling seamless communication between blockchain networks through standardized cross-chain messaging.",
+    delay: 200
+  },
+  {
+    icon: <Zap className="w-6 h-6 text-primary" />,
+    title: "High Performance",
+    description: "Process 100,000+ transactions per second with near-instant finality, enabling enterprise-grade applications at global scale.",
+    delay: 300
+  },
+  {
+    icon: <Network className="w-6 h-6 text-primary" />,
+    title: "Subnet Architecture",
+    description: "Parallel processing through specialized subnets that handle specific transaction types, dramatically increasing throughput while maintaining security.",
+    delay: 400
+  },
+  {
+    icon: <Smartphone className="w-6 h-6 text-primary" />,
+    title: "Mobile-First Design",
+    description: "Optimized for mobile devices with lightweight clients and efficient verification protocols, making blockchain accessible to everyone.",
+    delay: 500
   }
+];
+
+const keyPoints = [
+  "100,000+ transactions per second",
+  "Near-instant finality",
+  "Quantum-resistant security",
+  "Cross-chain interoperability",
+  "Energy-efficient consensus",
+  "Developer-friendly SDKs",
+  "Enterprise-grade reliability",
+  "Decentralized governance"
 ];
 
 export default function FeaturesSection() {
   return (
-    <section id="features" className="px-4 md:px-8 py-16 md:py-24 max-w-7xl mx-auto">
+    <SectionContainer 
+      id="features" 
+      aria-labelledby="features-heading"
+      className="bg-gradient-to-b from-background to-muted/30"
+    >
       <div className="text-center mb-16">
-        <h2 className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4">
+        <h2 
+          id="features-heading"
+          className="font-poppins font-bold text-3xl md:text-4xl text-foreground mb-4"
+        >
           Why Join PEOCHAIN?
         </h2>
         
@@ -42,76 +85,52 @@ export default function FeaturesSection() {
         <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
           PEOCHAIN isn't another blockchain—it's a revolutionary new architecture designed to solve fundamental blockchain limitations. Our groundbreaking technology ensures security, scalability, and decentralization like never before.
         </p>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 max-w-3xl mx-auto text-left">
-          <div className="flex items-start gap-2">
-            <div className="text-primary mt-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
+          {keyPoints.map((point, index) => (
+            <div key={index} className="flex items-start gap-2">
+              <div className="text-primary mt-1 flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <span className="text-foreground/80">{point}</span>
             </div>
-            <p className="text-foreground/90">
-              <span className="font-medium">Solves Blockchain Trilemma:</span> Delivers scalability, security, and decentralization simultaneously.
-            </p>
-          </div>
-          <div className="flex items-start gap-2">
-            <div className="text-primary mt-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </div>
-            <p className="text-foreground/90">
-              <span className="font-medium">Unmatched Security:</span> Advanced cryptography provides robust transaction validation and data integrity.
-            </p>
-          </div>
-          <div className="flex items-start gap-2">
-            <div className="text-primary mt-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </div>
-            <p className="text-foreground/90">
-              <span className="font-medium">Massively Scalable:</span> Designed to handle up to 100,000 TPS with 1-second finality.
-            </p>
-          </div>
-          <div className="flex items-start gap-2">
-            <div className="text-primary mt-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </div>
-            <p className="text-foreground/90">
-              <span className="font-medium">Truly Decentralized:</span> Innovative consensus mechanism ensuring no single points of failure.
-            </p>
-          </div>
+          ))}
         </div>
       </div>
       
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {features.map((feature, index) => (
-          <Card key={index} className="feature-card glass rounded-3xl border-0 shadow-sm hover:shadow-lg transition-all">
-            <CardContent className="p-6 md:p-8 flex flex-col h-full">
-              <div className="bg-primary/10 p-4 rounded-2xl inline-flex mb-6 w-16 h-16 items-center justify-center text-primary">
-                {feature.icon}
-              </div>
-              <h3 className="font-poppins font-semibold text-xl mb-4 text-foreground">{feature.title}</h3>
-              <p className="text-foreground/70 mb-6 flex-grow">
-                {feature.description}
-              </p>
-              {index === 0 ? (
-                <a href="/whitepaper" className="flex items-center text-primary cursor-pointer">
-                  <span className="font-medium">Discover PoSyg</span>
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </a>
-              ) : (
-                <a href="#waitlist" className="flex items-center text-primary cursor-pointer">
-                  <span className="font-medium">Join Waitlist</span>
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </a>
-              )}
-            </CardContent>
-          </Card>
+          <FeatureCard
+            key={index}
+            title={feature.title}
+            description={feature.description}
+            icon={feature.icon}
+            variant="primary"
+            className={cn(
+              "animate-fadeIn",
+              feature.delay ? `[animation-delay:${feature.delay}ms]` : ""
+            )}
+          />
         ))}
       </div>
-    </section>
+      
+      <div className="bg-white/50 backdrop-blur-sm rounded-xl p-6 border border-primary/10 max-w-3xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+          <div className="mb-4 md:mb-0">
+            <h3 className="font-medium text-lg text-foreground mb-1">Ready to explore PEOCHAIN?</h3>
+            <p className="text-foreground/80">Read our technical whitepaper to learn more about our innovative technology.</p>
+          </div>
+          <Button 
+            className="md:flex-shrink-0"
+            onClick={() => window.location.href = '/whitepaper'}
+          >
+            <span>Read Whitepaper</span>
+            <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
+          </Button>
+        </div>
+      </div>
+    </SectionContainer>
   );
 }

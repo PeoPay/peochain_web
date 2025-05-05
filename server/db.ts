@@ -28,10 +28,39 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-// Create a new connection pool instance using the provided DATABASE_URL.
+// Pool configuration based on environment and expected load
+const poolConfig = {
+  connectionString: process.env.DATABASE_URL,
+  // Configure appropriate pool size based on environment
+  max: process.env.NODE_ENV === 'production' ? 20 : 10, // Maximum connections in pool
+  min: process.env.NODE_ENV === 'production' ? 5 : 2,   // Minimum idle connections maintained
+  idleTimeoutMillis: 30000,                             // How long a connection can be idle before being closed
+  connectionTimeoutMillis: 5000,                        // How long to wait for a connection
+  // Enable statement timeout to prevent long-running queries
+  statement_timeout: 10000,                             // 10 seconds max query time
+  // Log slow queries in development
+  log: process.env.NODE_ENV !== 'production' 
+    ? (query: string, params: any[]) => {
+        if (query.includes('SELECT') && !query.includes('pg_')) {
+          console.log('SLOW QUERY:', query, params);
+        }
+      }
+    : undefined
+};
+
+// Create a new connection pool instance using the configured options.
 // Pooling optimizes performance by efficiently managing multiple database connections.
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+export const pool = new Pool(poolConfig);
 
 // Initialize Drizzle ORM with the connection pool and imported schema definitions.
 // Provides a type-safe and structured way to interact with the database, simplifying data operations.
 export const db = drizzle({ client: pool, schema });
+
+// Graceful shutdown handler to close pool on process termination
+process.on('SIGINT', () => {
+  console.log('Closing database pool connections...');
+  pool.end().then(() => {
+    console.log('Database pool has been closed');
+    process.exit(0);
+  });
+});

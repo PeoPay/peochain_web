@@ -7,6 +7,61 @@ import {
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, sql, desc, asc, and, gte, lte } from "drizzle-orm";
+import crypto from 'crypto';
+import bcrypt from 'bcrypt';
+
+// Constants for security settings
+const REFERRAL_CODE_LENGTH = 8;
+const { randomBytes } = crypto;
+const BCRYPT_SALT_ROUNDS = 10; // Standard recommendation for bcrypt
+
+// Secure referral code generation using cryptographically secure random values
+function generateSecureReferralCode(): string {
+  // Generate a cryptographically secure random string
+  const randomBytesBuffer = randomBytes(REFERRAL_CODE_LENGTH);
+  
+  // Convert to a URL-safe base64 string and trim to desired length
+  const base64 = randomBytesBuffer.toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
+  
+  // Take the first REFERRAL_CODE_LENGTH characters and uppercase
+  return base64.substring(0, REFERRAL_CODE_LENGTH).toUpperCase();
+}
+
+/**
+ * Hashes a password using bcrypt, a secure password hashing algorithm
+ * @param password The plain text password to hash
+ * @returns A promise that resolves to the hashed password
+ */
+async function hashPassword(password: string): Promise<string> {
+  try {
+    // Generate a salt and hash the password
+    const salt = await bcrypt.genSalt(BCRYPT_SALT_ROUNDS);
+    const hash = await bcrypt.hash(password, salt);
+    return hash;
+  } catch (error) {
+    console.error('Error hashing password:', error);
+    throw new Error('Failed to hash password');
+  }
+}
+
+/**
+ * Verifies a password against a stored hash
+ * @param password The plain text password to verify
+ * @param storedHash The stored hash to compare against
+ * @returns A promise that resolves to true if the password matches, false otherwise
+ */
+async function verifyPassword(password: string, storedHash: string): Promise<boolean> {
+  try {
+    // Compare the provided password with the stored hash
+    return await bcrypt.compare(password, storedHash);
+  } catch (error) {
+    console.error('Error verifying password:', error);
+    return false;
+  }
+}
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -15,6 +70,7 @@ export interface IStorage {
   
   // Waitlist methods
   createWaitlistEntry(entry: InsertWaitlistEntry): Promise<WaitlistEntry>;
+  createWaitlistEntryBulk(entries: InsertWaitlistEntry[]): Promise<number>;
   getWaitlistEntryByEmail(email: string): Promise<WaitlistEntry | undefined>;
   getWaitlistEntryByReferralCode(referralCode: string): Promise<WaitlistEntry | undefined>;
   incrementReferralCount(referralCode: string): Promise<void>;
@@ -23,16 +79,19 @@ export interface IStorage {
   // Analytics methods
   // Daily stats
   createOrUpdateDailyStats(stats: InsertDailyWaitlistStats): Promise<DailyWaitlistStats>;
+  createOrUpdateDailyStatsBulk(statsList: InsertDailyWaitlistStats[]): Promise<number>;
   getDailyStatsForDateRange(startDate: Date, endDate: Date): Promise<DailyWaitlistStats[]>;
   getLatestDailyStats(limit?: number): Promise<DailyWaitlistStats[]>;
   
   // Geographic stats
   createOrUpdateGeographicStats(stats: InsertGeographicStats): Promise<GeographicStats>;
+  createOrUpdateGeographicStatsBulk(statsList: InsertGeographicStats[]): Promise<number>;
   getAllGeographicStats(): Promise<GeographicStats[]>;
   getTopRegionsByUserCount(limit?: number): Promise<GeographicStats[]>;
   
   // Referral channel stats
   createOrUpdateReferralChannel(channel: InsertReferralChannel): Promise<ReferralChannel>;
+  createOrUpdateReferralChannelBulk(channels: InsertReferralChannel[]): Promise<number>;
   getAllReferralChannels(): Promise<ReferralChannel[]>;
   getTopReferralChannels(limit?: number): Promise<ReferralChannel[]>;
   
@@ -59,6 +118,41 @@ export class UserService {
       throw new Error('Failed to fetch user');
     }
   }
+  
+  async createUser(userData: InsertUser): Promise<User> {
+    try {
+      // Hash the password before storing
+      const hashedPassword = await hashPassword(userData.password);
+      
+      const [user] = await db
+        .insert(users)
+        .values({
+          ...userData,
+          password: hashedPassword
+        })
+        .returning();
+      
+      return user;
+    } catch (error) {
+      console.error('Error creating user:', error);
+      throw new Error('Failed to create user');
+    }
+  }
+  
+  async verifyUserPassword(username: string, password: string): Promise<boolean> {
+    try {
+      const [user] = await db.select().from(users).where(eq(users.username, username));
+      
+      if (!user) {
+        return false;
+      }
+      
+      return await verifyPassword(password, user.password);
+    } catch (error) {
+      console.error('Error verifying user password:', error);
+      return false;
+    }
+  }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -78,17 +172,13 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db
-      .insert(users)
-      .values(insertUser)
-      .returning();
-    return user;
+    return this.userService.createUser(insertUser);
   }
   
   async createWaitlistEntry(insertEntry: InsertWaitlistEntry): Promise<WaitlistEntry> {
     try {
-      // Generate a unique referral code
-      const referralCode = this.generateReferralCode(insertEntry.email);
+      // Generate a secure referral code
+      const referralCode = generateSecureReferralCode();
       
       // Process referral if provided
       if (insertEntry.referredBy) {
@@ -100,12 +190,21 @@ export class DatabaseStorage implements IStorage {
         }
       }
       
-      // Insert the new waitlist entry
+      // Insert the new waitlist entry using upsert to handle duplicates gracefully
       const [entry] = await db
         .insert(waitlistEntries)
         .values({
           ...insertEntry,
           referralCode,
+        })
+        .onConflictDoUpdate({
+          target: waitlistEntries.email,
+          set: {
+            fullName: insertEntry.fullName,
+            userType: insertEntry.userType,
+            metadata: insertEntry.metadata,
+            // Don't update referralCode or referredBy to preserve existing referral chains
+          }
         })
         .returning();
       
@@ -125,16 +224,156 @@ export class DatabaseStorage implements IStorage {
     }
   }
   
-  // Helper method to generate a referral code
-  private generateReferralCode(email: string): string {
-    // Create a unique code based on email and timestamp
-    const timestamp = Date.now().toString(36);
-    const emailHash = email
-      .split('')
-      .reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) & 0xFFFFFFFF, 0)
-      .toString(36);
+  /**
+   * Bulk insert waitlist entries for improved performance
+   * @param entries Array of waitlist entries to insert
+   * @returns Number of successfully inserted entries
+   */
+  async createWaitlistEntryBulk(entries: InsertWaitlistEntry[]): Promise<number> {
+    if (entries.length === 0) return 0;
     
-    return `${emailHash.substring(0, 6)}${timestamp.substring(timestamp.length - 4)}`.toUpperCase();
+    try {
+      // Process entries to hash passwords and generate referral codes
+      const processedEntries = entries.map(entry => {
+        // Generate a secure referral code
+        const referralCode = generateSecureReferralCode();
+        
+        return {
+          ...entry,
+          referralCode,
+        };
+      });
+      
+      // Perform bulk insert with conflict handling
+      const result = await db
+        .insert(waitlistEntries)
+        .values(processedEntries)
+        .onConflictDoNothing({ target: waitlistEntries.email })
+        .returning({ id: waitlistEntries.id });
+      
+      return result.length;
+    } catch (error) {
+      console.error('Error in bulk waitlist entry creation:', error);
+      return 0;
+    }
+  }
+  
+  /**
+   * Creates or updates geographic stats in bulk
+   * @param stats Array of geographic stats to create or update
+   * @returns Number of successfully processed stats
+   */
+  async createOrUpdateGeographicStatsBulk(stats: InsertGeographicStats[]): Promise<number> {
+    if (stats.length === 0) return 0;
+    
+    try {
+      let successCount = 0;
+      
+      // Process in batches to avoid potential issues with large arrays
+      const BATCH_SIZE = 50;
+      for (let i = 0; i < stats.length; i += BATCH_SIZE) {
+        const batch = stats.slice(i, i + BATCH_SIZE);
+        
+        // Use upsert operation for each batch
+        const result = await db
+          .insert(geographicStats)
+          .values(batch)
+          .onConflictDoUpdate({
+            target: geographicStats.region,
+            set: {
+              userCount: sql`excluded.user_count`,
+              engagementScore: sql`excluded.engagement_score`
+            }
+          })
+          .returning({ id: geographicStats.id });
+        
+        successCount += result.length;
+      }
+      
+      return successCount;
+    } catch (error) {
+      console.error('Error in bulk geographic stats operation:', error);
+      return 0;
+    }
+  }
+  
+  /**
+   * Creates or updates referral channels in bulk
+   * @param channels Array of referral channels to create or update
+   * @returns Number of successfully processed channels
+   */
+  async createOrUpdateReferralChannelBulk(channels: InsertReferralChannel[]): Promise<number> {
+    if (channels.length === 0) return 0;
+    
+    try {
+      let successCount = 0;
+      
+      // Process in batches
+      const BATCH_SIZE = 50;
+      for (let i = 0; i < channels.length; i += BATCH_SIZE) {
+        const batch = channels.slice(i, i + BATCH_SIZE);
+        
+        // Use upsert operation for each batch
+        const result = await db
+          .insert(referralChannels)
+          .values(batch)
+          .onConflictDoUpdate({
+            target: referralChannels.channelName,
+            set: {
+              referralCount: sql`excluded.referral_count`,
+              conversionRate: sql`excluded.conversion_rate`
+            }
+          })
+          .returning({ id: referralChannels.id });
+        
+        successCount += result.length;
+      }
+      
+      return successCount;
+    } catch (error) {
+      console.error('Error in bulk referral channel operation:', error);
+      return 0;
+    }
+  }
+  
+  /**
+   * Creates or updates daily waitlist stats in bulk
+   * @param stats Array of daily stats to create or update
+   * @returns Number of successfully processed stats
+   */
+  async createOrUpdateDailyStatsBulk(stats: InsertDailyWaitlistStats[]): Promise<number> {
+    if (stats.length === 0) return 0;
+    
+    try {
+      let successCount = 0;
+      
+      // Process in batches
+      const BATCH_SIZE = 50;
+      for (let i = 0; i < stats.length; i += BATCH_SIZE) {
+        const batch = stats.slice(i, i + BATCH_SIZE);
+        
+        // Use upsert operation for each batch
+        const result = await db
+          .insert(dailyWaitlistStats)
+          .values(batch)
+          .onConflictDoUpdate({
+            target: dailyWaitlistStats.date,
+            set: {
+              signupCount: sql`excluded.signup_count`,
+              totalReferrals: sql`excluded.total_referrals`,
+              conversionRate: sql`excluded.conversion_rate`
+            }
+          })
+          .returning({ id: dailyWaitlistStats.id });
+        
+        successCount += result.length;
+      }
+      
+      return successCount;
+    } catch (error) {
+      console.error('Error in bulk daily stats operation:', error);
+      return 0;
+    }
   }
   
   async getWaitlistEntryByEmail(email: string): Promise<WaitlistEntry | undefined> {
@@ -171,74 +410,94 @@ export class DatabaseStorage implements IStorage {
     try {
       const dateString = date.toISOString().split('T')[0];
       
-      // Try to find existing stats for this date
-      const [existingStats] = await db
-        .select()
-        .from(dailyWaitlistStats)
-        .where(eq(dailyWaitlistStats.date, dateString));
-      
-      if (existingStats) {
-        // Update existing stats
-        await db
-          .update(dailyWaitlistStats)
-          .set({
+      // Use upsert operation to update or create daily stats
+      await db
+        .insert(dailyWaitlistStats)
+        .values({
+          date: dateString,
+          signupCount: 1,
+          totalReferrals: wasReferred ? 1 : 0,
+          conversionRate: 0, // Will be calculated later
+        })
+        .onConflictDoUpdate({
+          target: dailyWaitlistStats.date,
+          set: {
             signupCount: sql`${dailyWaitlistStats.signupCount} + 1`,
             totalReferrals: wasReferred ? sql`${dailyWaitlistStats.totalReferrals} + 1` : dailyWaitlistStats.totalReferrals,
-          })
-          .where(eq(dailyWaitlistStats.id, existingStats.id));
-      } else {
-        // Create new stats for this date
-        await db
-          .insert(dailyWaitlistStats)
-          .values({
-            date: dateString,
-            signupCount: 1,
-            totalReferrals: wasReferred ? 1 : 0,
-            conversionRate: 0, // Will be calculated later
-          });
-      }
+          }
+        });
     } catch (error) {
       console.error("Error updating daily stats:", error);
     }
   }
-
-  // Analytics methods implementation
+  
+  /**
+   * Updates the daily stats for a specific date with new signup and referral data
+   * @param date The date to update stats for
+   * @param signupCount Number of new signups
+   * @param referredCount Number of signups that were referred
+   * @returns Boolean indicating success
+   */
+  async updateDailyStatsForDate(date: Date, signupCount: number, referredCount: number): Promise<boolean> {
+    try {
+      const dateStr = date.toISOString().split('T')[0];
+      
+      // Use upsert operation to update or create daily stats
+      await db
+        .insert(dailyWaitlistStats)
+        .values({
+          date: dateStr,
+          signupCount,
+          totalReferrals: referredCount,
+          conversionRate: 0 // Will be calculated later
+        })
+        .onConflictDoUpdate({
+          target: dailyWaitlistStats.date,
+          set: {
+            signupCount: sql`${dailyWaitlistStats.signupCount} + ${signupCount}`,
+            totalReferrals: sql`${dailyWaitlistStats.totalReferrals} + ${referredCount}`
+          }
+        });
+      
+      return true;
+    } catch (error) {
+      console.error('Error updating daily stats:', error);
+      return false;
+    }
+  }
+  
   async createOrUpdateDailyStats(stats: InsertDailyWaitlistStats): Promise<DailyWaitlistStats> {
     try {
       // Check if stats for this date already exist
-      const dateString = typeof stats.date === 'object' && stats.date !== null && 'toISOString' in stats.date
-        ? (stats.date as Date).toISOString().split('T')[0] 
-        : stats.date;
+      const dateString = typeof stats.date === 'string' 
+        ? stats.date 
+        : (stats.date as Date).toISOString().split('T')[0];
       
-      const [existingStats] = await db
-        .select()
-        .from(dailyWaitlistStats)
-        .where(eq(dailyWaitlistStats.date, dateString));
+      // Use upsert operation for better performance
+      const [result] = await db
+        .insert(dailyWaitlistStats)
+        .values({
+          ...stats,
+          date: dateString,
+        })
+        .onConflictDoUpdate({
+          target: dailyWaitlistStats.date,
+          set: {
+            signupCount: stats.signupCount,
+            totalReferrals: stats.totalReferrals,
+            conversionRate: stats.conversionRate,
+            metadata: stats.metadata,
+          }
+        })
+        .returning();
       
-      if (existingStats) {
-        // Update existing stats
-        const [updatedStats] = await db
-          .update(dailyWaitlistStats)
-          .set(stats)
-          .where(eq(dailyWaitlistStats.id, existingStats.id))
-          .returning();
-        
-        return updatedStats;
-      } else {
-        // Create new stats
-        const [newStats] = await db
-          .insert(dailyWaitlistStats)
-          .values(stats)
-          .returning();
-        
-        return newStats;
-      }
+      return result;
     } catch (error) {
-      console.error("Error creating/updating daily stats:", error);
-      throw error;
+      console.error('Error creating/updating daily stats:', error);
+      throw new Error('Failed to create or update daily stats');
     }
   }
-
+  
   async getDailyStatsForDateRange(startDate: Date, endDate: Date): Promise<DailyWaitlistStats[]> {
     const startDateStr = startDate.toISOString().split('T')[0];
     const endDateStr = endDate.toISOString().split('T')[0];
@@ -246,15 +505,13 @@ export class DatabaseStorage implements IStorage {
     return db
       .select()
       .from(dailyWaitlistStats)
-      .where(
-        and(
-          gte(dailyWaitlistStats.date, startDateStr),
-          lte(dailyWaitlistStats.date, endDateStr)
-        )
-      )
+      .where(and(
+        gte(dailyWaitlistStats.date, startDateStr),
+        lte(dailyWaitlistStats.date, endDateStr)
+      ))
       .orderBy(asc(dailyWaitlistStats.date));
   }
-
+  
   async getLatestDailyStats(limit: number = 30): Promise<DailyWaitlistStats[]> {
     return db
       .select()
@@ -262,49 +519,37 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(dailyWaitlistStats.date))
       .limit(limit);
   }
-
+  
   async createOrUpdateGeographicStats(stats: InsertGeographicStats): Promise<GeographicStats> {
     try {
-      // Check if stats for this region already exist
-      const [existingStats] = await db
-        .select()
-        .from(geographicStats)
-        .where(eq(geographicStats.region, stats.region));
+      // Use upsert operation for better performance
+      const [result] = await db
+        .insert(geographicStats)
+        .values(stats)
+        .onConflictDoUpdate({
+          target: geographicStats.region,
+          set: {
+            userCount: stats.userCount,
+            engagementScore: stats.engagementScore,
+            updatedAt: sql`CURRENT_TIMESTAMP`,
+          }
+        })
+        .returning();
       
-      if (existingStats) {
-        // Update existing stats
-        const [updatedStats] = await db
-          .update(geographicStats)
-          .set({
-            ...stats,
-            updatedAt: new Date(),
-          })
-          .where(eq(geographicStats.id, existingStats.id))
-          .returning();
-        
-        return updatedStats;
-      } else {
-        // Create new stats
-        const [newStats] = await db
-          .insert(geographicStats)
-          .values(stats)
-          .returning();
-        
-        return newStats;
-      }
+      return result;
     } catch (error) {
-      console.error("Error creating/updating geographic stats:", error);
-      throw error;
+      console.error('Error creating/updating geographic stats:', error);
+      throw new Error('Failed to create or update geographic stats');
     }
   }
-
+  
   async getAllGeographicStats(): Promise<GeographicStats[]> {
     return db
       .select()
       .from(geographicStats)
       .orderBy(desc(geographicStats.userCount));
   }
-
+  
   async getTopRegionsByUserCount(limit: number = 10): Promise<GeographicStats[]> {
     return db
       .select()
@@ -312,49 +557,37 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(geographicStats.userCount))
       .limit(limit);
   }
-
+  
   async createOrUpdateReferralChannel(channel: InsertReferralChannel): Promise<ReferralChannel> {
     try {
-      // Check if channel already exists
-      const [existingChannel] = await db
-        .select()
-        .from(referralChannels)
-        .where(eq(referralChannels.channelName, channel.channelName));
+      // Use upsert operation for better performance
+      const [result] = await db
+        .insert(referralChannels)
+        .values(channel)
+        .onConflictDoUpdate({
+          target: referralChannels.channelName,
+          set: {
+            referralCount: channel.referralCount,
+            conversionRate: channel.conversionRate,
+            updatedAt: sql`CURRENT_TIMESTAMP`,
+          }
+        })
+        .returning();
       
-      if (existingChannel) {
-        // Update existing channel
-        const [updatedChannel] = await db
-          .update(referralChannels)
-          .set({
-            ...channel,
-            updatedAt: new Date(),
-          })
-          .where(eq(referralChannels.id, existingChannel.id))
-          .returning();
-        
-        return updatedChannel;
-      } else {
-        // Create new channel
-        const [newChannel] = await db
-          .insert(referralChannels)
-          .values(channel)
-          .returning();
-        
-        return newChannel;
-      }
+      return result;
     } catch (error) {
-      console.error("Error creating/updating referral channel:", error);
-      throw error;
+      console.error('Error creating/updating referral channel:', error);
+      throw new Error('Failed to create or update referral channel');
     }
   }
-
+  
   async getAllReferralChannels(): Promise<ReferralChannel[]> {
     return db
       .select()
       .from(referralChannels)
       .orderBy(desc(referralChannels.referralCount));
   }
-
+  
   async getTopReferralChannels(limit: number = 10): Promise<ReferralChannel[]> {
     return db
       .select()
@@ -362,7 +595,7 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(referralChannels.referralCount))
       .limit(limit);
   }
-
+  
   async getAnalyticsOverview(): Promise<{
     totalSignups: number;
     totalReferrals: number;
@@ -373,39 +606,38 @@ export class DatabaseStorage implements IStorage {
     topRegions: GeographicStats[];
   }> {
     // Get total signups
-    const [{ count: totalSignups }] = await db
-      .select({ count: sql`count(*)` })
+    const [signupResult] = await db
+      .select({ count: sql`COUNT(*)` })
       .from(waitlistEntries);
+    const totalSignups = Number(signupResult?.count || 0);
     
-    // Calculate total referrals
+    // Get total referrals
     const [referralResult] = await db
-      .select({ total: sql`sum(referral_count)` })
+      .select({ sum: sql`SUM(${waitlistEntries.referralCount})` })
       .from(waitlistEntries);
+    const totalReferrals = Number(referralResult?.sum || 0);
     
-    const totalReferrals = referralResult?.total ? Number(referralResult.total) : 0;
-    const signupCount = totalSignups ? Number(totalSignups) : 0;
-    
-    // Calculate average referrals per user (avoiding division by zero)
-    const avgReferralsPerUser = signupCount > 0 ? totalReferrals / signupCount : 0;
+    // Calculate average referrals per user
+    const avgReferralsPerUser = totalSignups > 0 ? totalReferrals / totalSignups : 0;
     
     // Get top referrers
     const topReferrers = await db
       .select()
       .from(waitlistEntries)
       .orderBy(desc(waitlistEntries.referralCount))
-      .limit(5);
+      .limit(10);
     
     // Get latest daily stats
     const dailyStats = await this.getLatestDailyStats(30);
     
-    // Get top referral channels
+    // Get top channels
     const topChannels = await this.getTopReferralChannels(5);
     
     // Get top regions
     const topRegions = await this.getTopRegionsByUserCount(5);
     
     return {
-      totalSignups: signupCount,
+      totalSignups,
       totalReferrals,
       avgReferralsPerUser,
       topReferrers,

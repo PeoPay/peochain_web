@@ -4,9 +4,10 @@ node_modules
 .pnp.js
 
 # Build files
-dist
-build
-server/public
+# Build outputs
+-dist/
+-build/
+-server/public/
 
 # Runtime data
 *.pid
@@ -66,3 +67,12 @@ vite.config.ts.*
 *.tar.gz
 .vercel
 .netlify
+
+# Housekeeping cleanup
+*.zip
+exported_data/
+package-lock.json
+
+# Replit
+.replit*
+replit.nix

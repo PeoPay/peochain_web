@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, ChevronDown, X, ChevronRight, Code, Shield, Zap, Network, Layers, DollarSign } from "lucide-react";
@@ -10,9 +9,9 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface HeaderProps {
   onFeatureClick: () => void;
@@ -27,6 +26,15 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
   const [isScrolled, setIsScrolled] = useState(false);
   const [, setLocation] = useLocation();
   
+  // Skip to content link for accessibility
+  const skipToContent = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.focus();
+      mainContent.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -37,9 +45,11 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleMobileNavClick = (callback: () => void) => {
+  const handleMobileNavClick = (callback: (() => void) | undefined) => {
     setIsOpen(false);
-    callback();
+    if (callback) {
+      callback();
+    }
   };
   
   const navigateToWhitepaper = () => {
@@ -54,10 +64,21 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
       const element = document.getElementById(section);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Set focus for accessibility
+        element.focus();
       }
     } else {
       // Navigate to home page with section hash
       setLocation(`/#${section}`);
+    }
+  };
+  
+  // Safely handle technology click, defaulting to navigating to the technology section
+  const handleTechnologyClick = () => {
+    if (onTechnologyClick) {
+      onTechnologyClick();
+    } else {
+      navigateToHomeSection('technology');
     }
   };
   
@@ -66,20 +87,39 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
       className={cn(
         "fixed top-0 left-0 right-0 w-full py-3 md:py-4 px-4 md:px-8 flex justify-between items-center z-50 transition-all duration-300",
         isScrolled 
-          ? "bg-background/80 backdrop-blur-lg shadow-md" 
+          ? "bg-background/90 backdrop-blur-lg shadow-md" 
           : "bg-transparent"
       )}
+      role="banner"
     >
+      {/* Skip to content link - hidden visually but available for screen readers */}
+      <a 
+        href="#main-content" 
+        onClick={(e) => { e.preventDefault(); skipToContent(); }}
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md"
+      >
+        Skip to content
+      </a>
+      
       <div className="flex items-center">
-        <a href="/" className="flex items-center">
+        <a 
+          href="/" 
+          className="flex items-center"
+          aria-label="PEOChain Home"
+        >
           <img 
-            src="/images/peochain-logo.png" 
+            src="/images/logos/peochain-logo.png" 
             alt="PEOCHAIN Logo" 
             className="h-8 md:h-10"
+            onError={(e) => {
+              // Fallback if image doesn't exist yet
+              e.currentTarget.src = "https://via.placeholder.com/160x40?text=PEOCHAIN";
+            }}
           />
         </a>
       </div>
       
+      {/* Desktop Navigation */}
       <div className="hidden lg:flex items-center">
         <NavigationMenu>
           <NavigationMenuList>
@@ -101,11 +141,11 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                         href="#"
                         onClick={(e) => {
                           e.preventDefault();
-                          navigateToHomeSection('technology');
+                          handleTechnologyClick();
                         }}
                       >
                         <div className="mb-2 mt-4 flex items-center">
-                          <Shield className="h-6 w-6 text-primary mr-2" />
+                          <Shield className="h-6 w-6 text-primary mr-2" aria-hidden="true" />
                           <div className="text-lg font-medium text-primary">
                             PeoChain Technology
                           </div>
@@ -116,7 +156,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                         </p>
                         <div className="mt-4 flex items-center text-sm text-primary">
                           <span>Learn more</span>
-                          <ChevronRight className="ml-1 h-4 w-4" />
+                          <ChevronRight className="ml-1 h-4 w-4" aria-hidden="true" />
                         </div>
                       </a>
                     </NavigationMenuLink>
@@ -126,12 +166,12 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                       <a
                         onClick={(e) => {
                           e.preventDefault();
-                          navigateToHomeSection('technology');
+                          handleTechnologyClick();
                         }}
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="flex items-center">
-                          <Zap className="h-4 w-4 text-primary mr-2" />
+                          <Zap className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
                           <div className="text-sm font-medium leading-none">Parallel Processing</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -145,12 +185,12 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                       <a
                         onClick={(e) => {
                           e.preventDefault();
-                          navigateToHomeSection('technology');
+                          handleTechnologyClick();
                         }}
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="flex items-center">
-                          <Network className="h-4 w-4 text-primary mr-2" />
+                          <Network className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
                           <div className="text-sm font-medium leading-none">Cross-Chain Integration</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -164,12 +204,12 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                       <a
                         onClick={(e) => {
                           e.preventDefault();
-                          navigateToHomeSection('technology');
+                          handleTechnologyClick();
                         }}
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="flex items-center">
-                          <Shield className="h-4 w-4 text-primary mr-2" />
+                          <Shield className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
                           <div className="text-sm font-medium leading-none">Security Architecture</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -181,6 +221,7 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
+            
             <NavigationMenuItem>
               <NavigationMenuTrigger
                 className={cn(
@@ -202,11 +243,11 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="flex items-center">
-                          <Zap className="h-4 w-4 text-primary mr-2" />
-                          <div className="text-sm font-medium leading-none">High-Performance Blockchain</div>
+                          <Layers className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
+                          <div className="text-sm font-medium leading-none">Core Features</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          100,000+ transactions per second with near-instant finality
+                          Explore the key features that make PeoChain revolutionary
                         </p>
                       </a>
                     </NavigationMenuLink>
@@ -216,16 +257,16 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                       <a
                         onClick={(e) => {
                           e.preventDefault();
-                          navigateToHomeSection('features');
+                          navigateToHomeSection('benefits');
                         }}
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="flex items-center">
-                          <Code className="h-4 w-4 text-primary mr-2" />
-                          <div className="text-sm font-medium leading-none">Developer Friendly</div>
+                          <DollarSign className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
+                          <div className="text-sm font-medium leading-none">Benefits</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Unified API and comprehensive SDKs for simplified development
+                          Discover how PeoChain benefits users, developers, and businesses
                         </p>
                       </a>
                     </NavigationMenuLink>
@@ -235,16 +276,16 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                       <a
                         onClick={(e) => {
                           e.preventDefault();
-                          navigateToHomeSection('features');
+                          navigateToWhitepaper();
                         }}
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="flex items-center">
-                          <DollarSign className="h-4 w-4 text-primary mr-2" />
-                          <div className="text-sm font-medium leading-none">DeFi Ecosystem</div>
+                          <Code className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
+                          <div className="text-sm font-medium leading-none">Technical Whitepaper</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Integrated financial services with cross-chain compatibility
+                          Read our detailed technical whitepaper for in-depth information
                         </p>
                       </a>
                     </NavigationMenuLink>
@@ -252,171 +293,162 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink 
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigateToHomeSection('benefits');
-                }}
-                className={cn(navigationMenuTriggerStyle(), "hover:text-primary text-base font-medium")}
-              >
-                Benefits
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink 
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigateToHomeSection('faq');
-                }}
-                className={cn(navigationMenuTriggerStyle(), "hover:text-primary text-base font-medium")}
-              >
-                FAQ
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink 
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigateToWhitepaper();
-                }}
-                className={cn(navigationMenuTriggerStyle(), "hover:text-primary text-base font-medium")}
-              >
-                Whitepaper
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-        
-        <Button 
-          onClick={() => navigateToHomeSection('waitlist')}
-          className="btn-gradient text-white font-medium py-2 px-6 rounded-full ml-4"
-        >
-          Join Waitlist
-        </Button>
-      </div>
-      
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild className="lg:hidden">
-          <Button variant="ghost" size="icon" className="text-foreground text-2xl">
-            <Menu className="h-6 w-6" />
-            <span className="sr-only">Toggle menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="right" className="bg-background/95 backdrop-blur-lg w-full sm:max-w-md p-0 border-l border-primary/10">
-          <div className="flex flex-col h-full">
-            <div className="flex justify-between items-center p-4 border-b border-primary/10">
-              <div className="flex items-center">
-                <img 
-                  src="/images/peochain-logo.png" 
-                  alt="PEOCHAIN Logo" 
-                  className="h-8"
-                />
-              </div>
-              <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
             
-            <div className="flex-1 overflow-auto py-4 px-6">
-              <nav className="flex flex-col space-y-1 w-full">
-                <div className="py-4 border-b border-primary/10">
-                  <div className="flex items-center mb-2">
-                    <Shield className="h-5 w-5 text-primary mr-2" />
-                    <span className="text-primary font-medium">Technology</span>
-                  </div>
-                  <div className="pl-7 flex flex-col space-y-3 mt-3">
-                    <button 
-                      onClick={() => navigateToHomeSection('technology')}
-                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
-                    >
-                      <Zap className="h-4 w-4 mr-2" />
-                      Parallel Processing
-                    </button>
-                    <button 
-                      onClick={() => navigateToHomeSection('technology')}
-                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
-                    >
-                      <Network className="h-4 w-4 mr-2" />
-                      Cross-Chain Integration
-                    </button>
-                    <button 
-                      onClick={() => navigateToHomeSection('technology')}
-                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
-                    >
-                      <Layers className="h-4 w-4 mr-2" />
-                      Subnet Validators
-                    </button>
-                  </div>
-                </div>
-                
-                <div className="py-4 border-b border-primary/10">
-                  <div className="flex items-center mb-2">
-                    <Code className="h-5 w-5 text-primary mr-2" />
-                    <span className="text-primary font-medium">Features</span>
-                  </div>
-                  <div className="pl-7 flex flex-col space-y-3 mt-3">
-                    <button 
-                      onClick={() => navigateToHomeSection('features')}
-                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
-                    >
-                      <Zap className="h-4 w-4 mr-2" />
-                      High Performance
-                    </button>
-                    <button 
-                      onClick={() => navigateToHomeSection('features')}
-                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
-                    >
-                      <Code className="h-4 w-4 mr-2" />
-                      Developer Tools
-                    </button>
-                    <button 
-                      onClick={() => navigateToHomeSection('features')}
-                      className="flex items-center text-foreground hover:text-primary transition-colors text-sm"
-                    >
-                      <DollarSign className="h-4 w-4 mr-2" />
-                      DeFi Ecosystem
-                    </button>
-                  </div>
-                </div>
-                
-                <button 
-                  onClick={() => navigateToHomeSection('benefits')}
-                  className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
-                >
-                  <ChevronRight className="h-4 w-4 text-primary mr-2" />
-                  Benefits
-                </button>
-                
-                <button 
-                  onClick={() => navigateToHomeSection('faq')}
-                  className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
-                >
-                  <ChevronRight className="h-4 w-4 text-primary mr-2" />
-                  FAQ
-                </button>
-                
-                <button 
-                  onClick={navigateToWhitepaper}
-                  className="py-4 border-b border-primary/10 text-foreground hover:text-primary transition-colors font-medium text-left flex items-center"
-                >
-                  <ChevronRight className="h-4 w-4 text-primary mr-2" />
-                  Whitepaper
-                </button>
-              </nav>
-            </div>
-            
-            <div className="p-6 border-t border-primary/10">
+            <NavigationMenuItem>
               <Button 
-                onClick={() => navigateToHomeSection('waitlist')}
-                className="btn-gradient text-white font-medium py-6 px-8 rounded-full w-full"
+                variant="link" 
+                className="text-foreground hover:text-primary text-base font-medium px-4"
+                onClick={onWaitlistClick}
               >
                 Join Waitlist
               </Button>
+            </NavigationMenuItem>
+            
+            <NavigationMenuItem>
+              <Button 
+                variant="link" 
+                className="text-foreground hover:text-primary text-base font-medium px-4"
+                onClick={onFaqClick ? onFaqClick : () => navigateToHomeSection('faq')}
+              >
+                FAQ
+              </Button>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+      
+      {/* Mobile Navigation */}
+      <div className="lg:hidden flex items-center">
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="text-foreground hover:bg-primary/10"
+              aria-label="Open menu"
+            >
+              <Menu className="h-6 w-6" aria-hidden="true" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[85vw] sm:w-[350px] pr-0">
+            <div className="flex flex-col h-full">
+              <div className="flex items-center justify-between mb-6">
+                <a href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+                  <img 
+                    src="/images/logos/peochain-logo.png" 
+                    alt="PEOCHAIN Logo" 
+                    className="h-8"
+                    onError={(e) => {
+                      // Fallback if image doesn't exist yet
+                      e.currentTarget.src = "https://via.placeholder.com/160x40?text=PEOCHAIN";
+                    }}
+                  />
+                </a>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => setIsOpen(false)}
+                  className="text-foreground hover:bg-primary/10"
+                  aria-label="Close menu"
+                >
+                  <X className="h-5 w-5" aria-hidden="true" />
+                </Button>
+              </div>
+              
+              <nav className="space-y-6 pr-6">
+                <div>
+                  <h3 className="text-sm font-medium text-muted-foreground mb-3 px-1">Technology</h3>
+                  <ul className="space-y-2">
+                    <li>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start text-base font-normal"
+                        onClick={() => handleMobileNavClick(onTechnologyClick || (() => navigateToHomeSection('technology')))}
+                      >
+                        <Shield className="h-4 w-4 mr-2 text-primary" aria-hidden="true" />
+                        Overview
+                      </Button>
+                    </li>
+                    <li>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start text-base font-normal"
+                        onClick={() => handleMobileNavClick(onTechnologyClick || (() => navigateToHomeSection('technology')))}
+                      >
+                        <Zap className="h-4 w-4 mr-2 text-primary" aria-hidden="true" />
+                        Parallel Processing
+                      </Button>
+                    </li>
+                    <li>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start text-base font-normal"
+                        onClick={() => handleMobileNavClick(onTechnologyClick || (() => navigateToHomeSection('technology')))}
+                      >
+                        <Network className="h-4 w-4 mr-2 text-primary" aria-hidden="true" />
+                        Cross-Chain Integration
+                      </Button>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h3 className="text-sm font-medium text-muted-foreground mb-3 px-1">Features & Benefits</h3>
+                  <ul className="space-y-2">
+                    <li>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start text-base font-normal"
+                        onClick={() => handleMobileNavClick(onFeatureClick)}
+                      >
+                        <Layers className="h-4 w-4 mr-2 text-primary" aria-hidden="true" />
+                        Core Features
+                      </Button>
+                    </li>
+                    <li>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start text-base font-normal"
+                        onClick={() => handleMobileNavClick(onBenefitsClick)}
+                      >
+                        <DollarSign className="h-4 w-4 mr-2 text-primary" aria-hidden="true" />
+                        Benefits
+                      </Button>
+                    </li>
+                    <li>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start text-base font-normal"
+                        onClick={() => handleMobileNavClick(navigateToWhitepaper)}
+                      >
+                        <Code className="h-4 w-4 mr-2 text-primary" aria-hidden="true" />
+                        Technical Whitepaper
+                      </Button>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="space-y-3">
+                  <Button 
+                    className="w-full bg-primary hover:bg-primary/90"
+                    onClick={() => handleMobileNavClick(onWaitlistClick)}
+                  >
+                    Join Waitlist
+                  </Button>
+                  
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-primary/20 text-foreground hover:bg-primary/5"
+                    onClick={() => handleMobileNavClick(onFaqClick || (() => navigateToHomeSection('faq')))}
+                  >
+                    FAQ
+                  </Button>
+                </div>
+              </nav>
             </div>
-          </div>
-        </SheetContent>
-      </Sheet>
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   );
 }

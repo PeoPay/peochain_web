@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, uuid, jsonb, date } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, timestamp, jsonb, date, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -6,6 +6,10 @@ export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+}, (table) => {
+  return {
+    usernameIdx: index("username_idx").on(table.username),
+  };
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
@@ -27,6 +31,14 @@ export const waitlistEntries = pgTable("waitlist_entries", {
   userType: text("user_type").notNull().default("user"),
   metadata: jsonb("metadata"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (table) => {
+  return {
+    emailIdx: index("email_idx").on(table.email),
+    referralCodeIdx: index("referral_code_idx").on(table.referralCode),
+    referredByIdx: index("referred_by_idx").on(table.referredBy),
+    referralCountIdx: index("referral_count_idx").on(table.referralCount),
+    createdAtIdx: index("created_at_idx").on(table.createdAt),
+  };
 });
 
 export const insertWaitlistEntrySchema = createInsertSchema(waitlistEntries)
@@ -55,6 +67,11 @@ export const dailyWaitlistStats = pgTable("daily_waitlist_stats", {
   conversionRate: integer("conversion_rate").notNull().default(0), // Stored as percentage (0-100)
   metadata: jsonb("metadata"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (table) => {
+  return {
+    dateIdx: index("date_idx").on(table.date),
+    createdAtStatsIdx: index("created_at_stats_idx").on(table.createdAt),
+  };
 });
 
 export const insertDailyWaitlistStatsSchema = createInsertSchema(dailyWaitlistStats)
@@ -79,6 +96,11 @@ export const geographicStats = pgTable("geographic_stats", {
   userCount: integer("user_count").notNull().default(0),
   engagementScore: integer("engagement_score").notNull().default(0), // 0-100
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, (table) => {
+  return {
+    regionIdx: index("region_idx").on(table.region),
+    userCountIdx: index("user_count_idx").on(table.userCount),
+  };
 });
 
 export const insertGeographicStatsSchema = createInsertSchema(geographicStats)
@@ -98,6 +120,11 @@ export const referralChannels = pgTable("referral_channels", {
   referralCount: integer("referral_count").notNull().default(0),
   conversionRate: integer("conversion_rate").notNull().default(0), // Stored as percentage (0-100)
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, (table) => {
+  return {
+    channelNameIdx: index("channel_name_idx").on(table.channelName),
+    referralCountChannelIdx: index("referral_count_channel_idx").on(table.referralCount),
+  };
 });
 
 export const insertReferralChannelSchema = createInsertSchema(referralChannels)

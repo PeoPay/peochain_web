@@ -13,6 +13,7 @@ const TermsOfService = lazy(() => import("@/pages/TermsOfService"));
 const Whitepaper = lazy(() => import("@/pages/Whitepaper"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const CrossChainDemo = lazy(() => import("@/pages/CrossChainDemo"));
+const DesignSystem = lazy(() => import("@/pages/DesignSystem"));
 
 // Loading component to display while page chunks are being loaded
 const PageLoader = () => (
@@ -39,6 +40,7 @@ function Router() {
         <Route path="/whitepaper" component={Whitepaper}/>
         <Route path="/dashboard" component={Dashboard}/>
         <Route path="/cross-chain-demo" component={CrossChainDemo}/>
+        <Route path="/design-system" component={DesignSystem}/>
         <Route component={NotFound} />
       </Switch>
     </Suspense>

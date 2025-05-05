@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
   Network, 
-  ShieldCheck, 
   LockKeyhole, 
   Shield, 
   Link as LinkIcon,
@@ -10,12 +9,15 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TechTooltip } from '@/components/ui/tech-tooltip';
+import { SectionContainer } from '@/components/ui/section-container';
+import { cn } from '@/lib/utils';
 
 interface TechHighlight {
   icon: React.ReactNode;
   title: string;
   description: string;
   tooltipContent: React.ReactNode;
+  delay?: number;
 }
 
 interface TechHighlightsSectionProps {
@@ -25,7 +27,7 @@ interface TechHighlightsSectionProps {
 export default function TechHighlightsSection({ onExploreClick }: TechHighlightsSectionProps) {
   const highlights: TechHighlight[] = [
     {
-      icon: <Network className="h-6 w-6" />,
+      icon: <Network className="h-6 w-6 text-primary" />,
       title: "Subnet Validator Network",
       description: "Parallel validator subnetworks, boosting throughput and decentralization dramatically.",
       tooltipContent: (
@@ -39,10 +41,11 @@ export default function TechHighlightsSection({ onExploreClick }: TechHighlights
             <li>Enables 100,000+ TPS while maintaining decentralization</li>
           </ul>
         </div>
-      )
+      ),
+      delay: 0
     },
     {
-      icon: <LockKeyhole className="h-6 w-6" />,
+      icon: <LockKeyhole className="h-6 w-6 text-primary" />,
       title: "Zero-Knowledge Proofs (ZK-Proofs)",
       description: "Secure, private transactions publicly verifiable, balancing privacy and trust.",
       tooltipContent: (
@@ -56,10 +59,11 @@ export default function TechHighlightsSection({ onExploreClick }: TechHighlights
             <li>Significantly improves scalability and privacy</li>
           </ul>
         </div>
-      )
+      ),
+      delay: 100
     },
     {
-      icon: <Shield className="h-6 w-6" />,
+      icon: <Shield className="h-6 w-6 text-primary" />,
       title: "Threshold Signature Scheme (TSS)",
       description: "Collaborative validation for maximum security and decentralization.",
       tooltipContent: (
@@ -73,10 +77,11 @@ export default function TechHighlightsSection({ onExploreClick }: TechHighlights
             <li>Maintains functionality even if some nodes go offline</li>
           </ul>
         </div>
-      )
+      ),
+      delay: 200
     },
     {
-      icon: <Gauge className="h-6 w-6" />,
+      icon: <Gauge className="h-6 w-6 text-primary" />,
       title: "Adaptive Block Production",
       description: "Dynamic adjustments maintaining network performance regardless of load.",
       tooltipContent: (
@@ -90,10 +95,11 @@ export default function TechHighlightsSection({ onExploreClick }: TechHighlights
             <li>Prevents congestion during high-traffic periods</li>
           </ul>
         </div>
-      )
+      ),
+      delay: 300
     },
     {
-      icon: <LinkIcon className="h-6 w-6" />,
+      icon: <LinkIcon className="h-6 w-6 text-primary" />,
       title: "Cross-Chain Interoperability",
       description: "Seamlessly connect with Ethereum, Solana, Polkadot, Cosmos—unlock liquidity and opportunities.",
       tooltipContent: (
@@ -107,41 +113,66 @@ export default function TechHighlightsSection({ onExploreClick }: TechHighlights
             <li>Composable DeFi applications spanning multiple chains</li>
           </ul>
         </div>
-      )
+      ),
+      delay: 400
     }
   ];
   
   return (
-    <section className="px-4 md:px-8 py-12 max-w-7xl mx-auto" id="tech-highlights">
-      <div className="glass rounded-3xl p-6 md:p-10">
+    <SectionContainer 
+      id="tech-highlights" 
+      aria-labelledby="tech-highlights-heading"
+      className="bg-gradient-to-b from-background/50 to-muted/30"
+    >
+      <h2 
+        id="tech-highlights-heading" 
+        className="sr-only"
+      >
+        Technology Highlights
+      </h2>
+      
+      <div className="bg-white/50 backdrop-blur-sm rounded-xl border border-primary/10 p-6 md:p-10 shadow-md">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
           {highlights.map((highlight, index) => (
-            <div key={index} className="text-center flex flex-col items-center">
-              <div className="bg-primary/10 p-3 inline-flex rounded-full mb-4 text-primary">
+            <div 
+              key={index} 
+              className={cn(
+                "text-center flex flex-col items-center animate-fadeIn",
+                highlight.delay ? `[animation-delay:${highlight.delay}ms]` : ""
+              )}
+            >
+              <div 
+                className="bg-primary/10 p-3 inline-flex rounded-full mb-4 text-primary"
+                aria-hidden="true"
+              >
                 {highlight.icon}
               </div>
-              <h3 className="feature-title mb-2 text-sm md:text-base">
+              <h3 className="font-medium mb-2 text-sm md:text-base">
                 <TechTooltip content={highlight.tooltipContent} expanded={true}>
-                  {highlight.title}
+                  <span className="cursor-help border-b border-dotted border-primary/50">
+                    {highlight.title}
+                  </span>
                 </TechTooltip>
               </h3>
-              <p className="description text-xs md:text-sm">
+              <p className="text-foreground/80 text-xs md:text-sm">
                 {highlight.description}
               </p>
             </div>
           ))}
         </div>
         
-        <div className="text-center mt-8">
+        <div className="text-center mt-10">
           <Button 
             onClick={onExploreClick}
             variant="outline"
-            className="font-medium py-2 px-6 rounded-full border-primary text-primary hover:bg-primary/10"
+            size="lg"
+            className="font-medium rounded-full border-primary text-primary hover:bg-primary/10 transition-colors"
           >
             Explore Our Technology
+            <Zap className="ml-2 h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
       </div>
-    </section>
+    </SectionContainer>
   );
 }
