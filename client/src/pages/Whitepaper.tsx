@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Download, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
+import { Download, ChevronDown, ChevronUp } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useLocation } from "wouter";
@@ -44,30 +44,49 @@ export default function Whitepaper() {
         onFaqClick={() => navigateToHome("faq")}
       />
 
-      <main className="container max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-12">
+      <main className="container max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-12 pt-24 md:pt-32">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 sm:mb-6 md:mb-8">
           PEOCHAIN Whitepaper
         </h1>
 
-        {/* 1. Introductory Statement */}
-        <p className="text-lg md:text-xl text-center text-foreground/80 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed">
-          "PeoChain is pioneering a decentralized financial revolution,
-          empowering underbanked populations globally through cutting-edge
-          blockchain innovation. By combining the novel Proof of Synergy (PoSyg)
-          consensus mechanism with Dynamic Contribution Scoring (DCS), PeoChain
-          achieves unparalleled scalability, security, and accessibility. Our
-          blockchain platform supports ultra-low fees, instant transactions,
-          seamless mobile integrations, and economic stability
-          mechanisms—redefining what's possible in global decentralized finance
-          (DeFi)."
-        </p>
+        {/* Executive Summary */}
+        <div className="bg-primary/5 p-6 rounded-xl mb-8 md:mb-12 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-foreground/90 leading-relaxed">
+            "PeoChain is pioneering a decentralized financial revolution,
+            empowering underbanked populations globally through cutting-edge
+            blockchain innovation. By combining the novel Proof of Synergy (PoSyg)
+            consensus mechanism with Dynamic Contribution Scoring (DCS), PeoChain
+            achieves unparalleled scalability, security, and accessibility. Our
+            blockchain platform supports ultra-low fees, instant transactions,
+            seamless mobile integrations, and economic stability
+            mechanisms—redefining what's possible in global decentralized finance
+            (DeFi)."
+          </p>
+        </div>
+
+        {/* Table of Contents */}
+        <div className="mb-10 max-w-2xl mx-auto">
+          <h2 className="text-xl font-bold mb-4 text-center">Contents</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <a href="#problems" className="p-2 hover:bg-primary/5 rounded transition-colors">1. Key Problems Solved</a>
+            <a href="#technology" className="p-2 hover:bg-primary/5 rounded transition-colors">2. Core Technology</a>
+            <a href="#architecture" className="p-2 hover:bg-primary/5 rounded transition-colors">3. System Architecture</a>
+            <a href="#consensus" className="p-2 hover:bg-primary/5 rounded transition-colors">4. Consensus Mechanism</a>
+            <a href="#tokenomics" className="p-2 hover:bg-primary/5 rounded transition-colors">5. Tokenomics</a>
+            <a href="#governance" className="p-2 hover:bg-primary/5 rounded transition-colors">6. Governance Model</a>
+            <a href="#ecosystem" className="p-2 hover:bg-primary/5 rounded transition-colors">7. Ecosystem Development</a>
+            <a href="#roadmap" className="p-2 hover:bg-primary/5 rounded transition-colors">8. Roadmap</a>
+            <a href="#team" className="p-2 hover:bg-primary/5 rounded transition-colors">9. Team & Partners</a>
+          </div>
+        </div>
 
         <Card className="glass rounded-3xl border-0 shadow-sm mb-8">
           <CardContent className="p-8 md:p-12">
             <div className="space-y-10">
               {/* 2. Key Problems Solved */}
-              <section>
-                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
+              <section id="problems">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center">
+                  <span className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center mr-3">1</span>
                   Key Problems Solved by PeoChain
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -121,8 +140,9 @@ export default function Whitepaper() {
               <Separator />
 
               {/* 3. PeoChain Solutions */}
-              <section>
-                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
+              <section id="technology">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center">
+                  <span className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center mr-3">2</span>
                   How PeoChain Solves These Problems
                 </h2>
 
@@ -270,8 +290,9 @@ export default function Whitepaper() {
               <Separator />
 
               {/* 4. Innovative Core Technologies */}
-              <section>
-                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
+              <section id="architecture">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center">
+                  <span className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center mr-3">3</span>
                   Innovative Core Technologies
                 </h2>
 
@@ -402,7 +423,7 @@ export default function Whitepaper() {
                 </div>
 
                 <div className="mt-6 md:mt-8 p-4 md:p-5 bg-primary/5 rounded-xl">
-                  <h3 className="font-bold text-base md:text-lg mb-3 md:mb-4 text-center">
+                  <h3 className="font-bold text-lg mb-2 md:mb-3">
                     Performance Comparison
                   </h3>
                   <div className="h-[350px] responsive-chart">
@@ -414,8 +435,11 @@ export default function Whitepaper() {
               <Separator />
 
               {/* 5. Technical Highlights */}
-              <section>
-                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Technical Highlights</h2>
+              <section id="consensus">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center">
+                  <span className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center mr-3">4</span>
+                  Technical Highlights
+                </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
                   <div className="border border-primary/20 p-4 md:p-5 rounded-xl whitepaper-section">
@@ -815,8 +839,9 @@ export default function Whitepaper() {
               <Separator />
 
               {/* 7. Financial Projections */}
-              <section>
-                <h2 className="text-2xl font-bold mb-6">
+              <section id="tokenomics">
+                <h2 className="text-2xl font-bold mb-6 flex items-center">
+                  <span className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center mr-3">5</span>
                   Financial Model, Projections & Viability
                 </h2>
 
@@ -826,7 +851,9 @@ export default function Whitepaper() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   <div className="bg-primary/5 p-6 rounded-xl">
-                    <h3 className="font-bold text-xl mb-3">ICO/IEO Funding</h3>
+                    <h3 className="font-bold text-xl mb-3">
+                      ICO/IEO Funding
+                    </h3>
                     <p className="text-foreground/80">
                       Targets <span className="font-semibold">$3,250,000</span>{" "}
                       (25% token supply) allocated towards blockchain
@@ -848,7 +875,9 @@ export default function Whitepaper() {
                   </div>
                 </div>
 
-                <h3 className="font-bold text-xl mb-3">Viability Measures</h3>
+                <h3 className="font-bold text-xl mb-3">
+                  Viability Measures
+                </h3>
                 <ul className="list-disc pl-6 space-y-2 text-foreground/80">
                   <li>
                     <span className="font-medium">Risk Management:</span> Robust
@@ -866,8 +895,9 @@ export default function Whitepaper() {
               <Separator />
 
               {/* 6. Economic Model */}
-              <section>
-                <h2 className="text-2xl font-bold mb-6">
+              <section id="governance">
+                <h2 className="text-2xl font-bold mb-6 flex items-center">
+                  <span className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center mr-3">6</span>
                   Economic Model (Tokenomics)
                 </h2>
 
@@ -1088,9 +1118,63 @@ export default function Whitepaper() {
 
               <Separator />
 
+              {/* 8. Ecosystem Development */}
+              <section id="ecosystem">
+                <h2 className="text-2xl font-bold mb-6 flex items-center">
+                  <span className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center mr-3">7</span>
+                  Ecosystem Development
+                </h2>
+
+                <div className="bg-primary/5 p-6 rounded-xl mb-6">
+                  <p className="text-foreground/80 mb-4">
+                    PeoChain's ecosystem is designed to foster innovation, accessibility, and sustainable growth through strategic partnerships and community-driven development initiatives.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="border border-primary/20 p-5 rounded-xl">
+                    <h3 className="font-bold text-xl mb-3">Strategic Partnerships</h3>
+                    <ul className="list-disc pl-6 space-y-2 text-foreground/80">
+                      <li>Financial institutions in emerging markets</li>
+                      <li>Mobile payment providers and telecom operators</li>
+                      <li>Cross-chain protocol integrations</li>
+                      <li>Regional fintech accelerators and incubators</li>
+                    </ul>
+                  </div>
+
+                  <div className="border border-primary/20 p-5 rounded-xl">
+                    <h3 className="font-bold text-xl mb-3">Developer Ecosystem</h3>
+                    <ul className="list-disc pl-6 space-y-2 text-foreground/80">
+                      <li>Comprehensive SDK and API documentation</li>
+                      <li>Developer grants and hackathon programs</li>
+                      <li>Educational resources and certification</li>
+                      <li>Open-source contribution framework</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <div className="bg-primary/5 p-4 rounded-xl text-center">
+                    <h4 className="font-semibold mb-2">Community Growth</h4>
+                    <p className="text-sm text-foreground/70">Targeted 500K+ active users within 24 months of mainnet launch</p>
+                  </div>
+                  <div className="bg-primary/5 p-4 rounded-xl text-center">
+                    <h4 className="font-semibold mb-2">dApp Ecosystem</h4>
+                    <p className="text-sm text-foreground/70">Support for 100+ dApps across DeFi, payments, and identity solutions</p>
+                  </div>
+                  <div className="bg-primary/5 p-4 rounded-xl text-center">
+                    <h4 className="font-semibold mb-2">Global Reach</h4>
+                    <p className="text-sm text-foreground/70">Active presence in 25+ countries with regional ambassador programs</p>
+                  </div>
+                </div>
+              </section>
+
+              <Separator />
+
               {/* 9. Roadmap */}
-              <section>
-                <h2 className="text-2xl font-bold mb-6">
+              <section id="roadmap">
+                <h2 className="text-2xl font-bold mb-6 flex items-center">
+                  <span className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center mr-3">8</span>
                   Roadmap to Global Adoption
                 </h2>
 
@@ -1197,8 +1281,9 @@ export default function Whitepaper() {
               <Separator />
 
               {/* 9. Leadership Team */}
-              <section>
-                <h2 className="text-2xl font-bold mb-6">
+              <section id="team">
+                <h2 className="text-2xl font-bold mb-6 flex items-center">
+                  <span className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center mr-3">9</span>
                   Leadership & Advisory Team
                 </h2>
 
@@ -1224,7 +1309,7 @@ export default function Whitepaper() {
                   <div className="flex flex-col md:flex-row gap-4 items-start p-4 bg-primary/5 rounded-xl">
                     <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
                       <img
-                        src="/images/team/daniil-krizhanovskyi.jpg"
+                        src="/images/team/daniil-krizhanovskyi.png"
                         alt="Daniil Krizhanovskyi"
                         className="w-full h-full object-cover"
                       />
@@ -1253,7 +1338,7 @@ export default function Whitepaper() {
               <Separator />
 
               {/* 10. Call to Action */}
-              <section className="text-center">
+              <section className="bg-primary/5 p-8 rounded-xl text-center mt-12">
                 <h2 className="text-2xl font-bold mb-4">
                   Join the PeoChain Revolution
                 </h2>
@@ -1263,13 +1348,21 @@ export default function Whitepaper() {
                   more inclusive global economy."
                 </p>
 
-                {/* 11. Download Button */}
-                <a href="/PEOCHAIN_White_Paper.pdf" download>
-                  <Button className="btn-gradient text-white font-medium py-2 px-8 rounded-full">
-                    <Download className="mr-2 h-4 w-4" /> Download Full
-                    Whitepaper
-                  </Button>
-                </a>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  {/* 11. Download Button */}
+                  <a href="/PEOCHAIN_White_Paper.pdf" download>
+                    <Button className="btn-gradient text-white font-medium py-2 px-8 rounded-full">
+                      <Download className="mr-2 h-4 w-4" /> Download Full
+                      Whitepaper
+                    </Button>
+                  </a>
+                  
+                  <a href="/#waitlist">
+                    <Button variant="outline" className="font-medium py-2 px-8 rounded-full">
+                      Join Waitlist
+                    </Button>
+                  </a>
+                </div>
               </section>
             </div>
           </CardContent>

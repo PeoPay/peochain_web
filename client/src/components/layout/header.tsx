@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, ChevronDown, X, ChevronRight, Code, Shield, Zap, Network, Layers, DollarSign } from "lucide-react";
+import { Menu, X, ChevronRight, Code, Shield, Zap, Network, Layers, DollarSign } from "lucide-react";
 import { useLocation } from "wouter";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
@@ -55,6 +54,11 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
   const navigateToWhitepaper = () => {
     setIsOpen(false);
     setLocation('/whitepaper');
+  };
+  
+  const navigateToPeoPay = () => {
+    setIsOpen(false);
+    setLocation('/peopay');
   };
   
   const navigateToHomeSection = (section: string) => {
@@ -132,93 +136,94 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
               >
                 Technology
               </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/20 to-primary/5 p-6 no-underline outline-none focus:shadow-md"
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleTechnologyClick();
-                        }}
-                      >
-                        <div className="mb-2 mt-4 flex items-center">
-                          <Shield className="h-6 w-6 text-primary mr-2" aria-hidden="true" />
-                          <div className="text-lg font-medium text-primary">
-                            PeoChain Technology
-                          </div>
+              <NavigationMenuContent className="z-50">
+                <div className="w-[500px] p-4 md:p-6 lg:p-8 bg-white shadow-lg rounded-xl">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="row-span-3">
+                      <div className="p-4 rounded-lg bg-primary/5 h-full flex flex-col">
+                        <div className="flex items-center mb-3">
+                          <Shield className="h-5 w-5 text-primary mr-2" aria-hidden="true" />
+                          <h3 className="text-base font-medium">PeoChain Technology</h3>
                         </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
+                        <p className="text-sm text-muted-foreground mb-4">
                           Explore our revolutionary blockchain infrastructure with 100,000+ TPS, 
                           subnet validators, and parallel transaction processing.
                         </p>
-                        <div className="mt-4 flex items-center text-sm text-primary">
-                          <span>Learn more</span>
-                          <ChevronRight className="ml-1 h-4 w-4" aria-hidden="true" />
+                        <div className="mt-auto">
+                          <a
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleTechnologyClick();
+                              document.dispatchEvent(new Event('mousedown'));
+                            }}
+                            className="group inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                            href="#technology"
+                          >
+                            Learn more
+                            <ChevronRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                          </a>
                         </div>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
+                      </div>
+                    </div>
+
+                    <div>
                       <a
                         onClick={(e) => {
                           e.preventDefault();
                           handleTechnologyClick();
+                          document.dispatchEvent(new Event('mousedown'));
                         }}
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none space-y-1 rounded-md p-3 hover:bg-accent/50 transition-colors"
                       >
                         <div className="flex items-center">
                           <Zap className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
-                          <div className="text-sm font-medium leading-none">Parallel Processing</div>
+                          <div className="text-sm font-medium">Parallel Processing</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           High-throughput transaction processing with our subnet validation system
                         </p>
                       </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
+                    </div>
+
+                    <div>
                       <a
                         onClick={(e) => {
                           e.preventDefault();
                           handleTechnologyClick();
+                          document.dispatchEvent(new Event('mousedown'));
                         }}
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none space-y-1 rounded-md p-3 hover:bg-accent/50 transition-colors"
                       >
                         <div className="flex items-center">
                           <Network className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
-                          <div className="text-sm font-medium leading-none">Cross-Chain Integration</div>
+                          <div className="text-sm font-medium">Cross-Chain Integration</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Seamless interoperability with major blockchain networks and protocols
                         </p>
                       </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
+                    </div>
+
+                    <div>
                       <a
                         onClick={(e) => {
                           e.preventDefault();
                           handleTechnologyClick();
+                          document.dispatchEvent(new Event('mousedown'));
                         }}
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none space-y-1 rounded-md p-3 hover:bg-accent/50 transition-colors"
                       >
                         <div className="flex items-center">
                           <Shield className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
-                          <div className="text-sm font-medium leading-none">Security Architecture</div>
+                          <div className="text-sm font-medium">Security Architecture</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Advanced consensus mechanisms with quantum-resistant encryption
                         </p>
                       </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
+                    </div>
+                  </div>
+                </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
             
@@ -231,66 +236,74 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
               >
                 Features
               </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] grid-cols-1">
-                  <li>
-                    <NavigationMenuLink asChild>
+              <NavigationMenuContent className="z-50">
+                <div className="w-[500px] p-4 md:p-6 lg:p-8 bg-white shadow-lg rounded-xl">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="row-span-2">
+                      <div className="p-4 rounded-lg bg-primary/5 h-full flex flex-col">
+                        <div className="flex items-center mb-3">
+                          <Layers className="h-5 w-5 text-primary mr-2" aria-hidden="true" />
+                          <h3 className="text-base font-medium">Core Features</h3>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          Explore the key features that make PeoChain revolutionary for users, developers, and enterprises.
+                        </p>
+                        <div className="mt-auto">
+                          <a
+                            onClick={(e) => {
+                              e.preventDefault();
+                              navigateToHomeSection('features');
+                              document.dispatchEvent(new Event('mousedown'));
+                            }}
+                            className="group inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                            href="#features"
+                          >
+                            Learn more
+                            <ChevronRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
                       <a
                         onClick={(e) => {
                           e.preventDefault();
                           navigateToHomeSection('features');
+                          document.dispatchEvent(new Event('mousedown'));
                         }}
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div className="flex items-center">
-                          <Layers className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
-                          <div className="text-sm font-medium leading-none">Core Features</div>
-                        </div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Explore the key features that make PeoChain revolutionary
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <a
-                        onClick={(e) => {
-                          e.preventDefault();
-                          navigateToHomeSection('benefits');
-                        }}
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none space-y-1 rounded-md p-3 hover:bg-accent/50 transition-colors"
                       >
                         <div className="flex items-center">
                           <DollarSign className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
-                          <div className="text-sm font-medium leading-none">Benefits</div>
+                          <div className="text-sm font-medium">Ultra-Low Fees</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Discover how PeoChain benefits users, developers, and businesses
+                          Transaction costs up to 1000x lower than traditional blockchains
                         </p>
                       </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
+                    </div>
+
+                    <div>
                       <a
                         onClick={(e) => {
                           e.preventDefault();
-                          navigateToWhitepaper();
+                          navigateToHomeSection('features');
+                          document.dispatchEvent(new Event('mousedown'));
                         }}
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none space-y-1 rounded-md p-3 hover:bg-accent/50 transition-colors"
                       >
                         <div className="flex items-center">
                           <Code className="h-4 w-4 text-primary mr-2" aria-hidden="true" />
-                          <div className="text-sm font-medium leading-none">Technical Whitepaper</div>
+                          <div className="text-sm font-medium">Developer Tools</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Read our detailed technical whitepaper for in-depth information
+                          Comprehensive SDK, APIs, and documentation for building on PeoChain
                         </p>
                       </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
+                    </div>
+                  </div>
+                </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
             
@@ -311,6 +324,16 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                 onClick={onFaqClick ? onFaqClick : () => navigateToHomeSection('faq')}
               >
                 FAQ
+              </Button>
+            </NavigationMenuItem>
+            
+            <NavigationMenuItem>
+              <Button 
+                variant="link" 
+                className="text-foreground hover:text-primary text-base font-medium px-4"
+                onClick={navigateToPeoPay}
+              >
+                PeoPay
               </Button>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -393,6 +416,30 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                 </div>
                 
                 <div>
+                  <h3 className="text-sm font-medium text-muted-foreground mb-3 px-1">Pages</h3>
+                  <ul className="space-y-2">
+                    <li>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start text-base font-normal"
+                        onClick={navigateToWhitepaper}
+                      >
+                        Whitepaper
+                      </Button>
+                    </li>
+                    <li>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start text-base font-normal"
+                        onClick={navigateToPeoPay}
+                      >
+                        PeoPay
+                      </Button>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div>
                   <h3 className="text-sm font-medium text-muted-foreground mb-3 px-1">Features & Benefits</h3>
                   <ul className="space-y-2">
                     <li>
@@ -413,16 +460,6 @@ export default function Header({ onFeatureClick, onBenefitsClick, onTechnologyCl
                       >
                         <DollarSign className="h-4 w-4 mr-2 text-primary" aria-hidden="true" />
                         Benefits
-                      </Button>
-                    </li>
-                    <li>
-                      <Button 
-                        variant="ghost" 
-                        className="w-full justify-start text-base font-normal"
-                        onClick={() => handleMobileNavClick(navigateToWhitepaper)}
-                      >
-                        <Code className="h-4 w-4 mr-2 text-primary" aria-hidden="true" />
-                        Technical Whitepaper
                       </Button>
                     </li>
                   </ul>
